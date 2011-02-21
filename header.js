@@ -19,7 +19,13 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var gMathJaxPath = getDefaultMathJaxPath()
+function getDefaultMathJaxPath()
+{
+src = location.protocol + "//" + location.host + location.pathname;
+return src.substring(0, src.search(/MathJax-test/)) + "MathJax/";
+}
+
+var gMathJaxPath = getDefaultMathJaxPath();
 var gUseNativeMathML = false;
 
 function parseQueryString()
@@ -33,7 +39,7 @@ function parseQueryString()
     }
     var paramname = pairs[i].substring(0, pos);
     var paramvalue = pairs[i].substring(pos + 1);
-    if (paramname = "mathJaxPath") {
+    if (paramname == "mathJaxPath") {
       gMathJaxPath = paramvalue;
     }
     if (paramname == "useNativeMathML") {
@@ -42,19 +48,12 @@ function parseQueryString()
   }
 }
 
-function getDefaultMathJaxPath()
-{
-src = location.href;
-return src.substring(0, src.search(/MathJax-test/)) + "MathJax/";
-}
-
 function startMathJax()
 {
   var script = document.createElement("script");
   script.type = "text/javascript";
   src = location.href;
   script.src = gMathJaxPath + "MathJax.js";
-
   var config =
     'MathJax.Hub.Config({' +
     'messageStyle: "none",' +

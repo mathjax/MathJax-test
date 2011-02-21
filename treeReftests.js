@@ -21,13 +21,8 @@
 
 function serialize(aNode)
 {
-  try {
-    source = (new XMLSerializer()).serializeToString(aNode);
-  }
-  catch (e) {
-    // XXXfred Internet Explorer will implement XMLSerializer in version 9
-    source = "[XMLSerializer not supported]";
-  }
+  // XXXfred: Internet Explorer only supports XMLSerializer since version 9
+  source = (new XMLSerializer()).serializeToString(aNode);
   
   // add linebreaks to help diffing source
   source = source.replace(/>(?!<)/g, ">\n")
@@ -36,25 +31,11 @@ function serialize(aNode)
   return source;
 }
 
-function getElementsByClassName(aNode, aClassName)
-{
-  if (aNode.getElementsByClassName) {
-    return aNode.getElementsByClassName(aClassName);
-	} else {
-    // XXXfred not supported?
-	}
-}
-
 function getMathJaxSource(aNode, aClassName)
 {
-   if (getElementsByClassName) {
-     divs = aNode.getElementsByClassName(aClassName);
-     if (divs) {
-       return serialize(divs[0]);
-     }
-   }
-
-   return "";
+   // XXXfred not supported by Internet Explorer?
+   divs = aNode.getElementsByClassName(aClassName);
+   return serialize(divs[0]);
 }
 
 function getMathJaxSourceMathML()
@@ -62,4 +43,3 @@ function getMathJaxSourceMathML()
   node = document.getElementById("reftest-element");
   return getMathJaxSource(node, "MathJax_MathML");
 }
-

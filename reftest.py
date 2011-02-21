@@ -51,9 +51,9 @@ class visualReftest(reftest):
 class treeReftest(reftest):
 
     def runTest(self):
-        self.mSelenium.open(self.mURL, False)
+        self.mSelenium.open(self.mURL, True)
         source1 = self.mSelenium.serializeReftest()
-        self.mSelenium.open(self.mURLRef, False)
+        self.mSelenium.open(self.mURLRef, True)
         source2 = self.mSelenium.serializeReftest()
         result = self.mSelenium.treeReftest(self.mID, self.mType,
                                             source1, source2)
