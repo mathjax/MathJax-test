@@ -45,7 +45,8 @@ class seleniumMathJax(selenium.selenium):
     def open(self, aUrl, aUseNativeMathML, aWaitTime = 0.5):
 
         aUrl += "?" # assuming query string is empty
-        aUrl += "useNativeMathML=true&"
+        if aUseNativeMathML:
+          aUrl += "useNativeMathML=true&"
         aUrl += "mathJaxPath=" + self.mMathJaxPath
 
         selenium.selenium.open(self, aUrl)
