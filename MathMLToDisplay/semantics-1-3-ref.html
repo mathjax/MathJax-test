@@ -1,0 +1,48 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>Test semantics 1-3</title>
+    <!-- Copyright (C) 2010-2011 Frederic Wang
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"></meta>
+    <script type="text/javascript" src="../header.js"></script>
+  </head>
+
+  <body>
+    <!-- unwanted whitespace
+         https://bugzilla.mozilla.org/show_bug.cgi?id=512418 -->
+    <p>■□■□■□<math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mrow>
+          <mrow>
+            <mo>lcm</mo>
+            <mo>(</mo>
+            <mi>a</mi>
+            <mo>,</mo>
+            <mi>b</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>=</mo>
+          <mfrac>
+            <mrow>
+              <mo>(</mo>
+              <mi>a</mi>
+              <mo>&#x2062;</mo>
+              <mi>b</mi>
+              <mo>)</mo>
+            </mrow>
+            <mrow>
+              <mo>gcd</mo>
+              <mo>(</mo>
+              <mi>a</mi>
+              <mo>,</mo>
+              <mi>b</mi>
+              <mo>)</mo>
+            </mrow>
+          </mfrac>
+        </mrow>
+      </math>■□■□■□</p>
+  </body>
+</html>

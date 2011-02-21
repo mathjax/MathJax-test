@@ -1,0 +1,25 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>embellished operators 4-2: some non-space-like children</title>
+    <!-- Copyright (C) 2010-2011 Frederic Wang
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"></meta>
+    <script type="text/javascript" src="../header.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <!-- a non-space-like child before-->
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mover>
+          <mtext>abcdef</mtext>
+          <mrow><mi>g</mi><mo stretchy="false">&#xaf;</mo></mrow>
+        </mover>
+      </math>
+    </div>
+  </body>
+</html>
