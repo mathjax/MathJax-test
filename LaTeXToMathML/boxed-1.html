@@ -2,7 +2,7 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>Test inline math</title>
+  <title>Test boxed</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -12,6 +12,8 @@
 </head>
 
 <body>
-  <div id="reftest-element">\(x\)</div>
+  <!-- See issue 10
+       https://github.com/mathjax/MathJax/issues/10 -->
+  <div id="reftest-element">$\boxed{1+2=3}$</div>
 </body>
 </html>

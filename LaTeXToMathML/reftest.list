@@ -1,4 +1,5 @@
 == backslashed-1.html backslashed-1-ref.html
+== basic-operators-1.html basic-operators-1-ref.html
 == display-math-1.html display-math-ref.html
 == display-math-2.html display-math-ref.html
 == frac-1.html frac-ref.html
@@ -7,4 +8,8 @@
 == greek-2.html greek-2-ref.html
 == inline-math-1.html inline-math-ref.html
 == inline-math-2.html inline-math-ref.html
-
+== macro-1a.html macro-1-ref.html
+== macro-1b.html macro-1-ref.html
+== macro-2.html macro-2-ref.html
+== macro-3.html macro-3-ref.html
+load macro-4.html

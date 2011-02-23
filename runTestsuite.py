@@ -34,10 +34,16 @@ def addReftests(aSuite, aSelenium, aReftestClass, aReftestDirectory):
         for line in f:
             if (not line.isspace()) and len(line) > 0 and line[0] != '#':
                 t = line.split()
-                if len(t) == 3:
+                if len(t) == 3 and (t[0] == "==" or t[0] == "!="):
                     aSuite.addTest(aReftestClass(aSelenium, t[0],
                                                 aReftestDirectory,
                                                 t[1], t[2]))
+                elif len(t) == 2 and t[0] == "load":
+                    aSuite.addTest(reftest.loadReftest(aSelenium, t[0],
+                                                       aReftestDirectory,
+                                                       t[1], None))
+                else:
+                    print "reftest syntax not supported"
 
 def getBrowserStartCommandFromBrowser(aBrowser):
 

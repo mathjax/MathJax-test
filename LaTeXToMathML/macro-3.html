@@ -2,7 +2,7 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>Test inline math</title>
+  <title>Test macro</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -12,6 +12,13 @@
 </head>
 
 <body>
-  <div id="reftest-element">\(x\)</div>
+  <div>$\newcommand\GL[2]{{{GL}_#1\left(#2\right)}}$</div>
+  <div id="reftest-element">
+    $
+    \GL{2}{\mathbb Z}
+    \GL{n}{\mathbb R}
+    \GL{m}{\mathbb C}
+    $
+  </div>
 </body>
 </html>

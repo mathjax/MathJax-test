@@ -31,7 +31,12 @@ class reftest(unittest.TestCase):
         self.mSelenium = aSelenium
         self.mType = aType
         self.mURL = aReftestDirectory + aURL
-        self.mURLRef = aReftestDirectory + aURLRef
+
+        if aURLRef == None:
+            self.mURLRef = None
+        else:
+            self.mURLRef = aReftestDirectory + aURLRef
+
         self.mID = aURL.split('.')[0]
 
     def id(self):
@@ -58,3 +63,8 @@ class treeReftest(reftest):
         result = self.mSelenium.treeReftest(self.mID, self.mType,
                                             source1, source2)
         self.assertTrue(result[0], result[1])
+
+class loadReftest(reftest):
+
+    def runTest(self):
+        self.mSelenium.open(self.mURL, self.mSelenium.mUseNativeMathML)
