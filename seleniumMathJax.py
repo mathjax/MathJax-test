@@ -29,12 +29,13 @@ import difflib
 class seleniumMathJax(selenium.selenium):
 
     def __init__(self, aHost, aPort, aBrowserStartCommand, aBrowserURL,
-                 aMathJaxPath, aBrowser, aUseNativeMathML, aTimeOut,
-                 aFullScreenMode):
+                 aMathJaxPath, aBrowser, aOperatingSystem,
+                 aUseNativeMathML, aTimeOut, aFullScreenMode):
         selenium.selenium.__init__(self, aHost, aPort, aBrowserStartCommand,
                                    aBrowserURL)
         self.mMathJaxPath = aMathJaxPath
         self.mBrowser = aBrowser
+        self.mOperatingSystem = aOperatingSystem
         self.mUseNativeMathML = aUseNativeMathML
         self.mTimeOut = aTimeOut
         self.mFullScreenMode = aFullScreenMode

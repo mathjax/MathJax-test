@@ -49,7 +49,7 @@ Start the Selenium server with the command
 
   java -jar /path/to/your/selenium-server.jar
 
-Use the file options.cfg to configure the way the test is run. When all is ready
+Use the file default.cfg to configure the way the test is run. When all is ready
 launch a new instance with the command
 
   python runTestsuite.py

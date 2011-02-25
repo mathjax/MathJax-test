@@ -22,7 +22,124 @@
 import time
 import unittest
 import seleniumMathJax
+import string
 from PIL import Image
+
+class reftestSuite(unittest.TestSuite):
+
+    def addReftests(self, aSelenium, aManifestFile):
+
+        i = string.rfind(aManifestFile, "/")
+        testDirectory = aManifestFile[0:(i+1)]
+
+        with open(aManifestFile) as f:
+
+            for line in f:
+
+                state = 0
+                testClass = None
+                testType = None
+                testURL = None
+                testURLRef = None         
+
+                for word in line.split():
+                    
+                    if word[0] == '#':
+                        # the remaining of the line is a comment
+                        break
+
+                    if state == 0 and word == "include":
+                        # 1. include
+                        state = 1
+                        continue
+
+                    if state == 1:
+                        # 1. <relative_path>
+                        self.addReftests(aSelenium, testDirectory + word)
+                        break
+
+                    if state == 0:
+                        # 2. <failure-type>*
+                        if (word == "fails" or
+                            word.startswith("fails-if") or
+                            word == "needs-focus" or
+                            word == "random" or
+                            word.startswith("random-if") or
+                            word == "silentfail" or
+                            word.startswith("silentfail-if") or
+                            word == "skip" or
+                            word.startswith("skip-if") or
+                            word == "slow" or
+                            word.startswith("slow-if") or
+                            word.startswith("asserts") or
+                            word.startswith("asserts-if")):
+                            print "failure-type not supported"
+                            continue
+                        else:
+                            state = 2
+
+                    if state == 2:
+                        # 2. [<http>]
+                        state = 3
+                        if word.startswith("HTTP"):
+                            print "http syntax not implemented"
+                            continue
+
+                    if state == 3:
+                        # 2. <type>
+                        if word == "load":
+                            testClass = loadReftest
+                            state = 4
+                            continue
+                        elif word == "tree==":
+                            testClass = treeReftest
+                            testType = "=="
+                            state = 4
+                            continue
+                        elif word == "tree!=":
+                            testClass = treeReftest
+                            testType = "!="
+                            state = 4
+                            continue
+                        elif word == "==":
+                            testClass = visualReftest
+                            testType = "=="
+                            state = 4
+                            continue
+                        elif word == "!=":
+                            testClass = visualReftest
+                            testType = "!="
+                            state = 4
+                            continue
+
+                    if state == 4:
+                        # 2. <url>
+                        testURL = word
+                        if testClass == "load":
+                            state = 6
+                        else:
+                            state = 5
+                        continue
+
+                    if state == 5:
+                        # 2. <url_ref>
+                        testURLRef = word
+                        state = 6
+                        continue
+
+                    print "reftest syntax not supported"
+                    break
+
+                # end for word
+
+                if state == 6:
+                    self.addTest(testClass(aSelenium, testType,
+                                           testDirectory,
+                                           testURL, testURLRef))
+
+            # end for line
+
+        # end with open
 
 class reftest(unittest.TestCase):
 
@@ -42,16 +159,10 @@ class reftest(unittest.TestCase):
     def id(self):
        return self.mID
 
-class visualReftest(reftest):
+class loadReftest(reftest):
 
     def runTest(self):
         self.mSelenium.open(self.mURL, self.mSelenium.mUseNativeMathML)
-        image1 = self.mSelenium.takeScreenshot()
-        self.mSelenium.open(self.mURLRef, self.mSelenium.mUseNativeMathML)
-        image2 = self.mSelenium.takeScreenshot()
-        result = self.mSelenium.visualReftest(self.mID, self.mType,
-                                              image1, image2)
-        self.assertTrue(result[0], result[1])
 
 class treeReftest(reftest):
 
@@ -64,7 +175,13 @@ class treeReftest(reftest):
                                             source1, source2)
         self.assertTrue(result[0], result[1])
 
-class loadReftest(reftest):
+class visualReftest(reftest):
 
     def runTest(self):
         self.mSelenium.open(self.mURL, self.mSelenium.mUseNativeMathML)
+        image1 = self.mSelenium.takeScreenshot()
+        self.mSelenium.open(self.mURLRef, self.mSelenium.mUseNativeMathML)
+        image2 = self.mSelenium.takeScreenshot()
+        result = self.mSelenium.visualReftest(self.mID, self.mType,
+                                              image1, image2)
+        self.assertTrue(result[0], result[1])

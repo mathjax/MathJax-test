@@ -19,38 +19,25 @@
 #
 # ***** END LICENSE BLOCK *****
 
-import time
 from datetime import datetime
-import unittest
-import HTMLTestRunner
-import seleniumMathJax
-import reftest
 import ConfigParser
+import HTMLTestRunner
+import platform
+import reftest
+import seleniumMathJax
+import time
+import unittest
 
-def addReftests(aSuite, aSelenium, aReftestClass, aReftestDirectory):
-    manifestFile = aReftestDirectory + "reftest.list"
+def getOperatingSystem():
 
-    with open(manifestFile) as f:
-        for line in f:
-            if (not line.isspace()) and len(line) > 0 and line[0] != '#':
-                t = line.split()
-                if len(t) == 3 and (t[0] == "==" or t[0] == "!="):
-                    aSuite.addTest(aReftestClass(aSelenium, t[0],
-                                                aReftestDirectory,
-                                                t[1], t[2]))
-                elif len(t) == 2 and t[0] == "load":
-                    aSuite.addTest(reftest.loadReftest(aSelenium, t[0],
-                                                       aReftestDirectory,
-                                                       t[1], None))
-                else:
-                    print "reftest syntax not supported"
+    return platform.system()
 
-def getBrowserStartCommandFromBrowser(aBrowser):
+def getBrowserStartCommand(aOS, aBrowser):
 
     if aBrowser == "Firefox":
         return "*firefox"
 
-    if aBrowser == "Safari":
+    if (aOS == "Windows" or aOS == "Mac") and aBrowser == "Safari":
         return "*safariproxy"
 
     if aBrowser == "Chrome":
@@ -59,28 +46,37 @@ def getBrowserStartCommandFromBrowser(aBrowser):
     if aBrowser == "Opera":
         return "*opera"
 
-    if aBrowser == "MSIE":
+    if aOS == "Windows" and aBrowser == "MSIE":
         return "*iexploreproxy"
 
-    if aBrowser == "Konqueror":
+    if aOS == "Linux" and aBrowser == "Konqueror":
         return "*konqueror /usr/bin/konqueror"
 
     return "unknown"
 
-def getOutputFileName(aBrowser):
+def getOutputFileName(aOperatingSystem, aBrowser):
     utcdate = datetime.now().isoformat("_")
-    return "results/" + aBrowser + "_" + utcdate + ".html"
+    return "results/" + \
+        aOperatingSystem + "_" + aBrowser + "_" +  utcdate + ".html"
 
 if __name__ == "__main__":
+
+    # Load configuration file
     config = ConfigParser.ConfigParser()
-    config.readfp(open("options.cfg"))
+    config.readfp(open("default.cfg"))
     section = "seleniumMathJax"
 
     browser = config.get(section, "browser")
+
+    operatingSystem = config.get(section, "operatingSystem")
+    if operatingSystem == "auto":
+        operatingSystem = getOperatingSystem()
+
     browserStartCommand = config.get(section, "browserStartCommand")
     if browserStartCommand == "auto":
-        browserStartCommand = getBrowserStartCommandFromBrowser(browser)
+        browserStartCommand = getBrowserStartCommand(operatingSystem, browser)
 
+    # Create a Selenium instance
     selenium = seleniumMathJax.seleniumMathJax(
         config.get(section, "host"),
         config.getint(section, "port"),
@@ -88,22 +84,26 @@ if __name__ == "__main__":
         config.get(section, "browserURL"),
         config.get(section, "mathJaxPath"),
         browser,
+        operatingSystem,
         config.getboolean(section, "useNativeMathML"),
         config.getint(section, "timeOut"),
         config.getboolean(section, "fullScreenMode"))
-    selenium.start()
-    
+
+    # Create the test suite
+    suite = reftest.reftestSuite()
+    suite.addReftests(selenium, "reftest.list")
+
+    # Create the output file
     output = config.get("testsuite", "outputFile")
     if output == "auto":
-        output = getOutputFileName(selenium.mBrowser)
+        output = getOutputFileName(selenium.mOperatingSystem,
+                                   selenium.mBrowser)
+
+    # Run the test suite
+    selenium.start()
 
     fp = file(output, "wb")
-
-    suite = unittest.TestSuite()
-    addReftests(suite, selenium, reftest.treeReftest, "LaTeXToMathML/")
-    addReftests(suite, selenium, reftest.visualReftest, "MathMLToDisplay/")
     HTMLTestRunner.HTMLTestRunner(stream=fp, verbosity=2).run(suite)
-
     fp.close()
 
     selenium.stop()

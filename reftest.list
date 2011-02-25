@@ -1,0 +1,6 @@
+# LaTeXToMathML/
+include LaTeXToMathML/reftest.list
+
+# MathMLToDisplay/
+include MathMLToDisplay/reftest.list
+
