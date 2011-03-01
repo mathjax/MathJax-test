@@ -17,6 +17,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# Contributor(s):
+#   Frederic Wang <fred.wang@free.fr> (original author)
+#
 # ***** END LICENSE BLOCK *****
 
 from datetime import datetime
@@ -28,76 +31,90 @@ import seleniumMathJax
 import time
 import unittest
 
-def getOperatingSystem():
+def getOperatingSystem(aOperatingSystem):
+
+    if aOperatingSystem != "auto":
+        return aOperatingSystem
 
     return platform.system()
 
-def getBrowserStartCommand(aOS, aBrowser):
+def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
 
     if aBrowser == "Firefox":
-        return "*firefox"
+        startCommand = "*firefox"
+    elif (aOS == "Windows" or aOS == "Mac") and aBrowser == "Safari":
+        startCommand = "*safariproxy"
+    elif aBrowser == "Chrome":
+        startCommand = "*googlechrome"
+    elif aBrowser == "Opera":
+        startCommand = "*opera"
+    elif aOS == "Windows" and aBrowser == "MSIE":
+        startCommand = "*iexploreproxy"
+    elif aOS == "Linux" and aBrowser == "Konqueror":
+        startCommand = "*konqueror"
+    else:
+        startCommand = "*custom"
+    
+    if aBrowserPath == "auto":
+        if aOS == "Linux" and aBrowser == "Konqueror":
+           startCommand = startCommand + " /usr/bin/konqueror" 
+    else:
+        startCommand = startCommand + " " + aBrowserPath
+    
+    return startCommand
 
-    if (aOS == "Windows" or aOS == "Mac") and aBrowser == "Safari":
-        return "*safariproxy"
+def getOutputFileName(aOutput, aSelenium):
 
-    if aBrowser == "Chrome":
-        return "*googlechrome"
+    if aOutput != "auto":
+        return aOutput
 
-    if aBrowser == "Opera":
-        return "*opera"
-
-    if aOS == "Windows" and aBrowser == "MSIE":
-        return "*iexploreproxy"
-
-    if aOS == "Linux" and aBrowser == "Konqueror":
-        return "*konqueror /usr/bin/konqueror"
-
-    return "unknown"
-
-def getOutputFileName(aOperatingSystem, aBrowser):
     utcdate = datetime.now().isoformat("_")
     return "results/" + \
-        aOperatingSystem + "_" + aBrowser + "_" +  utcdate + ".html"
+        aSelenium.mOperatingSystem + "_" + \
+        aSelenium.mBrowser + "_" + \
+        aSelenium.mBrowserVersion + "_" + \
+        aSelenium.mFonts + "_" + \
+        utcdate + ".html"
 
 if __name__ == "__main__":
 
     # Load configuration file
     config = ConfigParser.ConfigParser()
     config.readfp(open("default.cfg"))
-    section = "seleniumMathJax"
+    sectionFramework = "framework"
+    sectionPlatform = "platform"
+    sectionTestsuite = "testsuite"
 
-    browser = config.get(section, "browser")
+    browser = config.get(sectionPlatform, "browser")
 
-    operatingSystem = config.get(section, "operatingSystem")
-    if operatingSystem == "auto":
-        operatingSystem = getOperatingSystem()
+    operatingSystem = getOperatingSystem(
+        config.get(sectionPlatform, "operatingSystem"))
 
-    browserStartCommand = config.get(section, "browserStartCommand")
-    if browserStartCommand == "auto":
-        browserStartCommand = getBrowserStartCommand(operatingSystem, browser)
+    browserStartCommand = getBrowserStartCommand(
+        config.get(sectionPlatform, ("browserPath")), operatingSystem, browser)
 
     # Create a Selenium instance
     selenium = seleniumMathJax.seleniumMathJax(
-        config.get(section, "host"),
-        config.getint(section, "port"),
-        browserStartCommand,
-        config.get(section, "browserURL"),
-        config.get(section, "mathJaxPath"),
-        browser,
+        config.get(sectionFramework, "host"),
+        config.getint(sectionFramework, "port"),
+        config.get(sectionFramework, "mathJaxPath"),
+        config.get(sectionFramework, "mathJaxTestPath"),
         operatingSystem,
-        config.getboolean(section, "useNativeMathML"),
-        config.getint(section, "timeOut"),
-        config.getboolean(section, "fullScreenMode"))
+        browser,
+        config.get(sectionPlatform, "browserVersion"),
+        browserStartCommand,
+        config.get(sectionPlatform, "fonts"),
+        config.getboolean(sectionPlatform, "nativeMathML"),
+        config.getint(sectionFramework, "timeOut"),
+        config.getboolean(sectionFramework, "fullScreenMode"))
 
     # Create the test suite
-    suite = reftest.reftestSuite()
+    suite = reftest.reftestSuite(
+        config.getboolean(sectionTestsuite, "runSlowTests"))
     suite.addReftests(selenium, "reftest.list")
 
     # Create the output file
-    output = config.get("testsuite", "outputFile")
-    if output == "auto":
-        output = getOutputFileName(selenium.mOperatingSystem,
-                                   selenium.mBrowser)
+    output = getOutputFileName(config.get("testsuite", "outputFile"), selenium)
 
     # Run the test suite
     selenium.start()

@@ -7,7 +7,7 @@
 != embellished-op-2-2.html embellished-op-2-2-ref.html
 != embellished-op-2-3.html embellished-op-2-3-ref.html
 != embellished-op-2-4.html embellished-op-2-4-ref.html
-!= embellished-op-3-1.html embellished-op-3-1-ref.html
+random != embellished-op-3-1.html embellished-op-3-1-ref.html
 != embellished-op-3-2.html embellished-op-3-2-ref.html
 != embellished-op-3-3.html embellished-op-3-3-ref.html
 != embellished-op-3-4.html embellished-op-3-4-ref.html
@@ -15,7 +15,9 @@
 == embellished-op-4-1.html embellished-op-4-1-ref.html
 == embellished-op-4-2.html embellished-op-4-2-ref.html
 == embellished-op-4-3.html embellished-op-4-3-ref.html
-!= link-1.html link-ref.html
+skip-if(STIX) fails-if(TeX||ImageTeX) == greek-1.html greek-1-ref.html
+skip-if(STIX) fails-if(TeX||ImageTeX) == greek-2.html greek-2-ref.html
+fails-if(!Chrome) != link-1.html link-ref.html
 != link-2.html link-ref.html
 == math-as-mstyle-1-1.html math-as-mstyle-1-1-ref.html
 == math-as-mstyle-1-2.html math-as-mstyle-1-2-ref.html
@@ -41,7 +43,7 @@
 == mfenced-5c.html mfenced-5-ref.html
 == mfenced-5d.html mfenced-5-ref.html
 == mi-mathvariant-1.html mi-mathvariant-1-ref.html
-== mi-mathvariant-2.html mi-mathvariant-2-ref.html
+fails-if(STIX) == mi-mathvariant-2.html mi-mathvariant-2-ref.html
 == mstyle-1-1.html mstyle-1-1-ref.html
 == mstyle-1-2.html mstyle-1-2-ref.html
 == mstyle-1-3.html mstyle-1-3-ref.html
@@ -62,7 +64,7 @@
 == mstyle-2-8.html mstyle-2-8-ref.html
 == mstyle-2-9.html mstyle-2-9-ref.html
 == self-closing-tag-1.html self-closing-tag-1-ref.html
-== self-closing-tag-2.html self-closing-tag-2-ref.html
+random == self-closing-tag-2.html self-closing-tag-2-ref.html
 == semantics-1-1.html semantics-1-1-ref.html
 == semantics-1-2.html semantics-1-2-ref.html
 == semantics-1-3.html semantics-1-3-ref.html

@@ -17,6 +17,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# Contributor(s):
+#   Frederic Wang <fred.wang@free.fr> (original author)
+#
 # ***** END LICENSE BLOCK *****
 
 import time
@@ -28,26 +31,39 @@ import difflib
 
 class seleniumMathJax(selenium.selenium):
 
-    def __init__(self, aHost, aPort, aBrowserStartCommand, aBrowserURL,
-                 aMathJaxPath, aBrowser, aOperatingSystem,
-                 aUseNativeMathML, aTimeOut, aFullScreenMode):
+    def __init__(self, aHost, aPort, aMathJaxPath, aMathJaxTestPath,
+                 aOperatingSystem,
+                 aBrowser,
+                 aBrowserVersion,
+                 aBrowserStartCommand, 
+                 aFonts,
+                 aNativeMathML,
+                 aTimeOut,
+                 aFullScreenMode):
         selenium.selenium.__init__(self, aHost, aPort, aBrowserStartCommand,
-                                   aBrowserURL)
+                                   aMathJaxTestPath)
         self.mMathJaxPath = aMathJaxPath
-        self.mBrowser = aBrowser
         self.mOperatingSystem = aOperatingSystem
-        self.mUseNativeMathML = aUseNativeMathML
+        self.mBrowser = aBrowser
+        self.mBrowserVersion = aBrowserVersion
+        self.mFonts = aFonts
+        self.mNativeMathML = aNativeMathML
         self.mTimeOut = aTimeOut
         self.mFullScreenMode = aFullScreenMode
+
         self.mCanvas = None
         # Size of screenshots used by Mozilla
         self.mReftestSize = (800, 1000)
 
-    def open(self, aUrl, aUseNativeMathML, aWaitTime = 0.5):
+    def open(self, aUrl, aNativeMathML, aWaitTime = 0.5):
 
         aUrl += "?" # assuming query string is empty
-        if aUseNativeMathML:
-          aUrl += "useNativeMathML=true&"
+
+        aUrl += "fonts=" + self.mFonts + "&"
+
+        if aNativeMathML:
+          aUrl += "nativeMathML=true&"
+
         aUrl += "mathJaxPath=" + self.mMathJaxPath
 
         selenium.selenium.open(self, aUrl)
@@ -60,7 +76,7 @@ class seleniumMathJax(selenium.selenium):
         selenium.selenium.start(self)
 
         # Open the blank page and maximize it
-        self.open("blank.html", self.mUseNativeMathML, 3)
+        self.open("blank.html", self.mNativeMathML, 3)
         self.window_focus()
         self.window_maximize()
         time.sleep(2)
@@ -144,59 +160,6 @@ class seleniumMathJax(selenium.selenium):
         image.save(stringIO, "PNG")
         return "data:image/png;base64," + base64.b64encode(stringIO.getvalue())
 
-    def visualReftest(self, aId, aType, aImage, aImageRef):
-        # Compare aImage and aImageRef
-        box = ImageChops.difference(aImage, aImageRef).getbbox()
-        isEqual = (box == None or (box[0] == box[2] and box[1] == box[3]))
-
-        # Return Success
-        if (aType == '==' and isEqual) or (aType == '!=' and (not isEqual)):
-            return True, None
-
-        # Return failure together with base64 images of the reftest
-        msg = "REFTEST TEST-UNEXPECTED-FAIL | " + aId + " | " + \
-            "image comparison ("+ aType +") \n"
-        if aType == '==':
-            msg += "REFTEST   IMAGE 1 (TEST): " + \
-                self.encodeImageToBase64(aImage) + "\n"
-            msg += "REFTEST   IMAGE 2 (REFERENCE): " + \
-                self.encodeImageToBase64(aImageRef) + "\n"
-        elif aType == '!=':
-            msg += "REFTEST   IMAGE: " + \
-                self.encodeImageToBase64(aImage) + "\n"
-
-        return False, msg
-
-    def serializeReftest(self):
+    def getMathJaxSourceMathML(self):
         return self.get_eval(
             "selenium.browserbot.getCurrentWindow().getMathJaxSourceMathML()")
-
-    def treeReftest(self, aId, aType, aSource, aSourceRef):
-
-        # Compare aSource == aSourceRef
-        isEqual = (aSource == aSourceRef)
-
-        # Return Success
-        if (aType == '==' and isEqual) or (aType == '!=' and (not isEqual)):
-            return True, None
-
-        # Return failure together with a diff of the sources
-        msg = "REFTEST TEST-UNEXPECTED-FAIL | " + aId + " | " + \
-            "source comparison ("+ aType +") \n"
-
-        if aType == '==':
-            msg += "REFTEST   SOURCE 1 (TEST): " + \
-                aSource + "\n"
-            msg += "REFTEST   SOURCE 2 (REFERENCE): " + \
-                aSourceRef + "\n"
-
-            msg += "REFTEST   DIFF:\n"
-            generator = difflib.unified_diff(aSource.splitlines(1),
-                                             aSourceRef.splitlines(1))
-            for line in generator:
-                msg += line
-        elif aType == '!=':
-            msg += "REFTEST   SOURCE: " + \
-                aSource + "\n"
-
-        return False, msg

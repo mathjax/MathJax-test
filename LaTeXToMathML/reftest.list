@@ -1,12 +1,14 @@
 tree== backslashed-1.html backslashed-1-ref.html
-tree== basic-operators-1.html basic-operators-1-ref.html
+fails tree== basic-operators-1.html basic-operators-1-ref.html
+# boxed-1.html
 tree== display-math-1.html display-math-ref.html
 tree== display-math-2.html display-math-ref.html
 tree== frac-1.html frac-ref.html
 tree== frac-2.html frac-ref.html
-tree== functions-1.html functions-1-ref.html
+skip tree== functions-1.html functions-1-ref.html
 tree== greek-1.html greek-1-ref.html
 tree== greek-2.html greek-2-ref.html
+# greek-3.html
 tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
 tree== macro-1a.html macro-1-ref.html

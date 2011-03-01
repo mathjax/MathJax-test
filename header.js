@@ -17,6 +17,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
+ * Contributor(s):
+ *   Frederic Wang <fred.wang@free.fr> (original author)
+ *
  * ***** END LICENSE BLOCK ***** */
 
 function getDefaultMathJaxPath()
@@ -26,7 +29,8 @@ return src.substring(0, src.search(/MathJax-test/)) + "MathJax/";
 }
 
 var gMathJaxPath = getDefaultMathJaxPath();
-var gUseNativeMathML = false;
+var gNativeMathML = false;
+var gFonts = "STIX";
 
 function parseQueryString()
 {
@@ -42,8 +46,11 @@ function parseQueryString()
     if (paramname == "mathJaxPath") {
       gMathJaxPath = paramvalue;
     }
-    if (paramname == "useNativeMathML") {
-      gUseNativeMathML = (paramvalue == "true");
+    if (paramname == "fonts") {
+      gFonts = paramvalue;
+    }
+    if (paramname == "nativeMathML") {
+      gNativeMathML = (paramvalue == "true");
     }
   }
 }
@@ -57,10 +64,26 @@ function startMathJax()
   var config =
     'MathJax.Hub.Config({' +
     'messageStyle: "none",' +
-    'extensions: ["tex2jax.js", "mml2jax.js"],' +
+    'extensions: ["tex2jax.js", "mml2jax.js"],';
+
+  config +=
     'jax: ["input/TeX", "input/MathML", ' +
-       (gUseNativeMathML ? '"output/NativeMML"' : '"output/HTML-CSS"') + ']' +
-    '});' +
+       (gNativeMathML ? '"output/NativeMML"' : '"output/HTML-CSS"') + '],';
+
+  if (gFonts == "ImageTeX") {
+    fonts = "";
+  } else {
+    fonts = '"' + gFonts + '"';
+  }
+  config +=
+    '"HTML-CSS": {' +
+    '  availableFonts: [' + fonts + '], preferredFont: null, webFont: null' +
+    '}';
+
+  config +=
+    '});'
+
+  config +=
     'MathJax.Hub.Startup.onload();' +
     'MathJax.Hub.Queue(function () {' +
     'document.documentElement.className = "";' +

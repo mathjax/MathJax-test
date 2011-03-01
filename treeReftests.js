@@ -17,6 +17,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
+ * Contributor(s):
+ *   Frederic Wang <fred.wang@free.fr> (original author)
+ *
  * ***** END LICENSE BLOCK ***** */
 
 function serialize(aNode)
