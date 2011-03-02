@@ -54,7 +54,10 @@ launch a new instance with the command
 
   python runTestsuite.py
 
-and wait until the testsuite is complete.
+and wait until the testsuite is complete. You can also specified a custom
+configuration file with the -c option. For example
+
+  python runTestsuite.py -c windows.cfg
 
 Warning: because some unit tests need to take screenshots of test pages and
 compare them, you should avoid any action that could disturb what is rendered

@@ -28,6 +28,7 @@ import HTMLTestRunner
 import platform
 import reftest
 import seleniumMathJax
+import argparse
 import time
 import unittest
 
@@ -56,6 +57,10 @@ def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
         startCommand = "*custom"
     
     if aBrowserPath == "auto":
+        if startCommand == "*custom":
+            print "Unknown browser version"
+            return "unknown"
+
         if aOS == "Linux" and aBrowser == "Konqueror":
            startCommand = startCommand + " /usr/bin/konqueror" 
     else:
@@ -78,50 +83,96 @@ def getOutputFileName(aOutput, aSelenium):
 
 if __name__ == "__main__":
 
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(
+        description="A Python script to run MathJax automated tests.")
+    parser.add_argument("-c", "--config", nargs='?', default="default.cfg",
+                        help="A file describing the parameters of the \
+automated test instance to run. The default configuration file is default.cfg.")
+    args = parser.parse_args()
+
     # Load configuration file
     config = ConfigParser.ConfigParser()
-    config.readfp(open("default.cfg"))
-    sectionFramework = "framework"
-    sectionPlatform = "platform"
-    sectionTestsuite = "testsuite"
+    config.readfp(open(args.config))
 
-    browser = config.get(sectionPlatform, "browser")
+    # framework section
+    section = "framework"
+    host = config.get(section, "host")
+    port = config.getint(section, "port")
+    mathJaxPath = config.get(section, "mathJaxPath")
+    mathJaxTestPath = config.get(section, "mathJaxTestPath")
+    timeOut = config.getint(section, "timeOut")
+    fullScreenMode = config.getboolean(section, "fullScreenMode")
+    
+    # platform section
+    section = "platform"
+    operatingSystem = getOperatingSystem(config.get(section, "operatingSystem"))
+    browserList = config.get(section, "browser").split()
+    browserVersionList = config.get(section, "browserVersion").split()
+    browserPath = config.get(section, "browserPath")
+    fontsList = config.get(section, "fonts").split()
+    nativeMathML = config.getboolean(section, "nativeMathML")
+    
+    # testsuite section
+    section = "testsuite"
+    outputFile = config.get(section, "outputFile")
+    runSlowTests = config.getboolean(section, "runSlowTests")
+       
+    if (len(browserList) > 1 or len(browserVersionList) > 1 or
+        len(fontsList) > 1):
+        msg =  " can not be specified when launching several instances at the"
+        msg += "same time."
+        if browserPath != "auto":
+            print "browserPath" + msg
+            exit(1)
+        if outputFile != "auto":
+            print "outputFile" + msg
+            exit(1)
 
-    operatingSystem = getOperatingSystem(
-        config.get(sectionPlatform, "operatingSystem"))
+    for browser in browserList:
+        for browserVersion in browserVersionList:
+            for fonts in fontsList:
 
-    browserStartCommand = getBrowserStartCommand(
-        config.get(sectionPlatform, ("browserPath")), operatingSystem, browser)
+                browserStartCommand = getBrowserStartCommand(
+                    browserPath,
+                    operatingSystem,
+                    browser)
 
-    # Create a Selenium instance
-    selenium = seleniumMathJax.seleniumMathJax(
-        config.get(sectionFramework, "host"),
-        config.getint(sectionFramework, "port"),
-        config.get(sectionFramework, "mathJaxPath"),
-        config.get(sectionFramework, "mathJaxTestPath"),
-        operatingSystem,
-        browser,
-        config.get(sectionPlatform, "browserVersion"),
-        browserStartCommand,
-        config.get(sectionPlatform, "fonts"),
-        config.getboolean(sectionPlatform, "nativeMathML"),
-        config.getint(sectionFramework, "timeOut"),
-        config.getboolean(sectionFramework, "fullScreenMode"))
+                if browserStartCommand != "unknown":
 
-    # Create the test suite
-    suite = reftest.reftestSuite(
-        config.getboolean(sectionTestsuite, "runSlowTests"))
-    suite.addReftests(selenium, "reftest.list")
+                    # Create a Selenium instance
+                    selenium = seleniumMathJax.seleniumMathJax(
+                        host, port, mathJaxPath, mathJaxTestPath,
+                        operatingSystem,
+                        browser,
+                        browserVersion,
+                        browserStartCommand, 
+                        fonts,
+                        nativeMathML,
+                        timeOut,
+                        fullScreenMode)
+        
+                    # Create the test suite
+                    suite = reftest.reftestSuite(runSlowTests)
+                    suite.addReftests(selenium, "reftest.list")
+                    
+                    # Create the output file
+                    output = getOutputFileName(outputFile, selenium)
 
-    # Create the output file
-    output = getOutputFileName(config.get("testsuite", "outputFile"), selenium)
+                    # Run the test suite
+                    selenium.start()
+                    
+                    fp = file(output, "wb")
+                    HTMLTestRunner.HTMLTestRunner(stream=fp,
+                                                  verbosity=2).run(suite)
+                    fp.close()
+                    
+                    selenium.stop()
+                    time.sleep(4)
 
-    # Run the test suite
-    selenium.start()
+                # end if browserStartCommand
+            # end for fonts
+        # end browserVersion
+    # end browser
 
-    fp = file(output, "wb")
-    HTMLTestRunner.HTMLTestRunner(stream=fp, verbosity=2).run(suite)
-    fp.close()
-
-    selenium.stop()
-    time.sleep(2)
+    exit(0)
