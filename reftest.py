@@ -157,7 +157,7 @@ class reftestSuite(unittest.TestSuite):
                     if state == 5:
                         # 2. <url>
                         testURL = word
-                        if testClass == "load":
+                        if testClass == loadReftest:
                             state = 7
                         else:
                             state = 6
