@@ -261,13 +261,13 @@ class reftest(unittest.TestCase):
 
     def shouldSkipTest(self):
         if self.mSkip:
-            msg = "REFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)\n"
+            msg = "\nREFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)\n"
             # self.skipTest(msg)
             print msg
             return True
 
         if  ((not self.mTestSuite.mRunSlowTests) and self.mSlow):
-            msg = "REFTEST TEST-KNOWN-SLOW | " + self.mID + " | (SLOW)\n"
+            msg = "\nREFTEST TEST-KNOWN-SLOW | " + self.mID + " | (SLOW)\n"
             # self.skipTest(msg)
             print msg
             return True
@@ -296,7 +296,7 @@ class reftest(unittest.TestCase):
             else:
                 msg = "TEST-UNEXPECTED-FAIL"
 
-        msg = "REFTEST " + msg + " | " + self.mID + " | "
+        msg = "\nREFTEST " + msg + " | " + self.mID + " | "
         return success, msg
 
 class loadReftest(reftest):
@@ -306,7 +306,7 @@ class loadReftest(reftest):
         if self.shouldSkipTest():
             return
         self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
-        msg = "REFTEST TEST-PASS | " + self.mID + " | (LOAD ONLY)\n"
+        msg = "\nREFTEST TEST-PASS | " + self.mID + " | (LOAD ONLY)\n"
         print msg
         
 class treeReftest(reftest):

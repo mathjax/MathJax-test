@@ -15,6 +15,7 @@ random != embellished-op-3-1.html embellished-op-3-1-ref.html
 == embellished-op-4-1.html embellished-op-4-1-ref.html
 == embellished-op-4-2.html embellished-op-4-2-ref.html
 == embellished-op-4-3.html embellished-op-4-3-ref.html
+fails tree== entities-1.html entities-1-ref.html
 skip-if(STIX) fails-if(TeX||ImageTeX) == greek-1.html greek-1-ref.html
 skip-if(STIX) fails-if(TeX||ImageTeX) == greek-2.html greek-2-ref.html
 fails-if(!Chrome) != link-1.html link-ref.html

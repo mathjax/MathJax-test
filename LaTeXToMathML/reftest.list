@@ -9,7 +9,7 @@ skip tree== functions-1.html functions-1-ref.html
 tree== greek-1.html greek-1-ref.html
 tree== greek-2.html greek-2-ref.html
 # greek-3.html
-tree== inline-math-1.html inline-math-ref.html
+skip tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
 tree== macro-1a.html macro-1-ref.html
 tree== macro-1b.html macro-1-ref.html

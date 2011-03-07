@@ -24,6 +24,12 @@ system those you are interested in:
   - MSIE (possibly with the MathPlayer plugin to test its MathML support)
   - Konqueror
 
+Please also install the following fonts on your machine
+(see http://www.mathjax.org/help/fonts/):
+
+  - STIX (http://www.stixfonts.org/)
+  - TeX  (in the fonts/HTML-CSS/TeX/otf/ directory)
+
 Finally, you need to download the Selenium server:
 
   http://selenium.googlecode.com/files/selenium-server-standalone-2.0b1.jar
@@ -71,5 +77,6 @@ to the location you may have specified. Open the report in your browser to see
 statistics on the tests.
 
 Some failed tests provide an AssertionError with base64 screenshots of the test
-pages. You can visualize them with Mozilla's reftest-analyzer.xhtml by coying
-and pasting the "REFTEST TEST-UNEXPECTED-FAIL ..." AssertionError string.
+pages. To visualize them, open Mozilla's reftest-analyzer.xhtml and paste the
+the "REFTEST TEST-..." AssertionError string. You can also use the "Browse" 
+button to load the html page and see all the results at once.
