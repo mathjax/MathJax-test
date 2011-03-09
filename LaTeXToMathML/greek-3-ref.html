@@ -2,7 +2,7 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>Test</title>
+  <title>Test greek letters</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -13,8 +13,12 @@
 
 <body>
   <div id="reftest-element">
-\(
-\)
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mo stretchy="false">&#x220D;<!-- ∍ --></mo>
+      <mi mathvariant="italic">&#x03F0;<!-- ϰ --></mi>
+      <mi mathvariant="italic">&#x03DD;<!-- ϝ --></mi>
+      <mi mathvariant="italic">&#x2127;<!-- ℧ --></mi>
+    </math>
   </div>
 </body>
 </html>

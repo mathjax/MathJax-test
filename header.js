@@ -64,7 +64,8 @@ function startMathJax()
   var config =
     'MathJax.Hub.Config({' +
     'messageStyle: "none",' +
-    'extensions: ["tex2jax.js", "mml2jax.js"],';
+    // , "TeX/AMSmath.js", "TeX/AMSsymbols.js"
+    'extensions: ["tex2jax.js",  "mml2jax.js"],';
 
   config +=
     'jax: ["input/TeX", "input/MathML", ' +
@@ -78,6 +79,11 @@ function startMathJax()
   config +=
     '"HTML-CSS": {' +
     '  availableFonts: [' + fonts + '], preferredFont: null, webFont: null' +
+    '},';
+
+  config +=
+    'TeX: {' +
+    '  extensions: ["AMSmath.js", "AMSsymbols.js"]' +
     '}';
 
   config +=
