@@ -6,13 +6,14 @@
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"></meta>
     <script type="text/javascript" src="header.js"></script>
   </head>
 
   <body style="margin: 0; border: 1px solid red; background: white;">
 
-    <div style="visibility: hidden; width: 100%; height: 100%;">
+    <!-- XXXfred: 100% should be used instead of 1000px, but Internet Explorer
+         interprets the property differently... -->
+    <div style="visibility: hidden; width: 100%; height: 1000px;">
       <!-- A math fragment to force loading resources necessary for next tests
            (MathPlayer plugin, Cache...) -->
       <math xmlns="http://www.w3.org/1998/Math/MathML">

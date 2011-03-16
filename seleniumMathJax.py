@@ -35,8 +35,9 @@ class seleniumMathJax(selenium.selenium):
                  aOperatingSystem,
                  aBrowser,
                  aBrowserVersion,
+                 aBrowserMode,
                  aBrowserStartCommand, 
-                 aFonts,
+                 aFont,
                  aNativeMathML,
                  aTimeOut,
                  aFullScreenMode):
@@ -46,7 +47,8 @@ class seleniumMathJax(selenium.selenium):
         self.mOperatingSystem = aOperatingSystem
         self.mBrowser = aBrowser
         self.mBrowserVersion = aBrowserVersion
-        self.mFonts = aFonts
+        self.mBrowserMode = aBrowserMode
+        self.mFont = aFont
         self.mNativeMathML = aNativeMathML
         self.mTimeOut = aTimeOut
         self.mFullScreenMode = aFullScreenMode
@@ -59,7 +61,7 @@ class seleniumMathJax(selenium.selenium):
 
         aUrl += "?" # assuming query string is empty
 
-        aUrl += "fonts=" + self.mFonts + "&"
+        aUrl += "font=" + self.mFont + "&"
 
         if aNativeMathML:
           aUrl += "nativeMathML=true&"
@@ -121,6 +123,41 @@ class seleniumMathJax(selenium.selenium):
             self.mBrowser == "Konqueror"):
             # FullScreen Mode: 
             self.key_press_native(122) # F11
+            time.sleep(3)
+
+        if (self.mBrowser == "MSIE" and
+            not(self.mBrowserMode == "StandardMode")):
+            # For MSIE, we choose the document mode
+
+            #  opening developer tools
+            self.key_down_native(123) # F12
+            time.sleep(3)
+
+            if self.mBrowserMode == "Quirks":
+                self.key_down_native(18) # alt
+                time.sleep(.1)
+                self.key_press_native(81) # q
+                time.sleep(.1)
+                self.key_up_native(18) # alt
+                time.sleep(.1)
+            elif self.mBrowserMode == "IE7":
+                self.key_down_native(18) # alt
+                time.sleep(.1)
+                self.key_press_native(55) # 7
+                time.sleep(.1)
+                self.key_up_native(18) # alt
+                time.sleep(.1)
+            elif self.mBrowserMode == "IE8":
+                self.key_down_native(18) # alt
+                time.sleep(.1)
+                self.key_press_native(56) # 8
+                time.sleep(.1)
+                self.key_up_native(18) # alt
+                time.sleep(.1)
+            time.sleep(3)
+
+            # closing developer tools
+            self.key_down_native(123) # F12
             time.sleep(3)
 
         # Determine the canvas

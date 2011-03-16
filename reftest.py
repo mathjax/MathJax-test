@@ -198,7 +198,8 @@ class reftestSuite(unittest.TestSuite):
         if (aCondition == aSelenium.mOperatingSystem or
             aCondition == aSelenium.mBrowser or
             aCondition == aSelenium.mBrowserVersion or
-            aCondition == aSelenium.mFonts):
+            aCondition == aSelenium.mBrowserMode or
+            aCondition == aSelenium.mFont):
             return True
 
         if (aCondition == "nativeMathML"):

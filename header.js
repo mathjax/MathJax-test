@@ -30,7 +30,7 @@ function getDefaultMathJaxPath()
 
 var gMathJaxPath = getDefaultMathJaxPath();
 var gNativeMathML = false;
-var gFonts = "STIX";
+var gFont = "STIX";
 
 function parseQueryString()
 {
@@ -46,8 +46,8 @@ function parseQueryString()
         if (paramname == "mathJaxPath") {
             gMathJaxPath = paramvalue;
         }
-        if (paramname == "fonts") {
-            gFonts = paramvalue;
+        if (paramname == "font") {
+            gFont = paramvalue;
         }
         if (paramname == "nativeMathML") {
             gNativeMathML = (paramvalue == "true");
@@ -71,14 +71,14 @@ function startMathJax()
     'jax: ["input/TeX", "input/MathML", ' +
         (gNativeMathML ? '"output/NativeMML"' : '"output/HTML-CSS"') + '],';
 
-    if (gFonts == "ImageTeX") {
-        fonts = "";
+    if (gFont == "ImageTeX") {
+        font = "";
     } else {
-        fonts = '"' + gFonts + '"';
+        font = '"' + gFont + '"';
     }
     config +=
     '"HTML-CSS": {' +
-        '  availableFonts: [' + fonts + '],' +
+        '  availableFonts: [' + font + '],' +
         'preferredFont: null, webFont: null' +
         '},';
 

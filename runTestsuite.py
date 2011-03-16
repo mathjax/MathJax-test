@@ -78,7 +78,7 @@ def getOutputFileName(aOutput, aSelenium):
         aSelenium.mOperatingSystem + "_" + \
         aSelenium.mBrowser + "_" + \
         aSelenium.mBrowserVersion + "_" + \
-        aSelenium.mFonts + "_" + \
+        aSelenium.mFont + "_" + \
         utcdate + ".html"
 
 if __name__ == "__main__":
@@ -109,8 +109,9 @@ automated test instance to run. The default configuration file is default.cfg.")
     operatingSystem = getOperatingSystem(config.get(section, "operatingSystem"))
     browserList = config.get(section, "browser").split()
     browserVersionList = config.get(section, "browserVersion").split()
+    browserModeList = config.get(section, "browserMode").split()
     browserPath = config.get(section, "browserPath")
-    fontsList = config.get(section, "fonts").split()
+    fontList = config.get(section, "font").split()
     nativeMathML = config.getboolean(section, "nativeMathML")
     
     # testsuite section
@@ -119,7 +120,7 @@ automated test instance to run. The default configuration file is default.cfg.")
     runSlowTests = config.getboolean(section, "runSlowTests")
        
     if (len(browserList) > 1 or len(browserVersionList) > 1 or
-        len(fontsList) > 1):
+        len(browserModeList) or len(fontList) > 1):
         msg =  " can not be specified when launching several instances at the"
         msg += "same time."
         if browserPath != "auto":
@@ -131,47 +132,53 @@ automated test instance to run. The default configuration file is default.cfg.")
 
     for browser in browserList:
         for browserVersion in browserVersionList:
-            for fonts in fontsList:
+            for font in fontList:
+                for browserMode in browserModeList:
 
-                browserStartCommand = getBrowserStartCommand(
-                    browserPath,
-                    operatingSystem,
-                    browser)
+                    # Browser mode is only relevant for MSIE
+                    if not(browserMode == "StandardMode" or browser == "MSIE"):
+                        continue
 
-                if browserStartCommand != "unknown":
-
-                    # Create a Selenium instance
-                    selenium = seleniumMathJax.seleniumMathJax(
-                        host, port, mathJaxPath, mathJaxTestPath,
+                    browserStartCommand = getBrowserStartCommand(
+                        browserPath,
                         operatingSystem,
-                        browser,
-                        browserVersion,
-                        browserStartCommand, 
-                        fonts,
-                        nativeMathML,
-                        timeOut,
-                        fullScreenMode)
-        
-                    # Create the test suite
-                    suite = reftest.reftestSuite(runSlowTests)
-                    suite.addReftests(selenium, "reftest.list")
-                    
-                    # Create the output file
-                    output = getOutputFileName(outputFile, selenium)
+                        browser)
 
-                    # Run the test suite
-                    selenium.start()
-                    
-                    fp = file(output, "wb")
-                    HTMLTestRunner.HTMLTestRunner(stream=fp,
-                                                  verbosity=2).run(suite)
-                    fp.close()
-                    
-                    selenium.stop()
-                    time.sleep(4)
+                    if browserStartCommand != "unknown":
+                        
+                        # Create a Selenium instance
+                        selenium = seleniumMathJax.seleniumMathJax(
+                            host, port, mathJaxPath, mathJaxTestPath,
+                            operatingSystem,
+                            browser,
+                            browserVersion,
+                            browserMode,
+                            browserStartCommand, 
+                            font,
+                            nativeMathML,
+                            timeOut,
+                            fullScreenMode)
+                        
+                        # Create the test suite
+                        suite = reftest.reftestSuite(runSlowTests)
+                        suite.addReftests(selenium, "reftest.list")
+                        
+                        # Create the output file
+                        output = getOutputFileName(outputFile, selenium)
+                        
+                        # Run the test suite
+                        selenium.start()
+                        
+                        fp = file(output, "wb")
+                        HTMLTestRunner.HTMLTestRunner(stream=fp,
+                                                      verbosity=2).run(suite)
+                        fp.close()
+                        
+                        selenium.stop()
+                        time.sleep(4)
 
                 # end if browserStartCommand
-            # end for fonts
+            # end for font
         # end browserVersion
     # end browser
 
