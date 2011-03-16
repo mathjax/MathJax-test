@@ -1,6 +1,3 @@
-# LaTeXToMathML/
+include Configuration/Contexts/reftest.list
 include LaTeXToMathML/reftest.list
-
-# MathMLToDisplay/
 include MathMLToDisplay/reftest.list
-
