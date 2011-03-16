@@ -1,0 +1,3 @@
+include Colors/reftest.list
+include GenAttribs/reftest.list
+include Math/reftest.list

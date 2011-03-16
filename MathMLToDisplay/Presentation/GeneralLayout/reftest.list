@@ -1,0 +1,5 @@
+# include menclose/reftest.list
+include mfenced/reftest.list
+include mfrac/reftest.list
+include mstyle/reftest.list
+

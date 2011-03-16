@@ -1,0 +1,30 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>mfence 1 - whitespaces in separators</title>
+    <!-- Copyright (C) 2010 Saint Wesonga
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"></meta>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mfenced separators="&#x20;&#x9;&#xa;&#xd;;&#x20;&#x9;&#xa;&#xd;">
+        <mi>a</mi>
+        <mi>b</mi>
+        <mi>c</mi>
+        <mi>d</mi>
+      </mfenced>
+      <mfenced separators="&#x20;&#x9;&#xa;&#xd;,&#x20;&#x9;&#xa;&#xd;;&#x20;&#x9;&#xa;&#xd;.&#x20;&#x9;&#xa;&#xd;">
+        <mi>a</mi>
+        <mi>b</mi>
+        <mi>c</mi>
+        <mi>d</mi>
+      </mfenced>
+    </math>
+  </body>
+</html>

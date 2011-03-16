@@ -1,0 +1,11 @@
+!= mathbackground-1.html mathbackground-1-ref.html
+!= mathbackground-2.html mathbackground-2-ref.html
+!= mathbackground-3.html mathbackground-3-ref.html
+== mathbackground-4.html mathbackground-4-ref.html
+!= mathbackground-5a.html mathbackground-5-ref.html
+== mathbackground-5b.html mathbackground-5-ref.html
+== mathbackground-6.html mathbackground-6-ref.html
+!= mathcolor-1.html mathcolor-1-ref.html
+!= mathcolor-2.html mathcolor-2-ref.html
+!= mathcolor-3.html mathcolor-3-ref.html
+== mathcolor-4.html mathcolor-4-ref.html

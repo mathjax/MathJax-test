@@ -1,0 +1,2 @@
+== mi-mathvariant-1.html mi-mathvariant-1-ref.html
+fails-if(STIX) == mi-mathvariant-2.html mi-mathvariant-2-ref.html

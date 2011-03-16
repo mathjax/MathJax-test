@@ -1,0 +1,2 @@
+fails-if(!Chrome) != link-1.html link-ref.html
+!= link-2.html link-ref.html

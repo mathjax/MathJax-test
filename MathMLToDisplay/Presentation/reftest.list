@@ -1,0 +1,2 @@
+include GeneralLayout/reftest.list
+include TokenElements/mi/reftest.list
