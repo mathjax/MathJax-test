@@ -1,0 +1,33 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+<head>
+  <title>Test mpadded7</title>
+  <!-- Author: Design Science, Inc. (D. Doyle, E. Cannon, E. Tabacman, R.Miner)
+       Source: W3C MathML Test Suite -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript" src="../../../../header.js"></script>
+</head>
+
+<body>
+  <div>
+    <math xmlns="http://www.w3.org/1998/Math/MathML"> 
+      <mfrac>
+        <mn>1</mn>
+        <mn>2</mn>
+      </mfrac>
+      <mo>+</mo> 
+      <mstyle mathbackground="yellow"> 
+        <mpadded> 
+          <mi>x</mi> 
+          <mo>+</mo> 
+          <mi>y</mi> 
+        </mpadded> 
+        <mspace width="50px"></mspace>
+      </mstyle> 
+      <mo>+</mo> 
+      <mi>x</mi> 
+    </math>
+  </div>
+</body>
+</html>

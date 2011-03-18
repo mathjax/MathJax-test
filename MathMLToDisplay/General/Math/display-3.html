@@ -1,0 +1,42 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>Test display</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0
+         Source: mathAmode1, W3C MathML testsuite -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- display=inline should be smaller than display=block here -->
+
+    <div style="position: absolute; left: 0; top: 0;
+                background: green; height: 100%">
+      <math display="inline">
+        <mphantom>
+          <mfrac> 
+            <mi>x</mi> 
+            <mi>y</mi> 
+          </mfrac> 
+        </mphantom>
+      </math> 
+    </div>
+
+    <div style="position: absolute; left: 0; top: 0;
+                background: green; height: 100%">
+      <math display="block">
+        <mphantom>
+          <mfrac>
+            <mi>x</mi> 
+            <mi>y</mi> 
+          </mfrac> 
+        </mphantom>
+      </math> 
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+<head>
+  <title>SVG</title>
+  <!-- Copyright (c) 2011 Design Science, Inc.
+    License: Apache License 2.0 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript" src="../../header.js"></script>
+</head>
+
+<body>
+
+<!-- MathML inside SVG -->
+<svg width="100px" height="100px">
+  <switch>
+    <foreignObject requiredExtensions="http://www.w3.org/1998/Math/MathML"
+                   width="100" height="100">
+      <math>
+        <mspace width="100px" height="100px" mathbackground="green"></mspace>
+      </math>
+    </foreignObject>
+    <rect x="0" y="0" width="100px" height="100px" fill="red"/>
+  </switch>
+</svg>
+
+</body>
+</html>

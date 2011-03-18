@@ -91,10 +91,17 @@ function startMathJax()
     '});'
 
     config +=
-    'MathJax.Hub.Startup.onload();' +
-        'MathJax.Hub.Queue(function () {' +
-        'document.documentElement.className = "";' +
-        '});';
+    'MathJax.Hub.Startup.onload();';
+
+    if (window.postMathJax) {
+      config +=
+        'MathJax.Hub.Queue(postMathJax);';
+    }
+    
+    config +=
+    'MathJax.Hub.Queue(function () {' +
+    'document.documentElement.className = "";' +
+    '});';
 
     if (window.opera) {
         script.innerHTML = config;

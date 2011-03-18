@@ -1,2 +1,2 @@
 include GeneralLayout/reftest.list
-include TokenElements/mi/reftest.list
+include TokenElements/reftest.list
