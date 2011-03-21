@@ -9,13 +9,12 @@
   <script type="text/javascript">
     function postMathJax()
     {
-      h = document.getElementById("box").offsetWidth + "px";
-      w = document.getElementById("box").offsetHeight + "px";
-      l = document.getElementById("line");
-      l.setAttribute("x1", w);
-      l.setAttribute("x2", "0px");
-      l.setAttribute("y1", "0px");
-      l.setAttribute("y2", h);
+      w = document.getElementById("box").offsetWidth;
+      h = document.getElementById("box").offsetHeight;
+      document.getElementById("path").setAttribute("d",
+        "M" + ("0," + h) +
+        "L" + (w + ",0")
+        );
     }
   </script>
 
@@ -31,15 +30,16 @@
               z-index:0;">
     <math>
       <menclose notation="updiagonalstrike">
-        <mspace width="100px" height="100px" mathbackground="blue"/>
+        <mspace width="200px" height="100px"></mspace>
       </menclose>
     </math>
   </div>
 
   <div style="position: absolute; left: 20px; top: 20px; z-index:1;">
     <svg width="300px" height="300px">
-      <line id="line"
-         style="stroke-width: 15px; stroke: green; stroke-linecap: round;"/>
+      <path id="path"
+         style="fill: none;
+                stroke-width: 6px; stroke: green; stroke-linecap: round;"/>
     </svg>
   </div>
 

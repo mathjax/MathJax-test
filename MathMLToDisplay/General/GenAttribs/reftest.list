@@ -1,5 +1,5 @@
 fails-if(!Chrome) != link-1.html link-ref.html
 != link-2.html link-ref.html
-== style-1.html style-1-ref.html
-== style-2.html style-2-ref.html
+== style1.html style1-ref.html
+== style2.html style2-ref.html
 

@@ -11,10 +11,11 @@
     {
       w = document.getElementById("box").offsetWidth;
       h = document.getElementById("box").offsetHeight;
-      document.getElementById("path").setAttribute("d",
-        "M0,0" +
-        "L" + (w + "," + h)
-        );
+      e = document.getElementById("ellipse");
+      e.setAttribute("cx", (w/2) + "px");
+      e.setAttribute("rx", (w/2) + "px");
+      e.setAttribute("cy", (h/2) + "px");
+      e.setAttribute("ry", (h/2) + "px");
     }
   </script>
 
@@ -29,7 +30,7 @@
        style="position: absolute; left: 20px; top: 20px; background: red;
               z-index:0;">
     <math>
-      <menclose notation="downdiagonalstrike">
+      <menclose notation="circle">
         <mspace width="200px" height="100px"></mspace>
       </menclose>
     </math>
@@ -37,7 +38,7 @@
 
   <div style="position: absolute; left: 20px; top: 20px; z-index:1;">
     <svg width="300px" height="300px">
-      <path id="path"
+      <ellipse id="ellipse"
          style="fill: none;
                 stroke-width: 6px; stroke: green; stroke-linecap: round;"/>
     </svg>

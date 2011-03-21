@@ -11,10 +11,14 @@
     {
       w = document.getElementById("box").offsetWidth;
       h = document.getElementById("box").offsetHeight;
-      document.getElementById("path").setAttribute("d",
-        "M0,0" +
-        "L" + (w + "," + h)
-        );
+      c = Math.min(w, h) / 4;
+      r = document.getElementById("rect");
+      r.setAttribute("x", "0px")
+      r.setAttribute("y", "0px")
+      r.setAttribute("width", w + "px")
+      r.setAttribute("height", h + "px")
+      r.setAttribute("rx", c + "px");
+      r.setAttribute("ry", c + "px");
     }
   </script>
 
@@ -29,7 +33,7 @@
        style="position: absolute; left: 20px; top: 20px; background: red;
               z-index:0;">
     <math>
-      <menclose notation="downdiagonalstrike">
+      <menclose notation="roundedbox">
         <mspace width="200px" height="100px"></mspace>
       </menclose>
     </math>
@@ -37,9 +41,9 @@
 
   <div style="position: absolute; left: 20px; top: 20px; z-index:1;">
     <svg width="300px" height="300px">
-      <path id="path"
+      <rect id="rect"
          style="fill: none;
-                stroke-width: 6px; stroke: green; stroke-linecap: round;"/>
+                stroke-width: 8px; stroke: green; stroke-linecap: round;"/>
     </svg>
   </div>
 

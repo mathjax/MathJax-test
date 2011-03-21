@@ -78,6 +78,7 @@ def getOutputFileName(aOutput, aSelenium):
         aSelenium.mOperatingSystem + "_" + \
         aSelenium.mBrowser + "_" + \
         aSelenium.mBrowserVersion + "_" + \
+        aSelenium.mBrowserMode + "_" + \
         aSelenium.mFont + "_" + \
         utcdate + ".html"
 
