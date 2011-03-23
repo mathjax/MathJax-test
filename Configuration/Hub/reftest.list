@@ -1,0 +1,4 @@
+include elements/reftest.list
+
+== skipStartupTypeset-1.html skipStartupTypeset-1-ref.html
+

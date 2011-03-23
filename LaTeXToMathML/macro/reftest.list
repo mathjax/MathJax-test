@@ -1,0 +1,5 @@
+tree== macro-1a.html macro-1-ref.html
+tree== macro-1b.html macro-1-ref.html
+tree== macro-2.html macro-2-ref.html
+tree== macro-3.html macro-3-ref.html
+load macro-4.html

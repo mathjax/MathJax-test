@@ -1,0 +1,25 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+<head>
+  <title>skipStartupTypeset</title>
+  <!-- Copyright (c) 2011 Design Science, Inc.
+    License: Apache License 2.0 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript">
+    function preMathJax()
+    {
+      config = getConfigObject();
+      config.skipStartupTypeset = true;
+      setConfigObject(config);
+    }
+  </script>
+  <script type="text/javascript" src="../../../header.js"></script>
+</head>
+
+<body>
+
+  <div>\( \sqrt {\frac a b} + 2 \)</div>
+
+</body>
+</html>
