@@ -1,0 +1,6 @@
+include Contexts/reftest.list
+include HTML-CSS/reftest.list
+include Hub/elements/reftest.list
+include MathML/reftest.list
+include NativeMML/reftest.list
+

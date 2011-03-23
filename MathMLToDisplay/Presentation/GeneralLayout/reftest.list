@@ -3,3 +3,4 @@ include mfenced/reftest.list
 include mfrac/reftest.list
 include mphantom/reftest.list
 include mstyle/reftest.list
+include merror/reftest.list

@@ -1,0 +1,32 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+<head>
+  <title>elements</title>
+  <!-- Copyright (c) 2011 Design Science, Inc.
+    License: Apache License 2.0 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript">
+    function preMathJax()
+    {
+      config = getConfigObject();
+      config.elements = ["id1", "id2"];
+      setConfigObject(config);
+    }
+  </script>
+  <script type="text/javascript" src="../../../header.js"></script>
+</head>
+
+<body>
+
+  <!-- elements contains two ids:
+       the element id1 contains the element  id2 -->
+  <div id="id1">
+    \( \frac x y \)
+    <div id="id2">
+      \( \frac x y \)
+    </div>
+  </div>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 == xhtml-2.html basic-ref.html
 == namespace-1.html basic-ref.html
 == namespace-2.html basic-ref.html
-== math-location-1.html math-location-ref.html
+skip-if(Chrome) == math-location-1.html math-location-ref.html
 == math-location-2.html math-location-ref.html
 == svg-1a.html svg-1-ref.html
 == svg-1b.html svg-1-ref.html
