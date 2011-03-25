@@ -2,7 +2,7 @@ include Characters/reftest.list
 include Content/SemanticMappingElements/semantics/reftest.list
 include General/reftest.list
 include Presentation/reftest.list
-include Topics/EmbellishedOp/reftest.list
+include Topics/reftest.list
 
 fails-if(MSIE) load MSIE-stylesheets.html
 == self-closing-tag-1.html self-closing-tag-1-ref.html

@@ -1,6 +1,5 @@
 != horizontal.html?op=\u005E horizontal-ref.html
 != horizontal.html?op=\u005F horizontal-ref.html
-!= horizontal.html?op=\u005F horizontal-ref.html
 != horizontal.html?op=\u007E horizontal-ref.html
 != horizontal.html?op=\u00AF horizontal-ref.html
 != horizontal.html?op=\u02C6 horizontal-ref.html
@@ -10,7 +9,13 @@
 != horizontal.html?op=\u02DC horizontal-ref.html
 != horizontal.html?op=\u02F7 horizontal-ref.html
 != horizontal.html?op=\u0302 horizontal-ref.html
+!= horizontal.html?op=\u0332 horizontal-ref.html
 != horizontal.html?op=\u203E horizontal-ref.html
+!= horizontal.html?op=\u20D0 horizontal-ref.html
+!= horizontal.html?op=\u20D1 horizontal-ref.html
+!= horizontal.html?op=\u20D6 horizontal-ref.html
+!= horizontal.html?op=\u20D7 horizontal-ref.html
+!= horizontal.html?op=\u20E1 horizontal-ref.html
 != horizontal.html?op=\u2190 horizontal-ref.html
 != horizontal.html?op=\u2192 horizontal-ref.html
 != horizontal.html?op=\u2194 horizontal-ref.html
@@ -68,6 +73,7 @@
 != horizontal.html?op=\u23DF horizontal-ref.html
 != horizontal.html?op=\u23E0 horizontal-ref.html
 != horizontal.html?op=\u23E1 horizontal-ref.html
+!= horizontal.html?op=\u2500 horizontal-ref.html
 != horizontal.html?op=\u27F5 horizontal-ref.html
 != horizontal.html?op=\u27F6 horizontal-ref.html
 != horizontal.html?op=\u27F7 horizontal-ref.html
@@ -94,14 +100,6 @@
 != horizontal.html?op=\u295B horizontal-ref.html
 != horizontal.html?op=\u295E horizontal-ref.html
 != horizontal.html?op=\u295F horizontal-ref.html
-!= horizontal.html?op=\u007E horizontal-ref.html
-!= horizontal.html?op=\u0332 horizontal-ref.html
-!= horizontal.html?op=\u20D0 horizontal-ref.html
-!= horizontal.html?op=\u20D1 horizontal-ref.html
-!= horizontal.html?op=\u20D6 horizontal-ref.html
-!= horizontal.html?op=\u20D7 horizontal-ref.html
-!= horizontal.html?op=\u20E1 horizontal-ref.html
-!= horizontal.html?op=\u2500 horizontal-ref.html
 != vertical.html?op=\u0028 vertical-ref.html
 != vertical.html?op=\u0029 vertical-ref.html
 != vertical.html?op=\u002F vertical-ref.html
@@ -109,15 +107,9 @@
 != vertical.html?op=\u005D vertical-ref.html
 != vertical.html?op=\u007B vertical-ref.html
 != vertical.html?op=\u007C vertical-ref.html
-!= vertical.html?op=\u007C vertical-ref.html
-!= vertical.html?op=\u007C vertical-ref.html
 != vertical.html?op=\u007C\u007C vertical-ref.html
-!= vertical.html?op=\u007C\u007C vertical-ref.html
-!= vertical.html?op=\u007C\u007C\u007C vertical-ref.html
-!= vertical.html?op=\u007C\u007C\u007C vertical-ref.html
 != vertical.html?op=\u007C\u007C\u007C vertical-ref.html
 != vertical.html?op=\u007D vertical-ref.html
-!= vertical.html?op=\u2016 vertical-ref.html
 != vertical.html?op=\u2016 vertical-ref.html
 != vertical.html?op=\u2191 vertical-ref.html
 != vertical.html?op=\u2193 vertical-ref.html
@@ -165,6 +157,8 @@
 != vertical.html?op=\u2309 vertical-ref.html
 != vertical.html?op=\u230A vertical-ref.html
 != vertical.html?op=\u230B vertical-ref.html
+!= vertical.html?op=\u23B0 vertical-ref.html
+!= vertical.html?op=\u23B1 vertical-ref.html
 != vertical.html?op=\u2758 vertical-ref.html
 != vertical.html?op=\u2772 vertical-ref.html
 != vertical.html?op=\u2773 vertical-ref.html
@@ -195,7 +189,6 @@
 != vertical.html?op=\u296E vertical-ref.html
 != vertical.html?op=\u296F vertical-ref.html
 != vertical.html?op=\u2980 vertical-ref.html
-!= vertical.html?op=\u2980 vertical-ref.html
 != vertical.html?op=\u2983 vertical-ref.html
 != vertical.html?op=\u2984 vertical-ref.html
 != vertical.html?op=\u2985 vertical-ref.html
@@ -220,10 +213,3 @@
 != vertical.html?op=\u2998 vertical-ref.html
 != vertical.html?op=\u29FC vertical-ref.html
 != vertical.html?op=\u29FD vertical-ref.html
-!= vertical.html?op=\u2016 vertical-ref.html
-!= vertical.html?op=\u2223 vertical-ref.html
-!= vertical.html?op=\u2223 vertical-ref.html
-!= vertical.html?op=\u2225 vertical-ref.html
-!= vertical.html?op=\u2225 vertical-ref.html
-!= vertical.html?op=\u23B0 vertical-ref.html
-!= vertical.html?op=\u23B1 vertical-ref.html
