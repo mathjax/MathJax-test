@@ -1,0 +1,45 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>vertical stretchy char</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+        op = getQueryString("op");
+        if (op) {
+          op = eval('"' + op + '"');
+        } else {
+          op = '|';
+        }
+        textNode = document.createTextNode(op);
+        document.getElementById("mo").appendChild(textNode);
+      }
+    </script>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- the stretchy char should not be entirely hidden by the blue band  -->
+    <div style="position: absolute; left: 3em; top: 2em; z-index: 0;">
+      <math>
+        <mspace height="1em" depth="1em" width="10px"></mspace>
+        <mo id="mo" symmetric="true"></mo>
+      </math>
+    </div>
+  
+    <!-- one can click on the blue rectangle to make it transparent -->
+    <div onclick="this.style.opacity = 0.2" id="rect"
+         style="position: absolute; left: 0; top: 2.25em; z-index: 1;">
+      <math>
+        <mspace height=".75em" depth=".75em" width="6em"
+                mathbackground="blue"></mspace>
+      </math>
+    </div>
+
+  </body>
+</html>

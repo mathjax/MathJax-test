@@ -34,6 +34,8 @@ class reftestSuite(unittest.TestSuite):
     def __init__(self, aRunSlowTests):
         unittest.TestSuite.__init__(self)
         self.mRunSlowTests = aRunSlowTests
+        self.mPreviousURLRef = None
+        self.mPreviousImageRef = None
 
     def addReftests(self, aSelenium, aManifestFile):
         # This function parses a reftest manifest file.
@@ -234,6 +236,15 @@ class reftestSuite(unittest.TestSuite):
 
         assert "syntax not supported"
 
+    def takeReferenceScreenshot(self, aURLRef, aSelenium):
+        if aURLRef == self.mPreviousURLRef:
+            return self.mPreviousImageRef
+
+        self.mPreviousURLRef = aURLRef
+        aSelenium.open(aURLRef, aSelenium.mNativeMathML)
+        self.mPreviousImageRef = aSelenium.takeScreenshot()
+        return self.mPreviousImageRef
+
 class reftest(unittest.TestCase):
 
     def __init__(self,
@@ -251,7 +262,7 @@ class reftest(unittest.TestCase):
         else:
             self.mURLRef = aReftestDirectory + aURLRef
 
-        self.mID = aURL.split('.')[0]
+        self.mID = string.replace(aURL, ".", "_")
         self.mFails = aFails
         self.mRandom = aRandom
         self.mSkip = aSkip
@@ -354,10 +365,15 @@ class visualReftest(reftest):
 
         if self.shouldSkipTest():
             return
+
+        # take the screenshot of the test
         self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
         image = self.mSelenium.takeScreenshot()
-        self.mSelenium.open(self.mURLRef, self.mSelenium.mNativeMathML)
-        imageRef = self.mSelenium.takeScreenshot()
+
+        # take the screenshot of the reftest using the one in memory if it has
+        # been used just before.
+        imageRef = self.mTestSuite.takeReferenceScreenshot(self.mURLRef,
+                                                           self.mSelenium)
 
         # Compare image and imageRef
         box = ImageChops.difference(image, imageRef).getbbox()

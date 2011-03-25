@@ -56,6 +56,26 @@ function parseQueryString()
     }
 }
 
+function getQueryString(aParamName)
+{
+    var query = location.search.substring(1);
+    var pairs = query.split("&");
+    for(var i = 0; i < pairs.length; i++) {
+        var pos = pairs[i].indexOf("=");
+        if (pos == -1) {
+            continue;
+        }
+        var paramname = pairs[i].substring(0, pos);
+        var paramvalue = pairs[i].substring(pos + 1);
+        if (paramname == aParamName) {
+            return paramvalue;
+            break;
+        }
+    }
+
+    return null;
+}
+
 function defaultConfigObject()
 {
   return {
@@ -90,6 +110,10 @@ function setConfigObject(aConfigObject)
 
 function startMathJax()
 {
+    if (window.preMathJax) {
+        preMathJax();
+    }
+
     var script = document.createElement("script");
     script.type = "text/javascript";
     src = location.href;
@@ -121,9 +145,6 @@ function startMathJax()
 gMathJaxPath = getDefaultMathJaxPath();
 parseQueryString();
 setConfigObject(defaultConfigObject());
-if (window.preMathJax) {
-    preMathJax();
-}
 // XXXfred: Reftests executed with Mozilla's runreftest.py should really
 // call startMathJax when the MozReftestInvalidate event happens. 
 if (window.addEventListener) {

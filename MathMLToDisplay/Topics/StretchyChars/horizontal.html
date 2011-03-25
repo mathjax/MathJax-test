@@ -1,0 +1,50 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>horizontal stretchy char</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+        op = getQueryString("op");
+        if (op) {
+          op = eval('"' + op + '"');
+        } else {
+          op = '_';
+        }
+        textNode = document.createTextNode(op);
+        document.getElementById("mo").appendChild(textNode);
+      }
+    </script>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- the stretchy char should not be entirely hidden by the blue band  -->
+    <div style="position: absolute; left: 2em; top: 3em; z-index: 0;">
+      <math>
+        <mover>
+          <mo id="mo"></mo>
+          <mspace width="4em" height="10px"></mspace>
+        </mover>
+      </math>
+    </div>
+  
+    <!-- one can click on the blue rectangle to make it transparent -->
+    <div onclick="this.style.opacity = 0.2" id="rect"
+         style="position: absolute; left: 2.25em; top: 0; z-index: 1;">
+      <math>
+        <mover>
+          <mphantom><mtext></mtext></mphantom>
+          <mspace width="3.5em" height="3em" depth="3em"
+                  mathbackground="blue"></mspace>
+        </mover>
+      </math>
+    </div>
+
+  </body>
+</html>

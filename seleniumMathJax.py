@@ -24,6 +24,7 @@
 
 import time
 import selenium
+import string
 import base64
 import StringIO
 from PIL import Image, ImageChops
@@ -59,7 +60,10 @@ class seleniumMathJax(selenium.selenium):
 
     def open(self, aUrl, aNativeMathML, aWaitTime = 0.5):
 
-        aUrl += "?" # assuming query string is empty
+        if string.find(aUrl, "?") == -1:
+            aUrl += "?"
+        else:
+            aUrl += "&"
 
         aUrl += "font=" + self.mFont + "&"
 
@@ -151,6 +155,13 @@ class seleniumMathJax(selenium.selenium):
                 self.key_down_native(18) # alt
                 time.sleep(.1)
                 self.key_press_native(56) # 8
+                time.sleep(.1)
+                self.key_up_native(18) # alt
+                time.sleep(.1)
+            elif self.mBrowserMode == "IE9":
+                self.key_down_native(18) # alt
+                time.sleep(.1)
+                self.key_press_native(57) # 9
                 time.sleep(.1)
                 self.key_up_native(18) # alt
                 time.sleep(.1)
