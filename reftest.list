@@ -1,3 +1,5 @@
 include Configuration/Contexts/reftest.list
+include Crashtests/reftest.list
 include LaTeXToMathML/reftest.list
 include MathMLToDisplay/reftest.list
+include Parsing/reftest.list

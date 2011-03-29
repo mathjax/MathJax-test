@@ -4,9 +4,6 @@ include General/reftest.list
 include Presentation/reftest.list
 include Topics/reftest.list
 
-fails-if(MSIE) load MSIE-stylesheets.html
-== self-closing-tag-1.html self-closing-tag-1-ref.html
-random == self-closing-tag-2.html self-closing-tag-2-ref.html
 == unit-1a.html unit-1-ref.html
 == unit-1b.html unit-1-ref.html
 == unit-2a.html unit-2-ref.html

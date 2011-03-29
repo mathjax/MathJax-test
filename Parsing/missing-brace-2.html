@@ -1,0 +1,22 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+<head>
+  <title>Missing Brace</title>
+  <!-- Copyright (c) 2011 Design Science, Inc.
+       License: Apache License 2.0 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript" src="../header.js"></script>
+  <script type="text/javascript" src="../treeReftests.js"></script>
+</head>
+
+<body>
+
+  <!-- See issue 54
+       https://github.com/mathjax/MathJax/issues/54 -->
+  <div id="reftest-element">
+    $$\eqalignno{ {{da_1 }}\over{{dt}} &= !\left(! { - {1 \over {2\tau {{\rm total},1} }} + i(\omega 1 + \Delta \omega 1 - \omega {{\rm wg}})}!! \right)a_1 + \kappa s{1 + } + \kappa s_L\cr &&{\hbox{(1)}}\cr {{da_2 }}\over{{dt}} &= !\left(! { - {1\over {2\tau {{\rm total,}2} }} + i(\omega 2 + \Delta \omega 2 - \omega {{\rm wg}})} !!\right)a_2 + \kappa s_R + \kappa s{2 + } .\cr &&{\hbox{(2)}} }$$
+  </div>
+
+</body>
+</html>

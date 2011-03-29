@@ -14,8 +14,5 @@ tree== greek-2.html greek-2-ref.html
 tree== greek-3.html greek-3-ref.html
 skip tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
-tree== missing-brace-1.html missing-brace-1-ref.html
-tree== parameter-priority-1.html parameter-priority-1-ref.html
 fails == tag-1.html tag-1-ref.html
-skip-if(Chrome) load webkit-column-count-1.html
 
