@@ -2,15 +2,17 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>elements</title>
+  <title>styleSheets</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
     License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
   <script type="text/javascript">
     function preMathJax()
     {
+      directory = getCurrentDirectory();
       config = getConfigObject();
-      config.elements = ["frac1", "frac3", "frac4"];
+      // styleSheets has one element
+      config.styleSheets = [directory + "style1.css"];
     }
   </script>
   <script type="text/javascript" src="../../../header.js"></script>
@@ -18,26 +20,8 @@
 
 <body>
 
-  <!-- elements contains several ids -->
-  <div id="frac1">
-    \( \frac x y \)
-  </div>
-
-  <div id="frac2">
-    \( \frac x y \)
-  </div>
-
-  <div id="frac3">
-    \( \frac x y \)
-  </div>
-
-  <div id="frac4">
-    \( \frac x y \)
-  </div>
-
-  <div id="frac5">
-    \( \frac x y \)
-  </div>
+  <div id="box1" style="width: 100px; height: 100px; background: green;"></div>
+  <div id="box2" style="width: 100px; height: 100px; background: green;"></div>
 
 </body>
 </html>

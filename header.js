@@ -27,10 +27,21 @@ var gNativeMathML = false;
 var gFont = "STIX";
 var gConfigObject;
 
+function getCurrentPath()
+{
+    return location.protocol + "//" + location.host + location.pathname;
+}
+
+function getCurrentDirectory()
+{
+    src = getCurrentPath();
+    return src.substring(0, src.lastIndexOf("/") + 1);
+}
+
 function getDefaultMathJaxPath()
 {
-    src = location.protocol + "//" + location.host + location.pathname;
-    return src.substring(0, src.search(/MathJax-test/)) + "MathJax/";
+    src = getCurrentPath();
+    return src.substring(0, src.indexOf("MathJax-test")) + "MathJax/";
 }
 
 function parseQueryString()

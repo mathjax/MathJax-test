@@ -1,0 +1,35 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+<head>
+  <title>displayAlign</title>
+  <!-- Copyright (c) 2011 Design Science, Inc.
+    License: Apache License 2.0 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript">
+    function preMathJax()
+    {
+      config = getConfigObject();
+      config.displayAlign = "center";
+    }
+  </script>
+  <script type="text/javascript" src="../../../header.js"></script>
+</head>
+
+<body>
+
+  <div style="z-index: 0;">
+    <math display="block"> 
+      <mspace height="100px" width="100px" mathbackground="yellow"></mspace>
+    </math> 
+  </div>
+  
+  <!-- horizontal black bands to ignore a possible vertical shift -->
+  <div style="position: absolute; background: black; z-index: 1;
+              left: 0; top: 0; height: 40px; width: 100%;"></div>
+  
+  <div style="position: absolute; background: black; z-index: 1;
+              left: 0; top: 90px; height: 40px; width: 100%;"></div>
+
+</body>
+</html>
