@@ -2,28 +2,21 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>mathbf</title>
+  <title>nobr</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
   <script type="text/javascript" src="../header.js"></script>
-  <script type="text/javascript" src="../treeReftests.js"></script>
 </head>
 
 <body>
-  <!-- See issue 87
-       https://github.com/mathjax/MathJax/issues/87 -->
-  <div id="reftest-element">
+
+  <div style="width: 1em; background: red;">
+    <!-- See issue 29
+         https://github.com/mathjax/MathJax/issues/closed#issue/29 -->
     <math xmlns="http://www.w3.org/1998/Math/MathML">
-      <mrow>
-        <mover accent="true">
-          <mi mathvariant="bold">u</mi>
-          <mo mathvariant="bold" stretchy="false" accent="true">&#x02C6;<!-- ˆ --></mo>
-        </mover>
-      </mrow>
+      <mi>a</mi><mi>b</mi><mi>c</mi><mi>d</mi><mi>e</mi><mi>f</mi>
     </math>
   </div>
 </body>
 </html>
-
-

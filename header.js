@@ -121,6 +121,10 @@ function setConfigObject(aConfigObject)
 
 function startMathJax()
 {
+    if (window.initTreeReftests) {
+        initTreeReftests();
+    }
+
     if (window.preMathJax) {
         preMathJax();
     }
@@ -141,6 +145,9 @@ function startMathJax()
     
     config +=
     'MathJax.Hub.Queue(function () {' +
+    'if (window.finalizeTreeReftests) {' +
+    '  finalizeTreeReftests();' +
+    '}' +
     'document.documentElement.className = "";' +
     '});';
 

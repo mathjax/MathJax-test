@@ -25,15 +25,15 @@
 function serialize(aNode)
 {
     try {
-	      source = (new XMLSerializer()).serializeToString(aNode);
+        source = (new XMLSerializer()).serializeToString(aNode);
     } catch(e) {
-	      if (e instanceof TypeError) {
+        if (e instanceof TypeError) {
             // XXXfred: Internet Explorer only supports XMLSerializer since
             // version 9
             source = serialize2(aNode);
-	      } else {
+        } else {
             throw e;
-	      }
+        }
     }
 
     // add linebreaks to help diffing source
@@ -99,34 +99,49 @@ function serialize2(aNode)
     return s;
 }
 
-function getMathJaxSource(aNode, aClassName)
+function getMathJaxSourceMathML(aNode, aClassName)
 {
     try {
-	      divs = aNode.getElementsByClassName(aClassName);
-	      return serialize(divs[0]);
+        divs = aNode.getElementsByClassName(aClassName);
+        if (divs.length == 0) {
+            throw "MathJax_MathML not found.";
+        }
+        return serialize(divs[0]);
     } catch(e) {
-	      if (e instanceof TypeError) {
-	          // XXXfred Internet Explorer lacks support for
-	          // getElementsByClassName)
-	          divs = aNode.getElementsByTagName("div");
-	          for (i = 0; i < divs.length; i++) {
-		            if (divs[i].className == aClassName) {
-		                return serialize(divs[i]);
-		            }
-	          }
-	          throw "MathJax_MathML not found ";
-	      } else {
-	          throw e;
-	      }
+        if (e instanceof TypeError) {
+            // XXXfred Internet Explorer lacks support for
+            // getElementsByClassName)
+            children = aNode.children;
+            for (i = 0; i < children.length; i++) {
+                if (children[i].className == aClassName) {
+                    return serialize(children[i]);
+                }
+            }
+            throw "MathJax_MathML not found.";
+        } else {
+            throw e;
+        }
     }
 }
 
-function getMathJaxSourceMathML()
+function initTreeReftests()
+{
+    config = getConfigObject();
+    // Always use native MathML for tree reftests
+    config.jax = ["input/TeX", "input/MathML", "output/NativeMML"];
+}
+
+function finalizeTreeReftests()
 {
     node = document.getElementById("reftest-element");
     if (!node) {
-	      throw "reftest-element not found";
+        throw "reftest-element not found";
     }
-
-    return getMathJaxSource(node, "MathJax_MathML");
+    
+    textarea = document.createElement("textarea");
+    textarea.cols = 80;
+    textarea.rows = 20;
+    textarea.value = getMathJaxSourceMathML(node, "MathJax_MathML");
+    textarea.id = "source";
+    document.body.appendChild(textarea);
 }

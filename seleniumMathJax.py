@@ -210,4 +210,5 @@ class seleniumMathJax(selenium.selenium):
 
     def getMathJaxSourceMathML(self):
         return self.get_eval(
-            "selenium.browserbot.getCurrentWindow().getMathJaxSourceMathML()")
+            "selenium.browserbot.getCurrentWindow().\
+             document.getElementById('source').value")
