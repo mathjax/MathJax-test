@@ -148,7 +148,17 @@ function startMathJax()
     'if (window.finalizeTreeReftests) {' +
     '  finalizeTreeReftests();' +
     '}' +
-    'document.documentElement.className = "";' +
+    'if (window.LoadSuccess) {' +
+    '  if (LoadSuccess()) {' +
+    '    document.documentElement.className = "reftest-success";' +
+    '    document.title += " (success)";' +
+    '  } else { ' +
+    '    document.documentElement.className = "reftest-failure";' +
+    '    document.title += " (failure)";' +
+    '  }' +
+    '} else {' +
+    '  document.documentElement.className = "";' +
+    '}' +
     '});';
 
     if (window.opera) {

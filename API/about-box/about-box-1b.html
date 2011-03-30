@@ -2,22 +2,26 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>-webkit-column-count</title>
+  <title>about box</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-  <script type="text/javascript" src="../header.js"></script>
+  <script type="text/javascript" src="../../header.js"></script>
   <script type="text/javascript">
-     function LoadSuccess()
-     {
-       return true;
-     }    
+    function preMathJax()
+    {
+       var config = getConfigObject();
+       config.extensions.push("MathMenu.js");
+    }
+
+    function postMathJax()
+    {
+      MathJax.Menu.About();
+      MathJax.Menu.About.Remove();
+    }
   </script>
 </head>
 
 <body>
-  <!-- See issue 45
-     https://github.com/mathjax/MathJax/issues#issue/45 -->
-  <div style="-webkit-column-count:2;">\( P^1 \)</div> 
 </body>
 </html>

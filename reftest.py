@@ -133,6 +133,7 @@ class reftestSuite(unittest.TestSuite):
                         # 2. <type>
                         if word == "load":
                             testClass = loadReftest
+                            testType = "=="
                             state = 5
                             continue
                         elif word == "tree==":
@@ -318,8 +319,14 @@ class loadReftest(reftest):
         if self.shouldSkipTest():
             return
         self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
-        msg = "\nREFTEST TEST-PASS | " + self.mID + " | (LOAD ONLY)\n"
-        print msg
+
+        isEqual = self.mSelenium.getLoadTestSuccess()
+        (success, msg) = self.determineSuccess(isEqual)
+        msg += "(LOAD ONLY)\n";
+        if success:
+            print msg
+        else:
+            self.fail(msg)
         
 class treeReftest(reftest):
 

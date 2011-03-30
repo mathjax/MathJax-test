@@ -75,7 +75,8 @@ class seleniumMathJax(selenium.selenium):
         selenium.selenium.open(self, aUrl)
         self.wait_for_condition(
             "selenium.browserbot.getCurrentWindow().\
-             document.documentElement.className == ''", self.mTimeOut)
+             document.documentElement.className != 'reftest-wait'",
+            self.mTimeOut)
         time.sleep(aWaitTime)
 
     def start(self):
@@ -212,3 +213,8 @@ class seleniumMathJax(selenium.selenium):
         return self.get_eval(
             "selenium.browserbot.getCurrentWindow().\
              document.getElementById('source').value")
+
+    def getLoadTestSuccess(self):
+        return self.get_eval(
+            "selenium.browserbot.getCurrentWindow().\
+             document.documentElement.className == 'reftest-success'")
