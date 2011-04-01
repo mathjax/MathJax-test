@@ -11,13 +11,15 @@ tree== display-math-1.html display-math-ref.html
 tree== display-math-2.html display-math-ref.html
 tree== frac-1.html frac-ref.html
 tree== frac-2.html frac-ref.html
-skip tree== functions-1.html functions-1-ref.html
+fails tree== functions-1.html functions-1-ref.html
 tree== greek-1.html greek-1-ref.html
 tree== greek-2.html greek-2-ref.html
 tree== greek-3.html greek-3-ref.html
 skip tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
+tree== lower-1.html lower-1-ref.html
 fails tree== mathbf-1a.html mathbf-1-ref.html
 fails tree== mathbf-1b.html mathbf-1-ref.html
+tree== raise-1.html raise-1-ref.html
 fails == tag-1.html tag-1-ref.html
 

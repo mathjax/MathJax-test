@@ -11,17 +11,13 @@
     function preMathJax()
     {
        var config = getConfigObject();
-       config.jax = ["input/TeX", "output/NativeMML"];
+       config.jax = ["input/TeX", "output/HTML-CSS"];
        config.extensions.push("MathZoom.js");
-
-       // If the zoom box is large enough, it should render the same
-       // with or without scroll bars.
-       config.MathZoom = { styles: { "#MathJax_Zoom": { overflow : "none" } } };
     }
 
     function postMathJax()
     {
-      var math = document.getElementsByTagName("math")[0];
+      var math = document.getElementsByClassName("MathJax")[0];
       MathJax.Extension.MathZoom.Zoom(math, null)
     }
   </script>
@@ -29,13 +25,13 @@
 
 <body>
 
-  <!--
-       See issue 88
-       https://github.com/mathjax/MathJax/issues/88 -->
+  <!-- 
+       See issue 59
+       https://github.com/mathjax/MathJax/issues/59 -->
   <div>
     $$
-      \prod_{x\in\mathbb{X}} f(x) := \sum_{x\in\mathbb{X}} \mathbb{P}[x]\cdot
-      f(x)
+      \hspace{3em}
+      \tag{1}
     $$
   </div>
 </body>

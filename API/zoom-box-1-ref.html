@@ -17,23 +17,21 @@
 
     function postMathJax()
     {
-      MathJax.Extension.MathZoom.settings.zoom = "Click";
       var math = document.getElementsByTagName("math")[0];
-      var event = document.createEvent("UIEvents");
-      event.initEvent("click", true, true); 
-      math.dispatchEvent(event);
+      MathJax.Extension.MathZoom.Zoom(math, null)
     }
   </script>
 </head>
 
 <body>
 
-  <!-- 
+  <!--
        See issue 88
        https://github.com/mathjax/MathJax/issues/88 -->
-  <div id="math">
+  <div>
     $$
-      \prod_{x\in\mathbb{X}} f(x) := \sum_{x\in\mathbb{X}} \mathbb{P}[x]\cdot f(x)
+      \prod_{x\in\mathbb{X}} f(x) := \sum_{x\in\mathbb{X}} \mathbb{P}[x]\cdot
+      f(x)
     $$
   </div>
 </body>
