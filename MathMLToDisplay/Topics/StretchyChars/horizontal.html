@@ -10,20 +10,23 @@
       function preMathJax()
       {
         op = getQueryString("op");
-        if (op) {
-          op = eval('"' + op + '"');
-        } else {
-          op = '_';
+        if (!op) {
+          op = "005F"; // _
         }
-        textNode = document.createTextNode(op);
-        document.getElementById("mo").appendChild(textNode);
+        div = document.getElementById("div");
+        div.innerHTML += "&#x" + op + ";"
+
+        textNode = document.createTextNode(div.innerHTML);
+        // getElementById("mo") does not seem to work on Chrome
+        // document.getElementById("mo").appendChild(textNode);
+        document.getElementsByTagName("mo")[0].appendChild(textNode);
       }
     </script>
     <script type="text/javascript" src="../../../header.js"></script>
   </head>
 
   <body>
-
+ 
     <!-- the stretchy char should not be entirely hidden by the blue band  -->
     <div style="position: absolute; left: 2em; top: 3em; z-index: 0;">
       <math>
@@ -45,6 +48,9 @@
         </mover>
       </math>
     </div>
+
+    <!-- helper div to create unicode character -->
+    <div style="visibility: hidden" id="div"></div>
 
   </body>
 </html>

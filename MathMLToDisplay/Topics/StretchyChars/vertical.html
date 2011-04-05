@@ -10,13 +10,16 @@
       function preMathJax()
       {
         op = getQueryString("op");
-        if (op) {
-          op = eval('"' + op + '"');
-        } else {
-          op = '|';
+        if (!op) {
+          op = "007C"; // |
         }
-        textNode = document.createTextNode(op);
-        document.getElementById("mo").appendChild(textNode);
+        div = document.getElementById("div");
+        div.innerHTML += "&#x" + op + ";"
+
+        textNode = document.createTextNode(div.innerHTML);
+        // getElementById("mo") does not seem to work on Chrome
+        // document.getElementById("mo").appendChild(textNode);
+        document.getElementsByTagName("mo")[0].appendChild(textNode);
       }
     </script>
     <script type="text/javascript" src="../../../header.js"></script>
@@ -40,6 +43,9 @@
                 mathbackground="blue"></mspace>
       </math>
     </div>
+
+    <!-- helper div to create unicode character -->
+    <div style="visibility: hidden" id="div"></div>
 
   </body>
 </html>

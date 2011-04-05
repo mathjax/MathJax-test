@@ -1,0 +1,6 @@
+Some failures may be due to errors in the test pages, limitations of browsers
+or bugs in MathJax.
+
+For some reason, some tests in MathMLToDisplay/Topics/ freeze Konqueror and
+hence I was not able to provide a result.
+
