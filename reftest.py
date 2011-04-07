@@ -29,6 +29,11 @@ import string
 from PIL import Image, ImageChops
 import difflib
 
+EXPECTED_PASS = 0
+EXPECTED_FAIL  = 1
+EXPECTED_RANDOM = 2
+EXPECTED_DEATH = 3
+
 class reftestSuite(unittest.TestSuite):
 
     def __init__(self, aRunSlowTests):
@@ -37,7 +42,8 @@ class reftestSuite(unittest.TestSuite):
         self.mPreviousURLRef = None
         self.mPreviousImageRef = None
 
-    def addReftests(self, aSelenium, aManifestFile):
+    def addReftests(self, aSelenium, aManifestFile,
+                    aInheritedStatus = EXPECTED_PASS):
         # This function parses a reftest manifest file.
         # http://mxr.mozilla.org
         #                /mozilla-central/source/layout/tools/reftest/README.txt
@@ -54,9 +60,7 @@ class reftestSuite(unittest.TestSuite):
                 testType = None
                 testURL = None
                 testURLRef = None         
-                testFails = False
-                testRandom = False
-                testSkip = False
+                testExpectedStatus = 0
                 testSlow = False
 
                 for word in line.split():
@@ -65,54 +69,39 @@ class reftestSuite(unittest.TestSuite):
                         # the remaining of the line is a comment
                         break
 
-                    if state == 0 and word == "include":
-                        # 1. include
-                        state = 1
-                        continue
-
-                    if state == 1:
-                        # 1. <relative_path>
-                        self.addReftests(aSelenium, testDirectory + word)
-                        break
-
-                    if state == 0 or state == 2:
+                    if state == 0:
                         # 2. <failure-type>
                         if word == "fails":
-                            testFails = True
-                            state = 2
+                            testExpectedStatus = EXPECTED_FAIL
                             continue
                         elif word.startswith("fails-if"):
                             # 8 = len("fails-if")
-                            testFails = self.parseCondition(aSelenium, word[8:])
-                            state = 2
+                            if self.parseCondition(aSelenium, word[8:]):
+                                testExpectedStatus = EXPECTED_FAIL
                             continue
                         elif word == "random":
-                            testRandom = True
-                            state = 2
+                            testExpectedStatus = EXPECTED_RANDOM
                             continue
                         elif word.startswith("random-if"):
                             # 9 = len("random-if")
-                            testRandom = self.parseCondition(aSelenium,
-                                                             word[9:])
-                            state = 2
+                            if self.parseCondition(aSelenium, word[9:]):
+                                testExpectedStatus = EXPECTED_RANDOM
                             continue
                         elif word == "skip":
-                            testSkip = True
-                            state = 2
+                            testExpectedStatus = EXPECTED_DEATH
                             continue
                         elif word.startswith("skip-if"):
                             # 7 = len("skip-if")
-                            testSkip = self.parseCondition(aSelenium, word[7:])
-                            state = 2
+                            if self.parseCondition(aSelenium, word[7:]):
+                                testExpectedStatus = EXPECTED_DEATH
                             continue
                         elif word == "slow":
                             testSlow = True
-                            state = 2
                             continue
                         elif word.startswith("slow-if"):
                             # 7 = len("slow-if")
-                            testSlow = self.parseCondition(aSelenium, word[7:])
-                            state = 2
+                            if self.parseCondition(aSelenium, word[7:]):
+                                testSlow = True
                             continue
                         else:
                             # The following failure types are not supported:
@@ -121,71 +110,83 @@ class reftestSuite(unittest.TestSuite):
                             #   asserts
                             #   silentfail
                             #   silentfail-if
-                            state = 3
+                            testExpectedStatus = max(testExpectedStatus,
+                                                     aInheritedStatus)
+                            state = 1
 
-                    if state == 3:
+                    if state == 1 and word == "include":
+                        # 1. include
+                        state = 2
+                        continue
+
+                    if state == 2:
+                        # 1. <relative_path>
+                        self.addReftests(aSelenium,
+                                         testDirectory + word,
+                                         testExpectedStatus)
+                        break
+
+                    if state == 1:
                         # 2. [<http>]
-                        state = 4
+                        state = 3
                         if word.startswith("HTTP"):
                             raise "http syntax not supported"
 
-                    if state == 4:
+                    if state == 3:
                         # 2. <type>
                         if word == "load":
                             testClass = loadReftest
                             testType = "=="
-                            state = 5
+                            state = 4
                             continue
                         elif word == "tree==":
                             testClass = treeReftest
                             testType = "=="
-                            state = 5
+                            state = 4
                             continue
                         elif word == "tree!=":
                             testClass = treeReftest
                             testType = "!="
-                            state = 5
+                            state = 4
                             continue
                         elif word == "==":
                             testClass = visualReftest
                             testType = "=="
-                            state = 5
+                            state = 4
                             continue
                         elif word == "!=":
                             testClass = visualReftest
                             testType = "!="
-                            state = 5
+                            state = 4
                             continue
 
-                    if state == 5:
+                    if state == 4:
                         # 2. <url>
                         testURL = word
                         if testClass == loadReftest:
-                            state = 7
-                        else:
                             state = 6
+                        else:
+                            state = 5
                         continue
 
-                    if state == 6:
+                    if state == 5:
                         # 2. <url_ref>
                         testURLRef = word
-                        state = 7
+                        state = 6
                         continue
 
                     raise "reftest syntax not supported"
 
                 # end for word
 
-                if state == 7:
+                if state == 6:
                     self.addTest(testClass(self,
                                            aSelenium,
                                            testType,
                                            testDirectory,
                                            testURL,
                                            testURLRef,
-                                           testFails,
-                                           testRandom,
-                                           testSkip,
+                                           testExpectedStatus,
                                            testSlow))
 
             # end for line
@@ -251,7 +252,7 @@ class reftest(unittest.TestCase):
     def __init__(self,
                  aTestSuite,
                  aSelenium, aType, aReftestDirectory, aURL, aURLRef,
-                 aFails, aRandom, aSkip, aSlow):
+                 aExpectedStatus, aSlow):
         unittest.TestCase.__init__(self)
         self.mTestSuite = aTestSuite
         self.mSelenium = aSelenium
@@ -264,16 +265,14 @@ class reftest(unittest.TestCase):
             self.mURLRef = aReftestDirectory + aURLRef
 
         self.mID = string.replace(aURL, ".", "_")
-        self.mFails = aFails
-        self.mRandom = aRandom
-        self.mSkip = aSkip
+        self.mExpectedStatus = aExpectedStatus
         self.mSlow = aSlow
 
     def id(self):
        return self.mID
 
     def shouldSkipTest(self):
-        if self.mSkip:
+        if self.mExpectedStatus == EXPECTED_DEATH:
             msg = "\nREFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)\n"
             # self.skipTest(msg)
             print msg
@@ -292,13 +291,13 @@ class reftest(unittest.TestCase):
         success = ((self.mType == '==' and aIsEqual) or
                    (self.mType == '!=' and (not aIsEqual)))
 
-        if self.mFails:
+        if self.mExpectedStatus == EXPECTED_FAIL:
             if success:
                 msg = "TEST-UNEXPECTED-PASS"
                 success = False
             else:
                 msg = "TEST-KNOWN-FAIL"
-        elif self.mRandom:
+        elif self.mExpectedStatus == EXPECTED_RANDOM:
             if success:
                 msg = "TEST-PASS(EXPECTED RANDOM)"
             else:
