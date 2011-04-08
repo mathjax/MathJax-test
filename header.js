@@ -121,6 +121,11 @@ function setConfigObject(aConfigObject)
 
 function startMathJax()
 {
+    // Width of screenshots used by Mozilla
+    document.body.style.width = "800px";
+    document.body.style.height = "1000px";
+    document.body.style.border = document.body.style.margin = "0px";
+
     if (window.initTreeReftests) {
         initTreeReftests();
     }
@@ -144,21 +149,14 @@ function startMathJax()
     }
     
     config +=
-    'MathJax.Hub.Queue(function () {' +
-    'if (window.finalizeTreeReftests) {' +
-    '  finalizeTreeReftests();' +
-    '}' +
-    'if (window.LoadSuccess) {' +
-    '  if (LoadSuccess()) {' +
-    '    document.documentElement.className = "reftest-success";' +
-    '    document.title += " (success)";' +
-    '  } else { ' +
-    '    document.documentElement.className = "reftest-failure";' +
-    '    document.title += " (failure)";' +
-    '  }' +
-    '} else {' +
-    '  document.documentElement.className = "";' +
-    '}' +
+    'MathJax.Hub.Queue(function () {'               +
+    '  if (window.finalizeTreeReftests) {'          +
+    '    finalizeTreeReftests();'                   +
+    '  } else if (window.finalizeScriptReftests) {' +
+    '    finalizeScriptReftests();'                 +
+    '  } else {'                                    +
+    '    document.documentElement.className = "";'  +
+    '  }'                                           +
     '});';
 
     if (window.opera) {

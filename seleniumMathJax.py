@@ -214,7 +214,14 @@ class seleniumMathJax(selenium.selenium):
             "selenium.browserbot.getCurrentWindow().\
              document.getElementById('source').value")
 
-    def getLoadTestSuccess(self):
-        return self.get_eval(
+    def getScriptReftestResult(self):
+        # Strangely, get_eval converts to a string not a boolean...
+        success = (self.get_eval(
             "selenium.browserbot.getCurrentWindow().\
              document.documentElement.className == 'reftest-success'")
+        == "true")
+        return (
+            success,
+            self.get_eval(
+                "selenium.browserbot.getCurrentWindow().\
+             document.getElementById('results').value"))

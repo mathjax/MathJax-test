@@ -6,7 +6,6 @@
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-  <script type="text/javascript" src="../../header.js"></script>
   <script type="text/javascript">
     function preMathJax()
     {
@@ -19,12 +18,22 @@
       MathJax.Menu.About();
     }
 
-    function LoadSuccess()
+    function getTestCases()
     {
-      return (document.getElementsByTagName("a")[0].innerHTML ==
-              "www.mathjax.org")
+      return new Array(
+        newScriptReftestResult(
+          "Check the URI of the link to the MathJax home page",
+          document.getElementsByTagName("a")[0] == "http://www.mathjax.org/"
+        ),
+        newScriptReftestResult(
+          "Check the name of the link to the MathJax home page",
+          document.getElementsByTagName("a")[0].innerHTML == "www.mathjax.org"
+        )
+      );
     }    
   </script>
+  <script type="text/javascript" src="../../header.js"></script>
+  <script type="text/javascript" src="../../scriptTests.js"></script>
 </head>
 
 <body>

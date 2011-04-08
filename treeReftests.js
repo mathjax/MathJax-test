@@ -25,7 +25,7 @@
 function serialize(aNode)
 {
     try {
-        source = (new XMLSerializer()).serializeToString(aNode);
+        var source = (new XMLSerializer()).serializeToString(aNode);
     } catch(e) {
         if (e instanceof TypeError) {
             // XXXfred: Internet Explorer only supports XMLSerializer since
@@ -102,7 +102,7 @@ function serialize2(aNode)
 function getMathJaxSourceMathML(aNode, aClassName)
 {
     try {
-        divs = aNode.getElementsByClassName(aClassName);
+        var divs = aNode.getElementsByClassName(aClassName);
         if (divs.length == 0) {
             throw "MathJax_MathML not found.";
         }
@@ -111,8 +111,8 @@ function getMathJaxSourceMathML(aNode, aClassName)
         if (e instanceof TypeError) {
             // XXXfred Internet Explorer lacks support for
             // getElementsByClassName)
-            children = aNode.children;
-            for (i = 0; i < children.length; i++) {
+            var children = aNode.children;
+            for (var i = 0; i < children.length; i++) {
                 if (children[i].className == aClassName) {
                     return serialize(children[i]);
                 }
@@ -126,22 +126,24 @@ function getMathJaxSourceMathML(aNode, aClassName)
 
 function initTreeReftests()
 {
-    config = getConfigObject();
+    var config = getConfigObject();
     // Always use native MathML for tree reftests
     config.jax = ["input/TeX", "input/MathML", "output/NativeMML"];
 }
 
 function finalizeTreeReftests()
 {
-    node = document.getElementById("reftest-element");
+    var node = document.getElementById("reftest-element");
     if (!node) {
         throw "reftest-element not found";
     }
     
-    textarea = document.createElement("textarea");
+    var textarea = document.createElement("textarea");
     textarea.cols = 80;
     textarea.rows = 20;
     textarea.value = getMathJaxSourceMathML(node, "MathJax_MathML");
     textarea.id = "source";
     document.body.appendChild(textarea);
+
+    document.documentElement.className = "";
 }

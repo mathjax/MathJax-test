@@ -136,7 +136,10 @@ class reftestSuite(unittest.TestSuite):
                         # 2. <type>
                         if word == "load":
                             testClass = loadReftest
-                            testType = "=="
+                            state = 4
+                            continue
+                        elif word == "script":
+                            testClass = scriptReftest
                             state = 4
                             continue
                         elif word == "tree==":
@@ -164,6 +167,11 @@ class reftestSuite(unittest.TestSuite):
                         # 2. <url>
                         testURL = word
                         if testClass == loadReftest:
+                            if (testExpectedStatus == EXPECTED_FAIL or
+                                testExpectedStatus == EXPECTED_RANDOM):
+                                raise "loadtest can't be marked as fails/random"
+                            state = 6
+                        elif testClass == scriptReftest:
                             state = 6
                         else:
                             state = 5
@@ -286,10 +294,11 @@ class reftest(unittest.TestCase):
 
         return False
 
-    def determineSuccess(self, aIsEqual):
+    def determineSuccess(self, aResult):
 
-        success = ((self.mType == '==' and aIsEqual) or
-                   (self.mType == '!=' and (not aIsEqual)))
+        success = ((self.mType == None and aResult) or
+                   (self.mType == '==' and aResult) or
+                   (self.mType == '!=' and (not aResult)))
 
         if self.mExpectedStatus == EXPECTED_FAIL:
             if success:
@@ -319,14 +328,27 @@ class loadReftest(reftest):
             return
         self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
 
-        isEqual = self.mSelenium.getLoadTestSuccess()
-        (success, msg) = self.determineSuccess(isEqual)
+        (success, msg) = self.determineSuccess(True)
         msg += "(LOAD ONLY)\n";
+        print msg
+
+class scriptReftest(reftest):
+
+    def runTest(self):
+
+        if self.shouldSkipTest():
+            return
+        self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
+
+        (success1, msg1) = self.mSelenium.getScriptReftestResult()
+        (success, msg) = self.determineSuccess(success1)
+        msg += "(SCRIPT REFTEST)\n";
         if success:
             print msg
         else:
+            msg += msg1
             self.fail(msg)
-        
+       
 class treeReftest(reftest):
 
     def runTest(self):

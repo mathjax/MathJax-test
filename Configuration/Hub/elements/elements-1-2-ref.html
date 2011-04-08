@@ -6,14 +6,19 @@
   <!-- Copyright (c) 2011 Design Science, Inc.
     License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript">
+    function postMathJax()
+    {
+      document.getElementById("frac").innerHTML = "\\( \\frac x y \\)";
+    }
+  </script>
+  <script type="text/javascript" src="../../../header.js"></script>
 </head>
 
 <body>
 
   <!-- elements contains one id which does not exist in the document -->
-  <div>
-    \( \frac x y \)
-  </div>
+  <div id="frac"></div>
 
 </body>
 </html>
