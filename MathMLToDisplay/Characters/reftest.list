@@ -1,4 +1,4 @@
-fails tree== entities-1.html entities-1-ref.html
+fails-if(!Firefox) tree== entities-1.html entities-1-ref.html
 skip-if(STIX) fails-if(TeX||ImageTeX) == greek-1.html greek-1-ref.html
 skip-if(STIX) fails-if(TeX||ImageTeX) == greek-2.html greek-2-ref.html
-== greek-3.html greek-3-ref.html
+fails-if(TeX||ImageTeX) == greek-3.html greek-3-ref.html

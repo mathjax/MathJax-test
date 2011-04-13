@@ -1,4 +1,4 @@
-include EmbellishedOp/reftest.list
-include StretchyChars/reftest.list
+skip-if(Konqueror) include EmbellishedOp/reftest.list
+skip-if(Konqueror) include StretchyChars/reftest.list
 
 
