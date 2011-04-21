@@ -197,17 +197,24 @@ class seleniumMathJax(selenium.selenium):
         data = self.capture_screenshot_to_string()
         time.sleep(aWaitTime)
         image = Image.open(StringIO.StringIO(base64.b64decode(data)))
+        # XXXfred: is the screenshot taken by Selenium in RGB mode? If not, we
+        # may have lost information compared to the screen rendering...
         image = image.convert("RGB")
         if self.mCanvas != None:
           image = image.crop(self.mCanvas)
         return image
 
     def encodeImageToBase64(self, aImage):
+        # XXXfred If aImage is smaller than self.mReftestSize, the rest of the
+        # image is filled with black. Try to use white instead.
         stringIO = StringIO.StringIO()
         box = (0, 0, self.mReftestSize[0], self.mReftestSize[1])
         image = aImage.crop(box)
         image.save(stringIO, "PNG")
         return "data:image/png;base64," + base64.b64encode(stringIO.getvalue())
+
+    def encodeSourceToBase64(self, aSource):
+        return "data:text/plain;base64," + base64.b64encode(aSource)
 
     def getMathJaxSourceMathML(self):
         return self.get_eval(

@@ -24,13 +24,13 @@
 
 from datetime import datetime
 import ConfigParser
-import HTMLTestRunner
 import platform
 import reftest
 import seleniumMathJax
 import argparse
 import time
 import unittest
+import sys
 
 def getOperatingSystem(aOperatingSystem):
 
@@ -80,7 +80,8 @@ def getOutputFileName(aOutput, aSelenium):
         aSelenium.mBrowserVersion + "_" + \
         aSelenium.mBrowserMode + "_" + \
         aSelenium.mFont + "_" + \
-        utcdate + ".html"
+        utcdate + \
+        ".txt"
 
 if __name__ == "__main__":
 
@@ -171,10 +172,13 @@ automated test instance to run. The default configuration file is default.cfg.")
                         selenium.start()
                         
                         fp = file(output, "wb")
-                        HTMLTestRunner.HTMLTestRunner(stream=fp,
-                                                      verbosity=2).run(suite)
+                        stdout = sys.stdout
+                        sys.stdout = fp
+                        unittest.TextTestRunner(sys.stderr,
+                                                  verbosity=2).run(suite)
+                        sys.stdout = stdout
                         fp.close()
-                        
+
                         selenium.stop()
                         time.sleep(4)
 

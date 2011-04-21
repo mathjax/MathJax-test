@@ -1,5 +1,5 @@
 *.pyc
 *~
-results/*.html
+results/*.txt
 LaTeXToMathML/sample.html
 MathMLToDisplay/sample.html

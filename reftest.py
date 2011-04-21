@@ -272,7 +272,7 @@ class reftest(unittest.TestCase):
         else:
             self.mURLRef = aReftestDirectory + aURLRef
 
-        self.mID = string.replace(aURL, ".", "_")
+        self.mID = self.mURL
         self.mExpectedStatus = aExpectedStatus
         self.mSlow = aSlow
 
@@ -342,12 +342,13 @@ class scriptReftest(reftest):
 
         (success1, msg1) = self.mSelenium.getScriptReftestResult()
         (success, msg) = self.determineSuccess(success1)
-        msg += "(SCRIPT REFTEST)\n";
+        msg += "(SCRIPT REFTEST)";
         if success:
             print msg
         else:
-            msg += msg1
-            self.fail(msg)
+            msg += "\n" + msg1
+            print msg
+            self.fail()
        
 class treeReftest(reftest):
 
@@ -372,20 +373,23 @@ class treeReftest(reftest):
 
             if not isEqual:
                 msg += "REFTEST   SOURCE 1 (TEST): " + \
-                    source + "\n"
+                    self.mSelenium.encodeSourceToBase64(source) + "\n"
                 msg += "REFTEST   SOURCE 2 (REFERENCE): " + \
-                    sourceRef + "\n"
+                    self.mSelenium.encodeSourceToBase64(sourceRef) + "\n"
 
-                msg += "REFTEST   DIFF:\n"
+                msg += "REFTEST   DIFF: "
+                diff = "";
                 generator = difflib.unified_diff(source.splitlines(1),
                                                  sourceRef.splitlines(1))
                 for line in generator:
-                    msg += line
+                    diff += line
+                msg += self.mSelenium.encodeSourceToBase64(diff)
             elif isEqual:
                 msg += "REFTEST   SOURCE: " + \
-                    source + "\n"
+                    self.mSelenium.encodeSourceToBase64(source)
  
-            self.fail(msg)
+            print msg
+            self.fail()
 
 class visualReftest(reftest):
 
@@ -420,6 +424,7 @@ class visualReftest(reftest):
                     self.mSelenium.encodeImageToBase64(imageRef) + "\n"
             elif isEqual:
                 msg += "REFTEST   IMAGE: " + \
-                    self.mSelenium.encodeImageToBase64(image) + "\n"
+                    self.mSelenium.encodeImageToBase64(image)
 
-            self.fail(msg)
+            print msg
+            self.fail()
