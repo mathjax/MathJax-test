@@ -83,6 +83,14 @@ def getOutputFileName(aOutput, aSelenium):
         utcdate + \
         ".txt"
 
+def printInfo(aString):
+  print "REFTEST INFO | " + aString
+
+def boolToString(aBoolean):
+    if aBoolean:
+        return "true"
+    return "false"
+
 if __name__ == "__main__":
 
     # Parse command line arguments
@@ -138,8 +146,8 @@ automated test instance to run. The default configuration file is default.cfg.")
                 for browserMode in browserModeList:
 
                     # Browser mode is only relevant for MSIE
-                    if not(browserMode == "StandardMode" or browser == "MSIE"):
-                        continue
+                    if not(browser == "MSIE"):
+                        browserMode = "StandardMode"
 
                     browserStartCommand = getBrowserStartCommand(
                         browserPath,
@@ -174,11 +182,24 @@ automated test instance to run. The default configuration file is default.cfg.")
                         fp = file(output, "wb")
                         stdout = sys.stdout
                         sys.stdout = fp
+                        printInfo("Starting Testing Instance")
+                        printInfo("host:port = " + str(host) + ":" + str(port))
+                        printInfo("mathJaxPath = " + mathJaxPath)
+                        printInfo("mathJaxTestPath = " + mathJaxTestPath)
+                        printInfo("operatingSystem = " + operatingSystem)
+                        printInfo("browser = " + browser)
+                        printInfo("browserVersion = " + browserVersion)
+                        printInfo("browserMode = " + browserMode)
+                        printInfo("font = " + font)
+                        printInfo("nativeMathML = " +
+                                  boolToString(nativeMathML))
+                        printInfo("runSlowTests = " +
+                                  boolToString(runSlowTests))
                         unittest.TextTestRunner(sys.stderr,
                                                   verbosity=2).run(suite)
+                        printInfo("Testing Instance Finished")
                         sys.stdout = stdout
                         fp.close()
-
                         selenium.stop()
                         time.sleep(4)
 

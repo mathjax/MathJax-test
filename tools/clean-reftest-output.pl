@@ -46,12 +46,12 @@ use strict;
 
 my $N_TESTS = 0;
 my @testTypes = (
- ["PASS", "lightgreen", 0],
- ["UNEXPECTED-FAIL", "red", 0],
- ["UNEXPECTED-PASS", "orange", 0],
- ["KNOWN-FAIL", "yellow", 0],
- ["PASS(EXPECTED-RANDOM)", "blue", 0],
- ["KNOWN-FAIL(EXPECTED-RANDOM)", "deeppink", 0]
+ ["PASS", "pass", "lightgreen", 0],
+ ["UNEXPECTED-FAIL", "unexpected_fail", "red", 0],
+ ["UNEXPECTED-PASS", "unexpected_pass", "orange", 0],
+ ["KNOWN-FAIL", "known_fail", "yellow", 0],
+ ["PASS(EXPECTED RANDOM)", "random_pass", "blue", 0],
+ ["KNOWN-FAIL(EXPECTED RANDOM)", "random_fail", "deeppink", 0]
 );
 
 print <<EOM
@@ -69,8 +69,8 @@ EOM
 
 for(my $i = 0; $i <= $#testTypes ; $i++) {
 print <<EOM
-  .$testTypes[$i][0] {
-    background: $testTypes[$i][1];
+  .$testTypes[$i][1] {
+    background: $testTypes[$i][2];
   }
 EOM
 ;
@@ -89,23 +89,27 @@ while (<>) {
     next unless /REFTEST/;
     chomp;
     chop if /\r$/;
-    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),<span class="\2">\1\2: <a href="../\3">\3</a>\4</span>,;
+    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),\1\2: <a href="../\3">\3</a>\4,;
     s,(IMAGE[^:]*): (data:.*),<a href="\2">\1</a>,;
     s,(SOURCE[^:]*): (data:.*),<a href="\2">\1</a>,;
     s,(DIFF): (data:.*),<a href="\2">\1</a>,;
 
-    print;
-    print "\n";
+    my $content = $_;
 
     if ($1 eq "TEST-") {
-
         $N_TESTS++;
         for(my $i = 0; $i <= $#testTypes ; $i++) {
           if ($2 eq $testTypes[$i][0]) {
-            $testTypes[$i][2]++;
+            $testTypes[$i][3]++;
+            $content =
+                "<span class=\"$testTypes[$i][1]\">$content</span>";
+            last;
           }
         }
-   }
+    }
+
+    print $content;
+    print "\n";
 }
 
 print <<EOM
@@ -125,20 +129,20 @@ print <<EOM
       <svg width="700" height="250">
         <g transform="translate(15,15)">
           <circle cx="100" cy="100" r="100"
-                  style="fill: white; stroke: black;"/>
+                  style="fill: $testTypes[0][2]; stroke: black;"/>
 EOM
 ;
 
 my $s;
-my $e = 0;
+my $e = $N_TESTS / 3; # random starting angle
 for(my $i = 0; $i <= $#testTypes ; $i++) {
   $s = $e;
-  $e += $testTypes[$i][2];
-  drawSector($s, $e, $testTypes[$i][1]);
+  $e += $testTypes[$i][3];
+  drawSector($s, $e, $testTypes[$i][2]);
   drawLegend($i);
 }
 
-my $Nerrors = $testTypes[1][2] + $testTypes[2][2];
+my $Nerrors = $testTypes[1][3] + $testTypes[2][3];
 
 print <<EOM
         </g>
@@ -151,10 +155,10 @@ print <<EOM
     var error;
     function scrollToError() {
       var obj;
-      if (error < $testTypes[1][2]) {
-        obj = document.getElementsByClassName("UNEXPECTED-FAIL")[error];
+      if (error < $testTypes[1][3]) {
+        obj = document.getElementsByClassName("$testTypes[1][1]")[error];
       } else {
-        obj = document.getElementsByClassName("UNEXPECTED-PASS")[error - $testTypes[1][2]];
+        obj = document.getElementsByClassName("$testTypes[2][1]")[error - $testTypes[1][3]];
       }
       window.scrollTo(0, obj.offsetTop);
     }
@@ -204,10 +208,10 @@ sub drawLegend {
   my $i = @_[0];
   my $y = 20 + $i*30;
 print <<EOM
-  <rect fill="$testTypes[$i][1]" stroke="black" x="240" y="$y"
+  <rect fill="$testTypes[$i][2]" stroke="black" x="240" y="$y"
         width="20" height="15"/>
   <text x="270" y="$y" dy="1em">
-    $testTypes[$i][0] ($testTypes[$i][2] / $N_TESTS)
+    $testTypes[$i][0] ($testTypes[$i][3] / $N_TESTS)
   </text>
 EOM
 ;  

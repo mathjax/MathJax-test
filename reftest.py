@@ -294,11 +294,11 @@ class reftest(unittest.TestCase):
 
         return False
 
-    def determineSuccess(self, aResult):
+    def determineSuccess(self, aType, aResult):
 
-        success = ((self.mType == None and aResult) or
-                   (self.mType == '==' and aResult) or
-                   (self.mType == '!=' and (not aResult)))
+        success = ((aType == None and aResult) or
+                   (aType == "==" and aResult) or
+                   (aType == "!=" and (not aResult)))
 
         if self.mExpectedStatus == EXPECTED_FAIL:
             if success:
@@ -318,6 +318,10 @@ class reftest(unittest.TestCase):
                 msg = "TEST-UNEXPECTED-FAIL"
 
         msg = "\nREFTEST " + msg + " | " + self.mID + " | "
+
+        if (aType == "timeout"):
+            msg += "(TIMEOUT)"
+
         return success, msg
 
 class loadReftest(reftest):
@@ -326,11 +330,18 @@ class loadReftest(reftest):
 
         if self.shouldSkipTest():
             return
-        self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
 
-        (success, msg) = self.determineSuccess(True)
-        msg += "(LOAD ONLY)\n";
-        print msg
+        try:
+            self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
+
+            (success, msg) = self.determineSuccess(self.mType, True)
+            msg += "(LOAD ONLY)\n";
+            print msg
+
+        except Exception:
+            (success, msg) = self.determineSuccess("timeout", False)
+            print msg
+            self.fail()
 
 class scriptReftest(reftest):
 
@@ -338,15 +349,22 @@ class scriptReftest(reftest):
 
         if self.shouldSkipTest():
             return
-        self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
 
-        (success1, msg1) = self.mSelenium.getScriptReftestResult()
-        (success, msg) = self.determineSuccess(success1)
-        msg += "(SCRIPT REFTEST)";
-        if success:
-            print msg
-        else:
-            msg += "\n" + msg1
+        try:
+            self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
+
+            (success1, msg1) = self.mSelenium.getScriptReftestResult()
+            (success, msg) = self.determineSuccess(self.mType, success1)
+            msg += "(SCRIPT REFTEST)";
+            if success:
+                print msg
+            else:
+                msg += "\n" + msg1
+                print msg
+                self.fail()
+
+        except Exception:
+            (success, msg) = self.determineSuccess("timeout", False)
             print msg
             self.fail()
        
@@ -356,38 +374,45 @@ class treeReftest(reftest):
 
         if self.shouldSkipTest():
             return
-        self.mSelenium.open(self.mURL, True)
-        source = self.mSelenium.getMathJaxSourceMathML()
-        self.mSelenium.open(self.mURLRef, True)
-        sourceRef = self.mSelenium.getMathJaxSourceMathML()
 
-        # Compare source == sourceRef
-        isEqual = (source == sourceRef);
-        (success, msg) = self.determineSuccess(isEqual)
-        
-        if success:
-            print msg
-        else:
-            # Return failure together with a diff of the sources
-            msg += "source comparison ("+ self.mType +") \n"
+        try:
+            self.mSelenium.open(self.mURL, True)
+            source = self.mSelenium.getMathJaxSourceMathML()
+            self.mSelenium.open(self.mURLRef, True)
+            sourceRef = self.mSelenium.getMathJaxSourceMathML()
 
-            if not isEqual:
-                msg += "REFTEST   SOURCE 1 (TEST): " + \
-                    self.mSelenium.encodeSourceToBase64(source) + "\n"
-                msg += "REFTEST   SOURCE 2 (REFERENCE): " + \
-                    self.mSelenium.encodeSourceToBase64(sourceRef) + "\n"
+            # Compare source == sourceRef
+            isEqual = (source == sourceRef);
+            (success, msg) = self.determineSuccess(self.mType, isEqual)
 
-                msg += "REFTEST   DIFF: "
-                diff = "";
-                generator = difflib.unified_diff(source.splitlines(1),
-                                                 sourceRef.splitlines(1))
-                for line in generator:
-                    diff += line
-                msg += self.mSelenium.encodeSourceToBase64(diff)
-            elif isEqual:
-                msg += "REFTEST   SOURCE: " + \
-                    self.mSelenium.encodeSourceToBase64(source)
- 
+            if success:
+                print msg
+            else:
+                # Return failure together with a diff of the sources
+                msg += "source comparison ("+ self.mType +") \n"
+
+                if not isEqual:
+                    msg += "REFTEST   SOURCE 1 (TEST): " + \
+                        self.mSelenium.encodeSourceToBase64(source) + "\n"
+                    msg += "REFTEST   SOURCE 2 (REFERENCE): " + \
+                        self.mSelenium.encodeSourceToBase64(sourceRef) + "\n"
+
+                    msg += "REFTEST   DIFF: "
+                    diff = "";
+                    generator = difflib.unified_diff(source.splitlines(1),
+                                                     sourceRef.splitlines(1))
+                    for line in generator:
+                        diff += line
+                        msg += self.mSelenium.encodeSourceToBase64(diff)
+                elif isEqual:
+                    msg += "REFTEST   SOURCE: " + \
+                        self.mSelenium.encodeSourceToBase64(source)
+
+                print msg
+                self.fail()
+
+        except Exception:
+            (success, msg) = self.determineSuccess("timeout", False)
             print msg
             self.fail()
 
@@ -398,33 +423,39 @@ class visualReftest(reftest):
         if self.shouldSkipTest():
             return
 
-        # take the screenshot of the test
-        self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
-        image = self.mSelenium.takeScreenshot()
+        try:
+            # take the screenshot of the test
+            self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
+            image = self.mSelenium.takeScreenshot()
 
-        # take the screenshot of the reftest using the one in memory if it has
-        # been used just before.
-        imageRef = self.mTestSuite.takeReferenceScreenshot(self.mURLRef,
-                                                           self.mSelenium)
+            # take the screenshot of the reftest using the one in memory if it
+            # has been used just before.
+            imageRef = self.mTestSuite.takeReferenceScreenshot(self.mURLRef,
+                                                               self.mSelenium)
 
-        # Compare image and imageRef
-        box = ImageChops.difference(image, imageRef).getbbox()
-        isEqual = (box == None or (box[0] == box[2] and box[1] == box[3]))
-        (success, msg) = self.determineSuccess(isEqual)
+            # Compare image and imageRef
+            box = ImageChops.difference(image, imageRef).getbbox()
+            isEqual = (box == None or (box[0] == box[2] and box[1] == box[3]))
+            (success, msg) = self.determineSuccess(self.mType, isEqual)
 
-        if success:
-            print msg
-        else:
-            # Return failure together with base64 images of the reftest
-            msg += "image comparison ("+ self.mType +") \n"
-            if not isEqual:
-                msg += "REFTEST   IMAGE 1 (TEST): " + \
-                    self.mSelenium.encodeImageToBase64(image) + "\n"
-                msg += "REFTEST   IMAGE 2 (REFERENCE): " + \
-                    self.mSelenium.encodeImageToBase64(imageRef) + "\n"
-            elif isEqual:
-                msg += "REFTEST   IMAGE: " + \
-                    self.mSelenium.encodeImageToBase64(image)
+            if success:
+                print msg
+            else:
+                # Return failure together with base64 images of the reftest
+                msg += "image comparison ("+ self.mType +") \n"
+                if not isEqual:
+                    msg += "REFTEST   IMAGE 1 (TEST): " + \
+                        self.mSelenium.encodeImageToBase64(image) + "\n"
+                    msg += "REFTEST   IMAGE 2 (REFERENCE): " + \
+                        self.mSelenium.encodeImageToBase64(imageRef) + "\n"
+                elif isEqual:
+                    msg += "REFTEST   IMAGE: " + \
+                        self.mSelenium.encodeImageToBase64(image)
+                    
+                print msg
+                self.fail()
 
+        except Exception:
+            (success, msg) = self.determineSuccess("timeout", False)
             print msg
             self.fail()

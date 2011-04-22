@@ -15,7 +15,7 @@
 != menclose-1o.html menclose-1-ref.html
 == menclose-2a.html menclose-2a-ref.html
 == menclose-2b.html menclose-2b-ref.html
-== menclose-2c.html menclose-2c-ref.html
+fails == menclose-2c.html menclose-2c-ref.html
 == menclose-2d.html menclose-2d-ref.html
 == menclose-2e.html menclose-2e-ref.html
 == menclose-2f.html menclose-2f-ref.html
