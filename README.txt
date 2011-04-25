@@ -77,6 +77,6 @@ to the location you may have specified. Open the report in your browser to see
 statistics on the tests.
 
 Some failed tests provide an AssertionError with base64 screenshots of the test
-pages. To visualize them, open tools/reftest-analyzer.xhtml and paste the
+pages. To visualize them, open reftest-analyzer.xhtml and paste the
 the "REFTEST TEST-..." AssertionError string. You can also use the "Browse" 
 button to load the html page and see all the results at once.

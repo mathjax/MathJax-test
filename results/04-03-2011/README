@@ -1,8 +1,0 @@
-No unexpected failure found.
-
-You can ignore the error messages for
-- tree Reftests for MSIE (not implemented yet)
-- inline-2 (my config file was incorrect when I ran the test)
-- entities-1 (will be marked as "fails")
-- the other tests which are known to fail.
-

@@ -35,7 +35,6 @@ class seleniumMathJax(selenium.selenium):
     def __init__(self, aHost, aPort, aMathJaxPath, aMathJaxTestPath,
                  aOperatingSystem,
                  aBrowser,
-                 aBrowserVersion,
                  aBrowserMode,
                  aBrowserStartCommand, 
                  aFont,
@@ -47,7 +46,6 @@ class seleniumMathJax(selenium.selenium):
         self.mMathJaxPath = aMathJaxPath
         self.mOperatingSystem = aOperatingSystem
         self.mBrowser = aBrowser
-        self.mBrowserVersion = aBrowserVersion
         self.mBrowserMode = aBrowserMode
         self.mFont = aFont
         self.mNativeMathML = aNativeMathML
@@ -214,7 +212,8 @@ class seleniumMathJax(selenium.selenium):
         return "data:image/png;base64," + base64.b64encode(stringIO.getvalue())
 
     def encodeSourceToBase64(self, aSource):
-        return "data:text/plain;base64," + base64.b64encode(aSource)
+        return ("data:text/plain;charset=utf-8;base64," +
+                base64.b64encode(aSource.encode("utf-8")))
 
     def getMathJaxSourceMathML(self):
         return self.get_eval(

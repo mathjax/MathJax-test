@@ -58,7 +58,7 @@ def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
     
     if aBrowserPath == "auto":
         if startCommand == "*custom":
-            print "Unknown browser version"
+            print "Unknown browser"
             return "unknown"
 
         if aOS == "Linux" and aBrowser == "Konqueror":
@@ -77,7 +77,6 @@ def getOutputFileName(aOutput, aSelenium):
     return "results/" + \
         aSelenium.mOperatingSystem + "_" + \
         aSelenium.mBrowser + "_" + \
-        aSelenium.mBrowserVersion + "_" + \
         aSelenium.mBrowserMode + "_" + \
         aSelenium.mFont + "_" + \
         utcdate + \
@@ -118,7 +117,6 @@ automated test instance to run. The default configuration file is default.cfg.")
     section = "platform"
     operatingSystem = getOperatingSystem(config.get(section, "operatingSystem"))
     browserList = config.get(section, "browser").split()
-    browserVersionList = config.get(section, "browserVersion").split()
     browserModeList = config.get(section, "browserMode").split()
     browserPath = config.get(section, "browserPath")
     fontList = config.get(section, "font").split()
@@ -129,8 +127,7 @@ automated test instance to run. The default configuration file is default.cfg.")
     outputFile = config.get(section, "outputFile")
     runSlowTests = config.getboolean(section, "runSlowTests")
        
-    if (len(browserList) > 1 or len(browserVersionList) > 1 or
-        len(browserModeList) or len(fontList) > 1):
+    if (len(browserList) > 1 or len(browserModeList) or len(fontList) > 1):
         msg =  " can not be specified when launching several instances at the"
         msg += "same time."
         if browserPath != "auto":
@@ -141,71 +138,67 @@ automated test instance to run. The default configuration file is default.cfg.")
             exit(1)
 
     for browser in browserList:
-        for browserVersion in browserVersionList:
-            for font in fontList:
-                for browserMode in browserModeList:
+        for font in fontList:
+            for browserMode in browserModeList:
 
-                    # Browser mode is only relevant for MSIE
-                    if not(browser == "MSIE"):
-                        browserMode = "StandardMode"
+                # Browser mode is only relevant for MSIE
+                if not(browser == "MSIE"):
+                    browserMode = "StandardMode"
 
-                    browserStartCommand = getBrowserStartCommand(
-                        browserPath,
+                browserStartCommand = getBrowserStartCommand(
+                    browserPath,
+                    operatingSystem,
+                    browser)
+
+                if browserStartCommand != "unknown":
+                        
+                    # Create a Selenium instance
+                    selenium = seleniumMathJax.seleniumMathJax(
+                        host, port, mathJaxPath, mathJaxTestPath,
                         operatingSystem,
-                        browser)
-
-                    if browserStartCommand != "unknown":
+                        browser,
+                        browserMode,
+                        browserStartCommand, 
+                        font,
+                        nativeMathML,
+                        timeOut,
+                        fullScreenMode)
                         
-                        # Create a Selenium instance
-                        selenium = seleniumMathJax.seleniumMathJax(
-                            host, port, mathJaxPath, mathJaxTestPath,
-                            operatingSystem,
-                            browser,
-                            browserVersion,
-                            browserMode,
-                            browserStartCommand, 
-                            font,
-                            nativeMathML,
-                            timeOut,
-                            fullScreenMode)
+                    # Create the test suite
+                    suite = reftest.reftestSuite(runSlowTests)
+                    suite.addReftests(selenium, "reftest.list")
                         
-                        # Create the test suite
-                        suite = reftest.reftestSuite(runSlowTests)
-                        suite.addReftests(selenium, "reftest.list")
+                    # Create the output file
+                    output = getOutputFileName(outputFile, selenium)
                         
-                        # Create the output file
-                        output = getOutputFileName(outputFile, selenium)
+                    # Run the test suite
+                    selenium.start()
                         
-                        # Run the test suite
-                        selenium.start()
-                        
-                        fp = file(output, "wb")
-                        stdout = sys.stdout
-                        sys.stdout = fp
-                        printInfo("Starting Testing Instance")
-                        printInfo("host:port = " + str(host) + ":" + str(port))
-                        printInfo("mathJaxPath = " + mathJaxPath)
-                        printInfo("mathJaxTestPath = " + mathJaxTestPath)
-                        printInfo("operatingSystem = " + operatingSystem)
-                        printInfo("browser = " + browser)
-                        printInfo("browserVersion = " + browserVersion)
-                        printInfo("browserMode = " + browserMode)
-                        printInfo("font = " + font)
-                        printInfo("nativeMathML = " +
-                                  boolToString(nativeMathML))
-                        printInfo("runSlowTests = " +
-                                  boolToString(runSlowTests))
-                        unittest.TextTestRunner(sys.stderr,
-                                                  verbosity=2).run(suite)
-                        printInfo("Testing Instance Finished")
-                        sys.stdout = stdout
-                        fp.close()
-                        selenium.stop()
-                        time.sleep(4)
+                    fp = file(output, "wb")
+                    stdout = sys.stdout
+                    sys.stdout = fp
+                    printInfo("Starting Testing Instance")
+                    printInfo("host:port = " + str(host) + ":" + str(port))
+                    printInfo("mathJaxPath = " + mathJaxPath)
+                    printInfo("mathJaxTestPath = " + mathJaxTestPath)
+                    printInfo("operatingSystem = " + operatingSystem)
+                    printInfo("browser = " + browser)
+                    printInfo("browserMode = " + browserMode)
+                    printInfo("font = " + font)
+                    printInfo("nativeMathML = " +
+                              boolToString(nativeMathML))
+                    printInfo("runSlowTests = " +
+                              boolToString(runSlowTests))
+                    unittest.TextTestRunner(sys.stderr,
+                                            verbosity=2).run(suite)
+                    printInfo("Testing Instance Finished")
+                    sys.stdout = stdout
+                    fp.close()
+                    selenium.stop()
+                    time.sleep(4)
 
                 # end if browserStartCommand
-            # end for font
-        # end browserVersion
+        # end for font
     # end browser
 
     exit(0)

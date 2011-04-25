@@ -1,0 +1,5 @@
+RemoveType .gz
+AddEncoding gzip .gz
+AddType text/html .html.gz
+AddType text/plain .txt.gz
+
