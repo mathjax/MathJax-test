@@ -178,7 +178,8 @@ automated test instance to run. The default configuration file is default.cfg.")
                     stdout = sys.stdout
                     sys.stdout = fp
                     printInfo("Starting Testing Instance")
-                    printInfo("host:port = " + str(host) + ":" + str(port))
+                    printInfo("host=" + str(host))
+                    printInfo("port=" + str(port))
                     printInfo("mathJaxPath = " + mathJaxPath)
                     printInfo("mathJaxTestPath = " + mathJaxTestPath)
                     printInfo("operatingSystem = " + operatingSystem)

@@ -106,6 +106,7 @@ fails != horizontal.html?op=2B46 horizontal-ref.html
 # != vertical.html?op=\u007C\u007C\u007C vertical-ref.html
 != vertical.html?op=007D vertical-ref.html
 != vertical.html?op=2016 vertical-ref.html
+fails != vertical.html?op=2044 vertical-ref.html
 != vertical.html?op=2191 vertical-ref.html
 != vertical.html?op=2193 vertical-ref.html
 != vertical.html?op=2195 vertical-ref.html
@@ -144,6 +145,7 @@ fails != vertical.html?op=21EE vertical-ref.html
 fails != vertical.html?op=21EF vertical-ref.html
 fails != vertical.html?op=21F3 vertical-ref.html
 fails != vertical.html?op=21F5 vertical-ref.html
+fails != vertical.html?op=2215 vertical-ref.html
 != vertical.html?op=221A vertical-ref.html
 != vertical.html?op=2308 vertical-ref.html
 != vertical.html?op=2309 vertical-ref.html
