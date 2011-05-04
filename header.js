@@ -149,15 +149,7 @@ function startMathJax()
     }
     
     config +=
-    'MathJax.Hub.Queue(function () {'               +
-    '  if (window.finalizeTreeReftests) {'          +
-    '    finalizeTreeReftests();'                   +
-    '  } else if (window.finalizeScriptReftests) {' +
-    '    finalizeScriptReftests();'                 +
-    '  } else {'                                    +
-    '    document.documentElement.className = "";'  +
-    '  }'                                           +
-    '});';
+        'MathJax.Hub.Queue(finalizeTest);';
 
     if (window.opera) {
         script.innerHTML = config;
@@ -166,6 +158,21 @@ function startMathJax()
     }
 
     document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+function finalizeTest()
+{
+    // The finalize function is not directly called after postMathJax but put
+    // in the queue, just in case new actions have been added during the test.
+    MathJax.Hub.Queue(function () {
+        if (window.finalizeTreeReftests) {
+            finalizeTreeReftests();
+        } else if (window.finalizeScriptReftests) {
+            finalizeScriptReftests();
+        } else {
+            document.documentElement.className = "";
+        }
+    });
 }
 
 gMathJaxPath = getDefaultMathJaxPath();
@@ -178,3 +185,4 @@ if (window.addEventListener) {
 } else if (window.attachEvent){
     window.attachEvent("onload", startMathJax);
 }
+

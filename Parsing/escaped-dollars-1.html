@@ -2,7 +2,7 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>Scale</title>
+  <title>Escaped dollars</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
     License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -10,17 +10,27 @@
     function preMathJax()
     {
       config = getConfigObject();
-      config.NativeMML = {scale: 200};
+      config.tex2jax = {
+        inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+        processEscapes: true
+      }
+    }
+
+    function postMathJax()
+    {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub, "id"]);
     }
   </script>
-  <script type="text/javascript" src="../../header.js"></script>
+  <script type="text/javascript" src="../header.js"></script>
 </head>
 
 <body>
 
-  <math>
-    <mspace width="4em" height="2em" mathbackground="red"></mspace>
-  </math>
+  <!-- See issue 97
+       https://github.com/mathjax/MathJax/issues/closed/#issue/97 -->
+  <p id="id">
+    1\$ + 2\$ = 3\$
+  </p>
 
 </body>
 </html>
