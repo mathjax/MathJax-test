@@ -40,13 +40,19 @@
 
 # This script is intended to be run over the standard output of a
 # reftest run.  It will extract the parts of the output run relevant to
-# reftest and HTML-ize the URLs.
+# reftest and convert it to an HTML page.
 
 use strict;
+use URI::Escape;
 
+# root of the test framework
 my $root = "/MathJax-test/";
 
+# counter of tests
 my $N_TESTS = 0;
+
+# information for failure types
+# [string in input file, class name, background color, counter of tests]
 my @testTypes = (
  ["PASS", "pass", "lightgreen", 0],
  ["UNEXPECTED-FAIL", "unexpected_fail", "red", 0],
@@ -55,6 +61,9 @@ my @testTypes = (
  ["PASS(EXPECTED RANDOM)", "random_pass", "blue", 0],
  ["KNOWN-FAIL(EXPECTED RANDOM)", "random_fail", "deeppink", 0]
 );
+
+################################################################################
+# HTML header
 
 print <<EOM
 <!DOCTYPE html> 
@@ -69,10 +78,12 @@ print <<EOM
 EOM
 ;
 
+# define CSS style for failure types
 for(my $i = 0; $i <= $#testTypes ; $i++) {
 print <<EOM
-  .$testTypes[$i][1] {
+  div.$testTypes[$i][1] {
     background: $testTypes[$i][2];
+    margin: .5em;
   }
 EOM
 ;
@@ -81,41 +92,117 @@ EOM
 print <<EOM
 </style>
 </head>
+EOM
+;
+################################################################################
+# HTML body
+
+print <<EOM
 <body onload="topOfPage()">
 <div style="position: absolute; left: 0; top: 250px;
             font-family: monospace; white-space: pre;">
 EOM
 ;
 
+my $state = 0;
+my $unparsedContent;
+my $parsedContent;
+
 while (<>) {
-    next unless /REFTEST/;
+    next unless /^REFTEST/;
     chomp;
     chop if /\r$/;
-    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),\1\2: <a href="$root\3">\3</a>\4,;
-    s,(IMAGE[^:]*): (data:.*),<a href="\2">\1</a>,;
-    s,(SOURCE[^:]*): (data:.*),<a href="\2">\1</a>,;
-    s,(DIFF): (data:.*),<a href="\2">\1</a>,;
 
-    my $content = $_;
+# XXXfred: to be consistent with the IMAGE reftest, should we compute the diff
+# in reftest-analyser (rather than in the Python program) using
+# http://code.google.com/p/google-diff-match-patch/?
 
-    if ($1 eq "TEST-") {
-        $N_TESTS++;
-        for(my $i = 0; $i <= $#testTypes ; $i++) {
-          if ($2 eq $testTypes[$i][0]) {
-            $testTypes[$i][3]++;
-            $content =
-                "<span class=\"$testTypes[$i][1]\">$content</span>";
-            last;
-          }
+    if ($state == 0) {
+        $unparsedContent = $_;
+        
+        if (/(TEST-)([^\|]*) \| ([^\|]*) \|(.*)/) {
+            $N_TESTS++;
+            for(my $i = 0; $i <= $#testTypes ; $i++) {
+                if ($2 eq $testTypes[$i][0]) {
+                    $testTypes[$i][3]++;
+                    $parsedContent = "<div class=\"$testTypes[$i][1]\">";
+                    $parsedContent .= $unparsedContent;
+                    last;
+                }
+            }
+            if (!/TEST-PASS/ && /image|source comparison/) {
+                $state = 1;
+            } else {
+                $unparsedContent = "";
+                $state = 4;
+            }
+        } else {
+            print "$unparsedContent\n";
+        }
+    } elsif ($state == 1) {
+        if (/(IMAGE 1[^:]*): (data:.*)/) {
+            $unparsedContent .= $_;
+            s,(IMAGE[^:]*): (data:.*),<a href="\2">\1</a>,;
+            $parsedContent .= $_;
+            $state = 2;
+        } elsif (/(IMAGE): (data:.*)/) {
+            $unparsedContent .= $_;
+            s,(IMAGE[^:]*): (data:.*),<a href="\2">\1</a>,;
+            $parsedContent .= $_;
+            $state = 4;
+        } elsif (/(SOURCE 1[^:]*): (data:.*)/) {
+            # $unparsedContent .= $_;
+            s,(SOURCE[^:]*): (data:.*),<a href="\2">\1</a>,;
+            $parsedContent .= $_;
+            $state = 2;
+        }
+    } elsif ($state == 2) {
+        if (/(IMAGE 2[^:]*): (data:.*)/) {
+            $unparsedContent .= $_;
+            s,(IMAGE[^:]*): (data:.*),<a href="\2">\1</a>,;
+            $parsedContent .= $_;
+            $state = 4;
+        } elsif (/(SOURCE 2[^:]*): (data:.*)/) {
+            # $unparsedContent .= $_;
+            s,(SOURCE[^:]*): (data:.*),<a href="\2">\1</a>,;
+            $parsedContent .= $_;
+            $state = 3;
+        }
+    } elsif ($state == 3) {
+        if (/(DIFF): (data:.*)/) {
+            # $unparsedContent .= $_;
+            s,(DIFF): (data:.*),<a href="\2">\1</a>,;
+            $parsedContent .= $_;
+            $state = 4;
+            $unparsedContent = "";
         }
     }
 
-    print $content;
-    print "\n";
+    if ($state == 4) {
+        if ($unparsedContent) {
+            $parsedContent .= "\nREFTEST   <a href=\"".$root;
+            $parsedContent .= "reftest-analyzer.xhtml#log=";
+            $parsedContent .= uri_escape(uri_escape($unparsedContent));
+            $parsedContent .= "\">DIFF</a>";
+        }
+        $parsedContent = "$parsedContent</div>";
+        print $parsedContent;
+        $state = 0;
+    } else {
+        $parsedContent .= "\n";
+        $unparsedContent .= "\n";
+    }
 }
 
 print <<EOM
   </div>
+EOM
+;
+
+################################################################################
+# Result summary
+
+print <<EOM
   <div style="position: fixed; left: 0; top: 0; width: 100%; height: 250px;
               background: #ccf;">
 
@@ -135,60 +222,23 @@ print <<EOM
 EOM
 ;
 
-my $s;
-my $e = $N_TESTS / 3; # random starting angle
-for(my $i = 0; $i <= $#testTypes ; $i++) {
-  $s = $e;
-  $e += $testTypes[$i][3];
-  drawSector($s, $e, $testTypes[$i][2]);
-  drawLegend($i);
+# Draw the sectors and legend
+if ($N_TESTS > 0) {
+    my $s;
+    my $e = $N_TESTS / 3; # random starting angle
+    for(my $i = 0; $i <= $#testTypes ; $i++) {
+        $s = $e;
+        $e += $testTypes[$i][3];
+        drawSector($s, $e, $testTypes[$i][2]);
+        drawLegend($i);
+    }
 }
-
-my $Nerrors = $testTypes[1][3] + $testTypes[2][3];
 
 print <<EOM
         </g>
       </svg>
       </div>
   </div>
-
-
-  <script type="text/javascript">
-    var error;
-    function scrollToError()
-     {
-      var obj;
-      if (error < $testTypes[1][3]) {
-        obj = document.getElementsByClassName("$testTypes[1][1]")[error];
-      } else {
-        obj = document.getElementsByClassName("$testTypes[2][1]")[error - $testTypes[1][3]];
-      }
-      window.scrollTo(0, obj.offsetTop);
-    }
-
-    function nextError()
-    {
-      error++;
-      if (error == $Nerrors) {
-        error = 0;
-      }
-      scrollToError();
-    }
-
-    function previousError()
-    {
-      error--;
-      if (error == -1) {
-        error += $Nerrors;
-      }
-      scrollToError();
-    }
-
-    function topOfPage() { error = 0; window.scrollTo(0, 0); }
-  </script>
-
-</body>
-</html>
 EOM
 ;
 
@@ -218,3 +268,52 @@ print <<EOM
 EOM
 ;  
 }
+
+################################################################################
+# Javascript
+
+
+# Errors are UNEXPECTED-FAIL and UNEXPECTED-PASS
+my $Nerrors = $testTypes[1][3] + $testTypes[2][3];
+
+print <<EOM
+  <script type="text/javascript">
+    var error;
+    function scrollToError()
+     {
+      var obj;
+      if (error < $testTypes[1][3]) {
+        obj = document.\
+        getElementsByClassName("$testTypes[1][1]")[error];
+      } else {
+        obj = document.\
+        getElementsByClassName("$testTypes[2][1]")[error - $testTypes[1][3]];
+      }
+      window.scrollTo(0, obj.offsetTop);
+    }
+
+    function nextError()
+    {
+      error++;
+      if (error == $Nerrors) {
+        error = 0;
+      }
+      scrollToError();
+    }
+
+    function previousError()
+    {
+      error--;
+      if (error == -1) {
+        error += $Nerrors;
+      }
+      scrollToError();
+    }
+
+    function topOfPage() { error = 0; window.scrollTo(0, 0); }
+  </script>
+
+</body>
+</html>
+EOM
+;

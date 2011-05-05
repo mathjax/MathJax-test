@@ -41,7 +41,7 @@ function getCurrentDirectory()
 function getDefaultMathJaxPath()
 {
     src = getCurrentPath();
-    return src.substring(0, src.indexOf("MathJax-test")) + "MathJax/";
+    return src.substring(0, src.indexOf("MathJax-test")) + "MathJax/unpacked/";
 }
 
 function parseQueryString()
@@ -137,7 +137,7 @@ function startMathJax()
     var script = document.createElement("script");
     script.type = "text/javascript";
     src = location.href;
-    script.src = gMathJaxPath + "MathJax.js";
+    script.src = gMathJaxPath + "MathJax.js?config=default";
 
     var config =
         'MathJax.Hub.Config(getConfigObject());' +
