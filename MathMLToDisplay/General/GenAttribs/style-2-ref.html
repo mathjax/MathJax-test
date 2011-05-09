@@ -1,0 +1,27 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+  <!-- Copyright (c) 2011 Design Science, Inc.
+       License: Apache License 2.0 -->
+    <title>style border</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- See issue 109
+         https://github.com/mathjax/MathJax/issues/closed#issue/76 -->
+    <div style="position: absolute; top: 10px; left: 0px;">
+       <math>
+         <mtable style="background: blue;">
+           <mtr><mtd><mphantom><mi>aa</mi></mphantom></mtd></mtr>
+           <mtr><mtd><mphantom><mi>bb</mi></mphantom></mtd></mtr>
+           <mtr><mtd><mphantom><mi>cc</mi></mphantom></mtd></mtr>
+         </mtable>
+       </math>
+    </div>
+
+  </body>
+</html>

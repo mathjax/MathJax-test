@@ -30,8 +30,10 @@ import gzip
 import math
 import os
 import platform
+import re
 import reftest
 import seleniumMathJax
+import string
 import subprocess
 import sys
 import time
@@ -100,19 +102,36 @@ def gzipFile(aFile):
 
 if __name__ == "__main__":
 
-    directory = "results/" + datetime.utcnow().isoformat() + "/"
-    # create the directory (we assume that it does not exist yet, otherwise
-    # this will raise an error)
-    os.makedirs(directory)
-
     # Parse command line arguments
     parser = argparse.ArgumentParser(
         description="A Python script to run MathJax automated tests.")
-    parser.add_argument("-c", "--config", nargs='?', default="default.cfg",
+    parser.add_argument("-c", "--config", nargs="?", default="default.cfg",
                         help="A comma separated list of files describing the \
 parameters of the automated test instance to run. The default configuration \
 file is default.cfg.")
+    parser.add_argument("-o", "--output", nargs="?", default=None,
+                        help="By default, the output files are stored in \
+default results/YEAR-MONTH-DAY/TIME/. This option allows to specify a \
+custom sub directory instead of TIME/. The name of this directory can only \
+contain alphanumeric characters and its length must not exceed ten characters.")
     args = parser.parse_args()
+
+    # create the date directory
+    now = datetime.utcnow();
+    directory = "results/" + now.strftime("%Y-%m-%d") + "/"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    # create the subdirectory
+    if args.output and re.match("^([0-9]|[a-z]|[A-Z]){1,10}$", args.output):
+        directory += args.output + "/"
+    else:
+        directory += now.strftime("%H-%M-%S/")
+
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    # execute testing instances for all the config files
     configFileList = args.config.split(",")
 
     for configFile in configFileList:
@@ -222,7 +241,7 @@ file is default.cfg.")
                                       str(math.trunc(
                                         deltaTime.total_seconds() / 60)) +
                                       " minute(s) and " + \
-                                          str(deltaTime.seconds) + " second(s)")
+                                          str(deltaTime.seconds % 60) + " second(s)")
                             sys.stdout = stdout
                             fp.close()
 

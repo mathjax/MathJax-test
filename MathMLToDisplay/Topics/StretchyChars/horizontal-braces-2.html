@@ -1,0 +1,36 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>horizontal braces</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+   <!-- See issue 112
+        https://github.com/mathjax/MathJax/issues/closed#issue/112 -->
+   <div style="position: absolute; top: 0px; left: 10px; right: 10px;">
+   <math mathbackground="black">
+     <mtext>__</mtext>
+     <mover>
+       <mtext></mtext>
+       <mo stretchy="true">&#x23DE;</mo>
+     </mover>
+     <mtext>__</mtext>
+     <munder>
+       <mtext></mtext>
+       <mo stretchy="true">&#x23DF;</mo>
+     </munder>
+     <mtext>__</mtext>
+   </math>
+   </div>
+
+   <div style="position: absolute; top: 5px; left: 0px;
+               width: 500px; height: 200px; background: red"></div>
+
+  </body>
+</html>

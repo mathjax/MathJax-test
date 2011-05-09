@@ -41,7 +41,7 @@ function getCurrentDirectory()
 function getDefaultMathJaxPath()
 {
     src = getCurrentPath();
-    return src.substring(0, src.indexOf("MathJax-test")) + "MathJax/unpacked/";
+    return src.substring(0, src.indexOf("MathJax-test")) + "MathJax/";
 }
 
 function parseQueryString()

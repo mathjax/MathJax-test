@@ -1,0 +1,49 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+<head>
+  <title>maction tooltip</title>
+  <!-- Copyright (c) 2011 Design Science, Inc.
+       License: Apache License 2.0 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript" src="../../../../header.js"></script>
+  <script type="text/javascript">
+    function preMathJax()
+    {
+       var config = getConfigObject();
+       config.jax = ["input/MathML", "output/HTML-CSS"];
+       window.scrollTo(0, document.getElementById("id").offsetTop);
+    }
+
+    function postMathJax()
+    {
+      var event = {
+        clientX: 0,
+        clientY: 0
+      };
+      MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOver(event);
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <!-- See issue 107
+       https://github.com/mathjax/MathJax/issues/closed/#issue/107 -->
+
+  <div style="background: red; width: 10px; height: 2000px;"></div>
+
+  <div id="id">
+    <math>
+      <maction actiontype="tooltip">
+        <mtext>maction</mtext>
+        <mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow>
+      </maction>
+    </math>
+  </div>
+
+  <div style="background: red; width: 10px; height: 2000px;"></div>
+
+</body>
+</html>

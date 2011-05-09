@@ -95,6 +95,9 @@ fails != horizontal.html?op=295E horizontal-ref.html
 fails != horizontal.html?op=295F horizontal-ref.html
 fails != horizontal.html?op=2B45 horizontal-ref.html
 fails != horizontal.html?op=2B46 horizontal-ref.html
+skip-if(!TeX) fails != horizontal-braces-1a.html horizontal-braces-1-ref.html
+skip-if(!TeX) fails != horizontal-braces-1b.html horizontal-braces-1-ref.html
+skip-if(!STIX) fails != horizontal-braces-2.html horizontal-braces-2-ref.html
 != vertical.html?op=0028 vertical-ref.html
 != vertical.html?op=0029 vertical-ref.html
 != vertical.html?op=005B vertical-ref.html
