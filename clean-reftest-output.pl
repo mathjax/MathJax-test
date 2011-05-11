@@ -125,8 +125,9 @@ while (<>) {
             for(my $i = 0; $i <= $#testTypes ; $i++) {
                 if ($2 eq $testTypes[$i][0]) {
                     $testTypes[$i][3]++;
-                    $parsedContent = "<div class=\"$testTypes[$i][1]\">";
-                    $parsedContent .= $unparsedContent;
+                    $unparsedContent;
+                    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),\1\2: <a href="$root\3">\3</a>\4,;
+                    $parsedContent = "<div class=\"$testTypes[$i][1]\">" . $_;
                     last;
                 }
             }

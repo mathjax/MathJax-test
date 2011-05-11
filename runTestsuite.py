@@ -181,85 +181,85 @@ contain alphanumeric characters and its length must not exceed ten characters.")
                     if not(browser == "MSIE"):
                         browserMode = "StandardMode"
 
-                        browserStartCommand = getBrowserStartCommand(
-                            browserPath,
+                    browserStartCommand = getBrowserStartCommand(
+                        browserPath,
+                        operatingSystem,
+                        browser)
+
+                    if browserStartCommand != "unknown":
+
+                        # Create a Selenium instance
+                        selenium = seleniumMathJax.seleniumMathJax(
+                            host, port, mathJaxPath, mathJaxTestPath,
                             operatingSystem,
-                            browser)
-
-                        if browserStartCommand != "unknown":
-
-                            # Create a Selenium instance
-                            selenium = seleniumMathJax.seleniumMathJax(
-                                host, port, mathJaxPath, mathJaxTestPath,
-                                operatingSystem,
-                                browser,
-                                browserMode,
-                                browserStartCommand, 
-                                font,
-                                nativeMathML,
-                                timeOut,
-                                fullScreenMode)
+                            browser,
+                            browserMode,
+                            browserStartCommand, 
+                            font,
+                            nativeMathML,
+                            timeOut,
+                            fullScreenMode)
                         
-                            # Create the test suite
-                            suite = reftest.reftestSuite(runSlowTests)
-                            suite.addReftests(selenium, "reftest.list")
+                        # Create the test suite
+                        suite = reftest.reftestSuite(runSlowTests)
+                        suite.addReftests(selenium, "reftest.list")
                         
-                            # Create the output file
-                            output = getOutputFileName(directory, selenium)
-                            outputTxt = output + ".txt"
-                            outputHTML= output + ".html"
-                            fp = file(outputTxt, "wb")
-                            stdout = sys.stdout
-                            sys.stdout = fp
+                        # Create the output file
+                        output = getOutputFileName(directory, selenium)
+                        outputTxt = output + ".txt"
+                        outputHTML= output + ".html"
+                        fp = file(outputTxt, "wb")
+                        stdout = sys.stdout
+                        sys.stdout = fp
                         
-                            # Run the test suite
-                            startTime = datetime.utcnow()
-                            printInfo("Starting Testing Instance ; " +
-                                      startTime.isoformat())
-                            selenium.start()
-                            printInfo("host=" + str(host))
-                            printInfo("port=" + str(port))
-                            printInfo("mathJaxPath = " + mathJaxPath)
-                            printInfo("mathJaxTestPath = " + mathJaxTestPath)
-                            printInfo("operatingSystem = " + operatingSystem)
-                            printInfo("browser = " + browser)
-                            printInfo("browserMode = " + browserMode)
-                            printInfo("font = " + font)
-                            printInfo("nativeMathML = " +
-                                      boolToString(nativeMathML))
-                            printInfo("runSlowTests = " +
-                                      boolToString(runSlowTests))
-                            unittest.TextTestRunner(sys.stderr,
-                                                    verbosity=2).run(suite)
-                            selenium.stop()
-                            time.sleep(4)
-                            endTime = datetime.utcnow()
-                            deltaTime = endTime - startTime
-                            printInfo("Testing Instance Finished ; " +
-                                      endTime.isoformat())
-                            printInfo("Testing Instance took " + \
-                                      str(math.trunc(
-                                        deltaTime.total_seconds() / 60)) +
-                                      " minute(s) and " + \
-                                          str(deltaTime.seconds % 60) + " second(s)")
-                            sys.stdout = stdout
-                            fp.close()
+                        # Run the test suite
+                        startTime = datetime.utcnow()
+                        printInfo("Starting Testing Instance ; " +
+                                  startTime.isoformat())
+                        selenium.start()
+                        printInfo("host=" + str(host))
+                        printInfo("port=" + str(port))
+                        printInfo("mathJaxPath = " + mathJaxPath)
+                        printInfo("mathJaxTestPath = " + mathJaxTestPath)
+                        printInfo("operatingSystem = " + operatingSystem)
+                        printInfo("browser = " + browser)
+                        printInfo("browserMode = " + browserMode)
+                        printInfo("font = " + font)
+                        printInfo("nativeMathML = " +
+                                  boolToString(nativeMathML))
+                        printInfo("runSlowTests = " +
+                                  boolToString(runSlowTests))
+                        unittest.TextTestRunner(sys.stderr,
+                                                verbosity=2).run(suite)
+                        selenium.stop()
+                        time.sleep(4)
+                        endTime = datetime.utcnow()
+                        deltaTime = endTime - startTime
+                        printInfo("Testing Instance Finished ; " +
+                                  endTime.isoformat())
+                        printInfo("Testing Instance took " +
+                                  str(math.trunc( \
+                                    deltaTime.total_seconds() / 60)) +
+                                  " minute(s) and " +
+                                  str(deltaTime.seconds % 60) + " second(s)")
+                        sys.stdout = stdout
+                        fp.close()
 
-                            # Execute the Perl script to format the output
-                            print "Formatting the text ouput..."
-                            pipe = subprocess.Popen(
-                                ["./clean-reftest-output.pl", outputTxt],
-                                stdout=subprocess.PIPE)
-                            fp = file(outputHTML, "wb")
-                            print >> fp, pipe.stdout.read()
-                            fp.close()
+                        # Execute the Perl script to format the output
+                        print "Formatting the text ouput..."
+                        pipe = subprocess.Popen(
+                            ["perl", "clean-reftest-output.pl", outputTxt],
+                            stdout=subprocess.PIPE)
+                        fp = file(outputHTML, "wb")
+                        print >> fp, pipe.stdout.read()
+                        fp.close()
 
-                            # gzip the outputs
-                            print "Compressing the output files..."
-                            gzipFile(outputTxt)
-                            gzipFile(outputHTML)
+                        # gzip the outputs
+                        print "Compressing the output files..."
+                        gzipFile(outputTxt)
+                        gzipFile(outputHTML)
 
-                        # end if browserStartCommand
+                    # end if browserStartCommand
                 # end browserMode
             # end for font
         # end browser
