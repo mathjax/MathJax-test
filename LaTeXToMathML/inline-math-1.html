@@ -8,6 +8,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
   <script type="text/javascript" src="../header.js"></script>
   <script type="text/javascript" src="../treeReftests.js"></script>
+  <script type="text/javascript">
+    function preMathJax()
+    {
+      config = getConfigObject();
+      config.tex2jax = { inlineMath: [ ['$','$'], ["\\(","\\)"] ] };
+    }
+  </script>
 </head>
 
 <body>

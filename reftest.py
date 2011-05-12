@@ -455,5 +455,5 @@ class visualReftest(reftest):
             elif isEqual:
                 msg += "REFTEST   IMAGE: " + \
                     self.mSelenium.encodeImageToBase64(image)
-                print msg
-                self.fail()
+            print msg
+            self.fail()

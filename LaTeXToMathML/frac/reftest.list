@@ -1,5 +1,8 @@
 tree== binom-1.html binom-1-ref.html
+tree== brace-1.html brace-1-ref.html
+tree== brack-1.html brack-1-ref.html
 tree== cfrac-1.html cfrac-1-ref.html
+tree== choose-1.html choose-1-ref.html
 tree== dbinom-1.html dbinom-1-ref.html
 tree== dfrac-1.html dfrac-1-ref.html
 tree== frac-1a.html frac-1-ref.html

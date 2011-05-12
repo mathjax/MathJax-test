@@ -2,7 +2,7 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>hebrew letters</title>
+  <title>brace</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -13,10 +13,12 @@
 <body>
   <div id="reftest-element">
     <math xmlns="http://www.w3.org/1998/Math/MathML">
-      <mi mathvariant="normal">&#x2135;<!-- ℵ --></mi>
-      <mi mathvariant="italic">&#x2136;<!-- ℶ --></mi>
-      <mi mathvariant="italic">&#x2137;<!-- ℷ --></mi>
-      <mi mathvariant="italic">&#x2138;<!-- ℸ --></mi>
+      <mfenced open="{" close="}">
+        <mfrac linethickness="0">
+          <mn>1</mn>
+          <mn>2</mn>
+        </mfrac>
+      </mfenced>
     </math>
   </div>
 </body>
