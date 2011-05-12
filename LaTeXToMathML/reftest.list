@@ -1,20 +1,14 @@
+include arrows/reftest.list
+include basic-operators/reftest.list
+include frac/reftest.list
+include letters/reftest.list
 include macro/reftest.list
 
-tree== arrows-1.html arrows-1-ref.html
-tree== arrows-2.html arrows-2-ref.html
-tree== arrows-3.html arrows-3-ref.html
-tree== backslashed-1.html backslashed-1-ref.html
-fails tree== basic-operators-1.html basic-operators-1-ref.html
 tree== boxed-1.html boxed-1-ref.html
 fails tree== color-1.html color-1-ref.html
 tree== display-math-1.html display-math-ref.html
 tree== display-math-2.html display-math-ref.html
-tree== frac-1.html frac-ref.html
-tree== frac-2.html frac-ref.html
 fails tree== functions-1.html functions-1-ref.html
-tree== greek-1.html greek-1-ref.html
-tree== greek-2.html greek-2-ref.html
-tree== greek-3.html greek-3-ref.html
 skip tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
 tree== lower-1.html lower-1-ref.html
