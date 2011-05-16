@@ -195,8 +195,6 @@ class seleniumMathJax(selenium.selenium):
         data = self.capture_screenshot_to_string()
         time.sleep(aWaitTime)
         image = Image.open(StringIO.StringIO(base64.b64decode(data)))
-        # XXXfred: is the screenshot taken by Selenium in RGB mode? If not, we
-        # may have lost information compared to the screen rendering...
         image = image.convert("RGB")
         if self.mCanvas != None:
           image = image.crop(self.mCanvas)

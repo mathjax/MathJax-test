@@ -304,6 +304,11 @@ print <<EOM
 
     function previousError()
     {
+      if (error == -1) {
+        // case topOfPage
+        error = 0;
+      }
+
       error--;
       if (error == -1) {
         error += $Nerrors;
@@ -311,7 +316,7 @@ print <<EOM
       scrollToError();
     }
 
-    function topOfPage() { error = 0; window.scrollTo(0, 0); }
+    function topOfPage() { error = -1; window.scrollTo(0, 0); }
   </script>
 
 </body>

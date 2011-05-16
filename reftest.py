@@ -28,11 +28,13 @@ import seleniumMathJax
 import string
 from PIL import Image, ImageChops
 import difflib
+import conditionParser
 
 EXPECTED_PASS = 0
 EXPECTED_FAIL  = 1
 EXPECTED_RANDOM = 2
 EXPECTED_DEATH = 3
+EXPECTED_IRRELEVANT = 4
 
 class reftestSuite(unittest.TestSuite):
 
@@ -76,7 +78,7 @@ class reftestSuite(unittest.TestSuite):
                             continue
                         elif word.startswith("fails-if"):
                             # 8 = len("fails-if")
-                            if self.parseCondition(aSelenium, word[8:]):
+                            if conditionParser.parse(aSelenium, word[8:]):
                                 testExpectedStatus = EXPECTED_FAIL
                             continue
                         elif word == "random":
@@ -84,15 +86,20 @@ class reftestSuite(unittest.TestSuite):
                             continue
                         elif word.startswith("random-if"):
                             # 9 = len("random-if")
-                            if self.parseCondition(aSelenium, word[9:]):
+                            if conditionParser.parse(aSelenium, word[9:]):
                                 testExpectedStatus = EXPECTED_RANDOM
+                            continue
+                        elif word.startswith("require"):
+                            # 7 = len("require")
+                            if not conditionParser.parse(aSelenium, word[7:]):
+                                testExpectedStatus = EXPECTED_IRRELEVANT
                             continue
                         elif word == "skip":
                             testExpectedStatus = EXPECTED_DEATH
                             continue
                         elif word.startswith("skip-if"):
                             # 7 = len("skip-if")
-                            if self.parseCondition(aSelenium, word[7:]):
+                            if conditionParser.parse(aSelenium, word[7:]):
                                 testExpectedStatus = EXPECTED_DEATH
                             continue
                         elif word == "slow":
@@ -100,7 +107,7 @@ class reftestSuite(unittest.TestSuite):
                             continue
                         elif word.startswith("slow-if"):
                             # 7 = len("slow-if")
-                            if self.parseCondition(aSelenium, word[7:]):
+                            if conditionParser.parse(aSelenium, word[7:]):
                                 testSlow = True
                             continue
                         else:
@@ -130,7 +137,7 @@ class reftestSuite(unittest.TestSuite):
                         # 2. [<http>]
                         state = 3
                         if word.startswith("HTTP"):
-                            raise "http syntax not supported"
+                            raise NameError("http syntax not supported")
 
                     if state == 3:
                         # 2. <type>
@@ -169,7 +176,7 @@ class reftestSuite(unittest.TestSuite):
                         if testClass == loadReftest:
                             if (testExpectedStatus == EXPECTED_FAIL or
                                 testExpectedStatus == EXPECTED_RANDOM):
-                                raise "loadtest can't be marked as fails/random"
+                                raise NameError("loadtest can't be marked as fails/random")
                             state = 6
                         elif testClass == scriptReftest:
                             state = 6
@@ -183,7 +190,7 @@ class reftestSuite(unittest.TestSuite):
                         state = 6
                         continue
 
-                    raise "reftest syntax not supported"
+                    raise NameError("reftest syntax not supported")
 
                 # end for word
 
@@ -200,50 +207,6 @@ class reftestSuite(unittest.TestSuite):
             # end for line
 
         # end with open
-
-    def parseCondition(self, aSelenium, aCondition):
-        # A parser for reftest manifest condition.
-        # Note that it is not claimed to be complete, but should work in most
-        # cases, when the expression is not too complex.
-
-        # a limited set of pre-defined variables
-        if (aCondition == aSelenium.mOperatingSystem or
-            aCondition == aSelenium.mBrowser or
-            aCondition == aSelenium.mBrowserMode or
-            aCondition == aSelenium.mFont):
-            return True
-
-        if (aCondition == "nativeMathML"):
-            return aSelenium.mNativeMathML
-
-        l = len(aCondition)
-        
-        # not
-        if (l >= 1 and aCondition[0] == "!"):
-            return (not self.parseCondition(aSelenium, aCondition[1:]))
-            
-        if l >= 2:
-            # parenthesis
-            if (aCondition[0] == "(" and aCondition[l-1] == ")"):
-                return self.parseCondition(aSelenium, aCondition[1:l-1])
-
-            # or
-            orlist = aCondition.split("||")
-            if (len(orlist) >= 2):
-                for c in orlist:
-                    if self.parseCondition(aSelenium, c):
-                        return True
-                return False
-        
-            # and
-            andlist = aCondition.split("&&")
-            if (len(andlist) >= 2):
-                for c in andlist:
-                    if (not self.parseCondition(aSelenium, c)):
-                        return False
-                return True
-
-        assert "syntax not supported"
 
     def takeReferenceScreenshot(self, aURLRef, aSelenium):
         if (aURLRef == self.mPreviousURLRef):
@@ -281,6 +244,13 @@ class reftest(unittest.TestCase):
        return self.mID
 
     def shouldSkipTest(self):
+        if self.mExpectedStatus == EXPECTED_IRRELEVANT:
+            msg = "REFTEST INFO | " + self.mID
+            msg += " is irrelevant for this configuration\n"
+            # self.skipTest(msg)
+            print msg
+            return True
+
         if self.mExpectedStatus == EXPECTED_DEATH:
             msg = "\nREFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)\n"
             # self.skipTest(msg)

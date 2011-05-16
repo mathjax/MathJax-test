@@ -5,7 +5,9 @@ include frac/reftest.list
 include letters/reftest.list
 include macro/reftest.list
 include mathvariant/reftest.list
+include matrices/reftest.list
 
+fails tree== accents-1.html accents-1-ref.html
 tree== boxed-1.html boxed-1-ref.html
 fails == cases-1.html cases-1-ref.html
 fails tree== color-1.html color-1-ref.html
@@ -14,10 +16,13 @@ tree== display-math-2.html display-math-ref.html
 fails tree== functions-1.html functions-1-ref.html
 tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
+fails tree== largeops-1.html largeops-1-ref.html
+tree== limits-1.html limits-1-ref.html
 tree== lower-1.html lower-1-ref.html
 fails tree== mathop-1a.html mathop-1-ref.html
 fails tree== mathop-1b.html mathop-1-ref.html
 tree== raise-1.html raise-1-ref.html
 tree== sqrt-1.html sqrt-1-ref.html
 tree== sqrt-2.html sqrt-2-ref.html
-skip-if(Safari) fails == tag-1.html tag-1-ref.html
+tree== substack-1.html substack-1-ref.html
+fails skip-if(Safari) == tag-1.html tag-1-ref.html

@@ -6,7 +6,6 @@
     \angle
     \approx
     \approxeq               AMSsymbols
-    \array
     \ast
     \asymp
     \atop
@@ -24,19 +23,10 @@
     \begin
     \between                AMSsymbols
     \bf
-    \bigcap
     \bigcirc
-    \bigcup
-    \bigodot
-    \bigoplus
-    \bigotimes
-    \bigsqcup
     \bigstar                AMSsymbols
     \bigtriangledown
     \bigtriangleup
-    \biguplus
-    \bigvee
-    \bigwedge
     \blacklozenge           AMSsymbols
     \blacksquare            AMSsymbols
     \blacktriangle          AMSsymbols
@@ -52,7 +42,6 @@
     \boxminus               AMSsymbols
     \boxplus                AMSsymbols
     \boxtimes               AMSsymbols
-    \breve
     \buildrel
     \bullet
     \Bumpeq                 AMSsymbols
@@ -62,9 +51,7 @@
     \Cap                    AMSsymbols
     \cdot
     \cdotp
-    \cdots
     \centerdot              AMSsymbols
-    \check
     \checkmark              AMSsymbols
     \circ
     \circeq                 AMSsymbols
@@ -78,7 +65,6 @@
     \colon
     \complement             AMSsymbols
     \cong
-    \coprod
     \cr
     \cssId                 [HTML]           non-standard
     \cup
@@ -90,10 +76,6 @@
     \dagger
     \dashv
     \ddagger
-    \ddddot                 AMSmath
-    \dddot                  AMSmath
-    \ddot
-    \ddots
     \DeclareMathOperator    AMSmath
     \def                   [newcommand]
     \diagdown               AMSsymbols
@@ -105,7 +87,6 @@
     \displaystyle
     \div
     \divideontimes          AMSsymbols
-    \dot
     \doteq
     \Doteq                  AMSsymbols
     \doteqdot               AMSsymbols
@@ -162,7 +143,6 @@
     \gtrless                AMSsymbols
     \gtrsim                 AMSsymbols
     \gvertneqq              AMSsymbols
-    \hat
     \hbar
     \hbox
     \hdashline
@@ -175,11 +155,7 @@
     \hspace
     \Huge
     \huge
-    \idotsint               AMSmath
     \iff
-    \iiiint                 AMSmath
-    \iiint
-    \iint
     \Im
     \imath
     \impliedby              AMSsymbols
@@ -187,7 +163,6 @@
     \in
     \infty
     \injlim                 AMSmath
-    \int
     \intercal               AMSsymbols
     \intop
     \it
@@ -217,7 +192,6 @@
     \lesssim                AMSsymbols
     \lgroup
     \lhd                    AMSsymbols
-    \limits
     \ll
     \llap
     \llcorner               AMSsymbols
@@ -248,10 +222,8 @@
     \mathord
     \mathpunct
     \mathrel
-    \mathring               AMSmath
     \mathscr
     \mathstrut
-    \matrix
     \mbox
     \measuredangle          AMSsymbols
     \mid
@@ -315,14 +287,12 @@
     \nvDash                 AMSsymbols
     \nvdash                 AMSsymbols
     \odot
-    \oint
     \oldstyle
     \ominus
     \oplus
     \oslash
     \otimes
     \overbrace
-    \overline
     \overset
     \overwithdelims
     \owns
@@ -332,7 +302,6 @@
     \phantom
     \pitchfork              AMSsymbols
     \pm
-    \pmatrix
     \pmb
     \pmod
     \pod
@@ -345,7 +314,6 @@
     \precnsim               AMSsymbols
     \precsim                AMSsymbols
     \prime
-    \prod
     \projlim                AMSmath
     \propto
     \qquad
@@ -409,7 +377,6 @@
     \subseteqq              AMSsymbols
     \subsetneq              AMSsymbols
     \subsetneqq             AMSsymbols
-    \substack               AMSmath
     \succ
     \succapprox             AMSsymbols
     \succcurlyeq            AMSsymbols
@@ -418,7 +385,6 @@
     \succneqq               AMSsymbols
     \succnsim               AMSsymbols
     \succsim                AMSsymbols
-    \sum
     \supset
     \Supset                 AMSsymbols
     \supseteq
@@ -436,7 +402,6 @@
     \thickapprox            AMSsymbols
     \thicksim               AMSsymbols
     \thinspace
-    \tilde
     \times
     \tiny
     \Tiny                                  non-standard
@@ -452,7 +417,6 @@
     \tt
     \ulcorner               AMSsymbols
     \underbrace
-    \underline
     \underset
     \unicode               [unicode]       non-standard
     \unlhd                  AMSsymbols
@@ -477,16 +441,12 @@
     \vdash
     \Vdash                  AMSsymbols
     \vDash                  AMSsymbols
-    \vdots
-    \vec
     \vee
     \veebar                 AMSsymbols
     \verb                  [verb]
     \vphantom
     \Vvdash                 AMSsymbols
     \wedge
-    \widehat
-    \widetilde
     \wp
     \wr
     \yen                    AMSsymbols
@@ -496,10 +456,6 @@
     alignat*		   [AMSmath]
     aligned		   [AMSmath]
     alignedat		   [AMSmath]
-    array
-    Bmatrix
-    bmatrix
-    cases
     eqnarray
     eqnarray*
     equation
@@ -507,12 +463,7 @@
     gather		   [AMSmath]
     gather*		   [AMSmath]
     gathered		   [AMSmath]
-    matrix
     multline		   [AMSmath]
     multline*		   [AMSmath]
-    pmatrix
-    smallmatrix		    AMSmath
     split		   [AMSmath]
     subarray		    AMSmath
-    Vmatrix
-    vmatrix

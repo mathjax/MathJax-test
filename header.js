@@ -114,11 +114,6 @@ function getConfigObject()
     return gConfigObject;
 }
 
-function setConfigObject(aConfigObject)
-{
-    gConfigObject = aConfigObject;
-}
-
 function startMathJax()
 {
     // Width of screenshots used by Mozilla
@@ -134,12 +129,14 @@ function startMathJax()
         preMathJax();
     }
 
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    src = location.href;
-    script.src = gMathJaxPath + "MathJax.js?config=default";
+    var script1 = document.createElement("script");
+    var script2 = document.createElement("script");
+    script1.type = "text/x-mathjax-config";
+    script2.type = "text/javascript";
+    script2.src = gMathJaxPath + "MathJax.js?config=default";
 
     var config =
+        'MathJax.Message.Remove();' + // XXXfred workaround for issue 115
         'MathJax.Hub.Config(getConfigObject());' +
         'MathJax.Hub.Startup.onload();';
 
@@ -152,12 +149,14 @@ function startMathJax()
         'MathJax.Hub.Queue(finalizeTest);';
 
     if (window.opera) {
-        script.innerHTML = config;
+        script1.innerHTML = config;
     } else {
-        script.text = config;
+        script1.text = config;
     }
 
-    document.getElementsByTagName("head")[0].appendChild(script);
+    var head = document.getElementsByTagName("head")[0];
+    head.appendChild(script1);
+    head.appendChild(script2);
 }
 
 function finalizeTest()
@@ -177,9 +176,7 @@ function finalizeTest()
 
 gMathJaxPath = getDefaultMathJaxPath();
 parseQueryString();
-setConfigObject(defaultConfigObject());
-// XXXfred: Reftests executed with Mozilla's runreftest.py should really
-// call startMathJax when the MozReftestInvalidate event happens. 
+gConfigObject = defaultConfigObject();
 if (window.addEventListener) {
     window.addEventListener("load", startMathJax, false);
 } else if (window.attachEvent){

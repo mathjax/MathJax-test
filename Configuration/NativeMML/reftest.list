@@ -1,2 +1,2 @@
-skip-if(!nativeMathML) == scale-1.html scale-1-ref.html
+require(nativeMathML) == scale-1.html scale-1-ref.html
 
