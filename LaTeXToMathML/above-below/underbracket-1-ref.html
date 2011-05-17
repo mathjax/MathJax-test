@@ -2,7 +2,7 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>Arrows</title>
+  <title>underbracket</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -12,15 +12,15 @@
 
 <body>
   <div id="reftest-element">
-    \(
-    A \xleftarrow{123} B
-    A \xleftarrow[123]{} B
-    A \xleftarrow[123]{456} B
-
-    A \xrightarrow{123} B
-    A \xrightarrow[123]{} B
-    A \xrightarrow[123]{456} B
-    \)
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <munder>
+        <munder>
+          <mn>123</mn>
+          <mo stretchy="true" accent="true">&#x23DF;<!-- ⏟ --></mo>
+        </munder>
+        <mi>x</mi>
+      </munder>
+    </math>
   </div>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>Arrows</title>
+  <title>unicode</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -11,15 +11,12 @@
 </head>
 
 <body>
-  <div id="reftest-element">
-    \(
-    A \xleftarrow{123} B
-    A \xleftarrow[123]{} B
-    A \xleftarrow[123]{456} B
-
-    A \xrightarrow{123} B
-    A \xrightarrow[123]{} B
-    A \xrightarrow[123]{456} B
+  <div id="reftest-element">\(
+    \unicode{65}                        % the character 'A'
+    \unicode{x41}                       % the character 'A'
+    \unicode[.55,0.05]{x22D6}           % less-than with dot, with height .55em and depth 0.05em
+    \unicode[.55,0.05][Geramond]{x22D6} % same taken from Geramond font
+    \unicode[Garamond]{x22D6}           % same, but with default height, depth of .8em,.2em
     \)
   </div>
 </body>

@@ -1,0 +1,52 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+<head>
+  <title>style - mathchoice</title>
+  <!-- Copyright (c) 2011 Design Science, Inc.
+       License: Apache License 2.0 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <script type="text/javascript" src="../header.js"></script>
+  <script type="text/javascript" src="../treeReftests.js"></script>
+</head>
+
+<body>
+  <div id="reftest-element">
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mrow>
+        <mstyle scriptlevel="0" displaystyle="false">
+          <mrow>
+            <mn>1</mn>
+            <mtext>over</mtext>
+            <mn>2</mn>
+          </mrow>
+        </mstyle>
+      </mrow>
+      <mrow>
+        <mstyle scriptlevel="0" displaystyle="true">
+          <mfrac>
+            <mn>1</mn>
+            <mn>2</mn>
+          </mfrac>
+        </mstyle>
+      </mrow>
+      <mrow>
+        <mstyle scriptlevel="2" displaystyle="false">
+          <mtext>&#x00BD;<!-- ½ --></mtext>
+        </mstyle>
+      </mrow>
+      <mrow>
+        <mstyle scriptlevel="1" displaystyle="false">
+          <mrow>
+            <mn>1</mn>
+            <mrow>
+              <mo>/</mo>
+            </mrow>
+            <mn>2</mn>
+          </mrow>
+        </mstyle>
+      </mrow>
+    </math>
+  </div>
+</body>
+</html>

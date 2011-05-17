@@ -3,3 +3,6 @@ tree== macro-1b.html macro-1-ref.html
 tree== macro-2.html macro-2-ref.html
 tree== macro-3.html macro-3-ref.html
 load macro-4.html
+tree== macro-5.html macro-5-ref.html
+tree== macro-6.html macro-6-ref.html
+tree== macro-7.html macro-7-ref.html
