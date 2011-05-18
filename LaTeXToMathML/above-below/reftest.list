@@ -10,6 +10,6 @@ tree== substack-1.html substack-1-ref.html
 tree== underbrace-1.html underbrace-1-ref.html
 tree== underset-1.html underset-1-ref.html
 
-# not supported
+# XXXfred not supported
 # tree== overbracket-1.html overbracket-1-ref.html
 # tree== underbracket-1.html underbracket-1-ref.html

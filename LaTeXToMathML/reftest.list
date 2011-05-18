@@ -1,5 +1,6 @@
 include above-below/reftest.list
 include arrows/reftest.list
+include atoms/reftest.list
 include basic-operators/reftest.list
 include delimiters/reftest.list
 include environments/reftest.list
@@ -18,6 +19,7 @@ fails == cases-1.html cases-1-ref.html
 fails tree== color-1.html color-1-ref.html
 tree== display-math-1.html display-math-ref.html
 tree== display-math-2.html display-math-ref.html
+tree== displaylines-1.html displaylines-1-ref.html
 fails tree== functions-1.html functions-1-ref.html
 tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
@@ -25,14 +27,15 @@ tree== LaTeX-1.html LaTeX-1-ref.html
 tree== limits-1.html limits-1-ref.html
 tree== limits-2.html limits-2-ref.html
 tree== limits-3.html limits-3-ref.html
+tree== mathsize-1.html mathsize-1-ref.html
 tree== mod-1.html mod-1-ref.html
 tree== not-1.html not-1-ref.html
-fails tree== mathop-1a.html mathop-1-ref.html
-fails tree== mathop-1b.html mathop-1-ref.html
-tree== mathsize-1.html mathsize-1-ref.html
 tree== pod-1.html pod-1-ref.html
 fails tree== primes-1.html primes-1-ref.html
 tree== style-1.html style-1-ref.html
 tree== style-2.html style-2-ref.html
 fails skip-if(Safari) == tag-1.html tag-1-ref.html
 tree== verb-1.html verb-1-ref.html
+
+# XXXfred
+# \mathscr and \scr are in the doc but produce an "Undefined control sequence"

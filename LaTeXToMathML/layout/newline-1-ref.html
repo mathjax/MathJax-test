@@ -2,7 +2,7 @@
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
 <head>
-  <title>delimiters</title>
+  <title>newline</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -11,8 +11,15 @@
 </head>
 
 <body>
-  <div id="reftest-element">\(
-   () [] \{\} | \| \langle\rangle \lfloor\rfloor \lceil\rceil \lgroup\rgroup
-  \)</div>
+  <div id="reftest-element">
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mfenced open="{" close="">
+        <mtable columnalign="left left" rowspacing=".1em" columnspacing="1em">
+          <mtr><mtd><mi>a</mi></mtd></mtr>
+          <mtr><mtd><mi>b</mi></mtd></mtr>
+        </mtable>
+      </mfenced>
+    </math>
+  <div>
 </body>
 </html>
