@@ -4,36 +4,35 @@ include basic-operators/reftest.list
 include delimiters/reftest.list
 include environments/reftest.list
 include frac/reftest.list
+include layout/reftest.list
 include letters/reftest.list
 include macro/reftest.list
 include mathvariant/reftest.list
 include matrices/reftest.list
 include non-standard/reftest.list
+include roots/reftest.list
+include symbols/reftest.list
 
-fails tree== accents-1.html accents-1-ref.html
 tree== boxed-1.html boxed-1-ref.html
 fails == cases-1.html cases-1-ref.html
 fails tree== color-1.html color-1-ref.html
 tree== display-math-1.html display-math-ref.html
 tree== display-math-2.html display-math-ref.html
-tree== dots-1.html dots-1-ref.html
 fails tree== functions-1.html functions-1-ref.html
 tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
-fails tree== largeops-1.html largeops-1-ref.html
+tree== LaTeX-1.html LaTeX-1-ref.html
 tree== limits-1.html limits-1-ref.html
-tree== lower-1.html lower-1-ref.html
+tree== limits-2.html limits-2-ref.html
+tree== limits-3.html limits-3-ref.html
+tree== mod-1.html mod-1-ref.html
+tree== not-1.html not-1-ref.html
 fails tree== mathop-1a.html mathop-1-ref.html
 fails tree== mathop-1b.html mathop-1-ref.html
-fails tree== primes-1.html primes-1-ref.html
-tree== raise-1.html raise-1-ref.html
 tree== mathsize-1.html mathsize-1-ref.html
-tree== spaces-1.html spaces-1-ref.html
-tree== sqrt-1.html sqrt-1-ref.html
-tree== sqrt-2.html sqrt-2-ref.html
+tree== pod-1.html pod-1-ref.html
+fails tree== primes-1.html primes-1-ref.html
 tree== style-1.html style-1-ref.html
 tree== style-2.html style-2-ref.html
-fails tree== subarray-1.html subarray-1-ref.html
-tree== substack-1.html substack-1-ref.html
 fails skip-if(Safari) == tag-1.html tag-1-ref.html
 tree== verb-1.html verb-1-ref.html

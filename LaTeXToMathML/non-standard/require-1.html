@@ -8,12 +8,20 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
   <script type="text/javascript" src="../../header.js"></script>
   <script type="text/javascript" src="../../treeReftests.js"></script>
+  <script type="text/javascript">
+    function preMathJax()
+    {
+      var config = getConfigObject();
+      config.TeX = {};
+    }
+  </script>
 </head>
 
 <body>
   <div id="reftest-element">\(
-    \require{???}
-    \)
-  </div>
+    \require{AMSmath}
+    \require{AMSsymbols}
+    \binom{\bigstar}{\triangledown}
+  \)</div>
 </body>
 </html>

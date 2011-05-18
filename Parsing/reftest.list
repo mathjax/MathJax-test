@@ -6,7 +6,7 @@ tree!= missing-brace-2.html missing-brace-2-ref.html
 fails tree== parameter-priority-1.html parameter-priority-1-ref.html
 skip-if(MSIE) load stylesheets-1.html
 == self-closing-tag-1.html self-closing-tag-1-ref.html
-fails-if(!Firefox) == self-closing-tag-2.html self-closing-tag-2-ref.html
+fails-if(!(Firefox||Chrome)) == self-closing-tag-2.html self-closing-tag-2-ref.html
 fails-if(Opera)  == self-closing-tag-3.html self-closing-tag-3-ref.html
 skip-if(MSIE) load unmatched-math-1.html
 fails-if(Opera) == mfenced-lt-gt-1.html mfenced-lt-gt-1-ref.html
