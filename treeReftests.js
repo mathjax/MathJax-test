@@ -47,39 +47,40 @@ function serialize2(aNode)
 {
     // a basic serializer for browsers that do not support XMLSerializer
     // it is not claimed to be complete
+    // Versions of IE <= 8 do not know the Node constants
 
     var s = "";
 
     switch(aNode.nodeType)
     {
-    case Node.TEXT_NODE:
+    case 3: // Node.TEXT_NODE:
         s += aNode.data;
         break;
         
-    case Node.COMMENT_NODE:
+    case 8: // Node.COMMENT_NODE:
         s += "<!--"
         s += aNode.value;
         s += "-->"
         break;
 
-    case Node.CDATA_SECTION_NODE:
+    case 4: // Node.CDATA_SECTION_NODE:
         s += "<![CDATA["
         s += aNode.value;
         s += "]]>"
         break;
 
-    case Node.ATTRIBUTE_NODE:
-        s += aNode.name;
-        s += '=';
-        s += '"' + aNode.value + '"';
+    case 2: // Node.ATTRIBUTE_NODE:
+          s += " " + aNode.name;
+          s += '=';
+          s += '"' + aNode.value + '"';
         break;
 
-    case Node.ELEMENT_NODE:
+    case 1: // Node.ELEMENT_NODE:
         s += "<";
         s += aNode.tagName;
         var attributes = aNode.attributes;
         for (var i = 0; i < attributes.length; i++) {
-            s += " " + serialize2(attributes[i]);
+            s += serialize2(attributes[i]);
         }
         s += ">";
         var children = aNode.childNodes;
@@ -106,7 +107,7 @@ function getMathJaxSourceMathML(aNode, aClassName)
         if (divs.length == 0) {
             throw "MathJax_MathML not found.";
         }
-        return serialize(divs[0]);
+        return serialize(divs[0].getElementsByTagName("math")[0]);
     } catch(e) {
         if (e instanceof TypeError) {
             // XXXfred Internet Explorer lacks support for
@@ -114,7 +115,8 @@ function getMathJaxSourceMathML(aNode, aClassName)
             var children = aNode.children;
             for (var i = 0; i < children.length; i++) {
                 if (children[i].className == aClassName) {
-                    return serialize(children[i]);
+                    return serialize(children[i].
+                                     getElementsByTagName("math")[0]);
                 }
             }
             throw "MathJax_MathML not found.";

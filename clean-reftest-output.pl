@@ -156,6 +156,12 @@ while (<>) {
             s,(SOURCE[^:]*): (data:.*),<a href="\2">\1</a>,;
             $parsedContent .= $_;
             $state = 2;
+        } elsif (/(SOURCE): (data:.*)/) {
+            # $unparsedContent .= $_;
+            s,(SOURCE[^:]*): (data:.*),<a href="\2">\1</a>,;
+            $parsedContent .= $_;
+            $unparsedContent = "";
+            $state = 4;
         }
     } elsif ($state == 2) {
         if (/(IMAGE 2[^:]*): (data:.*)/) {
