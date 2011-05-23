@@ -38,20 +38,22 @@ EXPECTED_IRRELEVANT = 4
 
 class reftestSuite(unittest.TestSuite):
 
-    def __init__(self, aRunSlowTests):
+    def __init__(self, aRunSlowTests, aRunSkipTests, aListOfTests):
         unittest.TestSuite.__init__(self)
         self.mRunSlowTests = aRunSlowTests
+        self.mRunSkipTests = aRunSkipTests
+        self.mListOfTests = aListOfTests
         self.mPreviousURLRef = None
         self.mPreviousImageRef = None
 
-    def addReftests(self, aSelenium, aManifestFile,
+    def addReftests(self, aSelenium, aManifestFile, aIndex,
                     aInheritedStatus = EXPECTED_PASS):
         # This function parses a reftest manifest file.
         # http://mxr.mozilla.org
         #                /mozilla-central/source/layout/tools/reftest/README.txt
 
-        i = string.rfind(aManifestFile, "/")
-        testDirectory = aManifestFile[:(i+1)]
+        testDirectory = aManifestFile[:(string.rfind(aManifestFile, "/") + 1)]
+        index = aIndex
 
         with open(aManifestFile) as f:
 
@@ -128,9 +130,30 @@ class reftestSuite(unittest.TestSuite):
 
                     if state == 2:
                         # 1. <relative_path>
-                        self.addReftests(aSelenium,
-                                         testDirectory + word,
-                                         testExpectedStatus)
+                        testSubDirectory = testDirectory + word
+                        if index == -1:
+                            self.addReftests(aSelenium,
+                                             testSubDirectory,
+                                             -1,
+                                             testExpectedStatus)
+                        else:
+                            if self.mListOfTests[index] == "2":
+                                # all the tests in the subdirectory
+                                self.addReftests(aSelenium,
+                                                 testSubDirectory,
+                                                 -1,
+                                                 testExpectedStatus)
+                                index = index + 1
+                            elif self.mListOfTests[index] == "1":
+                                 # tests indicated in listOfTests
+                                index = index + 1
+                                index = self.addReftests(aSelenium,
+                                                         testSubDirectory,
+                                                         index,
+                                                         testExpectedStatus)
+                            else:
+                                # none of the tests in the subdirectory
+                                index = index + 1
                         break
 
                     if state == 1:
@@ -195,18 +218,22 @@ class reftestSuite(unittest.TestSuite):
                 # end for word
 
                 if state == 6:
-                    self.addTest(testClass(self,
-                                           aSelenium,
-                                           testType,
-                                           testDirectory,
-                                           testURL,
-                                           testURLRef,
-                                           testExpectedStatus,
-                                           testSlow))
+                    if (index == -1 or self.mListOfTests[index] == "1"):
+                        self.addTest(testClass(self,
+                                               aSelenium,
+                                               testType,
+                                               testDirectory,
+                                               testURL,
+                                               testURLRef,
+                                               testExpectedStatus,
+                                               testSlow))
+                    if index != -1:
+                        index = index + 1
 
             # end for line
 
         # end with open
+        return index
 
     def takeReferenceScreenshot(self, aURLRef, aSelenium):
         if (aURLRef == self.mPreviousURLRef):
@@ -251,7 +278,8 @@ class reftest(unittest.TestCase):
             print msg
             return True
 
-        if self.mExpectedStatus == EXPECTED_DEATH:
+        if ((not self.mTestSuite.mRunSkipTests) and
+            self.mExpectedStatus == EXPECTED_DEATH):
             msg = "\nREFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)\n"
             # self.skipTest(msg)
             print msg

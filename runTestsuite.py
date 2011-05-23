@@ -153,6 +153,8 @@ contain alphanumeric characters and its length must not exceed ten characters.")
         mathJaxTestPath = config.get(section, "mathJaxTestPath")
         timeOut = config.getint(section, "timeOut")
         fullScreenMode = config.getboolean(section, "fullScreenMode")
+        formatOutput = config.getboolean(section, "formatOutput")
+        compressOutput = config.getboolean(section, "compressOutput")
     
         # platform section
         section = "platform"
@@ -167,6 +169,8 @@ contain alphanumeric characters and its length must not exceed ten characters.")
         # testsuite section
         section = "testsuite"
         runSlowTests = config.getboolean(section, "runSlowTests")
+        runSkipTests = config.getboolean(section, "runSkipTests")
+        listOfTests = config.get(section, "listOfTests")
        
         if ((len(browserList) > 1 or len(browserModeList) or len(fontList) > 1)
             and browserPath != "auto"):
@@ -201,8 +205,15 @@ contain alphanumeric characters and its length must not exceed ten characters.")
                             fullScreenMode)
                         
                         # Create the test suite
-                        suite = reftest.reftestSuite(runSlowTests)
-                        suite.addReftests(selenium, "reftest.list")
+                        suite = reftest.reftestSuite(runSlowTests,
+                                                     runSkipTests,
+                                                     listOfTests)
+                        if listOfTests == "all":
+                            index = -1 # all tests
+                        else:
+                            index = 0 # tests indicated in listOfTests
+
+                        suite.addReftests(selenium, "reftest.list", index)
                         
                         # Create the output file
                         output = getOutputFileName(directory, selenium)
@@ -216,27 +227,38 @@ contain alphanumeric characters and its length must not exceed ten characters.")
                         startTime = datetime.utcnow()
                         printInfo("Starting Testing Instance ; " +
                                   startTime.isoformat())
-                        selenium.start()
-                        printInfo("host=" + str(host))
-                        printInfo("port=" + str(port))
-                        printInfo("mathJaxPath = " + mathJaxPath)
-                        printInfo("mathJaxTestPath = " + mathJaxTestPath)
-                        printInfo("operatingSystem = " + operatingSystem)
-                        printInfo("browser = " + browser)
-                        printInfo("browserMode = " + browserMode)
-                        printInfo("font = " + font)
-                        printInfo("nativeMathML = " +
-                                  boolToString(nativeMathML))
-                        printInfo("runSlowTests = " +
-                                  boolToString(runSlowTests))
-                        unittest.TextTestRunner(sys.stderr,
-                                                verbosity=2).run(suite)
-                        selenium.stop()
-                        time.sleep(4)
+                        interrupted = False
+                        try:
+                            selenium.start()
+                            printInfo("host=" + str(host))
+                            printInfo("port=" + str(port))
+                            printInfo("mathJaxPath = " + mathJaxPath)
+                            printInfo("mathJaxTestPath = " + mathJaxTestPath)
+                            printInfo("operatingSystem = " + operatingSystem)
+                            printInfo("browser = " + browser)
+                            printInfo("browserMode = " + browserMode)
+                            printInfo("font = " + font)
+                            printInfo("nativeMathML = " +
+                                      boolToString(nativeMathML))
+                            printInfo("runSlowTests = " +
+                                      boolToString(runSlowTests))
+                            unittest.TextTestRunner(sys.stderr,
+                                                    verbosity=2).run(suite)
+                            selenium.stop()
+                            time.sleep(4)
+                        except KeyboardInterrupt:
+                            selenium.stop()
+                            interrupted = True
+                            
                         endTime = datetime.utcnow()
                         deltaTime = endTime - startTime
-                        printInfo("Testing Instance Finished ; " +
-                                  endTime.isoformat())
+                        if not interrupted:
+                            printInfo("Testing Instance Finished ; " +
+                                      endTime.isoformat())
+                        else:
+                            printInfo("Testing Instance Interrupted ; " +
+                                      endTime.isoformat())
+
                         printInfo("Testing Instance took " +
                                   str(math.trunc( \
                                     deltaTime.total_seconds() / 60)) +
@@ -245,19 +267,28 @@ contain alphanumeric characters and its length must not exceed ten characters.")
                         sys.stdout = stdout
                         fp.close()
 
-                        # Execute the Perl script to format the output
-                        print "Formatting the text ouput..."
-                        pipe = subprocess.Popen(
-                            ["perl", "clean-reftest-output.pl", outputTxt],
-                            stdout=subprocess.PIPE)
-                        fp = file(outputHTML, "wb")
-                        print >> fp, pipe.stdout.read()
-                        fp.close()
+                        if not interrupted:
+                            if formatOutput:
+                                # Execute the Perl script to format the output
+                                print "Formatting the text ouput..."
+                                pipe = subprocess.Popen(
+                                    ["perl", "clean-reftest-output.pl",
+                                     outputTxt],
+                                    stdout=subprocess.PIPE)
+                                fp = file(outputHTML, "wb")
+                                print >> fp, pipe.stdout.read()
+                                fp.close()
 
-                        # gzip the outputs
-                        print "Compressing the output files..."
-                        gzipFile(outputTxt)
-                        gzipFile(outputHTML)
+                            if compressOutput:
+                                # gzip the outputs
+                                print "Compressing the output files..."
+                                gzipFile(outputTxt)
+                                if formatOutput:
+                                    gzipFile(outputHTML)
+                        else:
+                            print
+                            print "Test Launcher received SIGINT!"
+                            print "Testing Instance Interrupted."
 
                     # end if browserStartCommand
                 # end browserMode

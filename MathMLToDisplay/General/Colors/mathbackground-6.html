@@ -9,7 +9,7 @@
   <script type="text/javascript" src="../../../header.js"></script>
 </head>
 
-<body style="background: green">
+<body style="background: white">
 
   <!-- the text should not go outside the background area -->
 
@@ -21,7 +21,9 @@
 
   <div style="position: absolute; left: 20; top: 20; z-index: 1;">
     <math xmlns="http://www.w3.org/1998/Math/MathML">
-      <mtext mathbackground="green" mathcolor="green">□■□■□■□</mtext>
+      <mstyle mathbackground="white">
+        <mphantom><mtext>□■□■□■□</mtext></mphantom>
+      </mstyle>
     </math>
   </div>
 

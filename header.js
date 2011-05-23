@@ -120,6 +120,7 @@ function startMathJax()
     document.body.style.width = "800px";
     document.body.style.height = "1000px";
     document.body.style.border = document.body.style.margin = "0px";
+    document.body.style.overflow = "hidden";
 
     if (window.initTreeReftests) {
         initTreeReftests();

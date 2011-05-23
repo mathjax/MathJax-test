@@ -13,19 +13,19 @@
 != menclose-1m.html menclose-1-ref.html
 != menclose-1n.html menclose-1-ref.html
 != menclose-1o.html menclose-1-ref.html
-== menclose-2a.html menclose-2a-ref.html
-== menclose-2b.html menclose-2b-ref.html
-fails == menclose-2c.html menclose-2c-ref.html
-== menclose-2d.html menclose-2d-ref.html
-== menclose-2e.html menclose-2e-ref.html
-== menclose-2f.html menclose-2f-ref.html
-== menclose-2g.html menclose-2g-ref.html
-== menclose-2h.html menclose-2h-ref.html
-== menclose-2i.html menclose-2i-ref.html
-== menclose-2j.html menclose-2j-ref.html
-== menclose-2k.html menclose-2k-ref.html
-== menclose-2l.html menclose-2l-ref.html
-== menclose-2m.html menclose-2m-ref.html
-== menclose-2n.html menclose-2n-ref.html
-== menclose-2o.html menclose-2o-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2a.html menclose-2a-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2b.html menclose-2b-ref.html
+fails-if(!(nativeMathML&&(Firefox||MSIE))) == menclose-2c.html menclose-2c-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2d.html menclose-2d-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2e.html menclose-2e-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2f.html menclose-2f-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2g.html menclose-2g-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2h.html menclose-2h-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2i.html menclose-2i-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2j.html menclose-2j-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2k.html menclose-2k-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2l.html menclose-2l-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2m.html menclose-2m-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2n.html menclose-2n-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2o.html menclose-2o-ref.html
 == menclose-3.html menclose-3-ref.html
