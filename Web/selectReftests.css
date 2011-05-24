@@ -1,0 +1,18 @@
+ul.closed {
+   visibility: hidden;
+   height: 0px;
+}
+
+.directory {
+    font-size: 12pt;
+    background: none;
+    border: 0;
+}
+
+input.directory {
+    text-decoration: underline;
+}
+
+li {
+  list-style-type: none;
+}

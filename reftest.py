@@ -46,13 +46,16 @@ class reftestSuite(unittest.TestSuite):
         self.mPreviousURLRef = None
         self.mPreviousImageRef = None
 
+    def getDirectoryFromManifestFile(self, aManifestFile):
+        return aManifestFile[:(string.rfind(aManifestFile, "/") + 1)]
+
     def addReftests(self, aSelenium, aManifestFile, aIndex,
                     aInheritedStatus = EXPECTED_PASS):
         # This function parses a reftest manifest file.
         # http://mxr.mozilla.org
         #                /mozilla-central/source/layout/tools/reftest/README.txt
 
-        testDirectory = aManifestFile[:(string.rfind(aManifestFile, "/") + 1)]
+        testDirectory = self.getDirectoryFromManifestFile(aManifestFile)
         index = aIndex
 
         with open(aManifestFile) as f:
@@ -130,30 +133,39 @@ class reftestSuite(unittest.TestSuite):
 
                     if state == 2:
                         # 1. <relative_path>
-                        testSubDirectory = testDirectory + word
-                        if index == -1:
-                            self.addReftests(aSelenium,
-                                             testSubDirectory,
-                                             -1,
+                        reftestList = testDirectory + word
+                        if aSelenium == None:
+                            print ",[\"" + \
+                                self.getDirectoryFromManifestFile(word) + "\"",
+                            self.addReftests(aSelenium, reftestList, -1,
                                              testExpectedStatus)
+                            print "]",
                         else:
-                            if self.mListOfTests[index] == "2":
-                                # all the tests in the subdirectory
+                            if index == -1:
                                 self.addReftests(aSelenium,
-                                                 testSubDirectory,
+                                                 reftestList,
                                                  -1,
                                                  testExpectedStatus)
-                                index = index + 1
-                            elif self.mListOfTests[index] == "1":
-                                 # tests indicated in listOfTests
-                                index = index + 1
-                                index = self.addReftests(aSelenium,
-                                                         testSubDirectory,
-                                                         index,
-                                                         testExpectedStatus)
                             else:
-                                # none of the tests in the subdirectory
-                                index = index + 1
+                                if self.mListOfTests[index] == "2":
+                                    # all the tests in the subdirectory
+                                    self.addReftests(aSelenium,
+                                                     reftestList,
+                                                     -1,
+                                                     testExpectedStatus)
+                                    index = index + 1
+                                elif self.mListOfTests[index] == "1":
+                                    # tests indicated in listOfTests
+                                    index = index + 1
+                                    index = self.addReftests(aSelenium,
+                                                             reftestList,
+                                                             index,
+                                                             testExpectedStatus)
+                                elif self.mListOfTests[index] == "0":
+                                    # none of the tests in the subdirectory
+                                    index = index + 1
+                                else:
+                                    raise NameError("invalid listOfTests")
                         break
 
                     if state == 1:
@@ -199,7 +211,8 @@ class reftestSuite(unittest.TestSuite):
                         if testClass == loadReftest:
                             if (testExpectedStatus == EXPECTED_FAIL or
                                 testExpectedStatus == EXPECTED_RANDOM):
-                                raise NameError("loadtest can't be marked as fails/random")
+                                raise NameError("loadtest can't be marked as \
+fails/random")
                             state = 6
                         elif testClass == scriptReftest:
                             state = 6
@@ -218,18 +231,26 @@ class reftestSuite(unittest.TestSuite):
                 # end for word
 
                 if state == 6:
-                    if (index == -1 or self.mListOfTests[index] == "1"):
-                        self.addTest(testClass(self,
-                                               aSelenium,
-                                               testType,
-                                               testDirectory,
-                                               testURL,
-                                               testURLRef,
-                                               testExpectedStatus,
-                                               testSlow))
-                    if index != -1:
-                        index = index + 1
-
+                    if aSelenium == None:
+                        print ",\"" + testURL + "\"",
+                    else:
+                        if (index == -1 or self.mListOfTests[index] == "1"):
+                            self.addTest(testClass(self,
+                                                   aSelenium,
+                                                   testType,
+                                                   testDirectory,
+                                                   testURL,
+                                                   testURLRef,
+                                                   testExpectedStatus,
+                                                   testSlow))
+                        if (index == -1):
+                            continue
+                        elif (self.mListOfTests[index] == "0" or
+                              self.mListOfTests[index] == "1"):
+                            index = index + 1
+                            continue
+                        else:
+                            raise NameError("invalid listOfTests")
             # end for line
 
         # end with open
@@ -336,7 +357,7 @@ class loadReftest(reftest):
             self.fail()
 
         (success, msg) = self.determineSuccess(self.mType, True)
-        msg += "(LOAD ONLY)\n";
+        msg += "(LOAD ONLY)\n"
         print msg
 
 class scriptReftest(reftest):
@@ -356,7 +377,7 @@ class scriptReftest(reftest):
 
         (success1, msg1) = self.mSelenium.getScriptReftestResult()
         (success, msg) = self.determineSuccess(self.mType, success1)
-        msg += "(SCRIPT REFTEST)";
+        msg += "(SCRIPT REFTEST)"
         if success:
             print msg
         else:
@@ -383,7 +404,7 @@ class treeReftest(reftest):
             self.fail()
 
         # Compare source == sourceRef
-        isEqual = (source == sourceRef);
+        isEqual = (source == sourceRef)
         (success, msg) = self.determineSuccess(self.mType, isEqual)
 
         if success:
@@ -399,7 +420,7 @@ class treeReftest(reftest):
                     self.mSelenium.encodeSourceToBase64(sourceRef) + "\n"
 
                 msg += "REFTEST   DIFF: "
-                diff = "";
+                diff = ""
                 generator = difflib.unified_diff(source.splitlines(1),
                                                  sourceRef.splitlines(1))
                 for line in generator:

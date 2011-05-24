@@ -56,27 +56,27 @@ t_RIGHTPARENTHESIS = r"\)"
 
 def t_OPERATINGSYSTEM(t):
     r"Windows|Linux|Mac"
-    t.value = (t.value == gSelenium.mOperatingSystem)
+    t.value = (gSelenium == None or t.value == gSelenium.mOperatingSystem)
     return t
 
 def t_BROWSER(t):
     r"Firefox|Safari|Chrome|Opera|MSIE|Konqueror"
-    t.value = (t.value == gSelenium.mBrowser)
+    t.value = (gSelenium == None or t.value == gSelenium.mBrowser)
     return t
 
 def t_BROWSERMODE(t):
     r"StandardMode|Quirks|IE7|IE8|IE9"
-    t.value = (t.value == gSelenium.mBrowserMode)
+    t.value = (gSelenium == None or t.value == gSelenium.mBrowserMode)
     return t
 
 def t_FONT(t):
     r"STIX|TeX|ImageTeX"
-    t.value = (t.value == gSelenium.mFont)
+    t.value = (gSelenium == None or t.value == gSelenium.mFont)
     return t
 
 def t_NATIVEMATHML(t):
     r"nativeMathML"
-    t.value = gSelenium.mNativeMathML
+    t.value = (gSelenium == None or gSelenium.mNativeMathML)
     return t
 
 lexer = lex.lex()

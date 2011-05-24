@@ -1,0 +1,258 @@
+/* -*- Mode: Javascript; tab-width: 2; indent-tabs-mode:nil; -*- */
+/* vim: set ts=2 et sw=2 tw=80: */
+/* ***** BEGIN LICENSE BLOCK *****
+   /* Version: Apache License 2.0
+   *
+   * Copyright (c) 2011 Design Science, Inc.
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   * http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *
+   * Contributor(s):
+   *   Frederic Wang <fred.wang@free.fr> (original author)
+   *
+   * ***** END LICENSE BLOCK ***** */
+
+/*
+ * Fill aParent with XML nodes representing the hierarchy given by aList
+ * @tparam Array   aList   an array containing the list of reftests
+ * @tparam Element aParent 
+ */
+function writeReftestList(aList, aParent)
+{
+    // Create a checkbox
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = true;
+    checkbox.addEventListener("click", checkboxClick, false);
+    aParent.appendChild(checkbox);
+
+	  if (aList.constructor == Array) { // directory
+        // create a button to open/close the directory
+        var button = document.createElement("input");
+        button.type = "button";
+        button.value = aList[0];
+        button.setAttribute("class", "directory");
+        button.addEventListener("click", directoryClick, false);
+        aParent.appendChild(button);
+
+        // create a sublist
+        var ul = document.createElement("ul");
+        ul.setAttribute("class", "closed");
+        aParent.appendChild(ul);
+
+        // and fill it recursively
+        for (var i = 1; i < aList.length; i++) {
+            var li = document.createElement("li");
+            ul.appendChild(li);
+            writeReftestList(aList[i], li)
+        }
+    } else { // test file
+        // create a span with the name of the test
+        var span = document.createElement("span");
+        span.setAttribute("class", "directory");
+        aParent.appendChild(span);
+        var text = document.createTextNode(aList);
+        span.appendChild(text);
+    }
+}
+
+/* Function called when a checkbox is checked/unchecked. If the user checks a
+ * checkbox, all the parent are also checked using propagateUp. If the checkbox
+ * is the one of a directory, all the descendants are also checked/unchecked.
+ * @tparam Event aEvent the checkbox click event
+ */
+function checkboxClick(aEvent)
+{
+    var checkbox = aEvent.target;
+    var ul = checkbox.parentNode.getElementsByTagName("ul")[0];
+    if (ul) {
+        var list = ul.getElementsByTagName("input");
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].type == "checkbox") {
+                list[i].checked = checkbox.checked;
+            }
+        }
+    }
+
+    if (checkbox.checked) {
+        propagateUp(checkbox);
+    }
+}
+
+/* Check all the checkboxes from bottom to top, starting from aCheckBox and
+ * ending to the one representing the /MathJax-test/ root
+ * @tparam Element aCheckBox the starting checkbox
+ */
+function propagateUp(aCheckBox)
+{
+    if (aCheckBox.parentNode.id != "root") {
+        parent = aCheckBox.parentNode.parentNode.parentNode;
+        checkbox = parent.getElementsByTagName("input")[0];
+        checkbox.checked = true;
+        propagateUp(checkbox);
+    }
+}
+
+/*
+ * Function called when the user clicks on a directory. The action is 
+ * folding/unfolding the directory by removing/attaching a "closed" class.
+ * @tparam Event aEvent the directory click event
+ */
+function directoryClick(aEvent)
+{
+    var text = aEvent.target;
+    var ul = text.parentNode.getElementsByTagName("ul")[0];
+    if (ul.hasAttribute("class")) {
+        ul.removeAttribute("class")
+    } else {
+        ul.setAttribute("class", "closed");
+    }
+}
+
+/*
+ * init selectReftests.html
+ */
+function init()
+{
+    // fill the root with the test suite hierarchy
+    writeReftestList(gTestSuite, document.getElementById("root"));
+}
+
+/*
+ * Generate the listOfTests string for a given directory/file
+ * @tparam Element aParent the XML element representing a directory/file
+ * @return An object with three properties all, none, str indicating whether
+ * all/none of the tests of the directory should be run and the listOfTests
+ * string for this directory.
+ */
+function generateListOfTests(aParent)
+{
+    var checkbox = aParent.getElementsByTagName("input")[0];
+    if (!checkbox.checked) {
+        return { all: false, none: true, str: "0"};
+    }
+    var ul = aParent.getElementsByTagName("ul")[0];
+    if (!ul) {
+        return { all: true, none: false, str: "1"};
+    }
+
+    var all = true;
+    var none = true;
+    var str = "";
+
+    var list = ul.childNodes;
+    for (var i = 0; i < list.length; i++) {
+        var result = generateListOfTests(list[i]);
+        if (!result.all) {
+            all = false;
+        }
+        if (!result.none) {
+            none = false;
+        }
+        str += result.str;
+    }
+    
+    if (all) {
+        str = "2";
+    } else if(none) {
+        str = "0";
+    } else {
+        str = "1" + str;
+    }
+    
+    return {all: all, none: none, str: str};
+}
+
+/*
+ * 
+ */
+function generate()
+{
+    var result = generateListOfTests(document.getElementById("root"));
+    if (result.all) {
+        // all tests
+        document.getElementById("listOfTests").value = "all";
+    } else if(result.none) {
+        // no tests
+        document.getElementById("listOfTests").value = "";
+    } else {
+        // selection of tests
+        // ignore the first character (representing the root /MathJax-test/)
+        document.getElementById("listOfTests").value = result.str.substr(1);
+    }
+}
+
+/* Check the checkboxes of aParent according to the string provided
+ * @tparam String  aList   the list of tests represented as a string
+ * @tparam Integer aIndex  the index in the string where aParent starts
+ * @tparam Element aParent the XML element representing a directory/file
+ * @return Integer new value for aIndex
+ * @exception "invalid listOfTests"
+ */
+function readListOfTests(aList, aIndex, aParent)
+{
+    var index = aIndex;
+
+    // check/uncheck the checkbox for this directory/file
+    var checkbox = aParent.getElementsByTagName("input")[0];
+    checkbox.checked = (aList[aIndex] != "0");
+    index++;
+
+    var ul = aParent.getElementsByTagName("ul")[0];
+    if (ul) {
+        // It's a directory, consider the subdirectories/files
+        if (aList[aIndex] == "1") {
+            // apply the actions recursively to this subdirectory
+            var list = ul.childNodes;
+            for (var i = 0; i < list.length; i++) {
+                index = readListOfTests(aList, index, list[i]);
+            }
+        } else if (aList[aIndex] == "0" or aList[aIndex] == "2") {
+            // check or uncheck all in this directory
+            var checked = (aList[aIndex] == "2");
+            var list = ul.getElementsByTagName("input");
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].type == "checkbox") {
+                    list[i].checked = checked;
+                }
+            }
+        } else {
+            throw "invalid listOfTests"
+        }
+    }
+    return index;
+}
+
+/*
+ *
+ */
+function read()
+{
+    var listOfTests = document.getElementById("listOfTests").value;
+    var root = document.getElementById("root");
+
+    if (listOfTests == "all") {
+        // check all the checkboxes
+        var list = root.getElementsByTagName("input");
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].type == "checkbox") {
+                list[i].checked = true;
+            }
+        }
+        return;
+    }
+
+    // check the checkboxes according to what is in the listOfTests string
+    // "1" is for the root root /MathJax-test/
+    readListOfTests("1" + listOfTests, 0, root);
+}
