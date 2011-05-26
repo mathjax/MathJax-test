@@ -22,71 +22,123 @@
    *
    * ***** END LICENSE BLOCK ***** */
 
+/**
+ *  @file
+ *  This file should be included in all test pages to allow usage of MathJax
+ *  and communication with the test launcher.
+ */
+
+/**
+ * @var String gMathJaxPath
+ * path to a "MathJax/" source
+ *
+ * @var Boolean gNativeMathML
+ * Whether the test page uses native MathML.
+ *
+ * @var String  gFont
+ * font used by the test page (STIX, TeX, ImageTex).
+ *
+ * @var Object  gConfigObject
+ * config object to apply over the default MathJax config.
+ *
+ * @var Object gQueryString
+ * an object with pairs attribute=value corresponding to the query string.
+ */
 var gMathJaxPath;
 var gNativeMathML = false;
 var gFont = "STIX";
 var gConfigObject;
+var gQueryString = {};
 
+/**
+  *  get the current URI of the test file, without query or hash string 
+  *
+  *  @treturn String the URI
+  */
 function getCurrentPath()
 {
     return location.protocol + "//" + location.host + location.pathname;
 }
 
+/**
+  *  get the current directory of the test file, which is the current URI
+  *  without the file name.
+  *
+  *  @treturn String the directory
+  */
 function getCurrentDirectory()
 {
     src = getCurrentPath();
     return src.substring(0, src.lastIndexOf("/") + 1);
 }
 
+/**
+ *  get the default MathJaxPath. It is determined by going to the same level as
+ *  MathJax-test/.
+ */
 function getDefaultMathJaxPath()
 {
     src = getCurrentPath();
     return src.substring(0, src.indexOf("MathJax-test")) + "MathJax/";
 }
 
+/**
+  * This function parses the parameters of the query string and stores
+  * them in the variable @ref gQueryString. At the same time, the following
+  * variables are set according to the values read:
+  *
+  * - mathJaxPath
+  * - font
+  * - nativeMathML
+  *
+  * @note If a parameter is repeated several times, only the last value is
+  * taken into account.
+  */
 function parseQueryString()
 {
     var query = location.search.substring(1);
-    var pairs = query.split("&");
-    for(var i = 0; i < pairs.length; i++) {
-        var pos = pairs[i].indexOf("=");
-        if (pos == -1) {
+    var params = query.split("&");
+    for(var i = 0; i < params.length; i++) {
+        var parts = params[i].split("=");
+        if (parts.length != 2) {
             continue;
         }
-        var paramname = pairs[i].substring(0, pos);
-        var paramvalue = pairs[i].substring(pos + 1);
-        if (paramname == "mathJaxPath") {
-            gMathJaxPath = paramvalue;
+        gQueryString[parts[0]] = parts[1];
+        if (parts[0] == "mathJaxPath") {
+            gMathJaxPath = parts[1];
         }
-        if (paramname == "font") {
-            gFont = paramvalue;
+        if (parts[0] == "font") {
+            gFont = parts[1];
         }
-        if (paramname == "nativeMathML") {
-            gNativeMathML = (paramvalue == "true");
+        if (parts[0] == "nativeMathML") {
+            gNativeMathML = (parts[1] == "true");
         }
     }
 }
 
+/**
+  * Get the value of a parameter from the query string
+  *
+  * @tparam  String aParamName the name of the parameter
+  *
+  * @treturn String            the value of the parameter or null if not present
+  *
+  */
 function getQueryString(aParamName)
 {
-    var query = location.search.substring(1);
-    var pairs = query.split("&");
-    for(var i = 0; i < pairs.length; i++) {
-        var pos = pairs[i].indexOf("=");
-        if (pos == -1) {
-            continue;
-        }
-        var paramname = pairs[i].substring(0, pos);
-        var paramvalue = pairs[i].substring(pos + 1);
-        if (paramname == aParamName) {
-            return paramvalue;
-            break;
-        }
+    if (gQueryString.hasOwnProperty(aParamName)) {
+        return gQueryString[aParamName];
     }
 
     return null;
 }
 
+/**
+  *  Return a default mathjax config object to initialize @ref gConfigObject
+  *  The value of @ref gNativeMathML and @ref gFont are taken into account.
+  *
+  *  @treturn Object the config object
+  */
 function defaultConfigObject()
 {
   return {
@@ -109,16 +161,27 @@ function defaultConfigObject()
   }
 }
 
+/**
+  * Used to access @ref gConfigObject in the test file
+  *
+  * @treturn Object @ref gConfigObject
+  */
 function getConfigObject()
 {
     return gConfigObject;
 }
 
+/**
+  * Function called by the load event, to set up various things for the test
+  * page and in particular insert MathJax scripts.
+  *
+  */
 function startMathJax()
 {
     // Width of screenshots used by Mozilla
     document.body.style.width = "800px";
     document.body.style.height = "1000px";
+    // remove border, margin and scrollbars
     document.body.style.border = document.body.style.margin = "0px";
     document.body.style.overflow = "hidden";
 
@@ -137,7 +200,7 @@ function startMathJax()
     script2.src = gMathJaxPath + "MathJax.js?config=default";
 
     var config =
-        'MathJax.Message.Remove();' + // XXXfred workaround for issue 115
+//        'MathJax.Message.Remove();' + // XXXfred workaround for issue 115
         'MathJax.Hub.Config(getConfigObject());' +
         'MathJax.Hub.Startup.onload();';
 
@@ -160,6 +223,11 @@ function startMathJax()
     head.appendChild(script2);
 }
 
+/**
+  * Add the test finalizer according to the type of test and in particular
+  * remove the reftest-wait class of the document.
+  *
+  */
 function finalizeTest()
 {
     // The finalize function is not directly called after postMathJax but put
@@ -183,4 +251,3 @@ if (window.addEventListener) {
 } else if (window.attachEvent){
     window.attachEvent("onload", startMathJax);
 }
-

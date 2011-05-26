@@ -1,27 +1,40 @@
 /* -*- Mode: Javascript; tab-width: 2; indent-tabs-mode:nil; -*- */
 /* vim: set ts=2 et sw=2 tw=80: */
 /* ***** BEGIN LICENSE BLOCK *****
-   /* Version: Apache License 2.0
-   *
-   * Copyright (c) 2011 Design Science, Inc.
-   *
-   * Licensed under the Apache License, Version 2.0 (the "License");
-   * you may not use this file except in compliance with the License.
-   * You may obtain a copy of the License at
-   *
-   * http://www.apache.org/licenses/LICENSE-2.0
-   *
-   * Unless required by applicable law or agreed to in writing, software
-   * distributed under the License is distributed on an "AS IS" BASIS,
-   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   * See the License for the specific language governing permissions and
-   * limitations under the License.
-   *
-   * Contributor(s):
-   *   Frederic Wang <fred.wang@free.fr> (original author)
-   *
-   * ***** END LICENSE BLOCK ***** */
+/* Version: Apache License 2.0
+ *
+ * Copyright (c) 2011 Design Science, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Contributor(s):
+ *   Frederic Wang <fred.wang@free.fr> (original author)
+ *
+ * ***** END LICENSE BLOCK ***** */
 
+/**
+ *  @file
+ *  This file is for test pages of type @ref reftest::treeReftest
+ */
+
+/**
+ * serialize a node
+ *
+ * @tparam  Node   aNode the node to serialize
+ *
+ * @treturn String       an XML string describing the node
+ *
+ */
 function serialize(aNode)
 {
     try {
@@ -43,14 +56,22 @@ function serialize(aNode)
     return source;
 }
 
+/**
+ * a basic serializer for browsers that do not support XMLSerializer
+ * it is not claimed to be complete.
+ *
+ * @tparam  Node   aNode the node to serialize
+ *
+ * @treturn String       an XML string describing the node
+ *
+ * @exception "serialization error"
+ *
+ */
 function serialize2(aNode)
 {
-    // a basic serializer for browsers that do not support XMLSerializer
-    // it is not claimed to be complete
-    // Versions of IE <= 8 do not know the Node constants
-
     var s = "";
 
+    // XXXfred: Versions of IE <= 8 do not know the Node constants
     switch(aNode.nodeType)
     {
     case 3: // Node.TEXT_NODE:
@@ -100,10 +121,22 @@ function serialize2(aNode)
     return s;
 }
 
-function getMathJaxSourceMathML(aNode, aClassName)
+/**
+ * Serialize a math element inside aNode. The function looks for
+ * the first descendant of class "MathJax_MathML" and then the first
+ * math descendant.
+ * 
+ * @tparam Node    aNode the scope of the search for the math element
+ *
+ * @treturn String       the serialized math element
+ *
+ * @exception "MathJax_MathML not found."
+ *
+ */
+function getMathJaxSourceMathML(aNode)
 {
     try {
-        var divs = aNode.getElementsByClassName(aClassName);
+        var divs = aNode.getElementsByClassName("MathJax_MathML");
         if (divs.length == 0) {
             throw "MathJax_MathML not found.";
         }
@@ -114,7 +147,7 @@ function getMathJaxSourceMathML(aNode, aClassName)
             // getElementsByClassName)
             var children = aNode.children;
             for (var i = 0; i < children.length; i++) {
-                if (children[i].className == aClassName) {
+                if (children[i].className == "MathJax_MathML") {
                     return serialize(children[i].
                                      getElementsByTagName("math")[0]);
                 }
@@ -126,6 +159,12 @@ function getMathJaxSourceMathML(aNode, aClassName)
     }
 }
 
+/**
+ * initialize the tree reftest
+ * Basically, we set the output to native MathML, so that we can get the math
+ * element and serialize it.
+ *
+ */
 function initTreeReftests()
 {
     var config = getConfigObject();
@@ -133,6 +172,14 @@ function initTreeReftests()
     config.jax = ["input/TeX", "input/MathML", "output/NativeMML"];
 }
 
+/**
+ * finalize the tree reftest
+ * The function gets the element of id "reftest-element", serialize the math
+ * inside and create a textarea of id "source" with the serialization.
+ *
+ * @exception "reftest-element not found"
+ *
+ */
 function finalizeTreeReftests()
 {
     var node = document.getElementById("reftest-element");
@@ -143,7 +190,7 @@ function finalizeTreeReftests()
     var textarea = document.createElement("textarea");
     textarea.cols = 80;
     textarea.rows = 20;
-    textarea.value = getMathJaxSourceMathML(node, "MathJax_MathML");
+    textarea.value = getMathJaxSourceMathML(node);
     textarea.id = "source";
     document.body.appendChild(textarea);
 

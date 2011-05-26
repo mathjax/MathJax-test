@@ -188,7 +188,7 @@ while (<>) {
     if ($state == 4) {
         if ($unparsedContent) {
             $parsedContent .= "\nREFTEST   <a href=\"".$root;
-            $parsedContent .= "Web/reftest-analyzer.xhtml#log=";
+            $parsedContent .= "web/reftest-analyzer.xhtml#log=";
             $parsedContent .= uri_escape(uri_escape($unparsedContent));
             $parsedContent .= "\">DIFF</a>";
         }

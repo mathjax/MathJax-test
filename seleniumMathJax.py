@@ -22,6 +22,12 @@
 #
 # ***** END LICENSE BLOCK *****
 
+"""
+@package seleniumMathJax
+This module implements a selenium object augmented with features specific to
+the MathJax testing framework.
+"""
+
 import time
 import selenium
 import string
@@ -29,8 +35,14 @@ import base64
 import StringIO
 from PIL import Image, ImageChops
 import difflib
+import urlparse
 
 class seleniumMathJax(selenium.selenium):
+
+    """
+    @class seleniumMathJax::seleniumMathJax
+    @brief a selenium object with MathJax testing framework features
+    """
 
     def __init__(self, aHost, aPort, aMathJaxPath, aMathJaxTestPath,
                  aOperatingSystem,
@@ -41,6 +53,56 @@ class seleniumMathJax(selenium.selenium):
                  aNativeMathML,
                  aTimeOut,
                  aFullScreenMode):
+        """
+        @fn __init__(self, aHost, aPort, aMathJaxPath, aMathJaxTestPath,
+                     aOperatingSystem,
+                     aBrowser,
+                     aBrowserMode,
+                     aBrowserStartCommand, 
+                     aFont,
+                     aNativeMathML,
+                     aTimeOut,
+                     aFullScreenMode)
+
+        @param aHost host of the Selenium server
+        @param aPort port of the Selenium server
+        @param aMathJaxPath Value to assign to mMathJaxPath
+        @param aMathJaxTestPath Path to MathJax-test
+        @param aOperatingSystem Value to assign to mOperatingSystem
+        @param aBrowser Value to assign to mBrowser
+        @param aBrowserMode Value to assign to mBrowserMode
+        @param aBrowserStartCommand start command of the browser
+        @param aFont Value to assign to mFont
+        @param aNativeMathML Value to assign to mNativeMathML
+        @param aTimeOut Value to assign to mTimeOut
+        @param aFullScreenMode Value to assign to mFullScreenMode
+
+        @property mMathJaxPath
+        Path to MathJax
+        @property mOperatingSystem
+        operating system of the slave machine: Windows, Linux, Mac
+        @property mBrowser
+        browser to run: Firefox, Safari, Chrome, Opera, MSIE, Konqueror
+        @property mBrowserMode
+        browser mode: StandardMode, Quirks, IE7, IE8, IE9
+        @property mFont
+        font to use: STIX, TeX, ImageTeX
+        @property mNativeMathML
+        whether the tests should use MathJax or the native MathML support of
+        the browser
+        @property mTimeOut
+        time allowed before aborting a test
+        @property mFullScreenMode
+        whether the browser should be put in full screen mode, when possible
+
+        @property mCanvas
+        A 4-tuple defining the left, upper, right, and lower pixel coordinate
+        of the browser canvas i.e the area to capture for screenshot.
+
+        @property mReftestSize
+        The dimension of reftest images. It is set to 800x1000 px, to follow
+        the size of screenshots used by Mozilla
+        """
         selenium.selenium.__init__(self, aHost, aPort, aBrowserStartCommand,
                                    aMathJaxTestPath)
         self.mMathJaxPath = aMathJaxPath
@@ -53,24 +115,46 @@ class seleniumMathJax(selenium.selenium):
         self.mFullScreenMode = aFullScreenMode
 
         self.mCanvas = None
-        # Size of screenshots used by Mozilla
         self.mReftestSize = (800, 1000)
 
-    def open(self, aUrl, aNativeMathML, aWaitTime = 0.5):
+    def open(self, aURI, aWaitTime = 0.5):
 
-        if string.find(aUrl, "?") == -1:
-            aUrl += "?"
-        else:
-            aUrl += "&"
+        """
+        @fn open(self, aURI, aWaitTime = 0.5)
+        @brief open a page in the browser
+        
+        @param aURI URI of the page to open
+        @param aWaitTime time to wait
 
-        aUrl += "font=" + self.mFont + "&"
+        @details This function open the specified page in the browser, appending
+        the testing framework options to the query string. Then it waits for the
+        'reftest-wait' removal and waits again aWaitTime.
 
-        if aNativeMathML:
-          aUrl += "nativeMathML=true&"
+        @note The framework options are appended to the query string and
+        @ref parseQueryString consider the last values found. Hence these
+        framework options override those specified in the reftest manifest,
+        in the URI of the test pages. If you want your test page to use a
+        different configuration, do it in a preMathJax() function. Also,
+        note that @ref initTreeReftests sets @ref gNativeMathML to true, so
+        the query string nativeMathML is ignored for tree reftests.
+        """
 
-        aUrl += "mathJaxPath=" + self.mMathJaxPath
+        # append the testing framework options to the URI
+        a = urlparse.urlparse(aURI)
+        query = a.query
+        query += "&font=" + self.mFont
+        if self.mNativeMathML:
+            query += "&nativeMathML=true"
+        query += "&mathJaxPath=" + self.mMathJaxPath
+        newURI = urlparse.urlunparse((a.scheme,
+                                      a.netloc,
+                                      a.path,
+                                      a.params,
+                                      query,
+                                      a.fragment))
 
-        selenium.selenium.open(self, aUrl)
+        # open the page and wait for 'reftest-wait' removal
+        selenium.selenium.open(self, newURI)
         self.wait_for_condition(
             "selenium.browserbot.getCurrentWindow().\
              document.documentElement.className != 'reftest-wait'",
@@ -78,16 +162,42 @@ class seleniumMathJax(selenium.selenium):
         time.sleep(aWaitTime)
 
     def start(self):
+        """
+        @fn start(self)
+        @brief start the testing instance
+
+        @details This function starts Selenium. Then it opens the blank.html
+        page and maximizes it. If the @ref mFullScreenMode is true, the page is
+        put in fullscreen mode. For MSIE, the document mode is set according
+        to @ref mBrowserMode.
+        Then the area @ref mCanvas is determined by changing the
+        background of the blank page from white to black and comparing the
+        difference between the two screenshots.
+
+
+        @note
+
+        - If the environment changed between the two screenshots (for example
+        the time displayed on your screen) then the canvas determination may
+        fail. That's why it is recommended to launch the browser in fullscreen
+        mode, when possible.
+
+        - The control of the browser (maximize, fullscreenmode, simulation
+        of keyboard press etc) by Selenium is not perfect and may fail. Sleep
+        time are inserted to try to synchronize the actions, possibly causing a
+        long delay before the tests actually start. Hopefully, this will be
+        improved in future versions of Selenium :-)
+        """
         selenium.selenium.start(self)
 
         # Open the blank page and maximize it
-        self.open("blank.html", self.mNativeMathML, 3)
+        self.open("blank.html", 3)
         self.window_focus()
         self.window_maximize()
         time.sleep(2)
 
         # For Konqueror, we remove some bars to get a true fullscreen mode
-        if self.mBrowser == "Konqueror":
+        if self.mFullScreenMode and self.mBrowser == "Konqueror":
             # Location Bar: alt+s, t, l
             self.key_down_native(18) # alt
             time.sleep(.1)
@@ -187,7 +297,41 @@ class seleniumMathJax(selenium.selenium):
             # We failed to determine the bounding box...
             self.mCanvas = self.mReftestSize
 
+    def stop(self):
+        """
+        @fn stop(self)
+        @brief stop the testing instance
+        @details This function leaves the full screenmode and stops selenium
+
+        @note It seems that Selenium fails to stop Konqueror and MSIE correctly.
+        If you open these browsers again after the test run, they will indicate
+        that they were not closed correctly.
+        """
+        if self.mFullScreenMode and \
+           (self.mBrowser == "Firefox" or self.mBrowser == "Chrome" or \
+            self.mBrowser == "Opera"   or self.mBrowser == "MSIE" or \
+            self.mBrowser == "Konqueror"):
+            # Leave FullScreen Mode: 
+            self.key_press_native(122) # F11
+            time.sleep(3)
+
+        selenium.selenium.stop(self)
+        
     def takeScreenshot(self, aWaitTime = 0.5):
+        """
+        @fn takeScreenshot(self, aWaitTime = 0.5)
+        @brief take a screenshot of the screen
+
+        @param aWaitTime time to wait
+        @return an image coded with the PIL structure
+
+        @details This function takes a screenshot using Selenium's 
+        capture_screenshot_to_string(). It waits aWaitTime and then extracts
+        the area given by @ref mCanvas.
+
+        @see http://www.pythonware.com/library/pil/handbook/
+        """
+
         # Remarks:
         #   - ImageGrab works on Windows only.
         #   - selenium::capture_entire_page_screenshot_to_string does not
@@ -201,6 +345,15 @@ class seleniumMathJax(selenium.selenium):
         return image
 
     def encodeImageToBase64(self, aImage):
+        """
+        @fn encodeImageToBase64(self, aImage)
+        @brief encode an image into a base64 format
+        
+        @param aImage an image coded with the PIL structure
+        @return a string with the Base64 format of the image, openable in a
+        browser.
+        """
+
         # XXXfred If aImage is smaller than self.mReftestSize, the rest of the
         # image is filled with black. Try to use white instead.
         stringIO = StringIO.StringIO()
@@ -210,15 +363,45 @@ class seleniumMathJax(selenium.selenium):
         return "data:image/png;base64," + base64.b64encode(stringIO.getvalue())
 
     def encodeSourceToBase64(self, aSource):
+        """
+        @fn encodeSourceToBase64(self, aSource)
+        @brief encode a source code into a base64 format
+        
+        @param aSource a source code in text format
+        @return a string with the Base64 format of the source, openable in a
+        browser.
+        """
         return ("data:text/plain;charset=utf-8;base64," +
                 base64.b64encode(aSource.encode("utf-8")))
 
     def getMathJaxSourceMathML(self):
+        """
+        @fn getMathJaxSourceMathML(self)
+        @brief retrieve a MathML source of a tree reftest
+        
+        @return the code source of the MathML element
+        
+        @details This function get the value of the textarea of id "source"
+        in the test page. This textarea is generated by
+        @ref finalizeTreeReftests 
+        """
         return self.get_eval(
             "selenium.browserbot.getCurrentWindow().\
              document.getElementById('source').value")
 
     def getScriptReftestResult(self):
+        """
+        @fn getScriptReftestResult(self)
+        @brief retrieve the result of a script reftest
+
+        @return a pair (success, msg)
+
+        @details The success is determined by verifying whether the class name
+        of the document is "reftest-success". msg is the value of the textarea
+        of id "results" in the test page, detailing the result of each test.
+        This textarea is inserted by @ref finalizeScriptReftests.
+        """
+
         # Strangely, get_eval converts to a string not a boolean...
         success = (self.get_eval(
             "selenium.browserbot.getCurrentWindow().\

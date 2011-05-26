@@ -1,31 +1,39 @@
 /* -*- Mode: Javascript; tab-width: 2; indent-tabs-mode:nil; -*- */
 /* vim: set ts=2 et sw=2 tw=80: */
 /* ***** BEGIN LICENSE BLOCK *****
-   /* Version: Apache License 2.0
-   *
-   * Copyright (c) 2011 Design Science, Inc.
-   *
-   * Licensed under the Apache License, Version 2.0 (the "License");
-   * you may not use this file except in compliance with the License.
-   * You may obtain a copy of the License at
-   *
-   * http://www.apache.org/licenses/LICENSE-2.0
-   *
-   * Unless required by applicable law or agreed to in writing, software
-   * distributed under the License is distributed on an "AS IS" BASIS,
-   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   * See the License for the specific language governing permissions and
-   * limitations under the License.
-   *
-   * Contributor(s):
-   *   Frederic Wang <fred.wang@free.fr> (original author)
-   *
-   * ***** END LICENSE BLOCK ***** */
+/* Version: Apache License 2.0
+ *
+ * Copyright (c) 2011 Design Science, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Contributor(s):
+ *   Frederic Wang <fred.wang@free.fr> (original author)
+ *
+ * ***** END LICENSE BLOCK ***** */
 
-/*
+/**
+ *  @file
+ *  This file is used by selectReftests.html to provide a user interface to
+ *  the test suite and allow to select some tests to execute.
+ */
+
+/**
  * Fill aParent with XML nodes representing the hierarchy given by aList
+ *
  * @tparam Array   aList   an array containing the list of reftests
- * @tparam Element aParent 
+ * @tparam Element aParent the element to fill
+ *
  */
 function writeReftestList(aList, aParent)
 {
@@ -66,10 +74,15 @@ function writeReftestList(aList, aParent)
     }
 }
 
-/* Function called when a checkbox is checked/unchecked. If the user checks a
- * checkbox, all the parent are also checked using propagateUp. If the checkbox
- * is the one of a directory, all the descendants are also checked/unchecked.
+/**
+ * Function called when a checkbox is checked/unchecked.
+ *
+ * If the user checks a checkbox, all the parent are also checked using
+ * propagateUp. If the checkbox is the one of a directory, all the descendants
+ * are also checked/unchecked.
+ *
  * @tparam Event aEvent the checkbox click event
+ *
  */
 function checkboxClick(aEvent)
 {
@@ -89,9 +102,12 @@ function checkboxClick(aEvent)
     }
 }
 
-/* Check all the checkboxes from bottom to top, starting from aCheckBox and
+/**
+ * Check all the checkboxes from bottom to top, starting from aCheckBox and
  * ending to the one representing the /MathJax-test/ root
+ *
  * @tparam Element aCheckBox the starting checkbox
+ *
  */
 function propagateUp(aCheckBox)
 {
@@ -103,10 +119,14 @@ function propagateUp(aCheckBox)
     }
 }
 
-/*
- * Function called when the user clicks on a directory. The action is 
- * folding/unfolding the directory by removing/attaching a "closed" class.
+/**
+ * Function called when the user clicks on a directory.
+ *
+ * The action is folding/unfolding the directory by removing/attaching a
+ * "closed" class.
+ *
  * @tparam Event aEvent the directory click event
+ *
  */
 function directoryClick(aEvent)
 {
@@ -119,8 +139,9 @@ function directoryClick(aEvent)
     }
 }
 
-/*
- * init selectReftests.html
+/**
+ * init selectReftests.html using @ref gTestSuite
+ * 
  */
 function init()
 {
@@ -128,21 +149,27 @@ function init()
     writeReftestList(gTestSuite, document.getElementById("root"));
 }
 
-/*
+/**
  * Generate the listOfTests string for a given directory/file
+ *
  * @tparam Element aParent the XML element representing a directory/file
- * @return An object with three properties all, none, str indicating whether
- * all/none of the tests of the directory should be run and the listOfTests
- * string for this directory.
+ *
+ * @treturn Object An object with three properties all, none, str indicating
+ * whether all/none of the tests of the directory should be run and the
+ * listOfTests string for this directory.
+ *
  */
 function generateListOfTests(aParent)
 {
     var checkbox = aParent.getElementsByTagName("input")[0];
     if (!checkbox.checked) {
+        // it's not checked, return "none"
         return { all: false, none: true, str: "0"};
     }
+
     var ul = aParent.getElementsByTagName("ul")[0];
     if (!ul) {
+        // it's a file and is selected, return "all"
         return { all: true, none: false, str: "1"};
     }
 
@@ -150,6 +177,7 @@ function generateListOfTests(aParent)
     var none = true;
     var str = "";
 
+    // now apply recursively to the subdirectories / files
     var list = ul.childNodes;
     for (var i = 0; i < list.length; i++) {
         var result = generateListOfTests(list[i]);
@@ -173,8 +201,8 @@ function generateListOfTests(aParent)
     return {all: all, none: none, str: str};
 }
 
-/*
- * 
+/**
+ *  generate a string listOfTests representing the selected tests
  */
 function generate()
 {
@@ -192,12 +220,17 @@ function generate()
     }
 }
 
-/* Check the checkboxes of aParent according to the string provided
+/**
+ * Check the checkboxes of aParent according to the string provided
+ *
  * @tparam String  aList   the list of tests represented as a string
- * @tparam Integer aIndex  the index in the string where aParent starts
+ * @tparam int     aIndex  the index in the string where aParent starts
  * @tparam Element aParent the XML element representing a directory/file
- * @return Integer new value for aIndex
+ *
+ * @treturn int            new value for aIndex
+ *
  * @exception "invalid listOfTests"
+ *
  */
 function readListOfTests(aList, aIndex, aParent)
 {
@@ -217,7 +250,7 @@ function readListOfTests(aList, aIndex, aParent)
             for (var i = 0; i < list.length; i++) {
                 index = readListOfTests(aList, index, list[i]);
             }
-        } else if (aList[aIndex] == "0" or aList[aIndex] == "2") {
+        } else if (aList[aIndex] == "0" || aList[aIndex] == "2") {
             // check or uncheck all in this directory
             var checked = (aList[aIndex] == "2");
             var list = ul.getElementsByTagName("input");
@@ -233,8 +266,8 @@ function readListOfTests(aList, aIndex, aParent)
     return index;
 }
 
-/*
- *
+/**
+ *  read the string listOfTests and check/uncheck the checkboxes accordingly
  */
 function read()
 {

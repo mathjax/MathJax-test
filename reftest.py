@@ -22,6 +22,12 @@
 #
 # ***** END LICENSE BLOCK *****
 
+"""
+@package reftest
+This module implements various types of reftests, controls the executions and
+reports the results.
+"""
+
 import time
 import unittest
 import seleniumMathJax
@@ -30,6 +36,23 @@ from PIL import Image, ImageChops
 import difflib
 import conditionParser
 
+""" 
+@var EXPECTED_PASS
+The test is expected to pass.
+
+@var EXPECTED_FAIL
+The test is expected to fail.
+
+@var EXPECTED_RANDOM
+The test is expected to pass or fail randomly.
+
+@var EXPECTED_DEATH
+The test is marked skip and is expected to cause a crash, hang etc.
+
+@var EXPECTED_IRRELEVANT
+The test is marked with a require field which is not fullfilled by the current
+configuration.
+"""
 EXPECTED_PASS = 0
 EXPECTED_FAIL  = 1
 EXPECTED_RANDOM = 2
@@ -38,23 +61,94 @@ EXPECTED_IRRELEVANT = 4
 
 class reftestSuite(unittest.TestSuite):
 
+    """
+    @class reftest::reftestSuite
+    @brief A class inheriting from Python's TestSuite, augmented with reftest
+    features.
+    @see http://docs.python.org/library/unittest.html#unittest.TestSuite
+    """
+
     def __init__(self, aRunSlowTests, aRunSkipTests, aListOfTests):
+        """
+        @fn __init__(self, aRunSlowTests, aRunSkipTests, aListOfTests)
+    
+        @param aRunSlowTests Value to assign to @ref mRunSlowTests
+        @param aRunSkipTests Value to assign to @ref mRunSkipTests
+        @param aListOfTests  Value to assign to @ref mListOfTests
+
+        @property mRunSlowTests
+        Indicate whether the suite should run tests marked slow.
+        
+        @property mRunSkipTests
+        Indicate whether the suite should run tests marked skip.
+
+        @property mListOfTests
+        A string made representing the list of tests to run, as generated
+        by selectReftests.xhtml.
+
+        @property mPreviousURIRef
+        The previous URI of a reference page called in a visual reftest.
+
+        @property mPreviousImageRef
+        The previous screenshot taken, the one of the page at mPreviousURIRef.
+        """
         unittest.TestSuite.__init__(self)
         self.mRunSlowTests = aRunSlowTests
         self.mRunSkipTests = aRunSkipTests
         self.mListOfTests = aListOfTests
-        self.mPreviousURLRef = None
+        self.mPreviousURIRef = None
         self.mPreviousImageRef = None
 
+    def printInfo(self, aString):
+        """
+        @fn printInfo(self, aString)
+        @brief print a reftest info to the standard output
+        
+        @param aString the message to print
+
+        @details Each line of the message is prefixed by "REFTEST INFO | ", so
+        that it will be kept by the output formater.
+        """
+        prefix = "REFTEST INFO | "
+        print prefix + aString.replace("\n", "\n" + prefix)
+
     def getDirectoryFromManifestFile(self, aManifestFile):
+        """
+        @fn getDirectoryFromManifestFile(self, aManifestFile)
+        @brief return a directory of a manifest file.
+
+        @param aManifestFile the URI of the manifest file
+        @return the directory containing the manifest file
+        """
         return aManifestFile[:(string.rfind(aManifestFile, "/") + 1)]
 
     def addReftests(self, aSelenium, aManifestFile, aIndex,
                     aInheritedStatus = EXPECTED_PASS):
-        # This function parses a reftest manifest file.
-        # http://mxr.mozilla.org
-        #                /mozilla-central/source/layout/tools/reftest/README.txt
+        """
+        @fn addReftests(self, aSelenium, aManifestFile, aIndex,
+                        aInheritedStatus = EXPECTED_PASS)
+        @brief This function parses a reftest manifest file and adds the tests
+        to the test suite.
+        @see   http://mxr.mozilla.org/mozilla-central/source/layout/tools/reftest/README.txt
 
+        @param aSelenium @ref seleniumMathJax object that will be used for
+        the test suite.
+        @param aManifestFile manifest file to parse
+        @param aIndex index of the manifest file inside the @ref mListOfTests
+        string. -1 means run all tests.
+        @param aInheritedStatus expected status inherited from ancestor manifest
+        files. @ref EXPECTED_PASS, @ref EXPECTED_FAIL etc
+        @return the new index inside @ref mListOfTests
+
+        @exception "invalid listOfTests" The @ref mListOfTests does not match
+        the file hierarchy given by the manifest file.
+        @exception "http syntax not supported" This Mozilla's syntax is used
+        in the manifest but it is not supported in this testing framework.
+        @exception "loadtest can't be marked as fails/random" A loadtest is
+        marked fails or random in the manifest.        
+        @exception "reftest syntax not supported" Other syntax errors in the
+        manifest.
+        """
         testDirectory = self.getDirectoryFromManifestFile(aManifestFile)
         index = aIndex
 
@@ -65,8 +159,8 @@ class reftestSuite(unittest.TestSuite):
                 state = 0
                 testClass = None
                 testType = None
-                testURL = None
-                testURLRef = None         
+                testURI = None
+                testURIRef = None         
                 testExpectedStatus = 0
                 testSlow = False
 
@@ -207,7 +301,7 @@ class reftestSuite(unittest.TestSuite):
 
                     if state == 4:
                         # 2. <url>
-                        testURL = word
+                        testURI = word
                         if testClass == loadReftest:
                             if (testExpectedStatus == EXPECTED_FAIL or
                                 testExpectedStatus == EXPECTED_RANDOM):
@@ -222,7 +316,7 @@ fails/random")
 
                     if state == 5:
                         # 2. <url_ref>
-                        testURLRef = word
+                        testURIRef = word
                         state = 6
                         continue
 
@@ -232,15 +326,15 @@ fails/random")
 
                 if state == 6:
                     if aSelenium == None:
-                        print ",\"" + testURL + "\"",
+                        print ",\"" + testURI + "\"",
                     else:
                         if (index == -1 or self.mListOfTests[index] == "1"):
                             self.addTest(testClass(self,
                                                    aSelenium,
                                                    testType,
                                                    testDirectory,
-                                                   testURL,
-                                                   testURLRef,
+                                                   testURI,
+                                                   testURIRef,
                                                    testExpectedStatus,
                                                    testSlow))
                         if (index == -1):
@@ -256,42 +350,106 @@ fails/random")
         # end with open
         return index
 
-    def takeReferenceScreenshot(self, aURLRef, aSelenium):
-        if (aURLRef == self.mPreviousURLRef):
+    def takeReferenceScreenshot(self, aURIRef, aSelenium):
+        """
+        @fn takeReferenceScreenshot(self, aURIRef, aSelenium)
+        @brief take a screenshot of a reference page for a visual test. If
+        the URI is the same as @ref mPreviousURIRef, then we return
+        @ref mPreviousImageRef immediatly. This is a cache system to speed up
+        the execution of tests sharing the same reference page.
+        
+        @param aURIRef   the URI of the reference page to capture
+        @param aSelenium @ref seleniumMathJax object in which the tests are
+        executed.
+        """
+        if (aURIRef == self.mPreviousURIRef):
             return self.mPreviousImageRef
 
-        aSelenium.open(aURLRef, aSelenium.mNativeMathML)
-        # self.mPreviousURLRef is only set after the page is loaded, so that
+        aSelenium.open(aURIRef)
+        # self.mPreviousURIRef is only set after the page is loaded, so that
         # the screenshot won't be used if the loading failed.
-        self.mPreviousURLRef = aURLRef
+        self.mPreviousURIRef = aURIRef
         self.mPreviousImageRef = aSelenium.takeScreenshot()
         return self.mPreviousImageRef
 
 class reftest(unittest.TestCase):
 
+    """
+    @class reftest::reftest
+    @brief The base class for reftests, inheriting from Python's TestCase
+    @see http://docs.python.org/library/unittest.html#unittest.TestCase
+    """
+
     def __init__(self,
                  aTestSuite,
-                 aSelenium, aType, aReftestDirectory, aURL, aURLRef,
+                 aSelenium, aType, aReftestDirectory, aURI, aURIRef,
                  aExpectedStatus, aSlow):
+        """
+        @fn __init__(self,
+                     aTestSuite,
+                     aSelenium, aType, aReftestDirectory, aURI, aURIRef,
+                     aExpectedStatus, aSlow)
+        @param aTestSuite Value to assign to @ref mTestSuite
+        @param aSelenium Value to assign to @ref mSelenium
+        @param aType Value to assigne to @ref mType
+        @param aReftestDirectory the directory of the test page
+        @param aURI the name of the test page
+        @param aURIRef the name of the reference page. It may be None if the
+        test is not a comparison.
+        @param aExpectedStatus Value to assign to @ref mExpectedStatus
+        @param aSlow Value to assign to @ref mSlow
+
+        @property mTestSuite
+        The @ref reftestSuite running the tests
+        @property mSelenium
+        The @ref seleniumMathJax object in which the tests are run
+        @property mType
+        the type of reftest, either "==", "!=" or None if there is no
+        comparison involved.
+        @property mURI
+        the URI of the page, given by aReftestDirectory + aURI
+        @property mURIRef
+        If aURIRef is given, it is aReftestDirectory + aURIRef. Otherwise it
+        is None.
+        @property mID
+        An ID for the test. Initialized with the name of the test page.
+        @property mExpectedStatus
+        expected status for this test. @ref EXPECTED_PASS, @ref EXPECTED_FAIL
+        etc
+        @property mSlow
+        whether this test is marked slow
+        """
         unittest.TestCase.__init__(self)
         self.mTestSuite = aTestSuite
         self.mSelenium = aSelenium
         self.mType = aType
-        self.mURL = aReftestDirectory + aURL
+        self.mURI = aReftestDirectory + aURI
 
-        if aURLRef == None:
-            self.mURLRef = None
+        if aURIRef == None:
+            self.mURIRef = None
         else:
-            self.mURLRef = aReftestDirectory + aURLRef
+            self.mURIRef = aReftestDirectory + aURIRef
 
-        self.mID = self.mURL
+        self.mID = self.mURI
         self.mExpectedStatus = aExpectedStatus
         self.mSlow = aSlow
 
     def id(self):
-       return self.mID
+        """
+        @fn id(self)
+        @return the test id @ref mID
+        """
+        return self.mID
 
     def shouldSkipTest(self):
+        """
+        @fn shouldSkipTest(self)
+        Check whether the test is irrelevant, expected to die or slow and what
+        is indicated in the configuration of @ref mTestSuite, in order to
+        determine if we should skip this test.
+
+        @return whether the test should be skipped
+        """
         if self.mExpectedStatus == EXPECTED_IRRELEVANT:
             msg = "REFTEST INFO | " + self.mID
             msg += " is irrelevant for this configuration\n"
@@ -315,6 +473,20 @@ class reftest(unittest.TestCase):
         return False
 
     def determineSuccess(self, aType, aResult):
+        """
+        @fn determineSuccess(self, aType, aResult):
+        @brief determine the success of the unit test
+
+        @param aType the type of the test "==", "!=" or None
+        @param aResult For comparison test, whether the test and reference are
+        equal. Otherwise, whether the test was successful.
+        @return a pair (success, msg)
+
+        @details The success takes into account the result given but also
+        whether it matches the expected status. For example if the test passed
+        but was expected to fail, the success is False. msg is a
+        string used in the test report, "REFTEST TEST-PASS | id | " for example.
+        """
 
         success = ((aType == None and aResult) or
                    (aType == "==" and aResult) or
@@ -343,13 +515,25 @@ class reftest(unittest.TestCase):
 
 class loadReftest(reftest):
 
+    """
+    @class reftest::loadReftest
+    @brief A class for load reftest
+    @details A load test simply loads the test page. If an exception happens
+    (crash, hang etc) the test fails.
+    """
+
     def runTest(self):
+
+        """
+        @fn runTest(self)
+        @brief run the loadReftest
+        """
 
         if self.shouldSkipTest():
             return
 
         try:
-            self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
+            self.mSelenium.open(self.mURI)
         except Exception, data:
             (success, msg) = self.determineSuccess(None, False)
             msg += repr(data)
@@ -362,13 +546,25 @@ class loadReftest(reftest):
 
 class scriptReftest(reftest):
 
+    """
+    @class reftest::scriptReftest
+    @brief A class for script reftest
+    @details A script test executes several Javascript tests on a page and
+    returns the success.
+    """
+
     def runTest(self):
+
+        """
+        @fn runTest(self)
+        @brief run the scriptReftest
+        """
 
         if self.shouldSkipTest():
             return
 
         try:
-            self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
+            self.mSelenium.open(self.mURI)
         except Exception, data:
             (success, msg) = self.determineSuccess(None, False)
             msg += repr(data)
@@ -380,22 +576,34 @@ class scriptReftest(reftest):
         msg += "(SCRIPT REFTEST)"
         if success:
             print msg
+            self.mTestSuite.printInfo(msg1)
         else:
-            msg += "\n" + msg1
             print msg
+            self.mTestSuite.printInfo(msg1)
             self.fail()
        
 class treeReftest(reftest):
 
+    """
+    @class reftest::treeReftest
+    @brief A class for tree reftest
+    @details A tree reftest compares the MathML source of two pages.
+    """
+
     def runTest(self):
+
+        """
+        @fn runTest(self)
+        @brief run the treeReftest
+        """
 
         if self.shouldSkipTest():
             return
 
         try:
-            self.mSelenium.open(self.mURL, True)
+            self.mSelenium.open(self.mURI)
             source = self.mSelenium.getMathJaxSourceMathML()
-            self.mSelenium.open(self.mURLRef, True)
+            self.mSelenium.open(self.mURIRef)
             sourceRef = self.mSelenium.getMathJaxSourceMathML()
         except Exception as data:
             (success, msg) = self.determineSuccess(None, False)
@@ -436,19 +644,30 @@ class treeReftest(reftest):
 
 class visualReftest(reftest):
 
+    """
+    @class reftest::visualReftest
+    @brief A class for visual reftest
+    @details A visual reftest compare the visual rendering of two pages.
+    """
+
     def runTest(self):
+
+        """
+        @fn runTest(self)
+        @brief run the visualReftest
+        """
 
         if self.shouldSkipTest():
             return
 
         try:
             # take the screenshot of the test
-            self.mSelenium.open(self.mURL, self.mSelenium.mNativeMathML)
+            self.mSelenium.open(self.mURI)
             image = self.mSelenium.takeScreenshot()
 
             # take the screenshot of the reftest using the one in memory if it
             # has been used just before.
-            imageRef = self.mTestSuite.takeReferenceScreenshot(self.mURLRef,
+            imageRef = self.mTestSuite.takeReferenceScreenshot(self.mURIRef,
                                                                self.mSelenium)
         except Exception, data:
             (success, msg) = self.determineSuccess(None, False)
