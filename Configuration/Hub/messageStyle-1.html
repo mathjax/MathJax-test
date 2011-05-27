@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
@@ -5,7 +6,7 @@
   <title>messageStyle</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
     License: Apache License 2.0 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
   <!-- See issue 98
      https://github.com/mathjax/MathJax/issues#issue/98 -->
@@ -19,12 +20,12 @@
 
     function getTestCases()
     {
-      return new Array(
+      return [
         newScriptReftestResult(
           "Message system should wait for the styles to be set before using the in-page message area",
           document.getElementById("id").innerHTML == "PASS"
         )
-      );
+      ];
     }    
   </script>
 

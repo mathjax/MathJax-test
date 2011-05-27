@@ -1,2 +1,3 @@
 include mi/reftest.list
+include mpadded/reftest.list
 include mspace/reftest.list

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
@@ -5,19 +6,23 @@
   <title>zoom box</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <script type="text/javascript" src="../header.js"></script>
   <script type="text/javascript">
     function preMathJax()
     {
        var config = getConfigObject();
-       config.jax = ["input/TeX", "output/HTML-CSS"];
+       config.jax = ["input/TeX", "output/NativeMML"];
        config.extensions.push("MathZoom.js");
+
+       // If the zoom box is large enough, it should render the same
+       // with or without scroll bars.
+       config.MathZoom = { styles: { "#MathJax_Zoom": { overflow : "none" } } };
     }
 
     function postMathJax()
     {
-      var math = document.getElementsByClassName("MathJax")[0];
+      var math = document.getElementsByTagName("math")[0];
       MathJax.Extension.MathZoom.Zoom(math, null)
     }
   </script>
@@ -25,13 +30,13 @@
 
 <body>
 
-  <!-- 
-       See issue 59
-       https://github.com/mathjax/MathJax/issues/59 -->
+  <!--
+       See issue 88
+       https://github.com/mathjax/MathJax/issues/88 -->
   <div>
     $$
-      \hspace{3em}
-      \tag{1}
+      \prod_{x\in\mathbb{X}} f(x) := \sum_{x\in\mathbb{X}} \mathbb{P}[x]\cdot
+      f(x)
     $$
   </div>
 </body>

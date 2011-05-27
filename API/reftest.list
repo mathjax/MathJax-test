@@ -1,6 +1,1 @@
-include about-box/reftest.list
-include math-menu/reftest.list
-
-# zoom-box-1.html makes Internet Explorer crash
-skip-if(MSIE) fails-if(Firefox) == zoom-box-1.html zoom-box-1-ref.html
-fails == zoom-box-2.html zoom-box-2-ref.html
+# no tests written yet

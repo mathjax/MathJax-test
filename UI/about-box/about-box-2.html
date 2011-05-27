@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
@@ -5,7 +6,7 @@
   <title>about box</title>
   <!-- Copyright (c) 2011 Design Science, Inc.
        License: Apache License 2.0 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <script type="text/javascript">
     function preMathJax()
     {
@@ -20,7 +21,7 @@
 
     function getTestCases()
     {
-      return new Array(
+      return [
         newScriptReftestResult(
           "Check the URI of the link to the MathJax home page",
           document.getElementsByTagName("a")[0] == "http://www.mathjax.org/"
@@ -28,7 +29,7 @@
         newScriptReftestResult(
           "Check the name of the link to the MathJax home page",
           document.getElementsByTagName("a")[0].innerHTML == "www.mathjax.org"
-        )
+        ]
       );
     }    
   </script>
