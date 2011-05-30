@@ -68,13 +68,22 @@ class reftestSuite(unittest.TestSuite):
     @see http://docs.python.org/library/unittest.html#unittest.TestSuite
     """
 
-    def __init__(self, aRunSlowTests, aRunSkipTests, aListOfTests):
+    def __init__(self,
+                 aRunSlowTests = True,
+                 aRunSkipTests = True,
+                 aListOfTests = None,
+                 aStartID = ""):
         """
-        @fn __init__(self, aRunSlowTests, aRunSkipTests, aListOfTests)
+        @fn __init__(self, ,
+                     aRunSlowTests = True,
+                     aRunSkipTests = True,
+                     aListOfTests = None,
+                     aStartID = "")
     
         @param aRunSlowTests Value to assign to @ref mRunSlowTests
         @param aRunSkipTests Value to assign to @ref mRunSkipTests
         @param aListOfTests  Value to assign to @ref mListOfTests
+        @param aStartID      Initial value of @ref mRunningTestID.
 
         @property mRunSlowTests
         Indicate whether the suite should run tests marked slow.
@@ -86,6 +95,15 @@ class reftestSuite(unittest.TestSuite):
         A string made representing the list of tests to run, as generated
         by selectReftests.xhtml.
 
+        @property mRunningTestID
+        Initially, the ID of the first test to run or an empty string. It is
+        updated later to reflect the current running test.
+
+        @property mStarted
+        Whether the testing instance has started. Set to True if aStartID is
+        empty. Otherwise it remains False until we meet aStartID. This is used
+        to recover testing instance.
+
         @property mPreviousURIRef
         The previous URI of a reference page called in a visual reftest.
 
@@ -96,6 +114,8 @@ class reftestSuite(unittest.TestSuite):
         self.mRunSlowTests = aRunSlowTests
         self.mRunSkipTests = aRunSkipTests
         self.mListOfTests = aListOfTests
+        self.mRunningTestID = aStartID
+        self.mStarted = (aStartID == "")
         self.mPreviousURIRef = None
         self.mPreviousImageRef = None
 
@@ -450,6 +470,15 @@ class reftest(unittest.TestCase):
 
         @return whether the test should be skipped
         """
+
+        if (not self.mTestSuite.mStarted):
+            if (self.mTestSuite.mRunningTestID == self.mID):
+                self.mTestSuite.mStarted = True
+            else:
+                return True
+
+        self.mTestSuite.mRunningTestID = self.mID
+
         if self.mExpectedStatus == EXPECTED_IRRELEVANT:
             msg = "REFTEST INFO | " + self.mID
             msg += " is irrelevant for this configuration\n"

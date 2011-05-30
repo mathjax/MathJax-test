@@ -4,3 +4,5 @@ include styleSheets/reftest.list
 
 == skipStartupTypeset-1.html skipStartupTypeset-1-ref.html
 fails script messageStyle-1.html
+fails script messageStyle-2.html
+script messageStyle-3.html

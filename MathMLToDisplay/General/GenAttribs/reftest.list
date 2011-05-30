@@ -1,7 +1,16 @@
+== attribQuote1.html attribQuote1-ref.html
+== class1.html class1-ref.html
+== class2.html class2-ref.html
+== href1.html href1-ref.html
+== href2.html href2-ref.html
+== href3.html href3-ref.html
+== id1.html id1-ref.html
 fails-if(!(Chrome||Firefox)) != link-1.html link-ref.html
 != link-2.html link-ref.html
 == style1.html style1-ref.html
 == style2.html style2-ref.html
 fails != style-1.html style-1-ref.html
 fails != style-2.html style-2-ref.html
+== xmllang1.html xmllang1-ref.html
+== xref1.html xref1-ref.html
 

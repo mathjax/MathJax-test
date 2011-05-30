@@ -28,6 +28,8 @@
  *  the test suite and allow to select some tests to execute.
  */
 
+var gNumberOfTests;
+
 /**
  * Fill aParent with XML nodes representing the hierarchy given by aList
  *
@@ -71,6 +73,7 @@ function writeReftestList(aList, aParent)
         aParent.appendChild(span);
         var text = document.createTextNode(aList);
         span.appendChild(text);
+        gNumberOfTests++;
     }
 }
 
@@ -145,8 +148,12 @@ function directoryClick(aEvent)
  */
 function init()
 {
+    gNumberOfTests = 0;
+    
     // fill the root with the test suite hierarchy
     writeReftestList(gTestSuite, document.getElementById("root"));
+
+    document.title += " (" + gNumberOfTests + " tests)";
 }
 
 /**

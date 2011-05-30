@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>Test rec-semantics1</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: MathML 2 Recommendation
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+        Content/SemanticMappingElements/semantics/rec-semantics1.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    <p>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <semantics>
+          <mrow>
+            <mrow>
+              <mi>a</mi>
+              <mfenced open="(" close=")">
+                <mrow><mi>x</mi><mo>+</mo><mn>5</mn></mrow>
+              </mfenced>
+            </mrow>
+          </mrow>
+          <annotation-xml cd="mathmlkeys" name="contentequiv"
+                          encoding="MathML-Content">
+            <apply>
+              <ci>a</ci>
+              <apply><plus/><ci>x</ci><cn>5</cn></apply>
+            </apply>
+          </annotation-xml>
+        </semantics>
+      </math>
+    </p>
+  </body>
+</html>

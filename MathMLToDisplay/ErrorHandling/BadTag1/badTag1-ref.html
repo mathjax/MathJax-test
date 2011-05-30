@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>badTag1</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: Design Science, Inc. (D. Doyle)
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+                                             ErrorHandling/BadTags/badTag1.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../treeReftests.js"></script>
+  </head>
+
+  <body>
+
+    <div id="reftest-element">
+      <math>
+        <msup>
+          <mn>5</mn>
+          <merror><mtext>Unknown node type: foo</mtext></merror>
+        </msup>
+        <mo>+</mo>
+        <msup>
+          <merror><mtext>Unknown node type: foo</mtext></merror>
+          <mn>5</mn>
+        </msup>
+        <mo>+</mo>
+        <mrow>
+          <mn>5</mn><merror><mtext>Unknown node type: foo</mtext></merror>
+          <mn>5</mn>
+        </mrow>
+        <mo>+</mo>
+        <merror><mtext>Unknown node type: foo</mtext></merror>
+      </math>
+    </div>
+
+  </body>
+</html>

@@ -158,7 +158,7 @@ def printReftestList():
     @fn printReftestList()
     @brief generate the file web/reftestList.js
     """
-    suite = reftest.reftestSuite(True, True, None)
+    suite = reftest.reftestSuite()
     fp = file("web/reftestList.js", "wb")
     stdout = sys.stdout
     sys.stdout = fp
@@ -259,6 +259,7 @@ reftestList.txt")
         runSlowTests = config.getboolean(section, "runSlowTests")
         runSkipTests = config.getboolean(section, "runSkipTests")
         listOfTests = config.get(section, "listOfTests")
+        startID = config.get(section, "startID")
        
         if ((len(browserList) > 1 or len(browserModeList) or len(fontList) > 1)
             and browserPath != "auto"):
@@ -295,7 +296,8 @@ reftestList.txt")
                         # Create the test suite
                         suite = reftest.reftestSuite(runSlowTests,
                                                      runSkipTests,
-                                                     listOfTests)
+                                                     listOfTests,
+                                                     startID)
                         if listOfTests == "all":
                             index = -1 # all tests
                         else:
@@ -348,6 +350,8 @@ reftestList.txt")
                         else:
                             suite.printInfo("Testing Instance Interrupted ; " +
                                             endTime.isoformat())
+                            suite.printInfo("To recover use parameter")
+                            suite.printInfo("startID = " + suite.mRunningTestID)
 
                         suite.printInfo("Testing Instance took " +
                                         str(math.trunc

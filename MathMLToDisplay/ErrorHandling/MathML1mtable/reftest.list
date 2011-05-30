@@ -1,0 +1,8 @@
+# All these tests use a deprecated syntax. Hence, we only do some load reftests
+# to verify that they don't cause a crash or hang...
+
+load deprecated-mtd1.html
+load deprecated-mtd2.html
+load deprecated-test3.html
+load mtable1.html
+

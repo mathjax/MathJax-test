@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>attribQuote1</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: Design Science, Inc. (D. Doyle)
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+                                             General/GenAttribs/attribQuote1.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fred: The description says "Test quotes and apostrophes"
+         so I assume the goal is to test syntax " and ' for attributes.  -->
+
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML"> 
+        <mi mathsize="small">A</mi> 
+        <mo>+</mo> 
+        <mi mathsize='big'>A</mi>
+      </math>
+    </div>
+
+  </body>
+</html>
