@@ -4,6 +4,7 @@ include ErrorHandling/reftest.list
 include General/reftest.list
 include Presentation/reftest.list
 include Topics/reftest.list
+include TortureTests/reftest.list
 
 == nobr-1.html nobr-1-ref.html
 == unit-1a.html unit-1-ref.html

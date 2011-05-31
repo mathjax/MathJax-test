@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>mfenced-03</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: George Chavchanidze, Opera Software ASA
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+                                               General/GenAttribs/mfenced-03.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <div style="position: absolute; left: 0px; top: 50px;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mfenced open="{" close="}" color="black">
+          <mphantom>
+            <mtable color="black">
+              <mtr>
+                <mtd><mi>A</mi></mtd>
+                <mtd><mi>B</mi></mtd>
+                <mtd><mi>C</mi></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mi>D</mi></mtd>
+                <mtd><mi>E</mi></mtd>
+                <mtd><mi>F</mi></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mi>G</mi></mtd>
+                <mtd><mi>H</mi></mtd>
+                <mtd><mi>I</mi></mtd>
+              </mtr>
+            </mtable>
+          </mphantom>
+        </mfenced>
+      </math> 
+   </div>
+
+    <div style="position: absolute; left: 0px; top: 50px;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mpadded voffset="-.25 height">
+          <mpadded mathbackground="red"
+                   width="2 width" height=".5 height">
+            <mphantom>
+              <mtable>
+                <mtr>
+                  <mtd><mi>A</mi></mtd>
+                  <mtd><mi>B</mi></mtd>
+                  <mtd><mi>C</mi></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><mi>D</mi></mtd>
+                  <mtd><mi>E</mi></mtd>
+                  <mtd><mi>F</mi></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><mi>G</mi></mtd>
+                  <mtd><mi>H</mi></mtd>
+                  <mtd><mi>I</mi></mtd>
+                </mtr>
+              </mtable>
+            </mphantom>
+          </mpadded>
+        </mpadded>
+      </math>
+    </div>
+
+  </body>
+</html>

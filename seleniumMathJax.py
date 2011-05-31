@@ -302,10 +302,6 @@ class seleniumMathJax(selenium.selenium):
         @fn stop(self)
         @brief stop the testing instance
         @details This function leaves the full screenmode and stops selenium
-
-        @note It seems that Selenium fails to stop Konqueror and MSIE correctly.
-        If you open these browsers again after the test run, they will indicate
-        that they were not closed correctly.
         """
         if self.mFullScreenMode and \
            (self.mBrowser == "Firefox" or self.mBrowser == "Chrome" or \
@@ -313,6 +309,31 @@ class seleniumMathJax(selenium.selenium):
             self.mBrowser == "Konqueror"):
             # Leave FullScreen Mode: 
             self.key_press_native(122) # F11
+            time.sleep(3)
+
+        # selenium.selenium.stop does not seem to close Konqueror/MSIE
+        # correctly. Leave the browser manually instead.
+        if (self.mBrowser == "Konqueror"):
+            # Close the two windows with Ctrl+q
+            self.key_down_native(17) # control
+            time.sleep(.1)
+            self.key_press_native(81) # q
+            time.sleep(.1)
+            self.key_press_native(81) # q
+            time.sleep(.1)
+            self.key_up_native(17) # control
+            time.sleep(.1)
+            time.sleep(3)
+        elif (self.mBrowser == "MSIE"):
+            # Close two tabs with Ctrl+F4
+            self.key_down_native(17) # control
+            time.sleep(.1)
+            self.key_press_native(115) # F4
+            time.sleep(.1)
+            self.key_press_native(115) # F4
+            time.sleep(.1)
+            self.key_up_native(17) # control
+            time.sleep(.1)
             time.sleep(3)
 
         selenium.selenium.stop(self)

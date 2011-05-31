@@ -1,0 +1,7 @@
+# These tests contain invalid MathML markup. Hence, we only do some load
+# reftests # to verify that they don't cause a crash or hang...
+
+load mrootE2.html
+load noChildPresentation.html
+
+

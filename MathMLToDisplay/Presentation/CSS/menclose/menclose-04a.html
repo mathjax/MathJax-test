@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>menclose-04</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: George Chavchanidze, Opera Software ASA
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+                                              General/GenAttribs/menclose-04.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    
+    <table style="position: absolute; left: 50px; top: 0px;
+                  width: 200px; height: 200px;">
+      <tr>
+        <td align="center" valign="middle">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+          <menclose notation="box">
+            <mphantom>
+              <mn>123456789</mn>
+            </mphantom>
+          </menclose>
+        </math>
+        </td>
+      </tr>
+    </table>
+    
+    <table style="position: absolute; left: 50px; top: 0px;
+                  border: 1px solid black;
+                  width: 200px; height: 200px;">
+      <tr>
+        <td align="center" valign="middle">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+          <mpadded width=".8 width" height="3 height" background="red">
+            <mphantom>
+              <mn>123456789</mn>
+            </mphantom>
+          </mpadded>
+        </math>
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>

@@ -1,2 +1,3 @@
+include CSS/reftest.list
 include GeneralLayout/reftest.list
 include TokenElements/reftest.list

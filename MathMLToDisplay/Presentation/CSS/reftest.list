@@ -1,0 +1,10 @@
+include menclose/reftest.list
+include mfenced/reftest.list
+include mfrac/reftest.list
+include mover/reftest.list
+include mprescripts/reftest.list
+include mrow/reftest.list
+include ms/reftest.list
+include mspace/reftest.list
+include semantics/reftest.list
+

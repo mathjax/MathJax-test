@@ -1,0 +1,54 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>white10</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: Design Science, Inc. (E. Cannon, E. Tabacman, R.Miner)
+        Source: W3C MathML Test Suite
+                http://www.w3.org/Math/testsuite/build/main/
+                                                   Topics/WhiteSpace/white10.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+ 
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>H</mi>
+        <!-- 	Thinner than a thin space -->
+        <mspace width="verythinmathspace"></mspace>  <!-- 1/9 em -->
+        <mi>H</mi>
+        <!-- One fifth (sometimes one sixth) of an em wide. -->
+        <mspace width="thinmathspace"></mspace>  <!-- 1/6 em -->
+        <mi>H</mi>
+        <!-- Used in mathematical formulae. Four-eighteenths of an em -->
+        <mspace width="mediummathspace"></mspace>  <!-- 4/18 em -->
+        <mi>H</mi>
+        <!-- One fourth of an em wide -->
+        <mspace width=".25em"></mspace>  <!-- 1/4 em -->
+        <mi>H</mi>
+        <!-- 	Thinner than a thin space -->
+        <mspace width="negativeverythinmathspace"></mspace>  <!-- 1/9 em -->
+        <mi>H</mi>
+        <!-- One fifth (sometimes one sixth) of an em wide. -->
+        <mspace width="negativethinmathspace"></mspace>  <!-- -1/6 em -->
+        <mi>H</mi>
+        <!-- Used in mathematical formulae. Four-eighteenths of an em -->
+        <mspace width="negativemediummathspace"></mspace>  <!-- -4/18 em -->
+        <mi>H</mi>
+        <!-- One fourth of an em wide -->
+        <mspace width="-.25em"></mspace>  <!-- -1/4 em -->
+        <mi>H</mi>
+        <!-- LINE FEED -->
+        <mspace linebreak="newline"></mspace>
+        <mi>H</mi>
+      </math>
+    </div>
+
+  </body>
+</html>

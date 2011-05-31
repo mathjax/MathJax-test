@@ -1,3 +1,7 @@
-tree== badTag1.html badTag1.html-ref.html
-tree== badTagPhantom2.html badTagPhantom2-ref.html
-tree== nestedMath3.html nestedMath3-ref.html
+# Some tree reftests to verify that the pages generate <merror>'s.
+# The references reflect MathJax's behaviour, other renderers may behave
+# differently.
+
+require(!nativeMathML) tree== badTag1.html badTag1-ref.html
+require(!nativeMathML) tree== badTagPhantom2.html badTagPhantom2-ref.html
+require(!nativeMathML) tree== nestedMath3.html nestedMath3-ref.html
