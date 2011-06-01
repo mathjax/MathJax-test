@@ -1,10 +1,31 @@
+# The tests in this directory were imported from the tests Presentation/CSS/
+# in the W3C MathML test suite, adapted and converted into reftests.
+
+# not imported: maction, merror, msqrt
+
+# Some of the original == tests use mphantom to hide some parts of the formula
+# but unfortunately the spaces produced are detected. To preserve the same
+# rendering, vertical and horizontal alignments have been added.
+
+# Also, the original author sometimes says "Right hand side of equation should
+# look like mirrored copy of left hand side". To convert these tests into
+# reftest, the experimental CSS "transform" property has been used. However,
+# the tests and references do not seem to match exactly (errors in the tests
+# and/or bugs in MathJax?). These tests are disabled for now.
+
 include menclose/reftest.list
 include mfenced/reftest.list
 include mfrac/reftest.list
 include mover/reftest.list
-include mprescripts/reftest.list
+# include mprescripts/reftest.list
 include mrow/reftest.list
 include ms/reftest.list
 include mspace/reftest.list
+include msub/reftest.list
+include msubsup/reftest.list
+include msup/reftest.list
+# include mtable/reftest.list
+include munder/reftest.list
+include munderover/reftest.list
 include semantics/reftest.list
 

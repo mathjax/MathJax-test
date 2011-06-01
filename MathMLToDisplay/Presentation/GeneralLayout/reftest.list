@@ -3,6 +3,7 @@ include menclose/reftest.list
 include merror/reftest.list
 include mfenced/reftest.list
 include mfrac/reftest.list
+include mpadded/reftest.list
 include mphantom/reftest.list
 include mstyle/reftest.list
 

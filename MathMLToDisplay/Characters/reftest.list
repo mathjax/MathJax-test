@@ -1,3 +1,5 @@
+include Variants/reftest.list
+
 fails-if(!Firefox) tree== entities-1.html entities-1-ref.html
 fails require(TeX||ImageTeX) == greek-1.html greek-1-ref.html
 fails require(TeX||ImageTeX) == greek-2.html greek-2-ref.html

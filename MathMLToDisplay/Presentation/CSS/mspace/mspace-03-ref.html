@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>mspace-03</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: George Chavchanidze, Opera Software ASA
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+                                           Presentation/CSS/mspace/mspace-03.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <div style="position: absolute; left: 5px; top: 5px;
+                border: 1px solid black;
+                width: 31px; height: 120px;" >
+    </div>
+
+    <div style="position: absolute; left: 5px; top: 5px;" >
+      <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mrow>
+          <mspace width="30px" height="15px" depth="15px"
+                  mathbackground="red"/>
+          <mspace width="thinmathspace"/>
+          <mspace width="30px" height="15px" depth="15px"
+                  mathbackground="blue"/>
+        </mrow>
+      </math>
+    </div>
+
+  </body>
+</html>

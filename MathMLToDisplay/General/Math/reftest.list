@@ -3,7 +3,11 @@ fails == dir-1.html dir-1-ref.html
 == display-2.html display-2-ref.html
 == display-3.html display-3-ref.html
 == emptymath2.html emptymath2-ref.html
+!= math1.html math1-ref.html
+!= math3.html math3-ref.html
+!= mathAdisplay2.html mathAdisplay2-ref.html
 == mathAdisplay2.html mathAdisplay2-ref.html
+== mathAmacros1.html mathAmacros1-ref.html
 fails == mathAmode1.html mathAmode1-ref.html
 == math-as-mstyle-1-1.html math-as-mstyle-1-1-ref.html
 == math-as-mstyle-1-2.html math-as-mstyle-1-2-ref.html

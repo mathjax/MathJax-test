@@ -1,9 +1,9 @@
 != mfenced-01.html mfenced-01-02-03-ref.html
 != mfenced-02.html mfenced-01-02-03-ref.html
 != mfenced-03.html mfenced-01-02-03-ref.html
-== mfenced-04.html mfenced-04-ref.html
-== mfenced-05.html mfenced-05-ref.html
-== mfenced-06.html mfenced-06-ref.html
+# == mfenced-04.html mfenced-04-ref.html
+# == mfenced-05.html mfenced-05-ref.html
+# == mfenced-06.html mfenced-06-ref.html
 == mfenced-07.html mfenced-07-ref.html
 != mfenced-08a.html mfenced-08-ref.html
 != mfenced-08b.html mfenced-08-ref.html
