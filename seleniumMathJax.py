@@ -128,7 +128,8 @@ class seleniumMathJax(selenium.selenium):
 
         @details This function open the specified page in the browser, appending
         the testing framework options to the query string. Then it waits for the
-        'reftest-wait' removal and waits again aWaitTime.
+        'reftest-wait' removal and waits again aWaitTime. If 'reftest-error' is
+        found, then a javascript error happened and is reported.
 
         @note The framework options are appended to the query string and
         @ref parseQueryString consider the last values found. Hence these
@@ -137,11 +138,13 @@ class seleniumMathJax(selenium.selenium):
         different configuration, do it in a preMathJax() function. Also,
         note that @ref initTreeReftests sets @ref gNativeMathML to true, so
         the query string nativeMathML is ignored for tree reftests.
+        @raise Exception The javascript error that happened in the page.
         """
 
         # append the testing framework options to the URI
         a = urlparse.urlparse(aURI)
         query = a.query
+        query += "&errorHandler=true"
         query += "&font=" + self.mFont
         if self.mNativeMathML:
             query += "&nativeMathML=true"
@@ -160,6 +163,11 @@ class seleniumMathJax(selenium.selenium):
              document.documentElement.className != 'reftest-wait'",
             self.mTimeOut)
         time.sleep(aWaitTime)
+        if (self.get_eval("selenium.browserbot.getCurrentWindow().\
+             document.documentElement.className") == "reftest-error"):
+            message = self.get_eval("selenium.browserbot.getCurrentWindow().\
+             document.documentElement.lastChild.nodeValue")
+            raise Exception, message
 
     def start(self):
         """

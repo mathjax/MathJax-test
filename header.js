@@ -43,12 +43,16 @@
  *
  * @var Object gQueryString
  * an object with pairs attribute=value corresponding to the query string.
+ *
+ * @var Boolean gErrorHandler
+ * Whether the custom error handler should be used.
  */
 var gMathJaxPath;
 var gNativeMathML = false;
 var gFont = "STIX";
 var gConfigObject;
 var gQueryString = {};
+var gErrorHandler = false;
 
 /**
   *  get the current URI of the test file, without query or hash string 
@@ -112,6 +116,9 @@ function parseQueryString()
         }
         if (parts[0] == "nativeMathML") {
             gNativeMathML = (parts[1] == "true");
+        }
+        if (parts[0] == "errorHandler") {
+            gErrorHandler = (parts[1] == "true");
         }
     }
 }
@@ -230,6 +237,11 @@ function startMathJax()
   */
 function finalizeTest()
 {
+    if (document.documentElement.className == "reftest-error") {
+        // do not finalize the test if an error happened.
+        return;
+    }
+
     // The finalize function is not directly called after postMathJax but put
     // in the queue, just in case new actions have been added during the test.
     MathJax.Hub.Queue(function () {
@@ -243,8 +255,39 @@ function finalizeTest()
     });
 }
 
+/**
+  * A custom error handler, that allows seleniumMathJax::open to stop
+  * immediatly and report an error, instead of waiting the timeout.
+  *
+  * @param aErrorMessage error message reported
+  * @param aURL url of the script where the error happened
+  * @param aLineNumber line number where the error happened
+  *
+  * @treturn Boolean true
+  *
+  * @note we store the message in a comment at the end of the <html> node
+  * instead of a textarea inside <body>, because some javascript errors may
+  * prevent document.body to exist. When doing manual testing, we are supposed
+  * to use the browser debugger directly, so such a textarea is not useful.
+  */
+function errorHandler(aErrorMessage, aURL, aLineNumber)
+{
+    var data = aErrorMessage;
+    data += " (" + aURL + ", line " + aLineNumber + ")";
+    var comment = document.createComment(data);
+    document.documentElement.appendChild(comment);
+
+    document.title += " (error)";
+    document.documentElement.className = "reftest-error";
+
+    return true;
+}
+
 gMathJaxPath = getDefaultMathJaxPath();
 parseQueryString();
+if (gErrorHandler) {
+    window.onerror = errorHandler;
+}
 gConfigObject = defaultConfigObject();
 if (window.addEventListener) {
     window.addEventListener("load", startMathJax, false);

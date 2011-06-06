@@ -100,9 +100,17 @@ function serialize2(aNode)
         s += "<";
         s += aNode.tagName;
         var attributes = aNode.attributes;
+        // var attributesCopy = new Array();
         for (var i = 0; i < attributes.length; i++) {
-            s += serialize2(attributes[i]);
+          s += serialize2(attributes[i]);
+          // attributesCopy.push(serialize2(attributes[i]));
         }
+
+        // attributesCopy.sort();
+        // for (var i = 0; i < attributesCopy.length; i++) {
+        //  s += attributesCopy[i];
+        //}
+
         s += ">";
         var children = aNode.childNodes;
         for (var i = 0; i < children.length; i++) {

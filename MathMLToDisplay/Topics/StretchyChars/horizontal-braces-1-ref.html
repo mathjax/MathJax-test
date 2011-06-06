@@ -14,16 +14,15 @@
 
    <!-- See issue 112
         https://github.com/mathjax/MathJax/issues/closed#issue/112 -->
-   <div style="position: absolute; left: 10px; right: 10px;">
-   <math mathbackground="black">
+   <math>
      <mtext>__</mtext>
-     <mtext>|</mtext>
+     <mphantom>
+       <mpadded height="0" depth="0">
+	 <mtext>|</mtext>
+       </mpadded>
+     </mphantom>
      <mtext>__</mtext>
    </math>
-   </div>
-
-   <div style="position: absolute; top: 5px; left: 0px;
-               width: 500px; height: 200px; background: red"></div>
 
   </body>
 </html>

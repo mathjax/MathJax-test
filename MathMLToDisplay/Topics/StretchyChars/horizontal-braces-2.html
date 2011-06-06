@@ -14,24 +14,23 @@
 
    <!-- See issue 112
         https://github.com/mathjax/MathJax/issues/closed#issue/112 -->
-   <div style="position: absolute; top: 0px; left: 10px; right: 10px;">
-   <math mathbackground="black">
+   <math>
      <mtext>__</mtext>
-     <mover>
-       <mtext></mtext>
-       <mo stretchy="true">&#x23DE;</mo>
-     </mover>
-     <mtext>__</mtext>
-     <munder>
-       <mtext></mtext>
-       <mo stretchy="true">&#x23DF;</mo>
-     </munder>
+     <mphantom>
+       <mpadded height="0" depth="0">
+	 <mover>
+	   <mtext></mtext>
+	   <mo stretchy="true">&#x23DE;</mo>
+	 </mover>
+	 <mtext>__</mtext>
+	 <munder>
+	   <mtext></mtext>
+	   <mo stretchy="true">&#x23DF;</mo>
+	 </munder>
+       </mpadded>
+     </mphantom>
      <mtext>__</mtext>
    </math>
-   </div>
-
-   <div style="position: absolute; top: 5px; left: 0px;
-               width: 500px; height: 200px; background: red"></div>
 
   </body>
 </html>

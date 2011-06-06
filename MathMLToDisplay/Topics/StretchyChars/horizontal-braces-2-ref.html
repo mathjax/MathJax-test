@@ -14,18 +14,17 @@
 
    <!-- See issue 112
         https://github.com/mathjax/MathJax/issues/closed#issue/112 -->
-   <div style="position: absolute; left: 10px; right: 10px;">
-   <math mathbackground="black">
+   <math>
      <mtext>__</mtext>
-     <mpadded voffset="thinmathspace"><mo>&#x23DE;</mo></mpadded>
-     <mtext>__</mtext>
-     <mpadded voffset="-100%"><mo>&#x23DF;</mo></mpadded>
+     <mphantom>
+       <mpadded height="0" depth="0">
+	 <mpadded voffset="thinmathspace"><mo>&#x23DE;</mo></mpadded>
+	 <mtext>__</mtext>
+	 <mpadded voffset="-100%"><mo>&#x23DF;</mo></mpadded>
+       </mpadded>
+     </mphantom>
      <mtext>__</mtext>
    </math>
-   </div>
-
-   <div style="position: absolute; top: 5px; left: 0px;
-               width: 500px; height: 200px; background: red"></div>
 
   </body>
 </html>

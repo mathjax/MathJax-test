@@ -1,2 +1,3 @@
+include CommonAttributes/reftest.list
 include mi/reftest.list
 include mspace/reftest.list
