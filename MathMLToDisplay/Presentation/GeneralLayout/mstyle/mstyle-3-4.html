@@ -1,0 +1,30 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>mo: accent</title>
+    <!-- Copyright (C) 2010-2011 Frederic Wang
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mstyle accent="false">
+        <mover>
+          <!-- We assume &#x23de; has accent=true in the operator dictionary -->
+          <mrow>
+            <mi>x</mi>
+            <mo>+</mo>
+            <mi>y</mi>
+            <mo>+</mo>
+            <mi>z</mi>
+          </mrow>
+          <mo>&#x23de;</mo>
+        </mover>
+      </mstyle>
+    </math>
+  </body>
+</html>

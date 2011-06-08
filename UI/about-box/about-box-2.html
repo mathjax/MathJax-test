@@ -24,13 +24,11 @@
       return [
         newScriptReftestResult(
           "Check the URI of the link to the MathJax home page",
-          document.getElementsByTagName("a")[0] == "http://www.mathjax.org/"
-        ),
+          document.getElementsByTagName("a")[0] == "http://www.mathjax.org/"),
         newScriptReftestResult(
           "Check the name of the link to the MathJax home page",
-          document.getElementsByTagName("a")[0].innerHTML == "www.mathjax.org"
-        ]
-      );
+          document.getElementsByTagName("a")[0].innerHTML == "www.mathjax.org")
+        ];
     }    
   </script>
   <script type="text/javascript" src="../../header.js"></script>

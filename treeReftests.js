@@ -37,16 +37,12 @@
  */
 function serialize(aNode)
 {
-    try {
-        var source = (new XMLSerializer()).serializeToString(aNode);
-    } catch(e) {
-        if (e instanceof TypeError) {
-            // XXXfred: Internet Explorer only supports XMLSerializer since
-            // version 9
-            source = serialize2(aNode);
-        } else {
-            throw e;
-        }
+    var source;
+    if (MathJax.Hub.Browser.isMSIE) {
+        // XXXfred: Internet Explorer does not support XMLSerializer
+        source = serialize2(aNode);
+    } else {
+        source = (new XMLSerializer()).serializeToString(aNode);
     }
 
     // add linebreaks to help diffing source
@@ -143,28 +139,33 @@ function serialize2(aNode)
  */
 function getMathJaxSourceMathML(aNode)
 {
-    try {
-        var divs = aNode.getElementsByClassName("MathJax_MathML");
-        if (divs.length == 0) {
-            throw "MathJax_MathML not found.";
-        }
-        return serialize(divs[0].getElementsByTagName("math")[0]);
-    } catch(e) {
-        if (e instanceof TypeError) {
-            // XXXfred Internet Explorer lacks support for
-            // getElementsByClassName)
-            var children = aNode.children;
-            for (var i = 0; i < children.length; i++) {
-                if (children[i].className == "MathJax_MathML") {
-                    return serialize(children[i].
-                                     getElementsByTagName("math")[0]);
+    if (MathJax.Hub.Browser.isMSIE) {
+        // XXXfred Internet Explorer lacks support for getElementsByClassName
+        var children = aNode.children;
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].className == "MathJax_MathML") {
+                var mathNodes;
+                mathNodes = children[i].getElementsByTagName("math");
+                if (mathNodes.length == 0) {
+                    // XXXfred getElementsByTagName fails with IE9
+                    mathNodes = children[i].querySelectorAll("math");
+                }
+                if (mathNodes.length > 0) {
+                    return serialize(mathNodes[0]);
                 }
             }
-            throw "MathJax_MathML not found.";
-        } else {
-            throw e;
+        }
+    } else {
+        var divs = aNode.getElementsByClassName("MathJax_MathML");
+        if (divs.length > 0) {
+            var mathNodes = divs[0].getElementsByTagName("math");
+            if (mathNodes.length > 0) {
+                return serialize(mathNodes[0]);
+            }
         }
     }
+
+    throw "MathJax_MathML not found.";
 }
 
 /**

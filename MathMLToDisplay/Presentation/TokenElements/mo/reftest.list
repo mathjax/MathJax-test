@@ -1,0 +1,26 @@
+== mo1.html mo1-ref.html
+== mo2.html mo2-ref.html
+== mo3.html mo3-ref.html
+== mo4.html mo4-ref.html
+!= mo5.html mo5-ref.html
+== mo6.html mo6-ref.html
+== mo7.html mo7-ref.html
+!= mo8.html mo8-ref.html
+== moAaccent9.html moAaccent9-ref.html
+!= moAaccent10a.html moAaccent10a-ref.html
+== moAaccent10b.html moAaccent10b-ref.html
+== moAform11.html moAform11-ref.html
+== moAlargeop12.html moAlargeop12-ref.html
+== moAlrspace13.html moAlrspace13-ref.html
+!= moAminmax14a.html moAminmax14-ref.html
+!= moAminmax14b.html moAminmax14-ref.html
+== moAminmax14c.html moAminmax14-ref.html
+== moAmovable15.html moAmovable15-ref.html
+== moAprime16.html moAprime16-ref.html
+== moAsep17.html moAsep17-ref.html
+!= moAstretchy18a.html moAstretchy18-ref.html
+== moAstretchy18b.html moAstretchy18-ref.html
+!= moAsymmetric19a.html moAsymmetric19-ref.html
+== moAsymmetric19b.html moAsymmetric19-ref.html
+== moSminmax20.html moSminmax20-ref.html
+

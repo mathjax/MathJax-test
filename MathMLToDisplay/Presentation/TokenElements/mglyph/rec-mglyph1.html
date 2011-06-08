@@ -1,0 +1,72 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>rec-mglyph1</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: Dave Doyle, Design Science
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+                               Presentation/TokenElements/mglyph/rec-mglyph1.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function findGlyph(aCharacter, aAltText)
+      {
+        // XXXfred This won't work with MSIE
+
+        if (aCharacter) {
+          var list = document.body.getElementsByClassName("mglyph");
+          for (var i = 0; i < list.length; i++) {
+             if (list[i].innerHTML == aCharacter) {
+                return true;
+             }
+          }
+        }
+
+        list = document.body.getElementsByClassName("mtext");
+        for (var i = 0; i < list.length; i++) {
+           if (list[i].innerHTML == aAltText) {
+              return true;
+           }
+        }
+
+        return false;
+      }
+
+      function getTestCases()
+      {
+      return [
+        newScriptReftestResult("mglyph(font-family=my-braid-font)",
+                               findGlyph(null, "23braid")),
+        newScriptReftestResult("mglyph(font-family=Curlz MT)",
+                               findGlyph("A", "script 'A'")),
+        newScriptReftestResult("mglyph(font-family=Arial)",
+                               findGlyph("a", "lowercase 'a'"))
+      ];
+      }
+    </script>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mi>
+        <mglyph fontfamily="my-braid-font" index="2" alt="23braid"/> 
+      </mi> 
+      <mspace width="10px"/> 
+      <mn> 
+        <mglyph fontfamily="Curlz MT" index="65" alt="script 'A'"/> 
+      </mn> 
+      <mspace width="10px"/> 
+      <mn> 
+        <mglyph fontfamily="Arial" index="97" alt="lowercase 'a'"/> 
+      </mn> 
+    </math>
+
+  </body>
+</html>

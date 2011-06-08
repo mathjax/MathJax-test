@@ -1,0 +1,26 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>mo: movablelimits</title>
+    <!-- Copyright (C) 2010-2011 Frederic Wang
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <!-- We assume that &#x2211; has movablelimits=true in the
+           operator dictionary -->
+      <mstyle movablelimits="false">
+        <munderover>
+          <mo>&#x2211;</mo>
+          <mi>a</mi>
+          <mi>b</mi>
+        </munderover>
+      </mstyle>
+    </math>
+  </body>
+</html>

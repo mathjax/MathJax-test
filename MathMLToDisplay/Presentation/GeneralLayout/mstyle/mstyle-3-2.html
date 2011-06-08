@@ -1,0 +1,26 @@
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<html class="reftest-wait">
+  <head>
+    <title>mo: lspace, rspace</title>
+    <!-- Copyright (C) 2010-2011 Frederic Wang
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mstyle lspace="0" rspace="0">
+        <mrow>
+          <!-- We assume that the infix form of _ has -->
+          <!-- nonzero lspace/rspace values in the operator dictionary -->
+          <mtext>_</mtext>
+          <mo>_</mo>
+          <mtext>_</mtext>
+        </mrow>
+      </mstyle>
+    </math>
+  </body>
+</html>

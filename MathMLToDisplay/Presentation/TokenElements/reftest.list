@@ -1,3 +1,9 @@
 include CommonAttributes/reftest.list
+include mglyph/reftest.list
 include mi/reftest.list
+include mn/reftest.list
+include mo/reftest.list
+include ms/reftest.list
 include mspace/reftest.list
+include mtext/reftest.list
+
