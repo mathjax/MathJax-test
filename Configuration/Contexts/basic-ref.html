@@ -1,79 +1,79 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
 <!DOCTYPE html>
-<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
-<!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
-<head>
-  <title>Basic page</title>
-  <!-- Copyright (c) 2011 Design Science, Inc.
-    License: Apache License 2.0 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <script type="text/javascript" src="../../header.js"></script>
-</head>
+  <head>
+    <title>Basic page</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
 
-<!-- Set a defaut font. See issue 100
-     https://github.com/mathjax/MathJax/issues/100 -->
-<body style="font-family: Arial; font-size: 12pt;">
+  <!-- Set a defaut font. See issue 100
+       https://github.com/mathjax/MathJax/issues/100 -->
+  <body style="font-family: Arial; font-size: 12pt;">
 
-  <div style="position: absolute; left: 50px; top: 50px;">
-    <p><math xmlns="http://www.w3.org/1998/Math/MathML">
-        <msup>
-          <msqrt>
-            <mi>x</mi>
-          </msqrt>
-          <mn>3</mn>
-        </msup>
-    </math></p>
+    <div style="position: absolute; left: 50px; top: 50px;">
+      <p><math xmlns="http://www.w3.org/1998/Math/MathML">
+          <msup>
+            <msqrt>
+              <mi>x</mi>
+            </msqrt>
+            <mn>3</mn>
+          </msup>
+      </math></p>
 
-    <p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-        <mrow>
-          <munderover>
-            <mo>∑</mo>
-            <mrow>
-              <mi>i</mi>
-              <mo>=</mo>
-              <mn>1</mn>
-            </mrow>
-            <mi>n</mi>
-          </munderover>
-
+      <p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
           <mrow>
-            <msubsup>
-              <mo>∫</mo>
+            <munderover>
+              <mo>∑</mo>
               <mrow>
+                <mi>i</mi>
+                <mo>=</mo>
+                <mn>1</mn>
+              </mrow>
+              <mi>n</mi>
+            </munderover>
+
+            <mrow>
+              <msubsup>
+                <mo>∫</mo>
+                <mrow>
+                  <msub>
+                    <mi>a</mi>
+                    <mrow>
+                      <mi>i</mi>
+                      <mo>−</mo>
+                      <mn>1</mn>
+                    </mrow>
+                  </msub>
+                </mrow>
                 <msub>
                   <mi>a</mi>
-                  <mrow>
-                    <mi>i</mi>
-                    <mo>−</mo>
-                    <mn>1</mn>
-                  </mrow>
+                  <mi>i</mi>
                 </msub>
-              </mrow>
-              <msub>
-                <mi>a</mi>
-                <mi>i</mi>
-              </msub>
-            </msubsup>
+              </msubsup>
 
-            <mrow>
-              <mi>f</mi>
               <mrow>
-                <mo>(</mo>
-                <mi>x</mi>
-                <mo>)</mo>
+                <mi>f</mi>
+                <mrow>
+                  <mo>(</mo>
+                  <mi>x</mi>
+                  <mo>)</mo>
+                </mrow>
               </mrow>
-            </mrow>
 
-            <mrow>
-              <mo>ⅆ</mo>
-              <mi>x</mi>
+              <mrow>
+                <mo>ⅆ</mo>
+                <mi>x</mi>
+              </mrow>
+
             </mrow>
 
           </mrow>
+      </math></p>
+    </div>
 
-        </mrow>
-    </math></p>
-  </div>
-
-</body>
+  </body>
 </html>

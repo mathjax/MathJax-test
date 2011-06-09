@@ -95,9 +95,9 @@ fails skip-if(MSIE||Konqueror) != horizontal.html?op=295E horizontal-ref.html
 fails skip-if(MSIE||Konqueror) != horizontal.html?op=295F horizontal-ref.html
 fails skip-if(MSIE||Konqueror) != horizontal.html?op=2B45 horizontal-ref.html
 fails skip-if(MSIE||Konqueror) != horizontal.html?op=2B46 horizontal-ref.html
-fails require(TeX) != horizontal-braces-1a.html horizontal-braces-1-ref.html
-fails require(TeX) != horizontal-braces-1b.html horizontal-braces-1-ref.html
-fails require(STIX) != horizontal-braces-2.html horizontal-braces-2-ref.html
+require(TeX) != horizontal-braces-1a.html horizontal-braces-1-ref.html
+require(TeX) != horizontal-braces-1b.html horizontal-braces-1-ref.html
+fails-if(MSIE) require(STIX) != horizontal-braces-2.html horizontal-braces-2-ref.html
 skip-if(MSIE||Konqueror) != vertical.html?op=0028 vertical-ref.html
 skip-if(MSIE||Konqueror) != vertical.html?op=0029 vertical-ref.html
 skip-if(MSIE||Konqueror) != vertical.html?op=005B vertical-ref.html

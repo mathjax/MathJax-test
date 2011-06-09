@@ -1,6 +1,6 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
 <!DOCTYPE html>
-<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
-<!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
   <head>
     <title>vertical stretchy char</title>
@@ -10,17 +10,17 @@
     <script type="text/javascript">
       function preMathJax()
       {
-        op = getQueryString("op");
-        if (!op) {
-          op = "007C"; // |
-        }
-        div = document.getElementById("div");
-        div.innerHTML += "&#x" + op + ";"
+      op = getQueryString("op");
+      if (!op) {
+      op = "007C"; // |
+      }
+      div = document.getElementById("div");
+      div.innerHTML += "&#x" + op + ";"
 
-        textNode = document.createTextNode(div.innerHTML);
-        // getElementById("mo") does not seem to work on Chrome
-        // document.getElementById("mo").appendChild(textNode);
-        document.getElementsByTagName("mo")[0].appendChild(textNode);
+      textNode = document.createTextNode(div.innerHTML);
+      // getElementById("mo") does not seem to work on Chrome
+      // document.getElementById("mo").appendChild(textNode);
+      document.getElementsByTagName("mo")[0].appendChild(textNode);
       }
     </script>
     <script type="text/javascript" src="../../../header.js"></script>
@@ -35,7 +35,7 @@
         <mo id="mo" stretchy="true" symmetric="true"></mo>
       </math>
     </div>
-  
+    
     <!-- one can click on the blue rectangle to make it transparent -->
     <div onclick="this.style.opacity = 0.2" id="rect"
          style="position: absolute; left: 0; top: 2.25em; z-index: 1;">

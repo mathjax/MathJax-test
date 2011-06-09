@@ -1,6 +1,13 @@
 include Variants/reftest.list
 
-fails-if(!Firefox) tree== entities-1.html entities-1-ref.html
-fails require(TeX||ImageTeX) == greek-1.html greek-1-ref.html
-fails require(TeX||ImageTeX) == greek-2.html greek-2-ref.html
-fails require(TeX||ImageTeX) == greek-3.html greek-3-ref.html
+# The XML whitespaces &NewLine; and &Tab; are not included in the following
+# tests:
+fails-if(MSIE) tree== entities-1.html entities-1-ref.html
+fails-if(MSIE||Konqueror) tree== entities-2.html entities-2-ref.html
+fails-if(MSIE||Konqueror||Safari) tree== entities-3.html entities-3-ref.html
+fails-if(MSIE||Konqueror||Chrome||Safari) tree== entities-4.html entities-4-ref.html
+fails-if(MSIE||Konqueror) tree== entities-5.html entities-5-ref.html
+
+require(TeX||ImageTeX) == greek-1.html greek-1-ref.html
+require(TeX||ImageTeX) == greek-2.html greek-2-ref.html
+require(TeX||ImageTeX) == greek-3.html greek-3-ref.html

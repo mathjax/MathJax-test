@@ -1,6 +1,6 @@
 tree== comments-1a.html comments-1-ref.html
 tree== comments-1b.html comments-1-ref.html
-fails == escaped-dollars-1.html escaped-dollars-1-ref.html  
+== escaped-dollars-1.html escaped-dollars-1-ref.html  
 tree== missing-brace-1.html missing-brace-1-ref.html
 tree!= missing-brace-2.html missing-brace-2-ref.html
 fails tree== parameter-priority-1.html parameter-priority-1-ref.html

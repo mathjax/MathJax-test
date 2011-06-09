@@ -1,5 +1,6 @@
-<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
-<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
 <html class="reftest-wait">
   <head>
     <title>rec-mglyph1</title>
@@ -9,45 +10,45 @@
         Author: Dave Doyle, Design Science
         Source: W3C MathML Test Suite
         http://www.w3.org/Math/testsuite/build/main/
-                               Presentation/TokenElements/mglyph/rec-mglyph1.mml
+        Presentation/TokenElements/mglyph/rec-mglyph1.mml
       -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
       function findGlyph(aCharacter, aAltText)
       {
-        // XXXfred This won't work with MSIE
+      // XXXfred This won't work with MSIE
 
-        if (aCharacter) {
-          var list = document.body.getElementsByClassName("mglyph");
-          for (var i = 0; i < list.length; i++) {
-             if (list[i].innerHTML == aCharacter) {
-                return true;
-             }
-          }
-        }
+      if (aCharacter) {
+      var list = document.body.getElementsByClassName("mglyph");
+      for (var i = 0; i < list.length; i++) {
+                          if (list[i].innerHTML == aCharacter) {
+                          return true;
+                          }
+                          }
+                          }
 
-        list = document.body.getElementsByClassName("mtext");
-        for (var i = 0; i < list.length; i++) {
-           if (list[i].innerHTML == aAltText) {
-              return true;
-           }
-        }
+                          list = document.body.getElementsByClassName("mtext");
+                          for (var i = 0; i < list.length; i++) {
+                                              if (list[i].innerHTML == aAltText) {
+                                              return true;
+                                              }
+                                              }
 
-        return false;
-      }
+                                              return false;
+                                              }
 
-      function getTestCases()
-      {
-      return [
-        newScriptReftestResult("mglyph(font-family=my-braid-font)",
-                               findGlyph(null, "23braid")),
-        newScriptReftestResult("mglyph(font-family=Curlz MT)",
-                               findGlyph("A", "script 'A'")),
-        newScriptReftestResult("mglyph(font-family=Arial)",
-                               findGlyph("a", "lowercase 'a'"))
-      ];
-      }
-    </script>
+                                              function getTestCases()
+                                              {
+                                              return [
+                                              newScriptReftestResult("mglyph(font-family=my-braid-font)",
+                                              findGlyph(null, "23braid")),
+                                              newScriptReftestResult("mglyph(font-family=Curlz MT)",
+                                              findGlyph("A", "script 'A'")),
+                                              newScriptReftestResult("mglyph(font-family=Arial)",
+                                              findGlyph("a", "lowercase 'a'"))
+                                              ];
+                                              }
+                                              </script>
     <script type="text/javascript" src="../../../../header.js"></script>
     <script type="text/javascript" src="../../../../scriptTests.js"></script>
   </head>

@@ -5,7 +5,7 @@
 == href2.html href2-ref.html
 == href3.html href3-ref.html
 == id1.html id1-ref.html
-fails-if(!(Chrome||Firefox)) != link-1.html link-ref.html
+!= link-1.html link-ref.html
 != link-2.html link-ref.html
 == style1.html style1-ref.html
 == style2.html style2-ref.html

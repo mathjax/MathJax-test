@@ -1,15 +1,15 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
 <!DOCTYPE html>
-<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
-<!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
-<head>
-  <title>Test menclose</title>
-  <!-- Copyright (c) 2011 Design Science, Inc.
-       License: Apache License 2.0 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <script type="text/javascript">
-    function postMathJax()
-    {
+  <head>
+    <title>Test menclose</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function postMathJax()
+      {
       w = document.getElementById("box").offsetWidth;
       h = document.getElementById("box").offsetHeight;
       e = document.getElementById("ellipse");
@@ -17,33 +17,33 @@
       e.setAttribute("rx", (w/2) + "px");
       e.setAttribute("cy", (h/2) + "px");
       e.setAttribute("ry", (h/2) + "px");
-    }
-  </script>
+      }
+    </script>
 
-  <script type="text/javascript" src="../../../../header.js"></script>
-</head>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
 
-<body>
-  <!-- We hide the part of the rendering modified by the attribute with
-       a green band. -->
+  <body>
+    <!-- We hide the part of the rendering modified by the attribute with
+         a green band. -->
 
-  <div id="box"
-       style="position: absolute; left: 20px; top: 20px; background: red;
-              z-index:0;">
-    <math>
-      <menclose notation="circle">
-        <mspace width="200px" height="100px"></mspace>
-      </menclose>
-    </math>
-  </div>
+    <div id="box"
+         style="position: absolute; left: 20px; top: 20px; background: red;
+                z-index:0;">
+      <math>
+        <menclose notation="circle">
+          <mspace width="200px" height="100px"></mspace>
+        </menclose>
+      </math>
+    </div>
 
-  <div style="position: absolute; left: 20px; top: 20px; z-index:1;">
-    <svg width="300px" height="300px">
-      <ellipse id="ellipse"
-         style="fill: none;
-                stroke-width: 9px; stroke: green; stroke-linecap: round;"/>
-    </svg>
-  </div>
+    <div style="position: absolute; left: 20px; top: 20px; z-index:1;">
+      <svg width="300px" height="300px">
+        <ellipse id="ellipse"
+                 style="fill: none;
+                        stroke-width: 9px; stroke: green; stroke-linecap: round;"/>
+      </svg>
+    </div>
 
-</body>
+  </body>
 </html>

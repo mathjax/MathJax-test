@@ -42,8 +42,8 @@ attributes of the ``<mfenced/>`` element. Then the test page
 
    <mstyle open="[" close="]" separators=";">
       <mfenced>
-	 <mn>1</mn>
-	 <mn>2</mn>
+         <mn>1</mn>
+         <mn>2</mn>
       </mfenced>
    </mstyle>
 
@@ -53,8 +53,8 @@ should render the same as
 
    <mstyle>
       <mfenced open="[" close="]" separators=";">
-	 <mn>1</mn>
-	 <mn>2</mn>
+         <mn>1</mn>
+         <mn>2</mn>
       </mfenced>
    </mstyle>
 
@@ -110,9 +110,9 @@ script ``header.js`` and set a class "reftest-wait" to the root element.
 
 .. code-block:: html
 
+   <!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+   <!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
    <!DOCTYPE html>
-   <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
-   <!-- vim: set ts=2 et sw=2 tw=80: !-->
    <html class="reftest-wait">
    <head>
      <title>__PAGE_TITLE__</title>
@@ -234,7 +234,7 @@ description of the test performed and a boolean pass/fail result.
         newScriptReftestResult("A successful test", true),
         newScriptReftestResult("A failing test", false),
         newScriptReftestResult("Yet another test",
-	                       document.getElementById("id").innerHTML == "OK")
+                               document.getElementById("id").innerHTML == "OK")
       ];
     }    
 

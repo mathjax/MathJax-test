@@ -1,1 +1,1 @@
-fails == css-direction-rtl.html css-direction-rtl-ref.html
+fails-if(Quirks||IE7) == css-direction-rtl.html css-direction-rtl-ref.html

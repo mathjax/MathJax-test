@@ -1,43 +1,43 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
 <!DOCTYPE html>
-<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
-<!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
-<head>
-  <title>zoom box</title>
-  <!-- Copyright (c) 2011 Design Science, Inc.
-       License: Apache License 2.0 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <script type="text/javascript" src="../header.js"></script>
-  <script type="text/javascript">
-    function preMathJax()
-    {
-       var config = getConfigObject();
-       config.jax = ["input/TeX", "output/HTML-CSS"];
-       config.extensions.push("MathZoom.js");
+  <head>
+    <title>zoom box</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      var config = getConfigObject();
+      config.jax = ["input/TeX", "output/HTML-CSS"];
+      config.extensions.push("MathZoom.js");
 
-       // If the zoom box is large enough, it should render the same
-       // with or without scroll bars.
-       config.MathZoom = { styles: { "#MathJax_Zoom": { overflow : "none" } } };
-    }
+      // If the zoom box is large enough, it should render the same
+      // with or without scroll bars.
+      config.MathZoom = { styles: { "#MathJax_Zoom": { overflow : "none" } } };
+      }
 
-    function postMathJax()
-    {
+      function postMathJax()
+      {
       var math = document.getElementsByClassName("MathJax")[0];
       MathJax.Extension.MathZoom.Zoom(math, null);
-    }
-  </script>
-</head>
+      }
+    </script>
+  </head>
 
-<body>
+  <body>
 
-  <!-- 
-       See issue 59
-       https://github.com/mathjax/MathJax/issues/59 -->
-  <div>
-    $$
+    <!-- 
+         See issue 59
+         https://github.com/mathjax/MathJax/issues/59 -->
+    <div>
+      $$
       \hspace{3em}
       \tag{1}
-    $$
-  </div>
-</body>
+      $$
+    </div>
+  </body>
 </html>

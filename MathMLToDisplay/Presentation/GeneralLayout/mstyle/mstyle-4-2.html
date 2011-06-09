@@ -1,0 +1,31 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>munder: accentunder</title>
+    <!-- Copyright (C) 2010-2011 Frederic Wang
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mstyle accentunder="false">
+        <munder>
+          <!-- We assume &#x23df; is accent in the operator dictionary -->
+          <mrow>
+            <mi>x</mi>
+            <mo>+</mo>
+            <mi>y</mi>
+            <mo>+</mo>
+            <mi>z</mi>
+          </mrow>
+          <mo>&#x23df;</mo>
+        </munder>
+      </mstyle>
+    </math>
+  </body>
+</html>

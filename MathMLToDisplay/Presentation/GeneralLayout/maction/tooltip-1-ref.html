@@ -1,34 +1,34 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
 <!DOCTYPE html>
-<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
-<!-- vim: set ts=2 et sw=2 tw=80: !-->
 <html class="reftest-wait">
-<head>
-  <title>maction tooltip</title>
-  <!-- Copyright (c) 2011 Design Science, Inc.
-       License: Apache License 2.0 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <script type="text/javascript" src="../../../../header.js"></script>
-  <script type="text/javascript">
-    function preMathJax()
-    {
-       var config = getConfigObject();
-       config.jax = ["input/MathML", "output/HTML-CSS"];
-       config["HTML-CSS"].tooltip = { delayPost: 0 };
-    }
-  </script>
+  <head>
+    <title>maction tooltip</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      var config = getConfigObject();
+      config.jax = ["input/MathML", "output/HTML-CSS"];
+      config["HTML-CSS"].tooltip = { delayPost: 0 };
+      }
+    </script>
 
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <div id="id">
-    <math>
-      <maction actiontype="tooltip">
-        <mtext>maction</mtext>
-        <mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow>
-      </maction>
-    </math>
-  </div>
+    <div id="id">
+      <math>
+        <maction actiontype="tooltip">
+          <mtext>maction</mtext>
+          <mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow>
+        </maction>
+      </math>
+    </div>
 
-</body>
+  </body>
 </html>
