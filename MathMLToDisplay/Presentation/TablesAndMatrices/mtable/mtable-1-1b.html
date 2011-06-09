@@ -1,0 +1,52 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>mtable</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- This test verifies that the two first rows are displayed in the top
+         area. These rows should be hidden by the blue rectangle. -->
+
+    <table style="position: absolute; left: 5px; top: 5px;
+                  width: 200px; height: 200px;
+                  border: 1px solid black;">
+      <tr>
+        <td align="center" valign="middle">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mtable>
+              <mtr>
+                <mtd><mn>1</mn></mtd>
+                <mtd><mn>2</mn></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mn>3</mn></mtd>
+                <mtd><mn>4</mn></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mphantom><mn>5</mn></mphantom></mtd>
+                <mtd><mphantom><mn>6</mn></mphantom></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mphantom><mn>7</mn></mphantom></mtd>
+                <mtd><mphantom><mn>8</mn></mphantom></mtd>
+              </mtr>
+            </mtable>
+          </math>
+        </td>
+      </tr>
+    </table>
+
+    <div style="position: absolute; left: 5px; top: 5px;
+                width: 200px; height: 100px;
+                background: blue;"></div>
+  
+  </body>
+</html>

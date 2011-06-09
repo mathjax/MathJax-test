@@ -1,0 +1,77 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>mtable</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript">
+      function postMathJax()
+      {
+      w = document.getElementById("box").offsetWidth;
+      h = document.getElementById("box").offsetHeight;
+      c = 2 * Math.max(w, h);
+      document.getElementById("box").style.width = c + "px";
+      document.getElementById("box").style.height = c + "px";
+      document.getElementById("triangle").setAttribute("d",
+      "M 0,0" +
+      "L" + ("0," + c) +
+      "L" + (c + "," + c) +
+      "z"      
+      );
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- the strictly lower triangular matrix should be hidden by the red
+         triangle -->
+
+    <table id="box" style="position: absolute; left: 5px; top: 5px;
+                           border: 1px solid black;">
+      <tr>
+        <td align="center" valign="middle">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mtable width="100px">
+              <mtr>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mtext>·</mtext></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mtext>·</mtext></mtd>
+                <mtd><mtext>·</mtext></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mtext>·</mtext></mtd>
+                <mtd><mtext>·</mtext></mtd>
+                <mtd><mtext>·</mtext></mtd>
+                <mtd><mphantom><mtext>·</mtext></mphantom></mtd>
+              </mtr>
+            </mtable>
+          </math>
+        </td>
+      </tr>
+    </table>
+    
+    <div style="position: absolute; left: 5px; top: 5px;">
+      <svg width="500px" height="500px">
+        <path id="triangle" style="fill: red;"></path>
+      </svg>
+    </div>
+    
+  </body>
+</html>

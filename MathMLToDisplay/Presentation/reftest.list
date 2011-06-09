@@ -1,3 +1,4 @@
 include CSS/reftest.list
 include GeneralLayout/reftest.list
+include TablesAndMatrices/mtable/reftest.list
 include TokenElements/reftest.list

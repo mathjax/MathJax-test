@@ -1,0 +1,42 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>mtable - align</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- the green rectangle should be covered by the red rectangle -->
+
+    <div style="position: absolute; left: 5px; top: 5px;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mpadded width="0">
+          <mspace mathbackground="red"
+                  width="50px" height="30px" depth="30px"></mspace>
+        </mpadded>
+        <mtable align="center">
+          <mtr>
+            <mtd>
+              <mspace mathbackground="green"
+                      width="10px" height="50px"></mspace>
+            </mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+
+    <div style="position: absolute; left: 5px; top: 5px;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mspace mathbackground="red"
+                  width="50px" height="30px" depth="30px"></mspace>
+      </math>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>mtable</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- This test verifies that the second column is displayed in the right
+         area. This column should be hidden by the orange rectangle. -->
+
+    <table style="position: absolute; left: 5px; top: 5px;
+                  width: 200px; height: 200px;
+                  border: 1px solid black;">
+      <tr>
+        <td align="center" valign="middle">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mtable>
+              <mtr>
+                <mtd><mphantom><mn>1</mn></mphantom></mtd>
+                <mtd><mphantom><mn>2</mn></mphantom></mtd>
+                <mtd><mn>3</mn></mtd>
+                <mtd><mn>4</mn></mtd>
+              </mtr>
+              <mtr>
+                <mtd><mphantom><mn>5</mn></mphantom></mtd>
+                <mtd><mphantom><mn>6</mn></mphantom></mtd>
+                <mtd><mn>7</mn></mtd>
+                <mtd><mn>8</mn></mtd>
+              </mtr>
+            </mtable>
+          </math>
+        </td>
+      </tr>
+    </table>
+
+    <div style="position: absolute; left: 105px; top: 5px;
+                width: 100px; height: 200px;
+                background: orange;"></div>
+  
+  </body>
+</html>
