@@ -1,0 +1,64 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>rec-mlabeledtr</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: Design Science, Inc. (D. Doyle)
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+        Presentation/TablesAndMatrices/mlabeledtr/rec-mlabeledtr.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mtable> 
+        <mlabeledtr id="e-is-m-c-square"> 
+          <mtd> 
+            <mphantom><mtext> (2.1) </mtext></mphantom>
+          </mtd> 
+          <mtd> 
+            <mrow> 
+              <mi>E</mi> 
+              <mo>=</mo> 
+              <mrow> 
+                <mi>m</mi> 
+                <mo>&#x2062;</mo> 
+                <msup> 
+                  <mi>c</mi> 
+                  <mn>2</mn> 
+                </msup> 
+              </mrow> 
+            </mrow> 
+          </mtd> 
+        </mlabeledtr> 
+      </mtable> 
+
+      <!-- This red rectangle should hide the labels -->
+      <mpadded lspace="-1width">
+        <mpadded height="1.5height"
+                 depth="1.5depth"
+                 width="1.5width"
+                 mathbackground="red">
+          <mphantom>
+            <mtable>
+              <mtr>
+                <mtd>
+                  <mtext> (2.1) </mtext> 
+                </mtd>
+              </mtr>
+            </mtable>
+          </mphantom>
+        </mpadded>
+      </mpadded>
+    </math>
+
+  </body>
+</html>

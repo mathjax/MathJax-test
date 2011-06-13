@@ -158,6 +158,8 @@ def printReftestList():
     @fn printReftestList()
     @brief generate the file web/reftestList.js
     """
+    print "Generating reftestList.js...",
+
     suite = reftest.reftestSuite()
     fp = file("web/reftestList.js", "wb")
     stdout = sys.stdout
@@ -175,6 +177,110 @@ def printReftestList():
     print "]"
     sys.stdout = stdout
     fp.close()
+
+    print "done"
+
+def removeTemporaryData(aSelenium):
+    """
+    @fn removeTemporaryData(aSelenium)
+    """
+    aSelenium.start()
+    aSelenium.clearBrowserData()
+    aSelenium.stop()
+
+def runTestingInstance(aDirectory, aSelenium, aSuite):
+    """
+    @fn runTestingInstance(aDirectory, aSelenium, aSuite):
+    """
+
+    # Build the testsuite
+    if aSuite.mListOfTests == "all":
+        index = -1 # all tests
+    else:
+        index = 0 # tests indicated in listOfTests
+        
+    aSuite.addReftests(aSelenium, "reftest.list", index)
+
+    # Create the output file
+    output = getOutputFileName(aDirectory, aSelenium)
+    outputTxt = output + ".txt"
+    outputHTML= output + ".html"
+
+    fp = file(outputTxt, "wb")
+    stdout = sys.stdout
+    sys.stdout = fp
+
+    # Run the test suite
+    startTime = datetime.utcnow()
+    aSuite.printInfo("Starting Testing Instance ; " + startTime.isoformat())
+    interrupted = False
+    try:
+        aSelenium.start()
+        aSelenium.pre()
+        aSuite.printInfo("host=" + str(aSelenium.host))
+        aSuite.printInfo("port=" + str(aSelenium.port))
+        aSuite.printInfo("mathJaxPath = " + aSelenium.mMathJaxPath)
+        aSuite.printInfo("mathJaxTestPath = " + aSelenium.mMathJaxTestPath)
+        aSuite.printInfo("operatingSystem = " + aSelenium.mOperatingSystem)
+        aSuite.printInfo("browser = " + aSelenium.mBrowser)
+        aSuite.printInfo("browserMode = " + aSelenium.mBrowserMode)
+        aSuite.printInfo("font = " + aSelenium.mFont)
+        aSuite.printInfo("nativeMathML = " +
+                         boolToString(aSelenium.mNativeMathML))
+        aSuite.printInfo("runSlowTests = " +
+                         boolToString(aSuite.mRunSlowTests))
+        unittest.TextTestRunner(sys.stderr, verbosity = 2).run(aSuite)
+        aSelenium.post()
+        aSelenium.stop()
+        time.sleep(4)
+    except KeyboardInterrupt:
+        aSelenium.post()
+        aSelenium.stop()
+        interrupted = True
+
+    endTime = datetime.utcnow()
+    deltaTime = endTime - startTime
+
+    if not interrupted:
+        aSuite.printInfo("Testing Instance Finished ; " +
+                         endTime.isoformat())
+    else:
+        aSuite.printInfo("Testing Instance Interrupted ; " +
+                         endTime.isoformat())
+        aSuite.printInfo("To recover use parameter")
+        aSuite.printInfo("startID = " + aSuite.mRunningTestID)
+
+    aSuite.printInfo("Testing Instance took " +
+                     str(math.trunc(deltaTime.total_seconds() / 60))
+                     + " minute(s) and " +
+                     str(deltaTime.seconds % 60) + " second(s)")
+
+    sys.stdout = stdout
+    fp.close()
+
+    if not interrupted:
+        if formatOutput:
+            # Execute the Perl script to format the output
+            print "Formatting the text ouput...",
+            pipe = subprocess.Popen(["perl", "clean-reftest-output.pl",
+                                     outputTxt],
+                                    stdout=subprocess.PIPE)
+            fp = file(outputHTML, "wb")
+            print >> fp, pipe.stdout.read()
+            fp.close()
+            print "done"
+
+        if compressOutput:
+            # gzip the outputs
+            print "Compressing the output files...",
+            gzipFile(outputTxt)
+            if formatOutput:
+                gzipFile(outputHTML)
+            print "done"
+    else:
+        print
+        print "Test Launcher received SIGINT!"
+        print "Testing Instance Interrupted."
 
 if __name__ == "__main__":
 
@@ -194,30 +300,34 @@ contain alphanumeric characters and its length must not exceed ten characters.")
                         default = argparse.SUPPRESS,
                         help="Print the list of all the tests in a file \
 reftestList.txt")
+    parser.add_argument("-r", "--removeTemporaryData", nargs = "?",
+                        default = argparse.SUPPRESS,
+                        help="")
     args = parser.parse_args()
 
     # if the option --printList is passed, only generate the file
     # reftestList.txt
     if hasattr(args, "printList"):
-        print "Generating reftestList.js...",
         printReftestList()
-        print "done"
         exit(0)
+    
+    clearBrowsersData = hasattr(args, "removeTemporaryData")
 
-    # create the date directory
-    now = datetime.utcnow();
-    directory = "results/" + now.strftime("%Y-%m-%d") + "/"
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    if (not clearBrowsersData):
+        # create the date directory
+        now = datetime.utcnow();
+        directory = "results/" + now.strftime("%Y-%m-%d") + "/"
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
-    # create the subdirectory
-    if args.output and re.match("^([0-9]|[a-z]|[A-Z]){1,10}$", args.output):
-        directory += args.output + "/"
-    else:
-        directory += now.strftime("%H-%M-%S/")
+        # create the subdirectory
+        if args.output and re.match("^([0-9]|[a-z]|[A-Z]){1,10}$", args.output):
+            directory += args.output + "/"
+        else:
+            directory += now.strftime("%H-%M-%S/")
 
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
     # execute testing instances for all the config files
     configFileList = args.config.split(",")
@@ -261,131 +371,60 @@ reftestList.txt")
         listOfTests = config.get(section, "listOfTests")
         startID = config.get(section, "startID")
        
-        if ((len(browserList) > 1 or len(browserModeList) or len(fontList) > 1)
-            and browserPath != "auto"):
+        # When more than one browser is specified, browserPath is ignored.
+        if (len(browserList) > 1 and browserPath != "auto"):
             print >> sys.stderr, "Warning: browserPath ignored"
             browserPath = "auto"
 
+        # If we just want to clear browsers data, we ignore the list of fonts
+        # and browser modes.
+        if clearBrowsersData:
+            fontList = ["STIX"]
+            browserModeList = ["StandardMode"]
+
         for browser in browserList:
+
             for font in fontList:
-                for browserMode in browserModeList:
 
-                    # Browser mode is only relevant for MSIE
-                    if not(browser == "MSIE"):
-                        browserMode = "StandardMode"
+                # browserModeList is only relevant for MSIE
+                if not(browser == "MSIE"):
+                    browserModeList2 = ["StandardMode"]
+                else:
+                    browserModeList2 = browserModeList
+               
+                for browserMode in browserModeList2:
 
-                    browserStartCommand = getBrowserStartCommand(
-                        browserPath,
-                        operatingSystem,
-                        browser)
+                    browserStartCommand = \
+                        getBrowserStartCommand(browserPath,
+                                               operatingSystem,
+                                               browser)
 
                     if browserStartCommand != "unknown":
 
                         # Create a Selenium instance
-                        selenium = seleniumMathJax.seleniumMathJax(
-                            host, port, mathJaxPath, mathJaxTestPath,
-                            operatingSystem,
-                            browser,
-                            browserMode,
-                            browserStartCommand, 
-                            font,
-                            nativeMathML,
-                            timeOut,
-                            fullScreenMode)
+                        selenium = \
+                            seleniumMathJax.seleniumMathJax(host,
+                                                            port,
+                                                            mathJaxPath,
+                                                            mathJaxTestPath,
+                                                            operatingSystem,
+                                                            browser,
+                                                            browserMode,
+                                                            browserStartCommand,
+                                                            font,
+                                                            nativeMathML,
+                                                            timeOut,
+                                                            fullScreenMode)
                         
-                        # Create the test suite
-                        suite = reftest.reftestSuite(runSlowTests,
-                                                     runSkipTests,
-                                                     listOfTests,
-                                                     startID)
-                        if listOfTests == "all":
-                            index = -1 # all tests
+                        if (clearBrowsersData):
+                            removeTemporaryData(selenium)
                         else:
-                            index = 0 # tests indicated in listOfTests
-
-                        suite.addReftests(selenium, "reftest.list", index)
-                        
-                        # Create the output file
-                        output = getOutputFileName(directory, selenium)
-                        outputTxt = output + ".txt"
-                        outputHTML= output + ".html"
-                        fp = file(outputTxt, "wb")
-                        stdout = sys.stdout
-                        sys.stdout = fp
-                        
-                        # Run the test suite
-                        startTime = datetime.utcnow()
-                        suite.printInfo("Starting Testing Instance ; " +
-                                        startTime.isoformat())
-                        interrupted = False
-                        try:
-                            selenium.start()
-                            suite.printInfo("host=" + str(host))
-                            suite.printInfo("port=" + str(port))
-                            suite.printInfo("mathJaxPath = " + mathJaxPath)
-                            suite.printInfo("mathJaxTestPath = " +
-                                            mathJaxTestPath)
-                            suite.printInfo("operatingSystem = " +
-                                            operatingSystem)
-                            suite.printInfo("browser = " + browser)
-                            suite.printInfo("browserMode = " + browserMode)
-                            suite.printInfo("font = " + font)
-                            suite.printInfo("nativeMathML = " +
-                                            boolToString(nativeMathML))
-                            suite.printInfo("runSlowTests = " +
-                                            boolToString(runSlowTests))
-                            unittest.TextTestRunner(sys.stderr,
-                                                    verbosity=2).run(suite)
-                            selenium.stop()
-                            time.sleep(4)
-                        except KeyboardInterrupt:
-                            selenium.stop()
-                            interrupted = True
-                            
-                        endTime = datetime.utcnow()
-                        deltaTime = endTime - startTime
-                        if not interrupted:
-                            suite. printInfo("Testing Instance Finished ; " +
-                                             endTime.isoformat())
-                        else:
-                            suite.printInfo("Testing Instance Interrupted ; " +
-                                            endTime.isoformat())
-                            suite.printInfo("To recover use parameter")
-                            suite.printInfo("startID = " + suite.mRunningTestID)
-
-                        suite.printInfo("Testing Instance took " +
-                                        str(math.trunc
-                                            (deltaTime.total_seconds() / 60)) +
-                                        " minute(s) and " +
-                                        str(deltaTime.seconds % 60) +
-                                        " second(s)")
-                        sys.stdout = stdout
-                        fp.close()
-
-                        if not interrupted:
-                            if formatOutput:
-                                # Execute the Perl script to format the output
-                                print "Formatting the text ouput...",
-                                pipe = subprocess.Popen(
-                                    ["perl", "clean-reftest-output.pl",
-                                     outputTxt],
-                                    stdout=subprocess.PIPE)
-                                fp = file(outputHTML, "wb")
-                                print >> fp, pipe.stdout.read()
-                                fp.close()
-                                print "done"
-
-                            if compressOutput:
-                                # gzip the outputs
-                                print "Compressing the output files...",
-                                gzipFile(outputTxt)
-                                if formatOutput:
-                                    gzipFile(outputHTML)
-                                print "done"
-                        else:
-                            print
-                            print "Test Launcher received SIGINT!"
-                            print "Testing Instance Interrupted."
+                            # Create the test suite
+                            suite = reftest.reftestSuite(runSlowTests,
+                                                         runSkipTests,
+                                                         listOfTests,
+                                                         startID)
+                            runTestingInstance(directory, selenium, suite)
 
                     # end if browserStartCommand
                 # end browserMode

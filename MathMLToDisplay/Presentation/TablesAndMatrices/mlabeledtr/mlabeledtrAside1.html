@@ -1,0 +1,119 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>mlabeledtrAside1</title>
+    <!--
+        Copyright (c) World Wide Web Consortium
+        License: W3C Document License
+        Author: Design Science, Inc. (D. Doyle)
+        Source: W3C MathML Test Suite
+        http://www.w3.org/Math/testsuite/build/main/
+        Presentation/TablesAndMatrices/mlabeledtr/mlabeledtrAside1.mml
+      -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable frame="solid" columnlines="solid" rowlines="solid" side="left">
+          <mlabeledtr>
+            <mtd>
+              <mtext>1st</mtext>
+            </mtd>
+            <mtd>
+              <mfrac>
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mn>1</mn>
+                </mrow>
+                <mn>2</mn>
+              </mfrac>
+            </mtd>
+            <mtd>
+              <mi>b</mi>
+            </mtd>
+            <mtd>
+              <mi>c</mi>
+            </mtd>
+          </mlabeledtr> 
+          <mlabeledtr>
+            <mtd>
+              <mtext>2nd</mtext>
+            </mtd>
+            <mtd>
+              <mi>x</mi>
+            </mtd>
+            <mtd>
+              <mrow>
+                <mfrac>
+                  <mn>2</mn>
+                  <mn>3</mn>
+                </mfrac>
+                <mi>y</mi>
+                <mo>+</mo>
+                <mn>5</mn>
+              </mrow>
+            </mtd>
+            <mtd>
+              <mi>z</mi>
+            </mtd>
+          </mlabeledtr> 
+          <mlabeledtr>
+            <mtd>
+              <mtext>3rd</mtext>
+            </mtd>
+            <mtd>
+              <mn>1</mn>
+            </mtd>
+            <mtd>
+              <mn>2</mn>
+            </mtd>
+            <mtd>
+              <mn>5</mn>
+            </mtd>
+          </mlabeledtr>
+        </mtable> 
+      </math>
+    </div>
+
+    <div style="position: absolute; top: 0px;">
+      <math>
+
+        <!-- This red rectangle should hide the labels -->
+        <mpadded width="0">
+          <mpadded height="1.5height"
+                   depth="1.5depth"
+                   width="1.5width"
+                   mathbackground="red">
+            <mphantom>
+              <mtable>
+                <mtr>
+                  <mtd>
+                    <mtext>1st</mtext>
+                  </mtd>
+                </mtr>
+                <mtr>
+                  <mtd>
+                    <mtext>2nd</mtext>
+                  </mtd>
+                </mtr>
+                <mtr>
+                  <mtd>
+                    <mtext>3rd</mtext>
+                  </mtd>
+                </mtr>
+              </mtable>
+            </mphantom>
+          </mpadded>
+        </mpadded>
+      </math>
+    </div>
+
+  </body>
+</html>

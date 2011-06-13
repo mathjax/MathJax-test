@@ -37,6 +37,24 @@ from PIL import Image, ImageChops
 import difflib
 import urlparse
 
+VK_TAB = 9
+VK_ENTER = 10
+VK_SHIFT = 16
+VK_CONTROL = 17
+VK_ALT = 18
+VK_7 = 55
+VK_8 = 56
+VK_9 = 57
+VK_L = 76
+VK_M = 77
+VK_Q = 81
+VK_S = 83
+VK_T = 84
+VK_F4 = 115
+VK_F11 = 122
+VK_F12 = 123
+VK_DELETE =	127
+
 class seleniumMathJax(selenium.selenium):
 
     """
@@ -67,7 +85,7 @@ class seleniumMathJax(selenium.selenium):
         @param aHost host of the Selenium server
         @param aPort port of the Selenium server
         @param aMathJaxPath Value to assign to mMathJaxPath
-        @param aMathJaxTestPath Path to MathJax-test
+        @param aMathJaxTestPath Value to assign to mMathJaxTestPath
         @param aOperatingSystem Value to assign to mOperatingSystem
         @param aBrowser Value to assign to mBrowser
         @param aBrowserMode Value to assign to mBrowserMode
@@ -79,6 +97,8 @@ class seleniumMathJax(selenium.selenium):
 
         @property mMathJaxPath
         Path to MathJax
+        @property mMathJaxTestPath
+        Path to MathJax-test
         @property mOperatingSystem
         operating system of the slave machine: Windows, Linux, Mac
         @property mBrowser
@@ -106,6 +126,7 @@ class seleniumMathJax(selenium.selenium):
         selenium.selenium.__init__(self, aHost, aPort, aBrowserStartCommand,
                                    aMathJaxTestPath)
         self.mMathJaxPath = aMathJaxPath
+        self.mMathJaxTestPath = aMathJaxTestPath
         self.mOperatingSystem = aOperatingSystem
         self.mBrowser = aBrowser
         self.mBrowserMode = aBrowserMode
@@ -172,16 +193,21 @@ class seleniumMathJax(selenium.selenium):
     def start(self):
         """
         @fn start(self)
-        @brief start the testing instance
+        """
+        selenium.selenium.start(self)
 
-        @details This function starts Selenium. Then it opens the blank.html
+    def pre(self):
+        """
+        @fn pre(self)
+        @brief initialize the testing instance
+
+        @details This function opens the blank.html
         page and maximizes it. If the @ref mFullScreenMode is true, the page is
         put in fullscreen mode. For MSIE, the document mode is set according
         to @ref mBrowserMode.
         Then the area @ref mCanvas is determined by changing the
         background of the blank page from white to black and comparing the
         difference between the two screenshots.
-
 
         @note
 
@@ -196,8 +222,6 @@ class seleniumMathJax(selenium.selenium):
         long delay before the tests actually start. Hopefully, this will be
         improved in future versions of Selenium :-)
         """
-        selenium.selenium.start(self)
-
         # Open the blank page and maximize it
         self.open("blank.html", 3)
         self.window_focus()
@@ -207,35 +231,35 @@ class seleniumMathJax(selenium.selenium):
         # For Konqueror, we remove some bars to get a true fullscreen mode
         if self.mFullScreenMode and self.mBrowser == "Konqueror":
             # Location Bar: alt+s, t, l
-            self.key_down_native(18) # alt
+            self.key_down_native(VK_ALT)
             time.sleep(.1)
-            self.key_press_native(83) # s
+            self.key_press_native(VK_S)
             time.sleep(.1)
-            self.key_up_native(18) # alt
+            self.key_up_native(VK_ALT)
             time.sleep(.1)
-            self.key_press_native(84) # t
+            self.key_press_native(VK_T)
             time.sleep(.1)
-            self.key_press_native(76) # l
+            self.key_press_native(VK_L)
             time.sleep(1)
 
             # Main Toolbar: alt+s, t, m
-            self.key_down_native(18) # alt
+            self.key_down_native(VK_ALT)
             time.sleep(.1)
-            self.key_press_native(83) # s
+            self.key_press_native(VK_S)
             time.sleep(.1)
-            self.key_up_native(18) # alt
+            self.key_up_native(VK_ALT)
             time.sleep(.1)
-            self.key_press_native(84) # t
+            self.key_press_native(VK_T)
             time.sleep(.1)
-            self.key_press_native(77) # m
+            self.key_press_native(VK_M)
             time.sleep(1)
 
             # Menu Bar: ctrl+m
-            self.key_down_native(17) # control
+            self.key_down_native(VK_CONTROL)
             time.sleep(.1)
-            self.key_press_native(77) # m
+            self.key_press_native(VK_M)
             time.sleep(.1)
-            self.key_up_native(17) # control
+            self.key_up_native(VK_CONTROL)
             time.sleep(1)
 
         if self.mFullScreenMode and \
@@ -243,7 +267,7 @@ class seleniumMathJax(selenium.selenium):
             self.mBrowser == "Opera"   or self.mBrowser == "MSIE" or \
             self.mBrowser == "Konqueror"):
             # FullScreen Mode: 
-            self.key_press_native(122) # F11
+            self.key_press_native(VK_F11)
             time.sleep(3)
 
         if (self.mBrowser == "MSIE" and
@@ -251,36 +275,36 @@ class seleniumMathJax(selenium.selenium):
             # For MSIE, we choose the document mode
 
             #  opening developer tools
-            self.key_down_native(123) # F12
+            self.key_down_native(VK_F12)
             time.sleep(3)
 
             if self.mBrowserMode == "Quirks":
-                self.key_down_native(18) # alt
+                self.key_down_native(VK_ALT)
                 time.sleep(.1)
-                self.key_press_native(81) # q
+                self.key_press_native(VK_Q)
                 time.sleep(.1)
-                self.key_up_native(18) # alt
+                self.key_up_native(VK_ALT)
                 time.sleep(.1)
             elif self.mBrowserMode == "IE7":
-                self.key_down_native(18) # alt
+                self.key_down_native(VK_ALT)
                 time.sleep(.1)
-                self.key_press_native(55) # 7
+                self.key_press_native(VK_7)
                 time.sleep(.1)
-                self.key_up_native(18) # alt
+                self.key_up_native(VK_ALT)
                 time.sleep(.1)
             elif self.mBrowserMode == "IE8":
-                self.key_down_native(18) # alt
+                self.key_down_native(VK_ALT)
                 time.sleep(.1)
-                self.key_press_native(56) # 8
+                self.key_press_native(VK_8)
                 time.sleep(.1)
-                self.key_up_native(18) # alt
+                self.key_up_native(VK_ALT)
                 time.sleep(.1)
             elif self.mBrowserMode == "IE9":
-                self.key_down_native(18) # alt
+                self.key_down_native(VK_ALT)
                 time.sleep(.1)
-                self.key_press_native(57) # 9
+                self.key_press_native(VK_9)
                 time.sleep(.1)
-                self.key_up_native(18) # alt
+                self.key_up_native(VK_ALT)
                 time.sleep(.1)
             time.sleep(3)
 
@@ -305,47 +329,50 @@ class seleniumMathJax(selenium.selenium):
             # We failed to determine the bounding box...
             self.mCanvas = self.mReftestSize
 
+    def post(self):
+        if self.mFullScreenMode and \
+           (self.mBrowser == "Firefox" or self.mBrowser == "Chrome" or \
+                self.mBrowser == "Opera"   or self.mBrowser == "MSIE" or \
+                self.mBrowser == "Konqueror"):
+            # Leave FullScreen Mode: 
+            self.key_press_native(VK_F11)
+            time.sleep(3)
+
     def stop(self):
         """
         @fn stop(self)
-        @brief stop the testing instance
-        @details This function leaves the full screenmode and stops selenium
+        @brief stop selenium
         """
-        if self.mFullScreenMode and \
-           (self.mBrowser == "Firefox" or self.mBrowser == "Chrome" or \
-            self.mBrowser == "Opera"   or self.mBrowser == "MSIE" or \
-            self.mBrowser == "Konqueror"):
-            # Leave FullScreen Mode: 
-            self.key_press_native(122) # F11
-            time.sleep(3)
-
         # selenium.selenium.stop does not seem to close Konqueror/MSIE
         # correctly. Leave the browser manually instead.
         if (self.mBrowser == "Konqueror"):
             # Close the two windows with Ctrl+q
-            self.key_down_native(17) # control
+            self.key_down_native(VK_CONTROL)
             time.sleep(.1)
-            self.key_press_native(81) # q
+            self.key_press_native(VK_Q)
             time.sleep(.1)
-            self.key_press_native(81) # q
+            self.key_press_native(VK_Q)
             time.sleep(.1)
-            self.key_up_native(17) # control
+            self.key_up_native(VK_CONTROL)
             time.sleep(.1)
             time.sleep(3)
         elif (self.mBrowser == "MSIE"):
             # Close two tabs with Ctrl+F4
-            self.key_down_native(17) # control
+            self.key_down_native(VK_CONTROL)
             time.sleep(.1)
-            self.key_press_native(115) # F4
+            self.key_press_native(VK_F4)
             time.sleep(.1)
-            self.key_press_native(115) # F4
+            self.key_press_native(VK_F4)
             time.sleep(.1)
-            self.key_up_native(17) # control
+            self.key_up_native(VK_CONTROL)
             time.sleep(.1)
             time.sleep(3)
 
         selenium.selenium.stop(self)
         
+    def clearBrowserData(self):
+        print "clearBrowserData: not implemented"
+
     def takeScreenshot(self, aWaitTime = 0.5):
         """
         @fn takeScreenshot(self, aWaitTime = 0.5)

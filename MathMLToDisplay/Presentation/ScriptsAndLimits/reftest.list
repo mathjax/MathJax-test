@@ -1,0 +1,8 @@
+include mmultiscripts/reftest.list
+include mover/reftest.list
+include msub/reftest.list
+include msubsup/reftest.list
+include msup/reftest.list
+include munder/reftest.list
+include munderover/reftest.list
+

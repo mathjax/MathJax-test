@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>mtable - align</title>
+    <title>mtable columnwidth</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,12 +12,15 @@
 
   <body>
 
-    <div style="position: absolute; left: 5px; top: 5px;">
-      <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <mspace mathbackground="red"
-                  width="50px" height="30px" depth="30px"></mspace>
-      </math>
-    </div>
-
-</body>
+    <math>
+      <mtable frame="solid" columnwidth="100px">
+        <mtr>
+          <mtd>
+            <mspace width="50px" height="5px" mathbackground="red"></mspace>
+          </mtd>
+        </mtr>
+      </mtable>
+    </math>    
+    
+  </body>
 </html>
