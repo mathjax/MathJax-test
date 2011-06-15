@@ -1,0 +1,68 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>message</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      config = getConfigObject();
+      config.messageStyle = "normal";
+      }
+
+      function checkValue(aValue)
+      {
+      return document.getElementById("MathJax_Message").innerHTML == aValue;
+      }
+
+      function getTestCases()
+      {
+      var id1 = MathJax.Message.Set("msg1", null);
+      var r1 = checkValue("msg1");
+      MathJax.Message.Clear(id1, 0);
+      var r2 = checkValue("");
+      var id2 = MathJax.Message.Set("msg2", null);
+      var r3 = checkValue("msg2");
+      var id3 = MathJax.Message.Set("msg3", null);
+      var r4 = checkValue("msg3");
+      MathJax.Message.Clear(id3, 0);
+      var r5 = checkValue("msg2");
+      MathJax.Message.Clear(id2, 0);
+      var r6 = checkValue("");
+
+      return [
+      newScriptReftestResult(
+      "Set msg1", r1
+      ),
+      newScriptReftestResult(
+      "Clear id1", r2
+      ),
+      newScriptReftestResult(
+      "Set msg2", r3
+      ),
+      newScriptReftestResult(
+      "Set msg3", r4
+      ),
+      newScriptReftestResult(
+      "Clear id3", r5
+      ),
+      newScriptReftestResult(
+      "Clear id2", r6
+      )
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

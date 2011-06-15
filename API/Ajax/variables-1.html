@@ -1,0 +1,59 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>variables</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      // Just checking that all the variables exist
+      return [
+      newScriptReftestResult("MathJax.Ajax.timeout",
+      MathJax.Ajax.hasOwnProperty("timeout")),
+      newScriptReftestResult("MathJax.Ajax.STATUS",
+      MathJax.Ajax.hasOwnProperty("STATUS")),
+      newScriptReftestResult("MathJax.Ajax.STATUS.OK",
+      MathJax.Ajax.STATUS.hasOwnProperty("OK")),
+      newScriptReftestResult("MathJax.Ajax.STATUS.ERROR",
+      MathJax.Ajax.STATUS.hasOwnProperty("ERROR")),
+      newScriptReftestResult("MathJax.Ajax.loaded",
+      MathJax.Ajax.hasOwnProperty("loaded")),
+      newScriptReftestResult("MathJax.Ajax.loading",
+      MathJax.Ajax.hasOwnProperty("loading")),
+      newScriptReftestResult("MathJax.Ajax.loadHooks",
+      MathJax.Ajax.hasOwnProperty("loadHooks")),
+      newScriptReftestResult("MathJax.Ajax.Require",
+      MathJax.Ajax.hasOwnProperty("Require")),
+      newScriptReftestResult("MathJax.Ajax.Load",
+      MathJax.Ajax.hasOwnProperty("Load")),
+      newScriptReftestResult("MathJax.Ajax.loadComplete",
+      MathJax.Ajax.hasOwnProperty("loadComplete")),
+      newScriptReftestResult("MathJax.Ajax.loadTimeout",
+      MathJax.Ajax.hasOwnProperty("loadTimeout")),
+      newScriptReftestResult("MathJax.Ajax.loadError",
+      MathJax.Ajax.hasOwnProperty("loadError")),
+      newScriptReftestResult("MathJax.Ajax.loadHook",
+      MathJax.Ajax.hasOwnProperty("loadHook")),
+      newScriptReftestResult("MathJax.Ajax.Preloading",
+      MathJax.Ajax.hasOwnProperty("Preloading")),
+      newScriptReftestResult("MathJax.Ajax.Styles",
+      MathJax.Ajax.hasOwnProperty("Styles")),
+      newScriptReftestResult("MathJax.Ajax.fileURL",
+      MathJax.Ajax.hasOwnProperty("fileURL"))
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

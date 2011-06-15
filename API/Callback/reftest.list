@@ -1,0 +1,4 @@
+include Queue/reftest.list
+include Signal/reftest.list
+
+script variables-1.html

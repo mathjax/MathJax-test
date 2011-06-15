@@ -1,0 +1,48 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>File</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      config = getConfigObject();
+      config.messageStyle = "simple";
+      }
+
+      function checkValue(aValue)
+      {
+      return document.getElementById("MathJax_Message").innerHTML == aValue;
+      }
+
+      function getTestCases()
+      {
+      id1 = MathJax.Message.File("myfile");
+      r1 = checkValue("Loading .....");
+      MathJax.Message.Clear(id1, 0);
+      r2 = checkValue("");
+
+      return [
+      newScriptReftestResult(
+      "File myfile", r1
+      ),
+      newScriptReftestResult(
+      "Clear id1", r2
+      )
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

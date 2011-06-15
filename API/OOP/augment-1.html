@@ -1,0 +1,45 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Augment</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      MathJax.Object.Foo = MathJax.Object.Subclass({
+      Init: function (x) {this.setX(x)},
+      getX: function () {return this.x},
+      setX: function (x) {this.x = x}
+      });
+      var foo = MathJax.Object.Foo("bar");
+
+      // Augment should return the class object
+      var r1 = (MathJax.Object.Foo.Augment({
+      clearX: function () { this.x = null; return true; }
+      }) == MathJax.Object.Foo);
+      // clearX has been added. It returns true...
+      var r2 = foo.clearX();
+      // ... and set x to null.
+      var r3 = (foo.getX() == null);
+
+      return [
+      newScriptReftestResult("MathJax.Object.Foo.Augment", r1),
+      newScriptReftestResult("foo.clearX()", r2),
+      newScriptReftestResult("foo.getX()", r3)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

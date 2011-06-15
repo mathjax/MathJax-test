@@ -1,0 +1,49 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>filterText</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      config = getConfigObject();
+      config.messageStyle = "simple";
+      }
+
+      function checkValue(aValue)
+      {
+      return document.getElementById("MathJax_Message").innerHTML == aValue;
+      }
+
+      function getTestCases()
+      {
+      MathJax.Message.filterText = function(text, n) { return text + "@" + n; }
+      id1 = MathJax.Message.Set("mymsg");
+      r1 = checkValue("mymsg@" + id1);
+      MathJax.Message.Clear(id1, 0);
+      r2 = checkValue("");
+
+      return [
+      newScriptReftestResult(
+      "File myfile", r1
+      ),
+      newScriptReftestResult(
+      "Clear id1", r2
+      )
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

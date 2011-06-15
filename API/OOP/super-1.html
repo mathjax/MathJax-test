@@ -1,0 +1,46 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>super</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      // Create a hierarchy Foo => Bar => Baz and test the SUPER property.
+      MathJax.Object.Foo = MathJax.Object.Subclass({
+      });
+      MathJax.Object.Bar = MathJax.Object.Foo.Subclass({
+      });
+      MathJax.Object.Baz = MathJax.Object.Bar.Subclass({
+      });
+      return [
+      newScriptReftestResult(
+      "MathJax.Object.Baz.SUPER", MathJax.Object.Baz.SUPER == MathJax.Object.Bar
+      ),
+      newScriptReftestResult(
+      "MathJax.Object.Bar.SUPER", MathJax.Object.Bar.SUPER == MathJax.Object.Foo
+      ),
+      newScriptReftestResult(
+      "MathJax.Object.Foo.SUPER", MathJax.Object.Foo.SUPER == MathJax.Object
+      ),
+      newScriptReftestResult(
+      "MathJax.Object.Baz.SUPER.SUPER",
+      MathJax.Object.Baz.SUPER.SUPER == MathJax.Object.Foo
+      )
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

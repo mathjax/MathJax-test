@@ -1,0 +1,39 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>variables</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      // Just checking that all the variables exist
+      return [
+      newScriptReftestResult("MathJax.Hub", MathJax.hasOwnProperty("Hub")),
+      newScriptReftestResult("MathJax.Ajax", MathJax.hasOwnProperty("Ajax")),
+      newScriptReftestResult("MathJax.Message", MathJax.hasOwnProperty("Message")),
+      newScriptReftestResult("MathJax.HTML", MathJax.hasOwnProperty("HTML")),
+      newScriptReftestResult("MathJax.CallBack", MathJax.hasOwnProperty("CallBack")),
+      newScriptReftestResult("MathJax.Extension", MathJax.hasOwnProperty("Extension")),
+      newScriptReftestResult("MathJax.Object", MathJax.hasOwnProperty("Object")),
+      newScriptReftestResult("MathJax.InputJax", MathJax.hasOwnProperty("InputJax")),
+      newScriptReftestResult("MathJax.OutputJax", MathJax.hasOwnProperty("OutputJax")),
+      newScriptReftestResult("MathJax.ElementJax", MathJax.hasOwnProperty("ElementJax")),
+      newScriptReftestResult("MathJax.version", MathJax.hasOwnProperty("version")),
+      newScriptReftestResult("MathJax.isReady", MathJax.hasOwnProperty("isReady"))
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

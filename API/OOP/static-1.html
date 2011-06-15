@@ -1,0 +1,51 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>static</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      MathJax.Object.A = MathJax.Object.Subclass(
+      null,
+      { StaticMethod: function() { this.StaticX = 1 }, StaticX: 0 }
+      );
+
+      MathJax.Object.B = MathJax.Object.A.Subclass(
+      );
+
+      // Create an instance of A. The static member StaticX should be
+      // initialized with the value 0.
+      var a = MathJax.Object.A();
+      var r1 = (MathJax.Object.A.StaticX == 0);
+      // Call the static method StaticMethod. StaticX should become 1.
+      MathJax.Object.A.StaticMethod();
+      var r2 = (MathJax.Object.A.StaticX == 1);
+      
+      // Create an instance of B. The static members should not be inherited.
+      var b = MathJax.Object.B();
+      var r3 = !MathJax.Object.B.hasOwnProperty("StaticX");
+      var r4 = !MathJax.Object.B.hasOwnProperty("StaticMethod");
+
+      return [
+      newScriptReftestResult("MathJax.Object.A", r1),
+      newScriptReftestResult("MathJax.Object.A.StaticMethod", r2),
+      newScriptReftestResult("MathJax.Object.B.StaticX", r3),
+      newScriptReftestResult("MathJax.Object.B.StaticMethod", r4)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

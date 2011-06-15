@@ -1,0 +1,58 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>basic examples</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      // Basic examples from the MathJax doc
+      MathJax.Object.Foo = MathJax.Object.Subclass({
+      Init: function (x) {this.setX(x)},
+      getX: function () {return this.x},
+      setX: function (x) {this.x = x}
+      });
+      var foo = MathJax.Object.Foo("bar");
+      var r1 = foo.getX();
+      foo.setX("foobar");
+      var r2 = foo.getX();
+      return [
+      newScriptReftestResult(
+      "MathJax.Object.Foo('bar')", r1 == "bar"
+      ),
+      newScriptReftestResult("foo.setX('foobar')", r2 == "foobar"),
+      newScriptReftestResult(
+      "foo.constructor", foo.constructor == MathJax.Object.Foo
+      ),
+      newScriptReftestResult(
+      "foo.isa(MathJax.Object)", foo.isa(MathJax.Object)
+      ),
+      newScriptReftestResult(
+      "foo.isa(MathJax.Object.Foo)", foo.isa(MathJax.Object.Foo)
+      ),
+      newScriptReftestResult(
+      "foo.isa(MathJax.InputJax))", !foo.isa(MathJax.InputJax)
+      ),
+      newScriptReftestResult("foo.can('getX')", foo.can("getX")),
+      newScriptReftestResult("foo.can('bar')", !foo.can("bar")),
+      newScriptReftestResult("foo.has('getX')", foo.has("getX")),
+      newScriptReftestResult("foo.has('x')", foo.has("x")),
+      newScriptReftestResult("foo.has('bar')", !foo.has("bar")
+      )
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

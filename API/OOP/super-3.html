@@ -1,0 +1,46 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>super</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      // Examples from the MathJax doc
+      MathJax.Class1 = MathJax.Object.Subclass({
+      Init: function (x) {this.x = x},
+      XandY: function (y) {return "Class1: x and y = " + this.x + " and " + y}
+      });
+
+      MathJax.Class2 = MathJax.Class1.Subclass(
+      MathJax.Object.SimpleSUPER({
+      XandY: function (y) {return "Class2: " + this.SUPER(y)},
+      AnotherMethod: function () {return this.x}
+      })
+      );
+            
+      var foo = MathJax.Class2("foo");
+      var r1 = (foo.XandY("bar") ==
+      "Class2: Class1: x and y = foo and bar");
+
+      return [
+      newScriptReftestResult(
+      "foo.XandY('bar')", r1
+      )
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>
