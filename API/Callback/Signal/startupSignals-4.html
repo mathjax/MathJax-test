@@ -1,0 +1,57 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>startup signals</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var s = 0;
+      var signals = ["Begin Typeset",     // 0
+                     "Begin PreProcess",
+                     "End PreProcess",
+                     "Begin Process",
+                     "End Process",
+                     "End Typeset"];      // 5
+      var results = [];
+      var signals2 = [];
+
+      function checkStep(aStep, aSignal)
+      {
+        results.push(s == aStep);
+        s++;
+        signals2.push(aSignal);
+      }
+
+      function xMathJaxConfig()
+      {
+      MathJax.Hub.Register.StartupHook(signals[0], [checkStep, 0, signals[0]]);
+      for (var i = 1; i < 5; i++)
+         MathJax.Hub.Register.MessageHook(signals[i], [checkStep, i, signals[i]]);
+      MathJax.Hub.Register.StartupHook(signals[5], [checkStep, 5, signals[5]]);
+      }
+
+      function getTestCases()
+      {
+      testList = [];
+      for (var i = 0; i < signals.length; i++)
+        testList.push(newScriptReftestResult(signals[i], results[i]));
+
+      var s1 = signals.toString(), s2 = signals2.toString();
+      testList.push(newScriptReftestResult("s1 == s2", s1 == s2));
+      
+      return testList;
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

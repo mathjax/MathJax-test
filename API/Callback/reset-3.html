@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>variables</title>
+    <title>reset</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,18 +12,23 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      function f() { this.x++; }
+
       function getTestCases()
       {
-      // Just checking that all the variables exist
+      var obj = { x:0 }
+      var cb1 = MathJax.Callback([obj, f]);
+      var r1 = (obj.x == 0);
+      cb1();
+      var r2 = (obj.x == 1);
+      cb1.reset();
+      cb1();
+      var r3 = (obj.x == 2);
+
       return [
-      newScriptReftestResult("MathJax.InputJax.id",
-      MathJax.InputJax.hasOwnProperty("id")),
-      newScriptReftestResult("MathJax.InputJax.version",
-      MathJax.InputJax.hasOwnProperty("version")),
-      newScriptReftestResult("MathJax.InputJax.directory",
-      MathJax.InputJax.hasOwnProperty("directory")),
-      newScriptReftestResult("MathJax.InputJax.elementJax",
-      MathJax.InputJax.hasOwnProperty("elementJax"))
+      newScriptReftestResult("before callback execution", r1),
+      newScriptReftestResult("after the first callback execution", r2),
+      newScriptReftestResult("after the second callback execution", r3)
       ];
       }    
     </script>

@@ -1,0 +1,55 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>startup signals</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var s = 0;
+
+      // This test verifies that the signals are sent in that order:
+      var signals = ["End Styles",
+                     "Begin Jax",
+                     "End Jax",
+                     "Begin Typeset"];
+      var results = [];
+      var signals2 = [];
+
+      function checkStep(aStep, aSignal)
+      {
+        results.push(s == aStep);
+        s++;
+        signals2.push(aSignal);
+      }
+
+      function xMathJaxConfig()
+      {
+      for (var i = 0; i < signals.length; i++)
+         MathJax.Hub.Register.StartupHook(signals[i], [checkStep, i, signals[i]]);
+      }
+
+      function getTestCases()
+      {
+      testList = [];
+      for (var i = 0; i < signals.length; i++)
+        testList.push(newScriptReftestResult(signals[i], results[i]));
+
+      var s1 = signals.toString(), s2 = signals2.toString();
+      testList.push(newScriptReftestResult("s1 == s2", s1 == s2));
+      
+      return testList;
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>properties</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function f() { return true; }
+
+      function getTestCases()
+      {
+      var cb1 = MathJax.Callback([window, f, 1, 2]);
+
+      // hook
+      var r1 = (cb1.hook == f);
+
+      // data
+      var r2 = (cb1.data.length == 2 && cb1.data[0] == 1 && cb1.data[1] == 2);
+
+      // object
+      var r3 = (cb1.object == window);
+
+      // called
+      var r4 = (cb1.called == undefined);
+      cb1();
+      var r5 = (cb1.called == true);
+     
+      // isCallback
+      var r6 = cb1.isCallback;
+
+      return [
+      newScriptReftestResult("hook", r1),
+      newScriptReftestResult("data", r2),
+      newScriptReftestResult("object", r3),
+      newScriptReftestResult("called == undefined before execution", r3),
+      newScriptReftestResult("called == true after execution", r4),
+      newScriptReftestResult("isCallback", r5)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

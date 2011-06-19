@@ -1,0 +1,91 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>ExecuteHooks</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- Testing various parameters for MathJax.Callback.ExecuteHooks -->
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false;
+      function f1() { r1 = true; }
+
+      var r2 = 0;
+      function f2a() { r2 = 2; }
+      function f2b() { r2 *= 2; }
+      function f2c() { r2 += 5; }
+
+      var r3 = false;
+      function f3(x) { r3 = x; }
+
+      var r4 = 0;
+      function f4a(x, y) { r4 += x * y; }
+      function f4b(x, y) { r4 *= (x + y); }
+
+      var r5 = 0;
+      function f5(x) { r5 = x * x; }
+
+      var r6 = 0;
+      function f6(x) { r6 += x; }
+
+      var r7 = "";
+      function f7(x, y) { r7 = x + r7 + y; }
+
+      var r8 = "";
+      function f8(x) { r8 += x; } 
+
+      var r9 = "";
+      function f9(x) { r9 += x + "a"; } 
+
+      function f10() { return; }
+
+      function getTestCases()
+      {
+      MathJax.Callback.ExecuteHooks(MathJax.Callback(f1));
+      MathJax.Callback.ExecuteHooks([MathJax.Callback(f2a),
+                                     MathJax.Callback(f2b),
+                                     MathJax.Callback(f2c)]);
+      MathJax.Callback.ExecuteHooks(MathJax.Callback(f3), true);
+      MathJax.Callback.ExecuteHooks([MathJax.Callback(f4a),
+                                     MathJax.Callback(f4b)],
+                                    [1, 2]);
+      MathJax.Callback.ExecuteHooks(MathJax.Callback(f5), 5);
+      MathJax.Callback.ExecuteHooks(MathJax.Callback(f6), 1, true);
+      MathJax.Callback(f6)(2);
+      h7 = MathJax.Callback(f7);
+      MathJax.Callback.ExecuteHooks([h7, h7], ["a", "b"], true);
+      h8 = MathJax.Callback(f8);
+      MathJax.Callback.ExecuteHooks(h8, "a");
+      h8("b");
+      h9 = MathJax.Callback(f9);
+      MathJax.Callback.ExecuteHooks([h9, h9], "z");
+
+      return [
+      newScriptReftestResult("ExecuteHooks(h1)", r1),
+      newScriptReftestResult("ExecuteHooks([h2a, h2b, h2c])", r2 == 9),
+      newScriptReftestResult("ExecuteHooks(h3, true)", r3),
+      newScriptReftestResult("ExecuteHooks([h4a, h4b], [1, 2])", r4 == 6),
+      newScriptReftestResult("ExecuteHooks(h5, 5)", r5 == 25),
+      newScriptReftestResult("ExecuteHooks(h6, 1, true)", r6 == 3),
+      newScriptReftestResult("ExecuteHooks([h7, h7], ['a', 'b'] , true)",
+      r7 == "aabb"),
+      newScriptReftestResult("ExecuteHooks(h8, 'a')", r8 == "a"),
+      newScriptReftestResult("ExecuteHooks([h9, h9], 'z')", r9 == "za"),
+
+      // XXXfred TODO: add more
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

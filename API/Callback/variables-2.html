@@ -14,18 +14,18 @@
     <script type="text/javascript">
       function getTestCases()
       {
+      var cb = MathJax.Callback();
+
       // Just checking that all the variables exist
-      var el = MathJax.Hub.getAllJax()[0];
       return [
-      newScriptReftestResult("inputJax", el.has("inputJax")),
-      newScriptReftestResult("outputJax", el.has("outputJax")),
-      newScriptReftestResult("inputID", el.has("inputID")),
-      newScriptReftestResult("originalText", el.has("originalText")),
-      newScriptReftestResult("mimeType", el.has("mimeType")),
-      newScriptReftestResult("Text", el.can("Text")),
-      newScriptReftestResult("Reprocess", el.can("Reprocess")),
-      newScriptReftestResult("Remove", el.can("Remove")),
-      newScriptReftestResult("SourceElement", el.can("SourceElement"))
+      newScriptReftestResult("hook", cb.hasOwnProperty("hook")),
+      newScriptReftestResult("data", cb.hasOwnProperty("data")),
+      newScriptReftestResult("object", cb.hasOwnProperty("object")),
+      // this two properties are undefined by default.
+      newScriptReftestResult("called", !cb.hasOwnProperty("called")),
+      newScriptReftestResult("autoReset", !cb.hasOwnProperty("autoReset")),
+      newScriptReftestResult("isCallback", cb.hasOwnProperty("isCallback")),
+      newScriptReftestResult("reset", cb.hasOwnProperty("reset"))
       ];
       }    
     </script>
@@ -33,8 +33,5 @@
   </head>
 
   <body>
-
-   <p><math><mi>x</mi></math></p>
-
   </body>
 </html>

@@ -206,18 +206,20 @@ function startMathJax()
     script2.type = "text/javascript";
     script2.src = gMathJaxPath + "MathJax.js?config=default";
 
-    var config =
-//        'MathJax.Message.Remove();' + // XXXfred workaround for issue 115
-        'MathJax.Hub.Config(getConfigObject());' +
-        'MathJax.Hub.Startup.onload();';
+    var config = "";
+    if (window.xMathJaxConfig) {
+        config = "xMathJaxConfig();"
+    }
+    config += "MathJax.Hub.Config(getConfigObject());";
+    config += "MathJax.Hub.Startup.onload();";
 
     if (window.postMathJax) {
       config +=
-        'MathJax.Hub.Queue(postMathJax);';
+        "MathJax.Hub.Queue(postMathJax);";
     }
     
     config +=
-        'MathJax.Hub.Queue(finalizeTest);';
+        "MathJax.Hub.Queue(finalizeTest);";
 
     if (window.opera) {
         script1.innerHTML = config;

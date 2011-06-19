@@ -1,4 +1,14 @@
 include Queue/reftest.list
 include Signal/reftest.list
 
+script delay-1.html
+script delay-2.html
+script executehooks-1.html
+script properties-1.html
+script reset-1.html
+script reset-2.html
+script reset-3.html
+script specifications-1.html
 script variables-1.html
+script variables-2.html
+

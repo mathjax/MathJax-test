@@ -1,0 +1,35 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>running</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var emptyqueue = MathJax.Callback.Queue();
+      var r1 = emptyqueue.running;
+      // getTestCases() is called in finalizeScriptReftests() which is pushed in
+      // MathJax.Hub.queue by finalizeTest(). Hence MathJax.Hub.queue should be
+      // true here.
+      var r2 = MathJax.Hub.queue.running;
+
+      return [
+      newScriptReftestResult("emptyqueue.running", !r1),
+      newScriptReftestResult("MathJax.Hub.queue.running", r2)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

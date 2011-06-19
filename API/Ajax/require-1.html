@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>variables</title>
+    <title>require</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,18 +12,15 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      function postMathJax()
+      {
+      MathJax.Hub.Queue(["Require", MathJax.Ajax, "myfile.js"]);
+      }
+
       function getTestCases()
       {
-      // Just checking that all the variables exist
       return [
-      newScriptReftestResult("MathJax.InputJax.id",
-      MathJax.InputJax.hasOwnProperty("id")),
-      newScriptReftestResult("MathJax.InputJax.version",
-      MathJax.InputJax.hasOwnProperty("version")),
-      newScriptReftestResult("MathJax.InputJax.directory",
-      MathJax.InputJax.hasOwnProperty("directory")),
-      newScriptReftestResult("MathJax.InputJax.elementJax",
-      MathJax.InputJax.hasOwnProperty("elementJax"))
+      newScriptReftestResult("Require", f(2) == 4)
       ];
       }    
     </script>

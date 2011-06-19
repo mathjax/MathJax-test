@@ -8,16 +8,33 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
 
     <script type="text/javascript">
       function getTestCases()
       {
+      var queue = MathJax.Callback.Queue();
       // Just checking that all the variables exist
       return [
-      newScriptReftestResult("MathJax.Ajax.timeout",
-      MathJax.Ajax.hasOwnProperty("timeout"))
+      newScriptReftestResult("MathJax.Callback.Queue.pending",
+      queue.has("pending")),
+      newScriptReftestResult("MathJax.Callback.Queue.running",
+      queue.has("running")),
+      newScriptReftestResult("MathJax.Callback.Queue.queue",
+      queue.has("queue")),
+      newScriptReftestResult("MathJax.Callback.Queue.Push",
+      queue.can("Push")),
+      newScriptReftestResult("MathJax.Callback.Queue.Process",
+      queue.can("Process")),
+      newScriptReftestResult("MathJax.Callback.Queue.Suspend",
+      queue.can("Suspend")),
+      newScriptReftestResult("MathJax.Callback.Queue.Resume",
+      queue.can("Resume")),
+      newScriptReftestResult("MathJax.Callback.Queue.wait",
+      queue.can("wait")),
+      newScriptReftestResult("MathJax.Callback.Queue.call",
+      queue.can("call"))
       ];
       }    
     </script>

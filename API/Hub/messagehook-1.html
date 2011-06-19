@@ -1,0 +1,46 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>MathJax.Hub.Register.MessageHook</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r = false;
+      var results = [];
+
+      function xMathJaxConfig()
+      {
+      // example from the doc
+      MathJax.Hub.Register.MessageHook("New Math", function (message) {
+        var script = MathJax.Hub.getJaxFor(message[1]).SourceElement();
+        results.push(message.join(" ")+": '"+script.text+"'");
+      })
+      }
+
+      function getTestCases()
+      {
+      return [
+        newScriptReftestResult("New Math 1",
+        results[0] == "New Math MathJax-Element-1: '<math><msup><mi>x</mi><mn>2</mn></msup></math>'"),
+        newScriptReftestResult("New Math 2",
+        results[1] == "New Math MathJax-Element-2: 'x^2'")
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <div><math><msup><mi>x</mi><mn>2</mn></msup></math></div>
+    <div><script type="math/tex;">x^2</script></div>
+
+  </body>
+</html>

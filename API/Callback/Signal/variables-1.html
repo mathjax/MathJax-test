@@ -8,16 +8,25 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
 
     <script type="text/javascript">
       function getTestCases()
       {
       // Just checking that all the variables exist
+      var signal = MathJax.Callback.Signal("a name");
+
       return [
-      newScriptReftestResult("MathJax.Ajax.timeout",
-      MathJax.Ajax.hasOwnProperty("timeout"))
+      newScriptReftestResult("name", signal.has("name")),
+      newScriptReftestResult("posted", signal.has("posted")),
+      newScriptReftestResult("listeners", signal.has("listeners")),
+      newScriptReftestResult("Post", signal.can("Post")),
+      newScriptReftestResult("Clear", signal.can("Clear")),
+      newScriptReftestResult("Interest", signal.can("Interest")),
+      newScriptReftestResult("NoInterest", signal.can("NoInterest")),
+      newScriptReftestResult("MessageHook", signal.can("MessageHook")),
+      newScriptReftestResult("ExecuteHook", signal.has("ExecuteHook"))
       ];
       }    
     </script>

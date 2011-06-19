@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>variables</title>
+    <title>MathJax.Hub.Register.LoadHook</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,19 +12,21 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      var r = false;
+
+      function f()
+      {
+        r = true;
+      }
+
+      function xMathJaxConfig()
+      {
+      MathJax.Hub.Register.LoadHook("[MathJax]/config/default.js", f)
+      }
+
       function getTestCases()
       {
-      // Just checking that all the variables exist
-      return [
-      newScriptReftestResult("MathJax.InputJax.id",
-      MathJax.InputJax.hasOwnProperty("id")),
-      newScriptReftestResult("MathJax.InputJax.version",
-      MathJax.InputJax.hasOwnProperty("version")),
-      newScriptReftestResult("MathJax.InputJax.directory",
-      MathJax.InputJax.hasOwnProperty("directory")),
-      newScriptReftestResult("MathJax.InputJax.elementJax",
-      MathJax.InputJax.hasOwnProperty("elementJax"))
-      ];
+      return [newScriptReftestResult("MathJax.Hub.Register.LoadHook", r)];
       }    
     </script>
 

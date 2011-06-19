@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>variables</title>
+    <title>delay</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,18 +12,36 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      var start, end;
+
+      function setStartTime()
+      {
+      start = new Date().getTime();
+      }
+
+      function setEndTime()
+      {
+      end = new Date().getTime();
+      }
+
+      function f()
+      {
+      // do nothing
+      }
+
+      function postMathJax()
+      {
+      MathJax.Hub.Queue(setStartTime,
+      MathJax.Callback.Delay(500, f),
+      setEndTime);
+      }
+
       function getTestCases()
       {
-      // Just checking that all the variables exist
+      var delta = end - start;
       return [
-      newScriptReftestResult("MathJax.InputJax.id",
-      MathJax.InputJax.hasOwnProperty("id")),
-      newScriptReftestResult("MathJax.InputJax.version",
-      MathJax.InputJax.hasOwnProperty("version")),
-      newScriptReftestResult("MathJax.InputJax.directory",
-      MathJax.InputJax.hasOwnProperty("directory")),
-      newScriptReftestResult("MathJax.InputJax.elementJax",
-      MathJax.InputJax.hasOwnProperty("elementJax"))
+      newScriptReftestResult("Delay(time[, callback]) (delta = " + delta + ")",
+      delta > 450 && delta < 550) // error tolerance of 10%
       ];
       }    
     </script>
