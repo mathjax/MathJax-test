@@ -1,0 +1,60 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Post</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+     
+      var unexpected = false, Nreceived = 0;
+      var s = "";
+
+      function f(msg, arg1, arg2, arg3)
+      {
+      s += "(\""+ msg + "\", " + arg1 +", " + arg2 + ", " + arg3 + ") ; ";
+      if (msg != "msg") {
+        unexpected = true;
+      }
+      Nreceived++;
+      }
+
+      function postMathJax()
+      {
+      var cb = MathJax.Callback(f); cb.autoReset = true;
+      var signal = MathJax.Callback.Signal("mySignal");
+      r1 = (signal.MessageHook("msg", cb) == cb);
+      signal.Post("foo");
+      signal.Post(["msg", 1, 2, 3]);
+      signal.Post("bar");
+      signal.Post(["msg", 'a', 'b', 'c']);
+      signal.Post(["msg", "foo", "bar", "baz"]);
+      signal.Post("baz");
+      }
+      
+      function getTestCases()
+      {
+      var ref =
+      "(\"msg\", 1, 2, 3) ; (\"msg\", a, b, c) ; (\"msg\", foo, bar, baz) ; ";
+
+      return [
+      newScriptReftestResult("String value of messages received is correct",
+                             !unexpected),
+      newScriptReftestResult("Number of expected messages received is correct",
+                             (Nreceived == 3)),
+      newScriptReftestResult("Message received = " + s, s == ref)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

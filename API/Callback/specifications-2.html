@@ -1,0 +1,62 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>specifications</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function f1() { return 1; }
+      function f2() { return 2; }
+      function f3(x, y) { return x + y; }
+      function f4() { return this.x + this.y }
+      function f5(y) { return this.x + y; }
+      function f8(y, z) { return this.x + y - z; }
+      function f10() { return this.x; }
+      function f11(x, y) { this == window && x && !y; }  
+      function f13(x, y) { return x + " and " + y; }
+
+      function getTestCases()
+      {
+      var x = MathJax.Callback(["slice",[1,2,3,4],1,3])();
+
+      // Just checking that all the variables exist
+      return [
+      newScriptReftestResult("[fn]", (MathJax.Callback([f2])() == 2)),
+      newScriptReftestResult("[fn, data...]",
+      (MathJax.Callback([f3, 2, 3])() == 5)),
+      newScriptReftestResult("[object, fn]",
+      (MathJax.Callback([{x:'foo', y:'bar'}, f4])() == "foobar")),
+      newScriptReftestResult("[object, fn, data...]",
+      (MathJax.Callback([{x:3}, f5, 4])() == 7)),
+      newScriptReftestResult("['method', object]",
+      (MathJax.Callback(["length",[1,2,3,4]])() == 4)),
+      newScriptReftestResult("['method', object, data...]",
+      (x.length == 2 && x[0] == 2 && x[1] == 3)),
+      newScriptReftestResult("{hook: fn, data: [...], object: this}",
+      (MathJax.Callback({hook: f8, data: [1,2], object: {x:11}})() == 10)),
+      newScriptReftestResult("{data: [...], object: this}",
+      MathJax.Callback({data: [0], object: {x:1}})() == undefined),
+      newScriptReftestResult("{hook: fn, object: this}",
+      MathJax.Callback({hook: f10, object: {x:5}})() == 5),
+      newScriptReftestResult("{hook: fn, data: [...]}",
+      MathJax.Callback({hook: f11, data: [true, false]})),
+      newScriptReftestResult("'string'",
+      (MathJax.Callback("1+2+3+4")() == 10)),
+      newScriptReftestResult("Executing a Callback with additional arguments",
+      (MathJax.Callback([f13, "foo"])("bar") == "foo and bar"))
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

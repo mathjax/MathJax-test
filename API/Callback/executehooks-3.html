@@ -3,46 +3,33 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>delay</title>
+    <title>ExecuteHooks</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- test return value: null -->
 
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      var start, end;
-
-      function setStartTime()
-      {
-      start = new Date().getTime();
-      }
-
-      function setEndTime()
-      {
-      end = new Date().getTime();
-      }
-
       function f()
       {
       // do nothing
       }
 
-      function postMathJax()
-      {
-      MathJax.Hub.Queue(setStartTime,
-      MathJax.Callback.Delay(500, f),
-      setEndTime);
-      }
-
       function getTestCases()
       {
-      var delta = end - start;
+      var cb = MathJax.Callback.ExecuteHooks([
+      MathJax.Callback(f),
+      MathJax.Callback(f),
+      MathJax.Callback(f),
+      MathJax.Callback(f)]);
+
       return [
-      newScriptReftestResult("Delay(time[, callback]) (delta = " + delta + ")",
-      delta > 400 && delta < 600) // error tolerance of 100ms
-      ];
+        newScriptReftestResult("MathJax.Callback.ExecuteHooks == null",
+                               cb == null)];
       }    
     </script>
 

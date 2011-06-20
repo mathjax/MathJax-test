@@ -1,4 +1,14 @@
+script Clear-1.html
+script Interest-1.html
+script Interest-2.html
+script MessageHook-1.html
+script MessageHook-2.html
+script Post-1.html
+script Post-2.html
+script Post-3.html
 script properties-1.html
+script properties-2.html
+script properties-3.html
 script startupSignals-1.html
 script startupSignals-2.html
 script startupSignals-3.html

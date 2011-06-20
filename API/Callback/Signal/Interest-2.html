@@ -1,0 +1,66 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Interest 2</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var l1 = [], l2 = [], l3 = [];
+
+      function f1(msg)
+      {
+      l1.push(msg);
+      }
+
+      function f2(msg)
+      {
+      l2.push(msg);
+      }
+
+      function f3(msg)
+      {
+      l3.push(msg);
+      }
+
+      function getTestCases()
+      {
+      var cb1 = MathJax.Callback(f1); cb1.autoReset = true;
+      var cb2 = MathJax.Callback(f2); cb2.autoReset = true;
+      var cb3 = MathJax.Callback(f3); cb3.autoReset = true;
+      var signal = MathJax.Callback.Signal("mySignal");
+
+      signal.Interest(cb1);
+      signal.Post("msg1");
+      // cb2 will ignore past messages
+      signal.Interest(cb2, true);
+      signal.Post("msg2");
+      // clear the list of posted messages, cb3 won't receive them
+      signal.Clear();
+      signal.Interest(cb3, false);
+      // cb1 will ignore future message
+      signal.NoInterest(cb1);
+      signal.Post("msg3");
+
+      return [
+      newScriptReftestResult("Listener 1",
+      (l1.length == 2 && l1[0] == "msg1" && l1[1] == "msg2")),
+      newScriptReftestResult("Listener 2",
+      (l2.length == 2 && l2[0] == "msg2" && l2[1] == "msg3")),
+      newScriptReftestResult("Listener 3",
+      (l3.length == 1 && l3[0] == "msg3"))
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

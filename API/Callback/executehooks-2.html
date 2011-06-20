@@ -8,27 +8,56 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <!-- Testing return values for MathJax.Callback.ExecuteHooks -->
+    <!-- test return value: callback regrouping several callbacks -->
 
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      var start = 0, end = 0, cb;
+
+      function setStartTime()
+      {
+      start = new Date().getTime();
+      }
+
+      function setEndTime()
+      {
+      end = new Date().getTime();
+      }
+
+      function f()
+      {
+      // do nothing
+      }
+
+      function postMathJax()
+      {
+      cb = MathJax.Callback.ExecuteHooks([
+      MathJax.Callback.Delay(100, MathJax.Callback(f)),
+      MathJax.Callback(f),
+      MathJax.Callback.Delay(300, MathJax.Callback(f)),
+      MathJax.Callback.Delay(200, MathJax.Callback(f)),
+      MathJax.Callback(f),
+      MathJax.Callback(f),
+      MathJax.Callback(f),
+      MathJax.Callback.Delay(500, MathJax.Callback(f)),
+      MathJax.Callback.Delay(400, MathJax.Callback(f))]);
+
+      if (cb != null) {
+        MathJax.Hub.Queue(setStartTime, cb, setEndTime);
+      }
+      }
+
       function getTestCases()
-     
+      {
+      var delta = end - start;
       return [
-      newScriptReftestResult("ExecuteHooks(h1)", r1),
-      newScriptReftestResult("ExecuteHooks([h2a, h2b, h2c])", r2 == 9),
-      newScriptReftestResult("ExecuteHooks(h3, true)", r3),
-      newScriptReftestResult("ExecuteHooks([h4a, h4b], [1, 2])", r4 == 6),
-      newScriptReftestResult("ExecuteHooks(h5, 5)", r5 == 25),
-      newScriptReftestResult("ExecuteHooks(h6, 1, true)", r6 == 3),
-      newScriptReftestResult("ExecuteHooks([h7, h7], ['a', 'b'] , true)",
-      r7 == "aabb"),
-      newScriptReftestResult("ExecuteHooks(h8, 'a')", r8 == "a"),
-      newScriptReftestResult("ExecuteHooks([h9, h9], 'z')", r9 == "za"),
-
-
+      newScriptReftestResult("MathJax.Callback.ExecuteHooks != null",
+                             cb != null),
+      newScriptReftestResult("MathJax.Callback.ExecuteHooks (delta = " +
+                             delta + ")",
+      (delta > 400 && delta < 600)) // error tolerance of 100ms
       ];
       }    
     </script>

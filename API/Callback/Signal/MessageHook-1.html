@@ -1,0 +1,56 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>MessageHook</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+     
+      var unexpected = false, Nreceived = 0, r1;
+
+      function f(msg)
+      {
+      // The listener callback is called with the message as an argument
+      if (msg != "my message") {
+        unexpected = true;
+      }
+      Nreceived++;
+      }
+
+      function postMathJax()
+      {
+      var cb = MathJax.Callback(f); cb.autoReset = true;
+      var signal = MathJax.Callback.Signal("mySignal");
+      r1 = (signal.MessageHook("my message", cb) == cb);
+      signal.Post("foo");
+      signal.Post("my message");
+      signal.Post("bar");
+      signal.Post("my message");
+      signal.Post("my message");
+      signal.Post("baz");
+      }
+      
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("MessageHook returns the callback", r1),
+      newScriptReftestResult("Only expected messages were received",
+                             !unexpected),
+      newScriptReftestResult("All expected messages were received",
+                             (Nreceived == 3))
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

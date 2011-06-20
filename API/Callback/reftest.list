@@ -4,6 +4,8 @@ include Signal/reftest.list
 script delay-1.html
 script delay-2.html
 script executehooks-1.html
+script executehooks-2.html
+script executehooks-3.html
 script properties-1.html
 script reset-1.html
 script reset-2.html

@@ -1,0 +1,53 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>properties: listeners</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function f(msg)
+      {
+      }
+
+      function getTestCases()
+      {
+      var signal;
+      var r1, r2, r3;
+
+      cb1 = MathJax.Callback(f);
+      cb2 = MathJax.Callback(f);
+      cb3 = MathJax.Callback(f);
+      
+      signal = MathJax.Callback.Signal("mySignal");
+      signal.Interest(cb1);
+      r1 = (signal.listeners.length == 1 && signal.listeners[0] == cb1);
+      signal.Interest(cb2);
+      r2 = (signal.listeners.length == 2 &&
+            signal.listeners[0] == cb1 &&
+            signal.listeners[1] == cb2);
+      signal.Interest(cb3);
+      r3 = (signal.listeners.length == 3 &&
+            signal.listeners[0] == cb1 &&
+            signal.listeners[1] == cb2 &&
+            signal.listeners[2] == cb3);
+
+      return [
+      newScriptReftestResult("listeners after cb1 is registered", r1),
+      newScriptReftestResult("listeners after cb2 is registered", r2),
+      newScriptReftestResult("listeners after cb3 is registered", r3)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

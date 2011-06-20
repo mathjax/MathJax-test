@@ -1,0 +1,43 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Post</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false;
+
+      function f(msg)
+      {
+      // The listener callback is called with the message as an argument
+      r1 = (msg == "my message");
+      }
+
+      function xMathJaxConfig()
+      {
+      MathJax.Hub.Register.StartupHook("my message", f);
+      }
+
+      function getTestCases()
+      {
+      // No callback object provided: return a blank callback object
+      cb = MathJax.Hub.Startup.signal.Post("my message");
+      r2 = (cb.isCallback && cb.length == 0 && cb() == undefined);
+
+      return [newScriptReftestResult("Post(message): message received", r1),
+              newScriptReftestResult("Post(message) is an empty callback", r2)];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

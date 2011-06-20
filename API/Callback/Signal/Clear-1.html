@@ -1,0 +1,78 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Post</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <!-- Test asynchronous Clear -->
+
+    <script type="text/javascript">
+      var start, end, signal;
+      var functionsCalled = [];
+
+      function setStartTime()
+      {
+      start = new Date().getTime();
+      }
+
+      function setEndTime()
+      {
+      end = new Date().getTime();
+      }
+
+      function f()
+      {
+      functionsCalled.push("f");
+      }
+
+      function f1(msg)
+      {
+      functionsCalled.push("f1");
+      setStartTime();
+      return MathJax.Callback.Delay(500, f);
+      }
+
+      function f2()
+      {
+      functionsCalled.push("f2");
+      setEndTime();
+      }
+
+      function postMathJax()
+      {
+      signal = MathJax.Callback.Signal("mySignal");
+      signal.Interest(MathJax.Callback(f1));
+      signal.Post("msg");
+      MathJax.Hub.Queue(signal.Clear(MathJax.Callback(f2)));
+      }
+
+      function getTestCases()
+      {
+      var delta = end - start;
+
+      return [
+      newScriptReftestResult("Order of function calls",
+      (functionsCalled.length == 3 &&
+      functionsCalled[0] == "f1" &&
+      functionsCalled[1] == "f" &&
+      functionsCalled[2] == "f2")),
+      newScriptReftestResult("Posted message list cleared",
+      signal.posted.length == 0),
+      newScriptReftestResult("Posting delayed (delta = " + delta + ")",
+      delta > 400 && delta < 600) // error tolerance of 100ms
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

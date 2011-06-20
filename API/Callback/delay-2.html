@@ -51,7 +51,7 @@
       var delta = end - start;
       return [
       newScriptReftestResult("setTimeout(MathJax.Callback(...)) (delta = " + delta + ")",
-      delta > 450 && delta < 550) // error tolerance of 10%
+      delta > 400 && delta < 600) // error tolerance of 100ms
       ];
       }    
     </script>

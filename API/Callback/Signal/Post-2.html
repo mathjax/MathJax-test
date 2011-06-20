@@ -1,0 +1,49 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Post</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false;
+
+      function g()
+      {
+      }
+
+      function f(msg)
+      {
+      // The listener callback is called with the message as an argument
+      r1 = (msg == "my message");
+      }
+
+      function xMathJaxConfig()
+      {
+      MathJax.Hub.Register.StartupHook("my message", f);
+      cb1 = MathJax.Callback(g);
+      // callback object cb1 provided: it should be returned
+      cb2 = MathJax.Hub.Startup.signal.Post("my message", cb1)
+      r2 = (cb1 == cb2);
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("Post(message, callback): message received", r1),
+      newScriptReftestResult("Post(message, callback) return the callback", r2)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

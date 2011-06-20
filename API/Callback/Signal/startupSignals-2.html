@@ -32,7 +32,7 @@
       function xMathJaxConfig()
       {
       for (var i = 0; i < signals.length; i++)
-         MathJax.Hub.Register.StartupHook(signals[i], [checkStep, i, signals[i]]);
+         MathJax.Hub.Register.StartupHook(signals[i], [checkStep, i]);
       }
 
       function getTestCases()

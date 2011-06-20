@@ -14,8 +14,8 @@
     <script type="text/javascript">
       function getTestCases()
       {
-      var signal = MathJax.Callback.Signal("myname");
-      var r1 = (signal.name == "myname");
+      var signal = MathJax.Callback.Signal("mySignal");
+      var r1 = (signal.name == "mySignal");
       var r2 = signal.posted.length == 0;
       var r3 = signal.listeners.length == 0;
 

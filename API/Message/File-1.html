@@ -12,6 +12,8 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      var id1, r1, r2;
+
       function preMathJax()
       {
       config = getConfigObject();
@@ -25,10 +27,18 @@
 
       function getTestCases()
       {
+      var cbSpecSleep = ["Delay", MathJax.Callback, 5];
+
+      MathJax.Hub.Queue(
+      function () {
       id1 = MathJax.Message.File("myfile");
       r1 = checkValue("Loading myfile");
       MathJax.Message.Clear(id1, 0);
+      },
+      cbSpecSleep,
+      function () {
       r2 = checkValue("");
+      });
 
       return [
       newScriptReftestResult(

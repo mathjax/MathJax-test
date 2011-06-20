@@ -1,0 +1,84 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Post</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var start, end;
+      var functionsCalled = [];
+
+      function setStartTime()
+      {
+      start = new Date().getTime();
+      }
+
+      function setEndTime()
+      {
+      end = new Date().getTime();
+      }
+
+      function f()
+      {
+      functionsCalled.push("f");
+      }
+
+      function f1(msg)
+      {
+      functionsCalled.push("f1");
+      setStartTime();
+      return MathJax.Callback.Delay(500, f);
+      }
+
+      function f2(msg)
+      {
+      functionsCalled.push("f2");
+      }
+
+      function f3()
+      {
+      functionsCalled.push("f3");
+      setEndTime();
+      }
+
+      function postMathJax()
+      {
+      var cb1 = MathJax.Callback(f1);
+      var cb2 = MathJax.Callback(f2);
+      var signal = MathJax.Callback.Signal("mySignal");
+      signal.Interest(cb1);
+      signal.Post("msg1");
+      signal.NoInterest(cb1);
+      signal.Interest(cb2, true);
+      MathJax.Hub.Queue(signal.Post("msg2", MathJax.Callback(f3)));
+      }
+
+      function getTestCases()
+      {
+      var delta = end - start;
+
+      return [
+      newScriptReftestResult("Order of function calls",
+      (functionsCalled.length == 4 &&
+      functionsCalled[0] == "f1" &&
+      functionsCalled[1] == "f" &&
+      functionsCalled[2] == "f2" &&
+      functionsCalled[3] == "f3")),
+      newScriptReftestResult("Posting delayed (delta = " + delta + ")",
+      delta > 400 && delta < 600) // error tolerance of 100ms
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

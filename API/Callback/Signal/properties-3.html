@@ -1,0 +1,55 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>properties: posted</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var signal;
+      var r1, r2, r3;
+      var msg1 = "first message";
+      var msg2 = "second message";
+      var msg3 = "third message";
+      var msg4 = "fourth message";
+
+      var signal = MathJax.Callback.Signal("mySignal");
+      signal.Post(msg1);
+      r1 = (signal.posted.length == 1 && signal.posted[0] == msg1);
+      signal.Post(msg2);
+      r2 = (signal.posted.length == 2 &&
+            signal.posted[0] == msg1 &&
+            signal.posted[1] == msg2);
+      signal.Post(msg3);
+      r3 = (signal.posted.length == 3 &&
+            signal.posted[0] == msg1 &&
+            signal.posted[1] == msg2 &&
+            signal.posted[2] == msg3);
+      signal.Clear();
+      r0 = (signal.posted.length == 0);
+      signal.Post(msg4);
+      r4 = (signal.posted.length == 1 && signal.posted[0] == msg4);
+
+      return [
+      newScriptReftestResult("posted, after first message is posted", r1),
+      newScriptReftestResult("posted, after second message is posted", r2),
+      newScriptReftestResult("posted, after third message is posted", r3),
+      newScriptReftestResult("posted, after it is cleared", r0),
+      newScriptReftestResult("posted, after fourth message is posted", r4)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

@@ -12,6 +12,8 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      var id1, r1, r2;
+
       function preMathJax()
       {
       config = getConfigObject();
@@ -25,11 +27,19 @@
 
       function getTestCases()
       {
+      var cbSpecSleep = ["Delay", MathJax.Callback, 5];
+
+      MathJax.Hub.Queue(
+      function () {
       MathJax.Message.filterText = function(text, n) { return text + "@" + n; }
       id1 = MathJax.Message.Set("mymsg");
       r1 = checkValue("mymsg@" + id1);
       MathJax.Message.Clear(id1, 0);
+      },
+      cbSpecSleep,
+      function () {
       r2 = checkValue("");
+      });
 
       return [
       newScriptReftestResult(
