@@ -1,0 +1,33 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Element</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript">
+      function getReftestElements()
+      {
+        return ["script"];
+      }
+
+      function xMathJaxConfig()
+      {
+      var script = document.getElementById("script");
+      MathJax.HTML.setScript(script, " var my_text_surrounded_by_spaces = 1; ");
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../treeReftests.js"></script>
+
+  </head>
+
+  <body>
+
+    <script id="script" type="text/javascript">var initial_text = 0;</script>
+    
+  </body>
+</html>

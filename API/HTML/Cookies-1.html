@@ -1,0 +1,43 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Cookies</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      // these are examples from the doc
+
+      var r0 = (MathJax.HTML.Cookie.Set("test",{x:42, y:"It Works!"}) == null);
+
+      var data1 = MathJax.HTML.Cookie.Get("test");
+      var s1 = 0; for( var i in data1 ) { s1++; }
+      var r1 = (s1 == 2 && data1.x == 42 && data1.y == "It Works!");
+
+      var data2 = {x:10, z:"Safe"};
+      MathJax.HTML.Cookie.Get("test", data2);
+      var s2 = 0; for( var i in data2 ) { s2++; }
+      var r2 = (s2 == 3 && data2.x == 42 && data2.y == "It Works!" &&
+                data2.z == "Safe");
+
+      return [
+      newScriptReftestResult("MathJax.HTML.Cookie.Set returns null", r0),
+      newScriptReftestResult("Cookie.Get(name)", r1),
+      newScriptReftestResult("Cookie.Get(name, obj)", r2)
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

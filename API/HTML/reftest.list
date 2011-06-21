@@ -1,4 +1,10 @@
-tree== Element-1.html Element-1-ref.html
+script Cookies-1.html
+tree== Element-1a.html Element-1-ref.html
+tree== Element-1b.html Element-1-ref.html
 script properties-1.html
+tree== setScript-1.html setScript-1-ref.html
+tree!= setScript-2.html setScript-2-ref.html
+tree== TextNode-1b.html TextNode-1-ref.html
+tree== TextNode-1b.html TextNode-1-ref.html
 script variables-1.html
 

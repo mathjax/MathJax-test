@@ -1,0 +1,64 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>isJax</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1, r2, r3, r4;
+
+      function checkStates()
+      {
+      var script1 = document.getElementById("script1");
+      var script2 = document.getElementById("script2");
+
+      r1 = MathJax.Hub.isJax(script1) == -1;
+      r2 = MathJax.Hub.isJax(script2) == -1,
+      r3 = MathJax.Hub.isJax("script1") == -1;
+      r4 = MathJax.Hub.isJax("script2") == -1;
+      }
+
+      function xMathJaxConfig()
+      {
+      MathJax.Hub.Register.MessageHook("End PreProcess", checkStates);
+      }
+
+      function getTestCases()
+      {
+      return [newScriptReftestResult("MathJax.Hub.isJax(script1) == -1", r1),
+              newScriptReftestResult("MathJax.Hub.isJax(script2) == -1", r2),
+              newScriptReftestResult("MathJax.Hub.isJax('script1') == -1", r3),
+              newScriptReftestResult("MathJax.Hub.isJax('script2') == -1", r4)];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <script id="script1" type="math/tex">x+\sqrt{1-x^2}</script>
+
+    <script id="script2" type="math/mml">
+      <math>
+        <mi>x</mi>
+        <mo>+</mo>
+        <msqrt>
+          <mn>1</mn>
+          <mo>&#x2212;<!-- − --></mo>
+          <msup>
+            <mi>x</mi>
+            <mn>2</mn>
+          </msup>
+        </msqrt>
+      </math>
+    </script>
+
+  </body>
+</html>

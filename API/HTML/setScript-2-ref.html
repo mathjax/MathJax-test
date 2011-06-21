@@ -11,20 +11,7 @@
     <script type="text/javascript">
       function getReftestElements()
       {
-        return ["root"];
-      }
-
-      function xMathJaxConfig()
-      {
-      // example from the doc
-      var div = MathJax.HTML.Element(
-        "div",
-        {id: "MathDiv", style:{border:"1px solid", padding:"5px"}},
-        ["Here is math: \\(x+1\\)",["br"],"and a display $$x+1\\over x-1$$"]
-      );
-
-      var parent = document.getElementById("root");
-      parent.appendChild(div);
+        return ["script"];
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
@@ -34,7 +21,7 @@
 
   <body>
 
-    <div id="root"></div>
+    <script id="script" type="text/javascript"></script>
     
   </body>
 </html>

@@ -1,0 +1,37 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>PreProcessor</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r = [];
+
+      function xMathJaxConfig()
+      {
+      MathJax.Hub.Register.MessageHook("Begin PreProcess",
+                                       function() { r.push("1"); });
+      MathJax.Hub.Register.PreProcessor(function() { r.push("2"); });
+      MathJax.Hub.Register.MessageHook("End PreProcess",
+                                       function() { r.push("3"); });
+      }
+
+      function getTestCases()
+      {
+      return [newScriptReftestResult("MathJax.Hub.Register.PreProcessor",
+      (r.length == 3 && r[0] == "1" && r[1] == "2" && r[2] == "3"))];
+      }
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

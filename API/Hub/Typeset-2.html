@@ -1,0 +1,50 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Typeset</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1, r2, r3, r4 = false;
+
+      function postMathJax() 
+      {
+      var cb = MathJax.Hub.Typeset();
+      r1 = (cb.length == 0 && cb() == undefined);
+
+      cb = MathJax.Hub.Typeset(document.getElementById("root"));
+      r2 = (cb.length == 0 && cb() == undefined);
+
+      var f = new function() { r4 = true; };
+      cb = MathJax.Hub.Typeset(document.getElementById("root"), f);
+      r3 = (cb.length == 0 && cb() == undefined);
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult(
+      "MathJax.Hub.Typeset() returns an empty callback", r1),
+      newScriptReftestResult(
+      "MathJax.Hub.Typeset(element) returns an empty callback", r2),
+      newScriptReftestResult(
+      "MathJax.Hub.Typeset(element, callback) returns an empty callback", r3),
+      newScriptReftestResult(
+      "MathJax.Hub.Typeset(element, callback) calls the callback", r4)
+      ]
+      }
+    </script>
+
+  </head>
+
+  <body id="root">
+
+  </body>
+</html>
