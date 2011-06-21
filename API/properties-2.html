@@ -1,0 +1,45 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>MathJax.isReady</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1, r2, r3, r4;
+
+      function xMathJaxConfig()
+      {
+      r1 = !MathJax.hasOwnProperty("isReady");
+      MathJax.Hub.Register.StartupHook("onLoad",function () {
+        r2 = !MathJax.hasOwnProperty("isReady");
+      });
+      MathJax.Hub.Register.StartupHook("Begin Typeset",function () {
+        r3 = MathJax.hasOwnProperty("isReady");
+      });
+      }
+
+      function getTestCases()
+      {
+      r4 = MathJax.isReady;
+
+      return [
+      newScriptReftestResult("MathJax.isReady is undefined before config", r1),
+      newScriptReftestResult("MathJax.isReady is undefined before onLoad", r2),
+      newScriptReftestResult("MathJax.isReady is true after Begin Typeset", r3),
+      newScriptReftestResult("MathJax.isReady is true at the end", r4)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

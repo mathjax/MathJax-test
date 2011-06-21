@@ -1,0 +1,53 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>skipStartupTypeset</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      var configuredCalled = false;
+      var r1 = true, r2 = false;
+
+      function preMathJax()
+      {
+      config = getConfigObject();
+      config.delayStartupUntil = "configured";
+      }
+
+      function xMathJaxConfig()
+      {
+      MathJax.Hub.Register.StartupHook("End Config", function () {
+        if (!configuredCalled) {
+          r1 = false;
+        }
+      });
+      MathJax.Hub.Register.StartupHook("End", function () {
+        r2 = true;
+      });
+      }
+
+      function postMathJax()
+      {
+      configuredCalled = true;
+      MathJax.Hub.Configured();
+      }
+      
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("End Config signal not sent before Configure", r1),
+      newScriptReftestResult("End signal sent", r2)
+      ];
+      }    
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+  </body>
+</html>

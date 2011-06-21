@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>variables</title>
+    <title>MathJax.version</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -15,8 +15,8 @@
       function getTestCases()
       {
       return [
-      newScriptReftestResult("typeof(MathJax.version)", typeof(MathJax.version) == "string"),
-      newScriptReftestResult("MathJax.isReady", MathJax.isReady)
+      newScriptReftestResult("typeof(MathJax.version)", typeof(MathJax.version) == "string")
+      // more tests on MathJax.version?
       ];
       }    
     </script>

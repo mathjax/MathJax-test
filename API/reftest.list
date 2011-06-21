@@ -9,6 +9,7 @@ include Message/reftest.list
 include OOP/reftest.list
 # include OutputJax/reftest.list
 
+script properties-1.html
+script properties-2.html
 script variables-1.html
-script variables-2.html
 
