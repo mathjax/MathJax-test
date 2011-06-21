@@ -176,9 +176,11 @@ function getMathJaxSourceMathML(aNode)
  */
 function initTreeReftests()
 {
-    var config = getConfigObject();
-    // Always use native MathML for tree reftests
-    config.jax = ["input/TeX", "input/MathML", "output/NativeMML"];
+    if (!window.getReftestElements) {
+        // Always use native MathML for the "standard" tree reftests
+        var config = getConfigObject();
+        config.jax = ["input/TeX", "input/MathML", "output/NativeMML"];
+    }
 }
 
 /**
@@ -191,15 +193,30 @@ function initTreeReftests()
  */
 function finalizeTreeReftests()
 {
-    var node = document.getElementById("reftest-element");
-    if (!node) {
-        throw "reftest-element not found";
+    var src = "";
+
+    if (window.getReftestElements) {
+        // a list of elements to compare is specified
+        list = window.getReftestElements();
+        for (var i = 0; i < list.length; i++) {
+            src += "==========\n";
+            src += serialize(document.getElementById(list[i]));
+            src += "\n==========\n\n";
+        }
+    } else {
+        // Default tree reftest: <div id="reftest-element"> with a single
+        // math inside.
+        var node = document.getElementById("reftest-element");
+        if (!node) {
+            src = getMathJaxSourceMathML(node);
+            throw "reftest-element not found";
+        }
     }
     
     var textarea = document.createElement("textarea");
     textarea.cols = 80;
     textarea.rows = 20;
-    textarea.value = getMathJaxSourceMathML(node);
+    textarea.value = src;
     textarea.id = "source";
     document.body.appendChild(textarea);
 

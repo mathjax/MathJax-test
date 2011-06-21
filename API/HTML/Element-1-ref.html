@@ -8,17 +8,20 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
+    <script type="text/javascript">
+      function getReftestElements()
+      {
+        return ["root"];
+      }
+    </script>
     <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../treeReftests.js"></script>
 
   </head>
 
   <body>
 
-    <div id="root" class="reftest-tree">
-      <div id="MathDiv" style="border: 1px solid; padding: 5px;">
-        Here is math: \(x+1\)<br/>and a display $$x+1\over x-1$$
-      </div>
-    </div>
+    <div id="root"><div style="border: 1px solid; padding: 5px;" id="MathDiv">Here is math: \(x+1\)<br/>and a display $$x+1\over x-1$$</div></div>
     
   </body>
 </html>
