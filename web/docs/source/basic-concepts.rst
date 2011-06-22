@@ -52,8 +52,8 @@ way:
 
 - **visual reftest**: two pages are loaded and their visual outputs compared.
 
-- **tree reftest**: two pages are loaded, the ``<math>`` element of each of them
-  is serialized and the output strings compared.
+- **tree reftest**: two pages are loaded, DOM subtrees are serialized and the
+  corresponding output strings compared.
 
 - **load test**: the unit test is made of a single Web page. The test is passed
   if no crashes, hangs etc happen. Such a test is also often called

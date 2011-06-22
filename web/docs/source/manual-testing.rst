@@ -47,7 +47,7 @@ particular, the following Javascript files are important:
   post actions and communicates with the test launcher.
 
 - `treeReftests.js </MathJax-test/treeReftests.js>`_: this script is needed for
-  tree reftests to serialize the ``<math>`` element.
+  tree reftests to serialize DOM trees.
 
 - `scriptTests.js </MathJax-test/scriptTests.js>`_: this script is needed for
   script tests to determine whether all the Javascript tests passed.
@@ -63,7 +63,7 @@ Loading a Unit Test
 ===================
 
 To load a unit test, you just have to open the test pages in the browser you
-want to test. It is also possible to provide the some configuration options in
+want to test. It is also possible to provide some configuration options in
 the query string of the URI:
 
 - **mathJaxPath**. By default, the test page looks for an ancestor directory
@@ -74,9 +74,9 @@ the query string of the URI:
   font used by MathJax to render the mathematics. Default is ``STIX``.
 
 - **nativeMathML**. This indicates whether the browser's renderer should be used
-  to display mathematics. This is either "false" or "true". It is not relevant
-  for tree reftests since the MathML output is always used to serialize the
-  math elements. In the other cases, the default value is "false".  
+  to display mathematics. This is either "false" or "true". Note that in some
+  cases, tree reftests force the use of MathML output, so this parameter is
+  ignored. In the other cases, the default value is "false".  
 
 Some examples:
 
@@ -105,9 +105,9 @@ success in the following ways:
   reference and test pages and to switch between the two. Be aware that
   some differences may be hard to detect with the naked eye.
 
-- For tree reftests, a textarea containing the serialization of the ``<math>``
-  element is available. One has to compare these sources. You can copy and paste
-  the content of the textareas in two text files and use a
+- For tree reftests, a textarea containing the result of the serialization is
+  available. One has to compare these sources. You can copy and paste the
+  content of the textareas in two text files and use a
   `diff tool <http://en.wikipedia.org/wiki/Diff>`_.
 
 - For load tests, you only have to see if the Web page is loaded without

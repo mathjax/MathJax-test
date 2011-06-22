@@ -207,10 +207,10 @@ function startMathJax()
     script2.src = gMathJaxPath + "MathJax.js?config=default";
 
     var config = "";
-    if (window.xMathJaxConfig) {
-        config = "xMathJaxConfig();"
-    }
     config += "MathJax.Hub.Config(getConfigObject());";
+    if (window.xMathJaxConfig) {
+        config += "xMathJaxConfig();"
+    }
     config += "MathJax.Hub.Startup.onload();";
 
     if (window.postMathJax) {

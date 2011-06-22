@@ -114,11 +114,9 @@ class seleniumMathJax(selenium.selenium):
         time allowed before aborting a test
         @property mFullScreenMode
         whether the browser should be put in full screen mode, when possible
-
         @property mCanvas
         A 4-tuple defining the left, upper, right, and lower pixel coordinate
         of the browser canvas i.e the area to capture for screenshot.
-
         @property mReftestSize
         The dimension of reftest images. It is set to 800x1000 px, to follow
         the size of screenshots used by Mozilla
@@ -159,7 +157,7 @@ class seleniumMathJax(selenium.selenium):
         different configuration, do it in a preMathJax() function. Also,
         note that @ref initTreeReftests sets @ref gNativeMathML to true, so
         the query string nativeMathML is ignored for tree reftests.
-        @raise Exception The javascript error that happened in the page.
+        @exception Exception The javascript error that happened in the page.
         """
 
         # append the testing framework options to the URI

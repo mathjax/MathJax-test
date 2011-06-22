@@ -57,7 +57,8 @@ TeX fonts are used in combination with Linux or Internet Explorer.
 @brief the list of tokens for the tokenizer
 
 @var t_ignore
-@brief the list of characters ignored by the tokenizer. None since whitespaces are not accepted inside the boolean expressions.
+@brief the list of characters ignored by the tokenizer. None since whitespaces
+are not accepted inside the boolean expressions.
 
 @var lexer
 the tokenizer
