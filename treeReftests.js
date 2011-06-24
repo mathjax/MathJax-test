@@ -224,8 +224,9 @@ function finalizeTreeReftests()
         // Default tree reftest: <div id="reftest-element"> with a single
         // math inside.
         var node = document.getElementById("reftest-element");
-        if (!node) {
+        if (node) {
             src = getMathJaxSourceMathML(node);
+        } else {
             throw "reftest-element not found";
         }
     }
