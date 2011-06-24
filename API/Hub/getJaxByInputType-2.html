@@ -1,0 +1,70 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>getJaxByInputType</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var maths1 = MathJax.Hub.getJaxByInputType("math/mml", "el");
+      var maths2 = MathJax.Hub.getJaxByInputType("math/tex", "el");
+      var scripts = document.getElementById("el").
+                    getElementsByTagName("script");
+
+      return [
+        newScriptReftestResult(
+          "MathJax.Hub.getJaxByInputType('math/mml', el).length",
+          maths1.length == 3),
+        newScriptReftestResult(
+          "MathJax.Hub.getJaxByInputType('math/mml', el)[0]",
+          maths1[0] == scripts[0].MathJax.elementJax),
+        newScriptReftestResult(
+          "MathJax.Hub.getJaxByInputType('math/mml', el)[1]",
+          maths1[1] == scripts[2].MathJax.elementJax),
+        newScriptReftestResult(
+          "MathJax.Hub.getJaxByInputType('math/mml', el)[2]",
+          maths1[2] == scripts[5].MathJax.elementJax),
+        newScriptReftestResult(
+          "MathJax.Hub.getJaxByInputType('math/tex', el).length",
+          maths2.length == 3),
+        newScriptReftestResult(
+          "MathJax.Hub.getJaxByInputType('math/tex', el)[0]",
+          maths2[0] == scripts[1].MathJax.elementJax),
+        newScriptReftestResult(
+          "MathJax.Hub.getJaxByInputType('math/tex', el)[1]",
+          maths2[1] == scripts[3].MathJax.elementJax),
+        newScriptReftestResult(
+          "MathJax.Hub.getJaxByInputType('math/tex', el)[2]",
+          maths2[2] == scripts[4].MathJax.elementJax)
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <script type="math/mml"><math><mi>x</mi></math></script>
+    <script type="math/tex">x</script>
+    <script type="math/tex">x</script>
+    <div id="el">
+      <script type="math/mml"><math><mi>x</mi></math></script>
+      <script type="math/tex">x</script>
+      <script type="math/mml"><math><mi>x</mi></math></script>
+      <script type="math/tex">x</script>
+      <script type="math/tex">x</script>
+      <script type="math/mml"><math><mi>x</mi></math></script>
+    </div>
+    <script type="math/mml"><math><mi>x</mi></math></script>
+    <script type="math/tex">x</script>
+
+  </body>
+</html>

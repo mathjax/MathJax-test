@@ -1,0 +1,57 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>getAllJax</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var scripts = document.body.getElementsByTagName("script");
+
+      // modify the mimeType manually, as I don't know if there are others than
+      // "jax/mml"
+      scripts[0].MathJax.elementJax.mimeType = "";
+      scripts[2].MathJax.elementJax.mimeType = "jax/mmlx";
+      scripts[3].MathJax.elementJax.mimeType = "jax/mm";
+      scripts[6].MathJax.elementJax.mimeType = "jax/html";
+
+      var maths = MathJax.Hub.getJaxByType("jax/mml");
+
+      return [
+      newScriptReftestResult("MathJax.Hub.getJaxByType('jax/xml').length",
+                             maths.length == 4),
+      newScriptReftestResult("MathJax.Hub.getJaxByType('jax/xml')[0]",
+                             maths[0] == scripts[1].MathJax.elementJax),
+      newScriptReftestResult("MathJax.Hub.getJaxByType('jax/xml')[1]",
+                             maths[1] == scripts[4].MathJax.elementJax),
+      newScriptReftestResult("MathJax.Hub.getJaxByType('jax/xml')[2]",
+                             maths[2] == scripts[5].MathJax.elementJax),
+      newScriptReftestResult("MathJax.Hub.getJaxByType('jax/xml')[3]",
+                             maths[3] == scripts[7].MathJax.elementJax),
+      ];                   
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <script type="math/mml"><math><mi>x</mi></math></script>
+    <script id="script1" type="math/tex">x</script>
+    <script type="math/mml"><math><mi>x</mi></math></script>
+    <script type="math/tex">x</script>
+    <script id="script4" type="math/tex">x</script>
+    <script id="script5" type="math/mml"><math><mi>x</mi></math></script>
+    <script type="math/tex">x</script>
+    <script id="script7" type="math/tex">x</script>
+
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>getAllJax</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var maths = MathJax.Hub.getAllJax();
+      var scripts = document.body.getElementsByTagName("script");
+      var results = [];
+
+      results.push(newScriptReftestResult("MathJax.Hub.getAllJax().length",
+      maths.length == scripts.length));
+
+      for (var i = 0; i < scripts.length; i++) {
+        results.push(newScriptReftestResult("MathJax.Hub.getAllJax()["+ i + "]",
+                     maths[i] == scripts[i].MathJax.elementJax));
+      }
+
+      return results;
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <script type="math/mml"><math><mi>x</mi></math></script>
+    <script type="math/tex">x</script>
+    <script type="math/mml"><math><mi>x</mi></math></script>
+    <script type="math/tex">x</script>
+    <script type="math/tex">x</script>
+    <script type="math/mml"><math><mi>x</mi></math></script>
+
+  </body>
+</html>

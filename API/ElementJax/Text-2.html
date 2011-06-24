@@ -1,0 +1,57 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Text</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <!-- This is an example from the doc -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false, r2 = false, r3 = false;
+
+      function f()
+      {
+        r1 = true;
+        mspace = document.getElementById("mspace");
+        r3 = (mspace.offsetWidth == 200);
+      }
+
+      function postMathJax() 
+      {
+      var newMath = "<math><mspace id=\"mspace\" width=\"200px\" height=\"10px\" mathbackground=\"blue\"></mspace></math>";
+
+      var math = MathJax.Hub.getAllJax("div")[0];
+      mspace = document.getElementById("mspace");
+      r2 = (mspace.offsetWidth == 100);
+      MathJax.Hub.Queue(["Text", math, newMath, f]);
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("Text(nexMath, f): Callback is called", r1),
+      newScriptReftestResult("Before change: mspace.offsetWidth == 100",
+                             r2),
+      newScriptReftestResult(
+      "After change and reprocess: mspace.offsetWidth == 200", r3)
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="div">
+      <math>
+        <mspace id="mspace" width="100px" height="10px" mathbackground="blue"></mspace>
+      </math>
+    </div>    
+
+  </body>
+</html>

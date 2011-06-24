@@ -1,0 +1,111 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Update</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+    
+      var newMath = "<math><mspace id=\"mspace1\" width=\"200px\" height=\"10px\" mathbackground=\"orange\"></mspace></math>";
+
+      var r1 = false, r2 = false, r3 = false, r4 = false, r5 = false,
+          r6 = false, r7 = false, r8 = false, r9 = false, r10 = false;
+
+      function f()
+      {
+        r1 = true;
+        var mspace1 = document.getElementById("mspace1");
+        r7 = (mspace1.offsetWidth == 200);
+        var mspace2 = document.getElementById("mspace2");
+        r8 = (mspace2.offsetWidth == 100);
+      }
+
+      function g()
+      {
+        r2 = true;
+        var mspace3 = document.getElementById("mspace3");
+        r9 = (mspace3.offsetWidth == 100);
+      }
+
+      function postMathJax() 
+      {
+      var math = MathJax.Hub.getAllJax("div")[0];
+      var mspace1 = document.getElementById("mspace1");
+      var mspace2 = document.getElementById("mspace2");
+      var mspace3 = document.getElementById("mspace3");
+      var mspace4 = document.getElementById("mspace4");
+      r3 = (mspace1.offsetWidth == 100);
+      r4 = (mspace2.offsetWidth == 100);
+      r5 = (mspace3.offsetWidth == 100);
+      r6 = (mspace4.offsetWidth == 100);
+      var script = document.body.getElementsByTagName("script")[0];
+      MathJax.HTML.setScript(script, newMath);
+      MathJax.Hub.Queue(["Update", MathJax.Hub, ["div1", "div2"], f]);
+      MathJax.Hub.Queue(["Update", MathJax.Hub, "div3", g]);
+      }
+
+      function getTestCases()
+      {
+      var mspace4 = document.getElementById("mspace4");
+      r10 = (mspace4.offsetWidth == 100);
+
+      return [
+        newScriptReftestResult("Callback f called", r1),
+        newScriptReftestResult("Callback g called", r2),
+        newScriptReftestResult("mspace1, before Update", r3),
+        newScriptReftestResult("mspace2, before Update", r4),
+        newScriptReftestResult("mspace3, before Update", r5),
+        newScriptReftestResult("mspace4, before Update", r6),
+        newScriptReftestResult("mspace1, after Update", r7),
+        newScriptReftestResult("mspace2, after Update", r8),
+        newScriptReftestResult("mspace3, after Update", r9),
+        newScriptReftestResult("mspace4, at the end", r10)
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body style="font-size: 12pt;">
+
+    <!-- It is assumed that MathJax converts this absolute dimensions into 
+         relative ones. When the font-size is updated, the square becomes
+         twice wider, so we need to reprocess the math -->
+    <div id="div1" style="position: absolute; top: 0px;">
+      <math>
+        <mspace id="mspace1" width="100px" height="10px" mathbackground="blue">
+        </mspace>
+      </math>
+    </div>
+
+    <div id="div2" style="position: absolute; top: 30px;">
+      <math>
+        <mspace id="mspace2" width="100px" height="10px" mathbackground="red">
+        </mspace>
+      </math>
+    </div>
+
+    <div id="div3" style="position: absolute; top: 60px;">
+      <math>
+        <mspace id="mspace3" width="100px" height="10px" mathbackground="green">
+        </mspace>
+      </math>
+    </div>
+
+    <div id="div4" style="position: absolute; top: 90px;">
+      <math>
+        <mspace id="mspace4" width="100px" height="10px" mathbackground="cyan">
+        </mspace>
+      </math>
+    </div>
+
+    <div style="height: 150px"></div>
+
+  </body>
+</html>

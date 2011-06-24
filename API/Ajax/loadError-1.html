@@ -1,0 +1,71 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>loadError</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false, r2 = false;
+
+      myError = function(aFile)
+      {
+      r1 = true;
+      r2 = (aFile == "unknown.js");
+      setEndTime();
+      }
+
+      var start, end;
+
+      function setStartTime()
+      {
+      start = new Date().getTime();
+      }
+
+      function setEndTime()
+      {
+      end = new Date().getTime();
+      }
+
+      function updateMessage(msg)
+      {
+        document.getElementById("mydiv").innerHTML += msg;
+      }
+
+      function postMathJax()
+      {
+      MathJax.Ajax.timeout = 2000;
+      MathJax.Ajax.loadError = myError;
+      MathJax.Hub.Queue([updateMessage, "Loading unknown.js..."]);
+      MathJax.Hub.Queue([setStartTime]);
+      MathJax.Hub.Queue(["Require", MathJax.Ajax, "unknown.js"  ]);
+      MathJax.Hub.Queue([updateMessage, " done."]);
+      }
+
+      function getTestCases()
+      {
+      var delta = end - start;
+      var error = Math.abs(MathJax.Ajax.timeout - delta);
+
+      return [
+      newScriptReftestResult("MathJax.Ajax.loadError called", r1),
+      newScriptReftestResult("MathJax.Ajax.loadError argument", r2),
+      newScriptReftestResult("Require unknown.js, timeout (delta = " +
+                             delta + ")", (error < 100)) // tolerance of 100ms
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="mydiv"></div>
+  </body>
+</html>

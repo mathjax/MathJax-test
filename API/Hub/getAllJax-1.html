@@ -1,0 +1,99 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>getAllJax</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("MathJax.Hub.getAllJax()",
+                             MathJax.Hub.getAllJax().length == 18),
+      newScriptReftestResult("MathJax.Hub.getAllJax('id1')",
+                             MathJax.Hub.getAllJax("id1").length == 16),
+      newScriptReftestResult("MathJax.Hub.getAllJax(id11)",
+      MathJax.Hub.getAllJax(document.getElementById("id11")).length == 5),
+      newScriptReftestResult("MathJax.Hub.getAllJax(id111)",
+      MathJax.Hub.getAllJax(document.getElementById("id111")).length == 1),
+      newScriptReftestResult("MathJax.Hub.getAllJax('id112')",
+                             MathJax.Hub.getAllJax("id112").length == 1),
+      newScriptReftestResult("MathJax.Hub.getAllJax('id113')",
+                             MathJax.Hub.getAllJax("id113").length == 2),
+      newScriptReftestResult("MathJax.Hub.getAllJax('id12')",
+                             MathJax.Hub.getAllJax("id12").length == 4),
+      newScriptReftestResult("MathJax.Hub.getAllJax(id121)",
+      MathJax.Hub.getAllJax(document.getElementById("id121")).length == 2),
+      newScriptReftestResult("MathJax.Hub.getAllJax(id13)",
+      MathJax.Hub.getAllJax(document.getElementById("id13")).length == 5),
+      newScriptReftestResult("MathJax.Hub.getAllJax(id131)",
+      MathJax.Hub.getAllJax(document.getElementById("id131")).length == 1),
+      newScriptReftestResult("MathJax.Hub.getAllJax('id132')",
+                             MathJax.Hub.getAllJax("id132").length == 2)
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- 18 -->
+    <math><mi>j</mi></math>
+    <div id="id1">
+      <!-- 16 -->
+      <div id="id11">
+        <!-- 5 -->
+        <div id="id111">
+          <!-- 1 -->
+          \(x\)
+        </div>
+          \(y\)
+        <div id="id112">
+          <!-- 1 -->
+          <math><mi>x</mi></math>
+        </div>
+        <div id="id113">
+          <!-- 2 -->
+          <math><mi>k</mi></math>
+          \(z\)
+        </div>
+      </div>
+      <div id="id12">
+        <!-- 4 -->
+        \(z\)
+        <div id="id121">
+          <!-- 2 -->
+          <math><mi>a</mi></math>
+          <math><mi>b</mi></math>
+        </div>
+        <math><mi>d</mi></math>
+      </div>
+      <div id="id13">
+        <!-- 5 -->
+        <div id="id131">
+          <!-- 1 -->
+          \(p\)
+        </div>
+        <div id="id132">
+          <!-- 2 -->
+          <math><mi>r</mi></math>
+          \(s\)
+        </div>
+        \(t\)
+        <math><mi>u</mi></math>
+      </div>
+      \(f\)
+      <math><mi>m</mi></math>
+    </div>
+    \(i\)
+
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Process</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+
+    <script type="text/javascript">
+    
+      function postMathJax() 
+      {
+        document.getElementById("div1").innerHTML = "$$x$$";
+        document.getElementById("div2").innerHTML = "$$x$$";
+
+        var script = document.createElement("script");
+        script.type = "math/tex";
+        if (window.opera) {
+          script.innerHTML = "x";
+        } else {
+          script.text = "x";
+        }
+        document.getElementById("div3").appendChild(script);
+
+        // preprocessed
+        MathJax.Hub.Queue(["PreProcess", MathJax.Hub, "div1"]);
+        MathJax.Hub.Queue(["Process", MathJax.Hub, "div1"]);
+
+        // not preprocessed
+        MathJax.Hub.Queue(["Process", MathJax.Hub, "div2"]);
+
+        // script tag
+        MathJax.Hub.Queue(["Process", MathJax.Hub, "div3"]);
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="div1"></div>
+    <div id="div2"></div>    
+    <div id="div3"></div>    
+
+  </body>
+</html>

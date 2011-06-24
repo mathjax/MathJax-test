@@ -1,0 +1,84 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Require</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <!-- test loading of js, css, and inexistent file -->
+    <!-- same as Require-1, but with key:value instead -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var start, end;
+
+      function setStartTime()
+      {
+      start = new Date().getTime();
+      }
+
+      function setEndTime()
+      {
+      end = new Date().getTime();
+      }
+
+      function updateMessage(msg)
+      {
+        document.getElementById("mydiv").innerHTML += msg;
+      }
+
+      function postMathJax()
+      {
+      MathJax.Ajax.timeout = 2000;
+      MathJax.Hub.Queue([updateMessage, "Loading myfile.js.txt..."]);
+      MathJax.Hub.Queue(["Require", MathJax.Ajax,
+                         {js:"myfile.js.txt"}   ]);
+      MathJax.Hub.Queue([updateMessage, " done ; Loading myfile.css.txt..."]);
+      MathJax.Hub.Queue(["Require", MathJax.Ajax,
+                         {css:"myfile.css.txt"} ]);
+      MathJax.Hub.Queue([updateMessage, " done ; Loading unknown.js.txt..."]);
+      MathJax.Hub.Queue([setStartTime]);
+      MathJax.Hub.Queue(["Require", MathJax.Ajax,
+                         {js:"unknown.js.txt"}  ]);
+      MathJax.Hub.Queue([setEndTime]);
+      MathJax.Hub.Queue([updateMessage, " done."]);
+      }
+
+      function getTestCases()
+      {
+      var delta = end - start;
+      var error = Math.abs(MathJax.Ajax.timeout - delta);
+
+      return [
+      newScriptReftestResult("Require myfile.js.txt, status",
+                             MathJax.Ajax.loaded["myfile.js.txt"] ==
+                             MathJax.Ajax.STATUS.OK),
+      newScriptReftestResult("Require myfile.js.txt, can be executed",
+                             f(2) == 4),
+      newScriptReftestResult("Require myfile.css.txt, status",
+                             MathJax.Ajax.loaded["myfile.css.txt"] ==
+                             MathJax.Ajax.STATUS.OK),
+      newScriptReftestResult("Require myfile.css.txt, style changed",
+                    (document.getElementById("square").offsetWidth == 100)),
+      newScriptReftestResult("Require unknown.js.txt, status",
+                             MathJax.Ajax.loaded["unknown.js.txt"] ==
+                             MathJax.Ajax.STATUS.ERROR),
+      newScriptReftestResult("Require unknown.js.txt, timeout (delta = " +
+                             delta + ")", (error < 100)) // tolerance of 100ms
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="square"></div>
+    <div style="height: 100px"></div>
+    <div id="mydiv"></div>
+  </body>
+</html>

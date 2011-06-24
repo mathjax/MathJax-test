@@ -1,0 +1,52 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>PreProcess</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+
+      var r1 = false, r2 = false;
+
+      function numberOfChildren()
+      {
+        return document.getElementById("div").children.length;
+      }
+
+      function f()
+      {
+        r1 = true;
+        // a MathJax_preview span and a script tag after preprocess
+        r2 = (numberOfChildren() == 2);
+      }
+
+      function postMathJax()
+      {
+        document.getElementById("div").innerHTML = "$$x$$";
+        MathJax.Hub.Queue(["PreProcess", MathJax.Hub, "div", f]);
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("Callback called", r1),
+      newScriptReftestResult("After processing", r2)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="div"></div>
+
+  </body>
+</html>

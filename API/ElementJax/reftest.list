@@ -1,3 +1,10 @@
+== Remove-1.html Remove-1-ref.html
+script Remove-2.html
+script SourceElement-1.html
+== Reprocess-1.html Reprocess-1-ref.html
+script Reprocess-2.html
+== Text-1.html Text-1-ref.html
+script Text-2.html
 script variables-1.html
 script variables-2.html
 

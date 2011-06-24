@@ -1,0 +1,63 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Styles</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false, r2 = false, r3 = false, r4 = false;
+
+      function f()
+      {
+        r3 = true;
+        r4 = (document.getElementById("myrect").offsetWidth == 150);
+      }
+
+      function postMathJax()
+      {
+      r1 = (document.getElementById("myrect").offsetWidth == 100);
+      var cb = MathJax.Callback(f);
+      var cb2 = MathJax.Ajax.Styles("#myrect { width: 150px; }", cb);
+      r2 = (cb == cb2);
+      MathJax.Hub.Queue(cb2);
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("width before restyle == 100", r1),
+      newScriptReftestResult("MathJax.Ajax.Styles(styles, cb) returns cb", r2),
+      newScriptReftestResult("MathJax.Ajax.Styles(styles, cb), cb called ", r3),
+      newScriptReftestResult("width after restyle == 150", r4)
+      ];
+      }    
+    </script>
+
+    <style type="text/css">
+      div.square {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100px;
+        height: 100px;
+        background: red;
+      }
+    </style>
+    </div>
+
+  </head>
+
+  <body>
+
+    <div class="square" id="myrect"></div>
+    <div style="height: 150px"></div>
+
+  </body>
+</html>

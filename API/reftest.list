@@ -3,11 +3,10 @@ include Callback/reftest.list
 include ElementJax/reftest.list
 include HTML/reftest.list
 include Hub/reftest.list
-# include InputJax/reftest.list
-# include Jax/reftest.list
+include InputJax/reftest.list
 include Message/reftest.list
 include OOP/reftest.list
-# include OutputJax/reftest.list
+include OutputJax/reftest.list
 
 script properties-1.html
 script properties-2.html

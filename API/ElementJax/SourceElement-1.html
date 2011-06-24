@@ -1,0 +1,52 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>SourceElement</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <!-- This is an example from the doc -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var maths = MathJax.Hub.getAllJax("MathDiv");
+      var scripts = document.body.getElementsByTagName("script")
+
+      return [
+      newScriptReftestResult("SourceElement(), tex1",
+      scripts[0] == maths[0].SourceElement()),
+      newScriptReftestResult("SourceElement(), tex2",
+      scripts[1] == maths[1].SourceElement()),
+      newScriptReftestResult("SourceElement(), mathml1",
+      scripts[2] == maths[2].SourceElement()),
+      newScriptReftestResult("SourceElement(), mathml2",
+      scripts[3] == maths[3].SourceElement())
+      ];      
+      alert()
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="tex1"><script type="math/tex;">x+0</script></div>
+    <div id="tex2"><script type="math/tex;">x+1</script></div>
+    <div id="mathml1">
+      <script type="math/mml;">
+        <math><mi>x</mi><mo>+</mo><mn>2</mn></math>
+      </script>
+    </div>
+    <div id="mathml2">
+      <script type="math/mml;">
+        <math><mi>x</mi><mo>+</mo><mn>3</mn></math>
+      </script>
+    </div>
+
+  </body>
+</html>

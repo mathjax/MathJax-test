@@ -1,0 +1,51 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Remove</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <!-- This is an example from the doc -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      config = getConfigObject();
+      config.skipStartupTypeset = true;
+      }
+
+      function getReftestElements()
+      {
+      return ["tex1", "tex2", "mathml1", "mathml2"];
+      }
+
+      function postMathJax() 
+      {
+      var maths = MathJax.Hub.getAllJax("MathDiv");
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub, "tex2"]);
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub, "mathml2"]);
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="tex1"><script type="math/tex;">x+0</script></div>
+    <div id="tex2"><script type="math/tex;">x+1</script></div>
+    <div id="mathml1">
+      <script type="math/mml;">
+        <math><mi>x</mi><mo>+</mo><mn>2</mn></math>
+      </script>
+    </div>
+    <div id="mathml2">
+      <script type="math/mml;">
+        <math><mi>x</mi><mo>+</mo><mn>3</mn></math>
+      </script>
+    </div>
+
+  </body>
+</html>

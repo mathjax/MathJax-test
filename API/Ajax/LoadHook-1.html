@@ -1,0 +1,55 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>LoadHook</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false, r2 = false, r3 = false, r4  = false;
+
+      function f()
+      {
+      r2 = true;
+      r3 = (f(3) == 9);
+      }
+
+      function xMathJaxConfig()
+      {
+      var cb = MathJax.Callback(f);
+      r1 = (MathJax.Ajax.LoadHook("myfile.js", cb) == cb);
+      }
+
+      function postMathJax()
+      {
+      MathJax.Hub.Queue(["Require", MathJax.Ajax, "myfile.js"]);
+      for (var x in MathJax.Ajax.loadHooks) {
+        if (x == "myfile.js") {
+          r4 = true;
+        }
+      }
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("MathJax.Ajax.LoadHook returns the callback", r1),
+      newScriptReftestResult("The callback is executed", r2),
+      newScriptReftestResult("The file loaded can be executed",  r3),
+      newScriptReftestResult("MathJax.Ajax.loadHooks contains myfile",  r4)
+      ];
+      }    
+
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

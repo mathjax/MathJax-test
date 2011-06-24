@@ -1,0 +1,37 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Reprocess</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+
+    <script type="text/javascript">
+      function postMathJax() 
+      {
+      document.getElementById("div1").style.fontSize = "24pt" 
+      MathJax.Hub.Queue(["Reprocess", MathJax.Hub, "div2"]);
+      }
+    </script>
+
+  </head>
+
+  <body style="font-size: 12pt;">
+
+    <!-- It is assumed that MathJax converts these absolute dimensions into 
+         relative ones. When the font-size is updated, the square becomes
+         twice larger. It won't be reprocessed in this test. -->
+    <div id="div1">
+      <math>
+        <mspace width="100px" height="100px" mathbackground="blue"></mspace>
+      </math>
+    </div>
+
+    <div id="div2">
+    </div>
+
+  </body>
+</html>

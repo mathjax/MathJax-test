@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>require</title>
+    <title>properties</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,15 +12,11 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      function postMathJax()
-      {
-      MathJax.Hub.Queue(["Require", MathJax.Ajax, "myfile.js"]);
-      }
-
       function getTestCases()
       {
       return [
-      newScriptReftestResult("Require", f(2) == 4)
+      newScriptReftestResult("Default timeout is 15000",
+                             MathJax.Ajax.timeout == 15000)
       ];
       }    
     </script>
