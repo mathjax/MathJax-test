@@ -1,0 +1,44 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>zscale</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.jax = ["input/MathML", "output/HTML-CSS"];
+      gConfigObject.extensions.push("MathZoom.js");
+      gConfigObject.menuSettings = { zoom: "Click", zscale: "500%" };
+      }
+
+      function postMathJax()
+      {
+      var math = document.getElementsByClassName("MathJax")[0];
+      MathJax.Extension.MathZoom.Click(null, math);
+      }
+    </script>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- zscale = 500% -->
+    <div style="position: absolute; left: 0; top: 0;">
+      <math><mrow><mi>x</mi><mo>+</mo><mi>y</mi></mrow></math>
+    </div>
+
+    <div style="font-size: 500%;
+                position: absolute; left: 0; top: 0; background: red;">
+      <math>
+        <mphantom><mrow><mi>x</mi><mo>+</mo><mi>y</mi></mrow></mphantom>
+      </math>
+    </div>
+
+    <div 
+
+  </body>
+</html>

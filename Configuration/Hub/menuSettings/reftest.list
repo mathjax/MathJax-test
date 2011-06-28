@@ -1,0 +1,14 @@
+== zoom-1.html?zoomConfig=None&zoomTrigger=Click zoom-1-ref.html
+== zoom-1.html?zoomConfig=None&zoomTrigger=DblClick zoom-1-ref.html
+== zoom-1.html?zoomConfig=None&zoomTrigger=Mouseover zoom-1-ref.html
+!= zoom-1.html?zoomConfig=Click&zoomTrigger=Click zoom-1-ref.html
+== zoom-1.html?zoomConfig=Click&zoomTrigger=DblClick zoom-1-ref.html
+== zoom-1.html?zoomConfig=Click&zoomTrigger=Mouseover zoom-1-ref.html
+== zoom-1.html?zoomConfig=Double-Click&zoomTrigger=Click zoom-1-ref.html
+!= zoom-1.html?zoomConfig=Double-Click&zoomTrigger=DblClick zoom-1-ref.html
+== zoom-1.html?zoomConfig=Double-Click&zoomTrigger=Mouseover zoom-1-ref.html
+== zoom-1.html?zoomConfig=Hover&zoomTrigger=Click zoom-1-ref.html
+== zoom-1.html?zoomConfig=Hover&zoomTrigger=DblClick zoom-1-ref.html
+!= zoom-1.html?zoomConfig=Hover&zoomTrigger=Mouseover zoom-1-ref.html
+== zscale-1.html zscale-1-ref.html
+# TODO: context=browser?

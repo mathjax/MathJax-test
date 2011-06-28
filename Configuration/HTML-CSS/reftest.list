@@ -1,2 +1,15 @@
 == scale-1.html scale-1-ref.html
 == minScaleAdjust-1.html minScaleAdjust-1-ref.html
+
+# before the tooltip is displayed
+== tooltip-1.html?delayPost=2000&delayFinalize=1000 tooltip-1-ref.html?show=false
+# after the tooltip is displayed and before it is cleared
+== tooltip-1.html?delayPost=2000&delayClear=2000&delayFinalize=3000 tooltip-1-ref.html?show=true
+# after the tooltip is cleared
+== tooltip-1.html?delayPost=2000&delayClear=2000&delayFinalize=5000 tooltip-1-ref.html?show=false
+# testing offsetX
+== tooltip-1.html?delayPost=0&delayClear=1000&offsetX=100 tooltip-1-ref.html?show=true&offsetX=100
+# testing offsetY
+== tooltip-1.html?delayPost=0&delayClear=1000&offsetY=100 tooltip-1-ref.html?show=true&offsetY=100
+# testing offsetX and offsetY
+== tooltip-1.html?delayPost=0&delayClear=1000&offsetX=100&offsetY=100 tooltip-1-ref.html?show=true&offsetX=100&offsetY=100

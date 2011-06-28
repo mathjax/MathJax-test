@@ -1,0 +1,62 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>showProcessingMessages</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      var processingFound = false, tryAgain = true; 
+      var delay = 200;
+      var showProcessing = getQueryBoolean("showProcessing");
+
+      function preMathJax()
+      {
+      gConfigObject.messageStyle = "normal";
+      gConfigObject.showProcessingMessages = showProcessing;
+      setTimeout("verifyMessage()", delay);
+      }
+
+      function verifyMessage()
+      {
+      var msg = document.getElementById("MathJax_Message");
+        if (msg) {
+          // verify whether the message contains the processing message
+          var regexp = /^Processing math: [0-9]{2}%$/
+          if (regexp.test(msg.innerHTML)) {
+            processingFound = true;
+            tryAgain = false;
+          }
+        }
+        if (tryAgain) {
+          setTimeout("verifyMessage()", delay);
+        }
+      }
+
+      function postMathJax()
+      {
+        tryAgain = false;
+      }
+
+      function getTestCases()
+      {
+      return [
+        newScriptReftestResult("showProcessingMessages",
+                              showProcessing ?
+                              processingFound : !processingFound)
+      ];
+      }
+
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+    <div>\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)</div>
+
+  </body>
+</html>

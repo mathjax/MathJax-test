@@ -11,9 +11,8 @@
     <script type="text/javascript">
       function preMathJax()
       {
-      var config = getConfigObject();
-      config.jax = ["input/TeX", "output/NativeMML"];
-      config.extensions.push("MathZoom.js");
+      gConfigObject.jax = ["input/TeX", "output/NativeMML"];
+      gConfigObject.extensions.push("MathZoom.js");
 
       // If the zoom box is large enough, it should render the same
       // with or without scroll bars.

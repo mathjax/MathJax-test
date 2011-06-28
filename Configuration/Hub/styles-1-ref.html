@@ -1,0 +1,41 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>styles</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+        gConfigObject.styles = { "#square1":
+                                 {
+                                   width: "100px",
+                                   height: "100px",
+                                   background: "red"
+                                 },
+                                 "#square2":
+                                 {
+                                   width: "100px",
+                                   height: "100px",
+                                   background: "blue"
+                                 }
+                               }
+      }
+
+    </script>
+    
+  </head>
+
+  <body>
+
+    <div id="square1" style="width: 100px; height: 100px; background: red">
+    </div>
+    <div id="square2" style="width: 100px; height: 100px; background: blue">
+    </div>
+
+  </body>
+</html>

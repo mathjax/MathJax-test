@@ -1,0 +1,132 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>processEnvironments</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.tex2jax = { processEnvironments: false };
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    \begin{align}
+    a & = & b & + & c \\
+    d & = & e & + & f \\
+    g & = & h & + & i
+    \end{align}
+
+    \begin{align*}
+    a & = & b & + & c \\
+    d & = & e & + & f \\
+    g & = & h & + & i
+    \end{align*}
+
+    \begin{alignat}{1}
+    x &= 1 + 2 \\
+    &= 3     \\
+    \end{alignat}
+
+    \begin{alignat*}{1}
+    x &= 1 + 2 \\
+    &= 3     \\
+    \end{alignat*}
+
+    \begin{aligned}
+    a & = & b & + & c \\
+    d & = & e & + & f \\
+    g & = & h & + & i
+    \end{aligned}
+
+    \begin{alignat}{1}
+    x &= 1 + 2 \\
+    &= 3     \\
+    \end{alignat}
+
+    \begin{equation}
+    \eqalign{
+    a &= b \\
+    c &= d
+    }
+    \end{equation}
+
+    \begin{equation}
+    \eqalignno{
+    a &= b \\
+    c &= d
+    }
+    \end{equation}
+
+    \begin{eqnarray}
+    a & = & b & + & c \\
+    d & = & e & + & f \\
+    g & = & h & + & i
+    \end{eqnarray}
+
+    \begin{eqnarray*}
+    a & = & b & + & c \\
+    d & = & e & + & f \\
+    g & = & h & + & i
+    \end{eqnarray*}
+
+    \begin{equation}
+    \boxed{x^2+y^2 = z^2}
+    \end{equation}
+
+    \begin{equation*}
+    e^{ix} = \cos{x} + i \sin{x}
+    \end{equation*}
+
+    \begin{gather}
+    a = 1 + x + y \\
+    d = 4 - y     \\
+    g = 2x - 5y
+    \end{gather}
+
+    \begin{gather*}
+    a = 1 + x + y \\
+    d = 4 - y     \\
+    g = 2x - 5y
+    \end{gather*}
+
+    \begin{gathered}
+    a = 1 + x + y \\
+    d = 4 - y     \\
+    g = 2x - 5y
+    \end{gathered}
+
+    \begin{equation}
+    \leqalignno{
+    a &= b \\
+    c &= d
+    }
+    \end{equation}
+
+    \begin{multline}
+    \exp(x) = 1 + x + \cdots \\ 
+    \frac{x^4}4 + \frac{x^5}{5!} + \cdots \\
+    \cdots + \frac{x^n}{n!} + \cdots
+    \end{multline} 
+
+    \begin{multline*}
+    \exp(x) = 1 + x + \cdots \\ 
+    \frac{x^4}4 + \frac{x^5}{5!} + \cdots \\
+    \cdots + \frac{x^n}{n!} + \cdots
+    \end{multline*} 
+
+    \begin{split}
+    a &= b + c \\
+    &= d + e \\
+    &= f + g
+    \end{split}
+
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>maction tooltip</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.jax = ["input/MathML", "output/HTML-CSS"];
+      gConfigObject["HTML-CSS"].tooltip = { delayPost: 0, delayClear: 5000,
+                                     offsetX: 0, offsetY: 0 };
+      }
+
+      function tooltipOver()
+      {
+      var event = { clientX: getQueryInteger("offsetX", 10),
+                    clientY: getQueryInteger("offsetY", 5) };
+      MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOver(event);
+      }
+
+      function postMathJax()
+      {
+        if (getQueryBoolean("show")) {
+          tooltipOver();
+        }
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="id">
+      <math>
+        <maction actiontype="tooltip">
+          <mtext>maction</mtext>
+          <mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow>
+        </maction>
+      </math>
+    </div>
+
+  </body>
+</html>

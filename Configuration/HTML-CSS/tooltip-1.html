@@ -1,0 +1,70 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>maction tooltip</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript">
+      var delayPost, delayClear, offsetX, offsetY, delayFinalize;
+
+      function preMathJax()
+      {
+      delayPost = getQueryInteger("delayPost", 600);
+      delayClear = getQueryInteger("delayClear", 600);
+      offsetX = getQueryInteger("offsetX", 10);
+      offsetY = getQueryInteger("offsetY", 5);
+      delayFinalize = getQueryInteger("delayFinalize", 0);
+
+      gConfigObject.jax = ["input/MathML", "output/HTML-CSS"];
+      gConfigObject["HTML-CSS"].tooltip = {
+        delayPost: delayPost,
+        delayClear: delayClear,
+        offsetX: offsetX,
+        offsetY: offsetY
+      };
+      }
+
+      function tooltipOver()
+      {
+      var event = { clientX: 0, clientY: 0 };
+      MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOver(event);
+      }
+
+      function tooltipOut()
+      {
+      MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOut(null);
+      }
+
+      function postMathJax()
+      {
+      // This finalizeReftests is supposed to be called at delayFinalize i.e.
+      // before the standard one (which will be after delayFinalize + 100) 
+      if (delayFinalize > 0) {
+        setTimeout("finalizeReftests()", delayFinalize);
+      }
+      MathJax.Hub.Queue(tooltipOver,
+                        ["Delay", MathJax.Callback, delayPost + 5],
+                        tooltipOut,
+                        ["Delay", MathJax.Callback, delayFinalize + 100]);
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="id">
+      <math>
+        <maction actiontype="tooltip">
+          <mtext>maction</mtext>
+          <mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow>
+        </maction>
+      </math>
+    </div>
+
+  </body>
+</html>

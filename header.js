@@ -32,6 +32,9 @@
  * @var String gMathJaxPath
  * path to a "MathJax/" source
  *
+ * @var String gMathJaxQueryString
+ * Query string associated to the MathJax.js script. Default is "config=default"
+ *
  * @var Boolean gNativeMathML
  * Whether the test page uses native MathML.
  *
@@ -48,6 +51,7 @@
  * Whether the custom error handler should be used.
  */
 var gMathJaxPath;
+var gMathJaxQueryString = "config=default";
 var gNativeMathML = false;
 var gFont = "STIX";
 var gConfigObject;
@@ -141,6 +145,41 @@ function getQueryString(aParamName)
 }
 
 /**
+  * Get the value of a boolean parameter from the query string
+  *
+  * @tparam String  aParamName    the name of the parameter
+  * @treturn Boolean the value of the parameter or false if not present
+  * 
+*/
+function getQueryBoolean(aParamName)
+{
+    var value = getQueryString(aParamName);
+    if (value) {
+        return value == "true";
+    } else {
+        return false;
+    }
+}
+
+/**
+  * Get the value of an integer parameter from the query string
+  *
+  * @tparam String  aParamName    the name of the parameter
+  * @tparam Integer aDefaultValue default value when the parameter isn't present
+  * @treturn Integer the value of the parameter or the default value.
+  *
+  */
+function getQueryInteger(aParamName, aDefaultValue)
+{
+    var value = getQueryString(aParamName);
+    if (value) {
+        return parseInt(value);
+    } else {
+        return aDefaultValue;
+    }
+}
+
+/**
   *  Return a default mathjax config object to initialize @ref gConfigObject
   *  The value of @ref gNativeMathML and @ref gFont are taken into account.
   *
@@ -169,16 +208,6 @@ function defaultConfigObject()
 }
 
 /**
-  * Used to access @ref gConfigObject in the test file
-  *
-  * @treturn Object @ref gConfigObject
-  */
-function getConfigObject()
-{
-    return gConfigObject;
-}
-
-/**
   * Function called by the load event, to set up various things for the test
   * page and in particular insert MathJax scripts.
   *
@@ -204,10 +233,10 @@ function startMathJax()
     var script2 = document.createElement("script");
     script1.type = "text/x-mathjax-config";
     script2.type = "text/javascript";
-    script2.src = gMathJaxPath + "MathJax.js?config=default";
+    script2.src = gMathJaxPath + "MathJax.js?" + gMathJaxQueryString;
 
     var config = "";
-    config += "MathJax.Hub.Config(getConfigObject());";
+    config += "MathJax.Hub.Config(gConfigObject);";
     if (window.xMathJaxConfig) {
         config += "xMathJaxConfig();"
     }
@@ -252,9 +281,19 @@ function finalizeTest()
         } else if (window.finalizeScriptReftests) {
             finalizeScriptReftests();
         } else {
-            document.documentElement.className = "";
+            finalizeReftests();
         }
     });
+}
+
+/**
+  * Default finalization for reftests.
+  * This function remove the document class name, so that the testing framework
+  * knows that the test is complete.
+  */
+function finalizeReftests()
+{
+    document.documentElement.className = "";    
 }
 
 /**

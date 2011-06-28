@@ -11,9 +11,8 @@
       function preMathJax()
       {
       directory = getCurrentDirectory();
-      config = getConfigObject();
       // check loading order
-      config.styleSheets = [directory + "style1.css",
+      gConfigObject.styleSheets = [directory + "style1.css",
       directory + "style4.css"];
       }
     </script>

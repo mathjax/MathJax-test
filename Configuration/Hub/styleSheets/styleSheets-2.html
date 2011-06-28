@@ -11,9 +11,8 @@
       function preMathJax()
       {
       directory = getCurrentDirectory();
-      config = getConfigObject();
       // styleSheets has three elements
-      config.styleSheets = [directory + "style1.css",
+      gConfigObject.styleSheets = [directory + "style1.css",
       directory + "style2.css",
       directory + "style3.css"];
       }

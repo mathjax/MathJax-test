@@ -14,10 +14,9 @@
     <script type="text/javascript">
       function preMathJax()
       {
-      config = getConfigObject();
-      config.messageStyle = "normal";
-      config.extensions = ["tex2jax.js"];
-      config.jax = ["output/HTML-CSS"];
+      gConfigObject.messageStyle = "normal";
+      gConfigObject.extensions = ["tex2jax.js"];
+      gConfigObject.jax = ["output/HTML-CSS"];
       }
 
       function checkValue(aValue)

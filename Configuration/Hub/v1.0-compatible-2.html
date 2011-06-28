@@ -1,0 +1,33 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>v1.0-compatible</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gMathJaxQueryString = "";
+      gConfigObject = { "v1.0-compatible": false };
+      }
+
+      function getTestCases()
+      {
+      var div = document.getElementById("MathJax_ConfigWarning");
+
+      return [
+      newScriptReftestResult("no MathJax_ConfigWarning", !div)
+      ];
+      }    
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>v1.0-compatible</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gMathJaxQueryString = "";
+      gConfigObject = {};
+      }
+
+      function getTestCases()
+      {
+      var div = document.getElementById("MathJax_ConfigWarning");
+      var a = div.getElementsByTagName("a")[0];
+      var URI = "http://www.mathjax.org/help/configuration";
+
+      return [
+      newScriptReftestResult("MathJax_ConfigWarning", div),
+      newScriptReftestResult("ConfigWarning: config/MathJax.js",
+      div &&
+      div.getElementsByTagName("code")[0].innerHTML == "config/MathJax.js"),
+      newScriptReftestResult("Error message: URI",
+                             div && a.innerHTML == URI && a.href == URI)
+      ];
+      }    
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+  </body>
+</html>

@@ -11,14 +11,12 @@
     <script type="text/javascript">
       function preMathJax()
       {
-      var config = getConfigObject();
-      config.jax = ["input/MathML", "output/HTML-CSS"];
-      config["HTML-CSS"].tooltip = { delayPost: 0 };
+      gConfigObject.jax = ["input/MathML", "output/HTML-CSS"];
+      gConfigObject["HTML-CSS"].tooltip = { delayPost: 0 };
       }
 
       function postMathJax()
       {
-      var element = document.getElementById("id");
       var event = {
       clientX: 0,
       clientY: 0

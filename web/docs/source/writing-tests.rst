@@ -318,14 +318,21 @@ the following function:
 
    function getQueryString(aParamName)
 
-Test pages first use the default MathJax configuration. It is merged with a
-custom configuration object at startup, created according to the testing
-instance configuration. You can access this config object and modify it before
-MathJax starts, via the function
+Similar functions exist to get integer and boolean parameters. For the former
+you have to specify a default value when the parameter is not present whereas
+for the latter, it defaults to false.
 
 .. code-block:: javascript
 
-   function getConfigObject()
+   function getQueryInteger(aParamName, aDefaultValue)
+   function getQueryBoolean(aParamName)
+
+Test pages first use the default MathJax configuration. It is merged with a
+custom configuration object ``gConfigObject`` at startup, created according to
+the testing instance configuration. You can access this config object and modify
+it before MathJax starts. Other global objects may help writing test, such as
+``gMathJaxPath`` and ``gMathJaxQueryString`` which describes the URI of the
+MathJax.js script.
 
 You also can add actions before/after MathJax starts by defining the
 following functions in your test page:
@@ -344,9 +351,8 @@ query string.
 
    function preMathJax()
    {
-     config = getConfigObject()
-     config["HTML-CSS"].minScaleAdjust = getQueryString("minScaleAdjust");
-     config.NativeMML = {scale: 200};
+     gConfigObject["HTML-CSS"].minScaleAdjust = getQueryString("minScaleAdjust");
+     gConfigObject.NativeMML = {scale: 200};
    }
 
    function postMathJax()
@@ -373,3 +379,16 @@ after the call to ``MathJax.Hub.Config`` and before one to
    {
      MathJax.Hub.Register.StartupHook("End Styles", myCallback);
    }
+
+For each test, finalize functions are pushed into ``MathJax.Hub.queue`` after
+``postMathJax()`` is executed. These functions add serialization, script results
+etc and alert the test launcher that the test is complete. In general you do not
+need to call them, but it may sometimes useful to know them for advanced
+synchronisation tests:
+
+.. code-block:: javascript
+
+   function finalizeTreeReftests()   // finalizer for tree reftests
+   function finalizeScriptReftests() // finalizer for script tests
+   function finalizeReftests()       // default finalizer
+

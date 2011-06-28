@@ -11,9 +11,8 @@
     <script type="text/javascript">
       function preMathJax()
       {
-      var config = getConfigObject();
-      config.jax = ["input/TeX", "output/HTML-CSS"];
-      config.extensions.push("MathZoom.js");
+      gConfigObject.jax = ["input/TeX", "output/HTML-CSS"];
+      gConfigObject.extensions.push("MathZoom.js");
       }
 
       function postMathJax()

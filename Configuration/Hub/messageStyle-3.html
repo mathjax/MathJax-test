@@ -1,0 +1,76 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>showProcessingMessages</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      var messageFound = false, invalidMessage = false, tryAgain = true;
+      var delay = 200;
+      var messageStyle;
+
+      function preMathJax()
+      {
+      messageStyle = getQueryString("messageStyle");
+      gConfigObject.messageStyle = messageStyle;
+      gConfigObject.showProcessingMessages = true;
+      setTimeout("verifyMessage()", delay);
+      }
+
+      function verifyMessage()
+      {
+      var msg = document.getElementById("MathJax_Message");
+        if (msg) {
+          if (msg.innerHTML != "") {
+            messageFound = true;
+            if (messageStyle == "none") {
+               invalidMessage = true;
+               tryAgain = false;
+            }
+          }
+          if (messageStyle == "simple") {
+            var regexp = /^Processing math: [0-9]{2}%$/
+            if (regexp.test(msg.innerHTML)) {
+              invalidMessage = true;
+              tryAgain = false;
+            }
+          } else if (messageStyle == "normal") {
+            var regexp = /^Processing (\.)*$/
+            if (regexp.test(msg.innerHTML)) {
+              invalidMessage = true;
+              tryAgain = false;
+            }
+          }
+        }
+        if (tryAgain) {
+          setTimeout("verifyMessage()", delay);
+        }
+      }
+
+      function postMathJax()
+      {
+        tryAgain = false;
+      }
+
+      function getTestCases()
+      {
+      return [
+        newScriptReftestResult("Testing message displayed",
+                    !invalidMessage && (messageStyle == "none" || messageFound))
+      ];
+      }
+
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+    <div>\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)\(x\)</div>
+
+  </body>
+</html>

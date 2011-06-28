@@ -11,10 +11,24 @@
       var configuredCalled = false;
       var r1 = true, r2 = false;
 
+      function insertScript()
+      {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      var s = "configuredCalled = true; MathJax.Hub.Configured();"
+      if (window.opera) {
+        script.innerHTML = s;
+      } else {
+        script.text = s;
+      }
+      var body = document.getElementsByTagName("body")[0];
+      body.appendChild(script);
+      }
+
       function preMathJax()
       {
-      config = getConfigObject();
-      config.delayStartupUntil = "configured";
+      gMathJaxQueryString += "&delayStartupUntil=configured";
+      setTimeout(insertScript, 2000);
       }
 
       function xMathJaxConfig()
@@ -29,12 +43,6 @@
       });
       }
 
-      function postMathJax()
-      {
-      configuredCalled = true;
-      MathJax.Hub.Configured();
-      }
-      
       function getTestCases()
       {
       return [
@@ -48,6 +56,8 @@
   </head>
 
   <body>
+
+    <p><math><mi>x</mi></math></p>
 
   </body>
 </html>
