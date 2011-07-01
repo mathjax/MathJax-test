@@ -1,6 +1,9 @@
 include Contexts/reftest.list
 include HTML-CSS/reftest.list
 include Hub/reftest.list
+include jsMath2jax/reftest.list
 include MathML/reftest.list
+include mml2jax/reftest.list
 include NativeMML/reftest.list
 include tex2jax/reftest.list
+include TeX/reftest.list

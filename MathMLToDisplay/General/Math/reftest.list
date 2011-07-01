@@ -5,7 +5,7 @@ fails == dir-1.html dir-1-ref.html
 == emptymath2.html emptymath2-ref.html
 != math1.html math1-ref.html
 != math3.html math3-ref.html
-!= mathAdisplay2.html mathAdisplay2-ref.html
+!= mathAdisplay1.html mathAdisplay1-ref.html
 == mathAdisplay2.html mathAdisplay2-ref.html
 == mathAmacros1.html mathAmacros1-ref.html
 fails == mathAmode1.html mathAmode1-ref.html

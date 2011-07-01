@@ -1,5 +1,16 @@
 == displayMath-1.html displayMath-1-ref.html
+== ignoreClass-1a.html ignoreClass-1-ref.html
+== ignoreClass-1b.html ignoreClass-1-ref.html
+== ignoreClass-2a.html ignoreClass-2-ref.html
+== ignoreClass-2b.html ignoreClass-2-ref.html
 == inlineMath-1.html inlineMath-1-ref.html
+== preview-1.html preview-1-ref.html
+== preview-2.html preview-2-ref.html
+== preview-3.html preview-3-ref.html
+== preview-4.html preview-4-ref.html
+script processClass-1.html
+== processClass-2a.html processClass-2-ref.html
+== processClass-2b.html processClass-2-ref.html
 == processEnvironments-1.html processEnvironments-1-ref.html
 == processEnvironments-2.html processEnvironments-2-ref.html
 == processEnvironments-3.html processEnvironments-3-ref.html
@@ -8,3 +19,5 @@
 == processEnvironments-6.html processEnvironments-6-ref.html
 == processEscapes-1.html processEscapes-1-ref.html
 == processEscapes-2.html processEscapes-2-ref.html
+script skipTags-1.html
+script skipTags-2.html

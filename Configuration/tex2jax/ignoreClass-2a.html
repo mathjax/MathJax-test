@@ -1,0 +1,30 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>ignoreClass</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <!-- test when ignoreClass matches one word inside the class value -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.tex2jax = { ignoreClass: "b" };
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    <div class="a">\(1\)</div>
+    <div class="b">\(2\)</div>
+    <div class="b a c">\(3\)</div>
+    <div class="a b c">\(4\)</div>
+    <div class="a c b">\(5\)</div>
+    <div class="a ab b ba c">\(6\)</div>
+
+  </body>
+</html>

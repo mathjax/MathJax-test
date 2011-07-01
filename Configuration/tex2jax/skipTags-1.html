@@ -1,0 +1,52 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>skipTags</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      // gConfigObject.tex2jax = {
+      //   skipTags: ["script","noscript","style","textarea","pre","code"]
+      // };
+
+      function getTestCases()
+      {
+      divContent = document.getElementById("div").innerHTML;
+      scriptContent = document.getElementById("script").innerHTML;
+      noscriptContent = document.getElementById("noscript").innerHTML;
+      styleContent = document.getElementById("style").innerHTML;
+      textareaContent = document.getElementById("textarea").innerHTML;
+      preContent = document.getElementById("pre").innerHTML;
+      codeContent = document.getElementById("code").innerHTML;
+
+      return [
+        newScriptReftestResult("div", divContent != "\\(x\\)"),
+        newScriptReftestResult("script", scriptContent == "// \\(x\\)"),
+        newScriptReftestResult("noscript", noscriptContent == "\\(x\\)"),
+        newScriptReftestResult("style", styleContent == "/* \\(x\\) */"),
+        newScriptReftestResult("textarea", textareaContent == "\\(x\\)"),
+        newScriptReftestResult("pre", preContent == "\\(x\\)"),
+        newScriptReftestResult("code", codeContent == "\\(x\\)")
+      ];
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+    <div id="div">\(x\)</div>
+    <script id="script" type="text/javascript">// \(x\)</script>
+    <noscript id="noscript">\(x\)</noscript>
+    <!-- Putting style in body is not valid, but do it anyway -->
+    <style id="style" type="text/css">/* \(x\) */</style>
+    <textarea id="textarea">\(x\)</textarea>
+    <pre id="pre">\(x\)</pre>
+    <code id="code">\(x\)</code>
+
+  </body>
+</html>

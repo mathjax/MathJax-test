@@ -191,8 +191,7 @@ function initTreeReftests()
 {
     if (!window.getReftestElements) {
         // Always use native MathML for the "standard" tree reftests
-        var config = getConfigObject();
-        config.jax = ["input/TeX", "input/MathML", "output/NativeMML"];
+        gConfigObject.jax = ["input/TeX", "input/MathML", "output/NativeMML"];
     }
 }
 

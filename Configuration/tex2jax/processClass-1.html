@@ -1,0 +1,60 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>processClass</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <!-- test processClass and skipTags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.tex2jax = { skipTags: ["script",
+                                           "noscript",
+                                           "style",
+                                           "textarea",
+                                           "pre",
+                                           "code",
+                                           "div"]};
+      }
+
+      function getTestCases()
+      {
+      divContent = document.getElementById("div").innerHTML;
+      scriptContent = document.getElementById("script").innerHTML;
+      noscriptContent = document.getElementById("noscript").innerHTML;
+      styleContent = document.getElementById("style").innerHTML;
+      textareaContent = document.getElementById("textarea").innerHTML;
+      preContent = document.getElementById("pre").innerHTML;
+      codeContent = document.getElementById("code").innerHTML;
+
+      return [
+        newScriptReftestResult("div", divContent == "\\(x\\)"),
+        newScriptReftestResult("script", scriptContent == "// \\(x\\)"),
+        newScriptReftestResult("noscript", noscriptContent == "\\(x\\)"),
+        newScriptReftestResult("style", styleContent == "/* \\(x\\) */"),
+        newScriptReftestResult("textarea", textareaContent == "\\(x\\)"),
+        newScriptReftestResult("pre", preContent == "\\(x\\)"),
+        newScriptReftestResult("code", codeContent == "\\(x\\)")
+      ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div id="div" class="tex2jax_process">\(x\)</div>
+    <script id="script" type="text/javascript" class="tex2jax_process">// \(x\)</script>
+    <noscript id="noscript" class="tex2jax_process">\(x\)</noscript>
+    <!-- Putting style in body is not valid, but do it anyway -->
+    <style id="style" type="text/css" class="tex2jax_process">/* \(x\) */</style>
+    <textarea id="textarea" class="tex2jax_process">\(x\)</textarea>
+    <pre id="pre" class="tex2jax_process">\(x\)</pre>
+    <code id="code" class="tex2jax_process">\(x\)</code>
+
+  </body>
+</html>

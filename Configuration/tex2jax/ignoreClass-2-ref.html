@@ -1,0 +1,31 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>ignoreClass</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function postMathJax()
+      {
+      for (var i = 2; i <= 6; i++) {
+        document.getElementById("id"+i).innerHTML = "\\(" + i + "\\)";
+      }
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    <div id="id1">\(1\)</div>
+    <div id="id2"></div>
+    <div id="id3"></div>
+    <div id="id4"></div>
+    <div id="id5"></div>
+    <div id="id6"></div>
+
+  </body>
+</html>

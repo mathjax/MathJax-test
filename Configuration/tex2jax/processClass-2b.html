@@ -1,0 +1,29 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>processClass</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <!-- test ignoreClass and processClass, with regexp -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.tex2jax = { ignoreClass: "a",
+                                processClass: "2[a-z]*O7M{1,6}?"};
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    <p class="a 2aO7M">\(x\)</p>
+    <p class="a 2zO7MMM">\(x\)</p>
+    <p class="2O7MM a">\(x\)</p>
+    <p class="2xO7MMMMMM">\(x\)</p>
+
+  </body>
+</html>
