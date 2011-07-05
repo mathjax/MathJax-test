@@ -16,13 +16,13 @@
 
       // If the zoom box is large enough, it should render the same
       // with or without scroll bars.
-      config.MathZoom = { styles: { "#MathJax_Zoom": { overflow : "none" } } };
+      gConfigObject.MathZoom = { styles: { "#MathJax_Zoom": { overflow : "none" } } };
       }
 
       function postMathJax()
       {
       var math = document.getElementsByTagName("math")[0];
-      MathJax.Extension.MathZoom.Zoom(math, null)
+      MathJax.Extension.MathZoom.Zoom(math, null);
       }
     </script>
   </head>

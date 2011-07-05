@@ -1,9 +1,13 @@
 include Contexts/reftest.list
+include FontWarnings/reftest.list
 include HTML-CSS/reftest.list
 include Hub/reftest.list
 include jsMath2jax/reftest.list
+include MathMenu/reftest.list
 include MathML/reftest.list
+include MathZoom/reftest.list
 include mml2jax/reftest.list
+include MMLorHTML/reftest.list
 include NativeMML/reftest.list
 include tex2jax/reftest.list
 include TeX/reftest.list

@@ -1,0 +1,41 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>prefer</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gMathJaxQueryString = "config=MMLorHTML";
+      gConfigObject.jax = ["input/TeX", "input/MathML"];
+      gConfigObject["MMLorHTML"] = {
+        prefer: {
+          MSIE: "MML", Firefox: "MML", Opera: "MML", other: "MML"
+        }
+      }
+      }
+
+      function getTestCases()
+      {
+      return [
+        newScriptReftestResult("native MathML used",
+                              document.getElementsByTagName("math").length == 1)
+      ];
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+    <math>
+      <mi>x</mi>
+    </math>
+
+  </body>
+</html>

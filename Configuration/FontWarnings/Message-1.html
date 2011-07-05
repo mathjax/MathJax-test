@@ -1,0 +1,73 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>MessageStyle</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      // test display of the various kinds of messages
+
+      var webFont, imageFonts, noFonts;
+
+      function preMathJax()
+      {
+      webFont = getQueryString("webFont");
+      imageFonts = getQueryString("imageFonts");
+      noFonts = getQueryString("noFonts");
+
+      gConfigObject.extensions.push("FontWarnings.js");
+      gConfigObject.FontWarnings = {
+        Message: {
+         webFont: [webFont],
+         imageFonts: [imageFonts],
+         noFonts: [noFonts]
+        },
+        removeAfter: 0
+      }
+      }
+
+      function postMathJax()
+      {
+      MathJax.HTML.Cookie.Set("fontWarn", { warned: false });
+      if (webFont) {
+        MathJax.Hub.Startup.signal.Post("HTML-CSS Jax - Web-Font");
+      }
+      if (imageFonts) {
+        MathJax.Hub.Startup.signal.Post("HTML-CSS Jax - using image fonts");
+      }
+      if (noFonts) {
+        MathJax.Hub.Startup.signal.Post("HTML-CSS Jax - no valid font");
+      }
+      MathJax.HTML.Cookie.Set("fontWarn", { warned: false });
+      }
+
+      function getTestCases()
+      {
+      var warning = document.getElementById("MathJax_FontWarning");
+      var result;
+      if (webFont) {
+        result = (warning.innerHTML == webFont);
+      } else if (imageFonts) {
+        result = (warning.innerHTML == imageFonts);
+      } else if (noFonts) {
+        result = (warning.innerHTML == noFonts);
+      } else {
+        result = (warning == null);
+      }
+
+      return [newScriptReftestResult("FontWarnings Message", result)];
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+    <math><mtext>my formula</mtext></math>
+
+  </body>
+</html>

@@ -353,7 +353,7 @@ class seleniumMathJax(selenium.selenium):
             time.sleep(.1)
             self.key_up_native(VK_CONTROL)
             time.sleep(.1)
-            time.sleep(3)
+            time.sleep(4)
         elif (self.mBrowser == "MSIE"):
             # Close two tabs with Ctrl+F4
             self.key_down_native(VK_CONTROL)
@@ -364,7 +364,7 @@ class seleniumMathJax(selenium.selenium):
             time.sleep(.1)
             self.key_up_native(VK_CONTROL)
             time.sleep(.1)
-            time.sleep(3)
+            time.sleep(4)
 
         selenium.selenium.stop(self)
         

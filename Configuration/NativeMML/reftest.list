@@ -1,2 +1,2 @@
 require(nativeMathML) == scale-1.html scale-1-ref.html
-
+require(nativeMathML) == styles-1.html styles-1-ref.html

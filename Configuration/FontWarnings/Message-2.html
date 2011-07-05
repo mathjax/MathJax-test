@@ -1,0 +1,47 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>MessageStyle</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      // test HTML snippet
+
+      function preMathJax()
+      {
+      gConfigObject.extensions.push("FontWarnings.js");
+      gConfigObject.FontWarnings = {
+        Message: {
+         webFont: [["myCustomSnipped"]],
+        },
+        HTML: {
+         myCustomSnipped:
+           [
+             "Please read the ",
+             ["a",{href:"instructions.html"},["instructions"]],
+             " carefully before proceeding"
+           ]
+        },
+        removeAfter: 0
+      }
+      }
+
+      function postMathJax()
+      {
+      MathJax.HTML.Cookie.Set("fontWarn", { warned: false });
+      MathJax.Hub.Startup.signal.Post("HTML-CSS Jax - Web-Font");
+      MathJax.HTML.Cookie.Set("fontWarn", { warned: false });
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    <math><mtext>my formula</mtext></math>
+
+  </body>
+</html>

@@ -1,0 +1,10 @@
+== fadeout-1.html fadeout-1-ref.html
+script HTML-1.html
+script Message-1.html
+script Message-1.html?webFont=my_webfont_warning
+script Message-1.html?imageFonts=my_imageFonts_warning
+script Message-1.html?noFonts=my_noFonts_warning
+== Message-2.html Message-2-ref.html
+!= messageStyle-1.html messageStyle-1-ref.html
+!= removeAfter-1a.html removeAfter-1-ref.html
+== removeAfter-1b.html removeAfter-1-ref.html

@@ -1,0 +1,45 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>fadeout</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.extensions.push("FontWarnings.js");
+      gConfigObject.FontWarnings = { removeAfter: 1,
+                                     fadeoutSteps: 10,
+                                     fadeoutTime: 10000 }
+      // time  opacity
+      // 0     90%
+      // 1000  80%
+      // 2000  70%
+      // 3000  60%
+      // 4000  50%
+      // ...
+      // 10000 0%
+      }
+
+      function postMathJax()
+      {
+      MathJax.HTML.Cookie.Set("fontWarn", { warned: false });
+      MathJax.Hub.Queue(
+      ["Post", MathJax.Hub.Startup.signal, "HTML-CSS Jax - Web-Font"],
+      ["Delay", MathJax.Callback, 2200],
+      ["Set", MathJax.HTML.Cookie, "fontWarn", { warned: false }]
+      );
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    <math><mtext>my formula</mtext></math>
+
+  </body>
+</html>

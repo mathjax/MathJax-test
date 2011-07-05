@@ -251,7 +251,8 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
         aSuite.printInfo("startID = " + aSuite.mRunningTestID)
 
     aSuite.printInfo("Testing Instance took " +
-                     str(math.trunc(deltaTime.total_seconds() / 60))
+                     str(math.trunc((deltaTime.days
+                                     * 24 * 60 + deltaTime.seconds) / 60))
                      + " minute(s) and " +
                      str(deltaTime.seconds % 60) + " second(s)")
 
