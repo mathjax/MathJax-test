@@ -1,7 +1,7 @@
 *.pyc
 *~
-parser.out
-parsetab.py
-results/
+testRunner/parser.out
+testRunner/parsetab.py
 web/docs/doxygen/
 web/docs/html/
+web/results/
