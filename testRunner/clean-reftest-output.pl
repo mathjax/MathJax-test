@@ -211,11 +211,12 @@ EOM
 
 print <<EOM
   <div style="position: fixed; left: 0; top: 0; width: 100%; height: 250px;
-              background: #ccf;">
+              background: #f2f2f2;">
 
       <div style="float: left;">
-        <h1>Reftest Output</h1>
-
+        <h1 style="font-family: 'Trebuchet MS', sans-serif; font-weight: normal;
+                   color: #20435c; background-color: #f2f2f2;">
+            Reftest Output</h1>
         <input type="button" onclick="previousError()" value="Previous Error"/>
         <input type="button" onclick="topOfPage()" value="Top"/>
         <input type="button" onclick="nextError()" value="Next Error"/>
@@ -230,6 +231,8 @@ EOM
 ;
 
 # Draw the sectors and legend
+# XXXfred If all the result stati are equal, the disk is painted with the PASS
+# color, even if the status are not PASS.
 if ($N_TESTS > 0) {
     my $s;
     my $e = $N_TESTS / 3; # random starting angle

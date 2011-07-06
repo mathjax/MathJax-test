@@ -35,6 +35,7 @@ import string
 from PIL import Image, ImageChops
 import difflib
 import conditionParser
+import socket
 
 """ 
 @var EXPECTED_PASS
@@ -69,12 +70,15 @@ class reftestSuite(unittest.TestSuite):
     """
 
     def __init__(self,
+                 aTransmitToTaskHandler = False,
+                 aTaskName = "",
                  aRunSlowTests = True,
                  aRunSkipTests = True,
                  aListOfTests = None,
                  aStartID = ""):
         """
-        @fn __init__(self, ,
+        @fn __init__(self,
+                     aTransmitToTaskHandler = False,
                      aRunSlowTests = True,
                      aRunSkipTests = True,
                      aListOfTests = None,
@@ -111,6 +115,8 @@ class reftestSuite(unittest.TestSuite):
         The previous screenshot taken, the one of the page at mPreviousURIRef.
         """
         unittest.TestSuite.__init__(self)
+        self.mTransmitToTaskHandler = aTransmitToTaskHandler
+        self.mTaskName = aTaskName
         self.mRunSlowTests = aRunSlowTests
         self.mRunSkipTests = aRunSkipTests
         self.mListOfTests = aListOfTests
@@ -118,6 +124,8 @@ class reftestSuite(unittest.TestSuite):
         self.mStarted = (aStartID == "")
         self.mPreviousURIRef = None
         self.mPreviousImageRef = None
+        self.mTestsExecuted = 0
+        self.mNumberOfTests = 0
 
     def printInfo(self, aString):
         """
@@ -361,6 +369,8 @@ fails/random")
                                                    testURIRef,
                                                    testExpectedStatus,
                                                    testSlow))
+                            self.mNumberOfTests = self.mNumberOfTests + 1
+
                         if (index == -1):
                             continue
                         elif (self.mListOfTests[index] == "0" or
@@ -395,6 +405,28 @@ fails/random")
         self.mPreviousURIRef = aURIRef
         self.mPreviousImageRef = aSelenium.takeScreenshot()
         return self.mPreviousImageRef
+
+    def sendRequest(self, aHost, aStatus, aProgress = ""):
+        if not self.mTransmitToTaskHandler:
+            return
+
+        if aProgress == "":
+           aProgress = str(self.mTestsExecuted) + "/" + \
+               str(self.mNumberOfTests)
+
+        # host and port of the task handler server
+        HOST, PORT = "localhost", 4445
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((HOST, PORT))
+        sock.send("TASK " +
+                  self.mTaskName + " " +
+                  aHost + " " +
+                  aStatus + " " +
+                  aProgress + "\n")
+
+    def testComplete(self, aReftest):
+        self.mTestsExecuted = self.mTestsExecuted + 1
+        self.sendRequest(aReftest.mSelenium.host, "Running")
 
 class reftest(unittest.TestCase):
 
@@ -479,6 +511,7 @@ class reftest(unittest.TestCase):
             if (self.mTestSuite.mRunningTestID == self.mID):
                 self.mTestSuite.mStarted = True
             else:
+                self.mTestSuite.testComplete(self)
                 return True
 
         self.mTestSuite.mRunningTestID = self.mID
@@ -488,6 +521,7 @@ class reftest(unittest.TestCase):
             msg += " is irrelevant for this configuration\n"
             # self.skipTest(msg)
             print msg
+            self.mTestSuite.testComplete(self)
             return True
 
         if ((not self.mTestSuite.mRunSkipTests) and
@@ -495,12 +529,14 @@ class reftest(unittest.TestCase):
             msg = "\nREFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)\n"
             # self.skipTest(msg)
             print msg
+            self.mTestSuite.testComplete(self)
             return True
 
         if  ((not self.mTestSuite.mRunSlowTests) and self.mSlow):
             msg = "\nREFTEST TEST-KNOWN-SLOW | " + self.mID + " | (SLOW)\n"
             # self.skipTest(msg)
             print msg
+            self.mTestSuite.testComplete(self)
             return True
 
         return False
@@ -544,6 +580,7 @@ class reftest(unittest.TestCase):
 
         msg = "\nREFTEST " + msg + " | " + self.mID + " | "
 
+        self.mTestSuite.testComplete(self)
         return success, msg
 
 class loadReftest(reftest):

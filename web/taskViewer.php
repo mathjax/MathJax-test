@@ -5,39 +5,50 @@
           "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>MathJax Automated Tests</title>
+    <title>Task Viewer</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css"
+                           href="docs/html/_static/default.css"/>
     <link type="text/css" rel="stylesheet" href="taskViewer.css"/>
   </head>
 
   <body>
-    <h1>MathJax Automated Tests</h1>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="./">Back to home</a></li> 
+      </ul>
+    </div>  
 
-    <?
-      $file = fsockopen("localhost", 5557);
-      if ($file) {
-        echo '<table id="taskList">';
-        echo '<tr><th>Task Name</th><th>Machine</th><th>Status</th><th>Progress</th></tr>';
-        fwrite($file, "TASKVIEWER\n");
-        while(!feof($file)) {
-          $line = fgets($file);
-          $argument = explode(" ", $line, 4);
-          if (count($argument) == 4) {
-            echo "<tr>";
-            for ($i = 0;  $i < 4; $i++) {
-              echo "<td>".$argument[$i]."</td>";
+    <div class="body">
+      <h1>Task Viewer</h1>
+
+      <?
+        $file = fsockopen("localhost", 4445);
+        if ($file) {
+          echo '<table id="taskList">';
+          echo '<tr><th>Task Name</th><th>Machine</th><th>Status</th><th>Progress</th></tr>';
+          fwrite($file, "TASKVIEWER\n");
+          while(!feof($file)) {
+            $line = fgets($file);
+            $argument = explode(" ", $line, 4);
+            if (count($argument) == 4) {
+              echo "<tr>";
+              for ($i = 0;  $i < 4; $i++) {
+                echo "<td>".$argument[$i]."</td>";
+              }
+              echo "</tr>";
             }
-            echo "</tr>";
           }
+          echo '</table>';
+          fclose($file);
+        } else {
+          echo "<p>Could not connect to the task handler.</p>";
         }
-        echo '</table>';
-        fclose($file);
-      } else {
-        echo "<p>Could not connect to the task handler.</p>";
-      }
-    ?>
+      ?>
 
+    </div>
   </body>
 </html>

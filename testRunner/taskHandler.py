@@ -28,28 +28,44 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
     def handle(self):
         global gServer
-        request = self.rfile.readline().strip().split();
-        client = request[0]
-        if (client == "TASKVIEWER"):
-            print "Received request by TASKVIEWVER"
-            for k in gServer.mTasks.keys():
-                self.wfile.write(k + " " + gServer.mTasks[k].serialize())
-        elif (client == "TASK"):
-            print "Received request by TASK"
-            # command = request[1]
+
+        if (self.client_address[0] == "127.0.0.1"):
+            # Only accept request from localhost
+            request = self.rfile.readline().strip()
+            print request
+            items = request.split()
+            client = items[0]
+            if (client == "TASKVIEWER"):
+                for k in gServer.mTasks.keys():
+                    self.wfile.write(k + " " + gServer.mTasks[k].serialize())
+            elif (client == "TASK"):
+                taskName = items[1]
+                if taskName in gServer.mTasks.keys():
+                    gServer.mTasks[taskName].mHost = items[2]
+                    gServer.mTasks[taskName].mStatus = items[3]
+                    gServer.mTasks[taskName].mProgress = items[4]
+            elif (client == "TASKEDITOR"):
+                command = items[1]
+                taskName = items[2]
+                if command == "ADD":
+                    if taskName not in gServer.mTasks.keys():
+                        self.add(taskName, task(items[3]))
+                elif command == "REMOVE"
+                    if taskName in gServer.mTasks.keys():
+                        del gServer.mTasks[taskName]
         else:
-            print "Received request by unknown client"
+            print "Received request by unknown host " + self.client_address[0]
 
 class task:
 
     def __init__(self, aHost):
         self.mHost = aHost
-        self.mStatus = "pending"
-        self.mProgress = 0
+        self.mStatus = "Unknown"
+        self.mProgress = "Unknown"
 
     def serialize(self):
         return self.mHost + " " + self.mStatus + " " + \
-            str(self.mProgress) + "%" + \
+            self.mProgress + \
             "\n"
    
 class taskHandler:
@@ -71,7 +87,7 @@ class taskHandler:
                                         requestHandler)
         server.serve_forever()
 
-gServer = taskHandler("localhost", 5557)
+gServer = taskHandler("localhost", 4445)
  
 if __name__ == "__main__":
     gServer.start()

@@ -197,6 +197,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
     """
 
     # Build the testsuite
+    suite.sendRequest(aSelenium.host, "Initializing", "-")
     if aSuite.mListOfTests == "all":
         index = -1 # all tests
     else:
@@ -232,6 +233,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
                          boolToString(aSelenium.mNativeMathML))
         aSuite.printInfo("runSlowTests = " +
                          boolToString(aSuite.mRunSlowTests))
+        suite.sendRequest(aSelenium.host, "Running")
         unittest.TextTestRunner(sys.stderr, verbosity = 2).run(aSuite)
         aSelenium.post()
         aSelenium.stop()
@@ -281,11 +283,14 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
             if formatOutput:
                 gzipFile(outputHTML)
             print "done"
+
+        suite.sendRequest(aSelenium.host, "Complete")
     else:
         print
         print "Test Launcher received SIGINT!"
         print "Testing Instance Interrupted."
-
+        suite.sendRequest(aSelenium.host, "Interrupted")
+    
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser(
@@ -356,7 +361,10 @@ reftestList.txt")
         fullScreenMode = config.getboolean(section, "fullScreenMode")
         formatOutput = config.getboolean(section, "formatOutput")
         compressOutput = config.getboolean(section, "compressOutput")
-    
+        transmitToTaskHandler = config.getboolean(section,
+                                                  "transmitToTaskHandler")
+        taskName = config.get(section, "taskName").split()
+
         # platform section
         section = "platform"
         operatingSystem = getOperatingSystem(config.get(section,
@@ -384,6 +392,8 @@ reftestList.txt")
         if clearBrowsersData:
             fontList = ["STIX"]
             browserModeList = ["StandardMode"]
+
+        i = 0
 
         for browser in browserList:
 
@@ -423,13 +433,18 @@ reftestList.txt")
                             removeTemporaryData(selenium)
                         else:
                             # Create the test suite
-                            suite = reftest.reftestSuite(runSlowTests,
+                            suite = reftest.reftestSuite(transmitToTaskHandler,
+                                                         taskName[i],
+                                                         runSlowTests,
                                                          runSkipTests,
                                                          listOfTests,
                                                          startID)
                             runTestingInstance(directory, selenium, suite)
 
                     # end if browserStartCommand
+
+                    i = i + 1
+
                 # end browserMode
             # end for font
         # end browser

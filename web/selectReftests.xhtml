@@ -9,13 +9,25 @@
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css"
+                           href="docs/html/_static/default.css"/>
     <link rel="stylesheet" type="text/css" href="selectReftests.css"/>
-    <script type="text/javascript" src="./reftestList.js"></script>
-    <script type="text/javascript" src="./selectReftests.js"></script>
+    <script type="text/javascript" src="reftestList.js"></script>
+    <script type="text/javascript" src="selectReftests.js"></script>
   </head>
 
   <body onload="init()">
-    <div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="./">Back to home</a></li> 
+      </ul>
+    </div>  
+
+    <div class="body">
+      <h1>Reftest Selector</h1>
+
       listOfTests =
       <input type="text" id="listOfTests" style="width: 70%;"/>
       <input type="button" onclick="generate()" value="get listOfTests"/>

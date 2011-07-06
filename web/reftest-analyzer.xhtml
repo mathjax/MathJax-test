@@ -50,10 +50,15 @@ Features to add:
 ** turn the test list into a collapsing tree view
 ** move log loading into popup from viewer UI
 
+MathJax Note: this file has only be modified to add a CSS style. Otherwise, it
+should be kept up-to-date with respect to Mozilla's reftest analyser.
+
 -->
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>Reftest analyzer</title>
+  <link rel="stylesheet" type="text/css"
+                         href="docs/html/_static/default.css"/>
   <style type="text/css"><![CDATA[
 
   html, body { margin: 0; }
@@ -191,23 +196,28 @@ function fileentry_changed() {
   show_phase("loading");
   var input = ID("fileentry");
   var files = input.files;
-  var log = null;
   if (files.length > 0) {
     // Only handle the first file; don't handle multiple selection.
     // The parts of the log we care about are ASCII-only.  Since we
     // can ignore lines we don't care about, best to read in as
     // iso-8859-1, which guarantees we don't get decoding errors.
-    log = files[0].getAsText("iso-8859-1");
+    var fileReader = new FileReader();
+    fileReader.onload = function(e) {
+      var log = null;
+
+      log = e.target.result;
+      
+      if (log)
+        process_log(log);
+      else
+        show_phase("entry");
+    }
+    fileReader.readAsText(files[0], "iso-8859-1");
   }
   // So the user can process the same filename again (after
   // overwriting the log), clear the value on the form input so we
   // will always get an onchange event.
   input.value = "";
-
-  if (log)
-    process_log(log);
-  else
-    show_phase("entry");
 }
 
 function log_pasted() {
@@ -460,7 +470,14 @@ function show_pixelinfo(x, y, pix1rgb, pix1hex, pix2rgb, pix2hex) {
 </head>
 <body onload="load()">
 
-<div id="entry">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="./">Back to home</a></li> 
+      </ul>
+    </div>  
+
+<div id="entry" class="body">
 
 <h1>Reftest analyzer: load reftest log</h1>
 
