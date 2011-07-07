@@ -36,6 +36,7 @@ from PIL import Image, ImageChops
 import difflib
 import conditionParser
 import socket
+import sys
 
 """ 
 @var EXPECTED_PASS
@@ -406,7 +407,7 @@ fails/random")
         self.mPreviousImageRef = aSelenium.takeScreenshot()
         return self.mPreviousImageRef
 
-    def sendRequest(self, aHost, aStatus, aProgress = ""):
+    def sendRequest(self, aStatus, aProgress = ""):
         if not self.mTransmitToTaskHandler:
             return
 
@@ -420,13 +421,13 @@ fails/random")
         sock.connect((HOST, PORT))
         sock.send("TASK " +
                   self.mTaskName + " " +
-                  aHost + " " +
                   aStatus + " " +
                   aProgress + "\n")
 
     def testComplete(self, aReftest):
+        sys.stdout.flush()
         self.mTestsExecuted = self.mTestsExecuted + 1
-        self.sendRequest(aReftest.mSelenium.host, "Running")
+        self.sendRequest("Running")
 
 class reftest(unittest.TestCase):
 
@@ -580,7 +581,6 @@ class reftest(unittest.TestCase):
 
         msg = "\nREFTEST " + msg + " | " + self.mID + " | "
 
-        self.mTestSuite.testComplete(self)
         return success, msg
 
 class loadReftest(reftest):
@@ -608,11 +608,13 @@ class loadReftest(reftest):
             (success, msg) = self.determineSuccess(None, False)
             msg += repr(data)
             print msg
+            self.mTestSuite.testComplete(self)
             self.fail()
 
         (success, msg) = self.determineSuccess(self.mType, True)
         msg += "(LOAD ONLY)\n"
         print msg
+        self.mTestSuite.testComplete(self)
 
 class scriptReftest(reftest):
 
@@ -639,6 +641,7 @@ class scriptReftest(reftest):
             (success, msg) = self.determineSuccess(None, False)
             msg += repr(data)
             print msg
+            self.mTestSuite.testComplete(self)
             self.fail()
 
         (success1, msg1) = self.mSelenium.getScriptReftestResult()
@@ -647,9 +650,11 @@ class scriptReftest(reftest):
         if success:
             print msg
             self.mTestSuite.printInfo(msg1)
+            self.mTestSuite.testComplete(self)
         else:
             print msg
             self.mTestSuite.printInfo(msg1)
+            self.mTestSuite.testComplete(self)
             self.fail()
        
 class treeReftest(reftest):
@@ -679,6 +684,7 @@ class treeReftest(reftest):
             (success, msg) = self.determineSuccess(None, False)
             msg += repr(data)
             print msg
+            self.mTestSuite.testComplete(self)
             self.fail()
 
         # Compare source == sourceRef
@@ -687,6 +693,7 @@ class treeReftest(reftest):
 
         if success:
             print msg
+            self.mTestSuite.testComplete(self)
         else:
             # Return failure together with a diff of the sources
             msg += "source comparison ("+ self.mType +") \n"
@@ -710,6 +717,7 @@ class treeReftest(reftest):
                     self.mSelenium.encodeSourceToBase64(source)
 
             print msg
+            self.mTestSuite.testComplete(self)
             self.fail()
 
 class visualReftest(reftest):
@@ -743,6 +751,7 @@ class visualReftest(reftest):
             (success, msg) = self.determineSuccess(None, False)
             msg += repr(data)
             print msg
+            self.mTestSuite.testComplete(self)
             self.fail()
 
         # Compare image and imageRef
@@ -752,6 +761,7 @@ class visualReftest(reftest):
 
         if success:
             print msg
+            self.mTestSuite.testComplete(self)
         else:
             # Return failure together with base64 images of the reftest
             msg += "image comparison ("+ self.mType +") \n"
@@ -764,4 +774,5 @@ class visualReftest(reftest):
                 msg += "REFTEST   IMAGE: " + \
                     self.mSelenium.encodeImageToBase64(image)
             print msg
+            self.mTestSuite.testComplete(self)
             self.fail()

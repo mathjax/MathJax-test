@@ -1,7 +1,7 @@
 /* -*- Mode: CSS; tab-width: 2; indent-tabs-mode:nil; -*- */
 /* vim: set ts=2 et sw=2 tw=80: */
 /* ***** BEGIN LICENSE BLOCK *****
-   /* Version: Apache License 2.0
+  /* Version: Apache License 2.0
    *
    * Copyright (c) 2011 Design Science, Inc.
    *
@@ -22,36 +22,9 @@
    *
    * ***** END LICENSE BLOCK ***** */
 
-a[href^="./taskEditor.xhtml"] {
+@import url('docs/html/_static/default.css');
+
+a[href^="taskEditor.xhtml"] {
     padding-right: 20px;
     background: url('secure.png') no-repeat 100% 0;
-}
-
-#taskList {
-    width: 100%;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-#taskList td, th {
-    border: 1px solid black;
-    padding: .5em;
-}
-
-#taskList form {
-  display: inline;
-}
-
-#taskList input.hiddenField {
-  width: 0;
-  height: 0;
-  visibility: hidden;
-}
-
-#taskList input.submitField {
-  width: 16px;
-  height: 16px;
-  padding: 0;
-  border: 0;
-  background-image: url('remove.png');
 }

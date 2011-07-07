@@ -23,9 +23,94 @@
 # ***** END LICENSE BLOCK *****
 
 import SocketServer
+import subprocess
+from signal import SIGINT
+from datetime import datetime, timedelta
+
+def boolToString(aBoolean):
+    """
+    @fn boolToString(aBoolean)
+    @brief A simple function to convert a boolean to a string
+
+    @return the string "true" or "false"
+    """
+    if aBoolean:
+        return "true"
+    return "false"
 
 class requestHandler(SocketServer.StreamRequestHandler):
 
+    def addParameter(self, aTask):
+        
+        request = self.rfile.readline().strip()
+        print request
+
+        if (request == "TASKEDITOR ADD END"):
+            return False
+
+        items = request.split("=")
+        parameterName = items[0]
+        parameterValue = items[1]
+    
+        if (parameterName == "transmitToTaskHandler" or
+            parameterName == "fullScreenMode" or
+            parameterName == "formatOutput" or
+            parameterName == "compressOutput" or
+            parameterName == "nativeMathML" or
+            parameterName == "runSlowTests" or
+            parameterName == "runSkipTests"):
+            aTask.mParameters[parameterName] = (parameterValue == "true")
+        elif (parameterName == "port" or
+              parameterName == "timeOut"):
+            aTask.mParameters[parameterName] = int(parameterValue)
+        elif (parameterName == "host" or
+              parameterName == "mathJaxPath" or
+              parameterName == "mathJaxTestPath" or
+              parameterName == "mathJaxTestPath" or
+              parameterName == "operatingSystem" or
+              parameterName == "browser" or
+              parameterName == "browserMode" or
+              parameterName == "browserPath" or
+              parameterName == "font" or
+              parameterName == "listOfTests" or
+              parameterName == "startID"):
+            aTask.mParameters[parameterName] = parameterValue
+        else:
+            print "Unknown parameter " + parameterName
+
+        return True
+
+    def addTask(self, aTaskName):
+        global gServer
+
+        if aTaskName not in gServer.mTasks.keys():
+            t = task()
+            t.mName = aTaskName
+            t.mOutputDirectory = t.mOutputDirectory + aTaskName + "/"
+            while (self.addParameter(t)):
+                None
+            gServer.mTasks[aTaskName] = t
+            t.createConfigFile()
+            t.mPopen = t.execute()
+            return "Task '" + aTaskName + "' added\n"
+
+        return "Failed to add task '" + aTaskName + "'\n"
+
+    def removeTask(self, aTaskName):
+        global gServer
+
+        if aTaskName in gServer.mTasks.keys():
+            t = gServer.mTasks[aTaskName]
+            if (t.mPopen == None or
+                t.mPopen.poll() != None):
+                del gServer.mTasks[aTaskName]
+                return "Task '" + aTaskName + "' removed\n"
+            elif t.mPopen.poll() == None:
+                t.mPopen.send_signal(SIGINT)
+                return "SIGINT sent to '" + aTaskName + "'\n"
+
+        return "Failed to add remove '" + aTaskName + "'\n"
+        
     def handle(self):
         global gServer
 
@@ -37,36 +122,100 @@ class requestHandler(SocketServer.StreamRequestHandler):
             client = items[0]
             if (client == "TASKVIEWER"):
                 for k in gServer.mTasks.keys():
-                    self.wfile.write(k + " " + gServer.mTasks[k].serialize())
+                    self.wfile.write(k + " " +
+                                     gServer.mTasks[k].serialize() + "\n")
             elif (client == "TASK"):
                 taskName = items[1]
                 if taskName in gServer.mTasks.keys():
-                    gServer.mTasks[taskName].mHost = items[2]
-                    gServer.mTasks[taskName].mStatus = items[3]
-                    gServer.mTasks[taskName].mProgress = items[4]
+                    gServer.mTasks[taskName].mStatus = items[2]
+                    gServer.mTasks[taskName].mProgress = items[3]
             elif (client == "TASKEDITOR"):
                 command = items[1]
                 taskName = items[2]
                 if command == "ADD":
-                    if taskName not in gServer.mTasks.keys():
-                        self.add(taskName, task(items[3]))
-                elif command == "REMOVE"
-                    if taskName in gServer.mTasks.keys():
-                        del gServer.mTasks[taskName]
+                    self.wfile.write(self.addTask(taskName))
+                elif command == "REMOVE":
+                    self.wfile.write(self.removeTask(taskName))
         else:
             print "Received request by unknown host " + self.client_address[0]
 
 class task:
 
-    def __init__(self, aHost):
-        self.mHost = aHost
+    def __init__(self):
+        self.mName = "Unknown"
         self.mStatus = "Unknown"
         self.mProgress = "Unknown"
+        self.mParameters = {}
+        self.mParameters["host"] = "Unknown"
+        self.mPopen = None
+        self.mOutputDirectory = datetime.utcnow().strftime("%Y-%m-%d/")
+
+    def host(self):
+        return self.mParameters["host"]
 
     def serialize(self):
-        return self.mHost + " " + self.mStatus + " " + \
-            self.mProgress + \
-            "\n"
+        return self.host() + " " + self.mStatus + " " + self.mProgress + " " + \
+            self.mOutputDirectory
+
+    def getConfigName(self):
+        return "config/" + self.mName + ".cfg"
+
+    def createConfigFile(self):
+        fp = file(self.getConfigName(), "wb")
+
+        fp.write("[framework]\n")        
+        fp.write("taskName = " + self.mName + "\n")
+        fp.write("transmitToTaskHandler = " +
+                 boolToString(self.mParameters["transmitToTaskHandler"]) + "\n")
+        fp.write("host = " +
+                 self.mParameters["host"] + "\n")
+        fp.write("port = " +
+                 str(self.mParameters["port"]) + "\n")
+        fp.write("mathJaxPath = " +
+                 self.mParameters["mathJaxPath"] + "\n")
+        fp.write("mathJaxTestPath = " +
+                 self.mParameters["mathJaxTestPath"] + "\n")
+        fp.write("timeOut = " +
+                 str(self.mParameters["timeOut"]) + "\n")
+        fp.write("fullScreenMode = " +
+                 boolToString(self.mParameters["fullScreenMode"]) + "\n")
+        fp.write("formatOutput = " +
+                 boolToString(self.mParameters["formatOutput"]) + "\n")
+        fp.write("compressOutput = " +
+                 boolToString(self.mParameters["compressOutput"]) + "\n")
+        fp.write("\n")
+
+        fp.write("[platform]\n")
+        fp.write("operatingSystem = " +
+                 self.mParameters["operatingSystem"] + "\n")
+        fp.write("browser = " +
+                 self.mParameters["browser"] + "\n")
+        fp.write("browserMode = " +
+                 self.mParameters["browserMode"] + "\n")
+        fp.write("browserPath = " +
+                 self.mParameters["browserPath"] + "\n")
+        fp.write("font = " +
+                 self.mParameters["font"] + "\n")
+        fp.write("nativeMathML = " +
+                 boolToString(self.mParameters["nativeMathML"]) + "\n")
+        fp.write("\n")
+
+        fp.write("[testsuite]\n")
+        fp.write("runSlowTests = " +
+                 boolToString(self.mParameters["runSlowTests"]) + "\n")
+        fp.write("runSkipTests = " +
+                 boolToString(self.mParameters["runSkipTests"]) + "\n")
+        fp.write("listOfTests = " +
+                 self.mParameters["listOfTests"] + "\n")
+        fp.write("startID = " +
+                 self.mParameters["startID"] + "\n")
+
+        fp.close()
+
+    def execute(self):
+        return subprocess.Popen(['python', 'runTestsuite.py',
+                                 '-c', self.getConfigName(),
+                                 '-o', self.mOutputDirectory])
    
 class taskHandler:
 
@@ -74,13 +223,6 @@ class taskHandler:
         self.mHost = aHost
         self.mPort = aPort
         self.mTasks = {}
-        self.add("task1", task("machine1"))
-        self.add("task2", task("machine2"))
-        self.add("task3", task("machine3"))
-
-    def add(self, aName, aTask):
-        if aName not in self.mTasks:
-            self.mTasks[aName] = aTask
 
     def start(self):
         server = SocketServer.TCPServer((self.mHost, self.mPort),

@@ -197,7 +197,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
     """
 
     # Build the testsuite
-    suite.sendRequest(aSelenium.host, "Initializing", "-")
+    suite.sendRequest("Initializing", "-")
     if aSuite.mListOfTests == "all":
         index = -1 # all tests
     else:
@@ -221,8 +221,8 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
     try:
         aSelenium.start()
         aSelenium.pre()
-        aSuite.printInfo("host=" + str(aSelenium.host))
-        aSuite.printInfo("port=" + str(aSelenium.port))
+        aSuite.printInfo("host =" + str(aSelenium.host))
+        aSuite.printInfo("port =" + str(aSelenium.port))
         aSuite.printInfo("mathJaxPath = " + aSelenium.mMathJaxPath)
         aSuite.printInfo("mathJaxTestPath = " + aSelenium.mMathJaxTestPath)
         aSuite.printInfo("operatingSystem = " + aSelenium.mOperatingSystem)
@@ -233,7 +233,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
                          boolToString(aSelenium.mNativeMathML))
         aSuite.printInfo("runSlowTests = " +
                          boolToString(aSuite.mRunSlowTests))
-        suite.sendRequest(aSelenium.host, "Running")
+        suite.sendRequest("Running")
         unittest.TextTestRunner(sys.stderr, verbosity = 2).run(aSuite)
         aSelenium.post()
         aSelenium.stop()
@@ -284,26 +284,26 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
                 gzipFile(outputHTML)
             print "done"
 
-        suite.sendRequest(aSelenium.host, "Complete")
+        suite.sendRequest("Complete")
     else:
         print
         print "Test Launcher received SIGINT!"
         print "Testing Instance Interrupted."
-        suite.sendRequest(aSelenium.host, "Interrupted")
+        suite.sendRequest("Interrupted")
     
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser(
         description="A Python script to run MathJax automated tests.")
-    parser.add_argument("-c", "--config", nargs = "?", default = "default.cfg",
+    parser.add_argument("-c", "--config", nargs = "?",
+                        default = "config/default.cfg",
                         help="A comma separated list of files describing the \
 parameters of the automated test instance to run. The default configuration \
-file is default.cfg.")
+file is config/default.cfg.")
     parser.add_argument("-o", "--output", nargs = "?", default = None,
                         help="By default, the output files are stored in \
 default web/results/YEAR-MONTH-DAY/TIME/. This option allows to specify a \
-custom sub directory instead of TIME/. The name of this directory can only \
-contain alphanumeric characters and its length must not exceed ten characters.")
+custom sub directory instead of the date.")
     parser.add_argument("-p", "--printList", nargs = "?",
                         default = argparse.SUPPRESS,
                         help="Print the list of all the tests in a file \
@@ -324,15 +324,16 @@ reftestList.txt")
     if (not clearBrowsersData):
         # create the date directory
         now = datetime.utcnow();
-        directory = ROOT + "web/results/" + now.strftime("%Y-%m-%d") + "/"
+        directory = ROOT + "web/results/"
         if not os.path.exists(directory):
             os.makedirs(directory)
 
         # create the subdirectory
-        if args.output and re.match("^([0-9]|[a-z]|[A-Z]){1,10}$", args.output):
-            directory += args.output + "/"
+        if args.output and re.match("^([0-9]|[a-z]|[A-Z]|-|/){1,50}/$",
+                                    args.output):
+            directory += args.output
         else:
-            directory += now.strftime("%H-%M-%S/")
+            directory += now.strftime("%Y-%m-%d/%H-%M-%S/")
 
         if not os.path.exists(directory):
             os.makedirs(directory)
@@ -341,6 +342,8 @@ reftestList.txt")
     configFileList = args.config.split(",")
 
     for configFile in configFileList:
+
+        configFile = configFile
 
         if (not os.path.isfile(configFile)):
             print >> sys.stderr,\

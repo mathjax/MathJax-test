@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
+<!-- vim: set ts=2 et sw=2 tw=80: !-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Task Editor</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+  </head>
+
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="./">Back to home</a></li> 
+        <li><a href="./taskViewer.php">Task Viewer</a></li> 
+      </ul>
+    </div>  
+
+    <div class="body">
+      <h1>Task Editor</h1>
+      
+      <form action="taskEditor.php" method="post">
+        <fieldset>
+          <legend>Framework:</legend>
+          <p>
+            <label>task name:
+              <input name="taskName" type="text" required="required"
+                     pattern="([a-z]|[A-Z]|[0-9]){1,10}"
+                     value="task1"
+                     maxlength="20"/> (alphanumeric)
+            </label>
+          </p>
+          <p>
+            <label>transmitToTaskHandler:
+              <input name="transmitToTaskHandler" type="checkbox"
+                     checked="checked" readonly="readonly"/>
+            </label>
+          </p>
+          <p>
+            <label>host:
+              <input name="host" type="text" required="required"
+                     pattern="([a-z]|[A-Z]|[0-9]|-|\.)+"
+                     value="192.168.0.18"
+                     maxlength="255"/>
+            </label>
+          </p>
+          <p>
+            <label>port:
+              <input name="port" type="text" value="4444" readonly="readonly"/>
+            </label>
+          </p>
+          <p>
+            <label>mathJaxPath:
+              <input name="mathJaxPath" type="text"
+                     value="http://localhost/MathJax/"
+                     readonly="readonly"/>
+            </label>
+          </p>
+          <p>
+            <label>mathJaxTestPath:
+              <input name="mathJaxTestPath" type="text"
+                     value="http://localhost/MathJax-test/"
+                     readonly="readonly"/>
+            </label>
+          </p>
+          <p>
+            <label>timeOut:
+              <input name="timeOut" type="number" min="1" max="120"
+                                    value="20"/> (seconds)
+            </label>
+          </p>
+          <p>
+            <label>fullScreenMode:
+              <input name="fullScreenMode" type="checkbox" checked="checked"/>
+            </label>
+          </p>
+          <p>
+            <label>formatOutput:
+              <input name="formatOutput" type="checkbox" checked="checked"/>
+            </label>
+          </p>
+          <p>
+            <label>compressOutput:
+              <input name="compressOutput" type="checkbox" checked="checked"/>
+            </label>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Platform:</legend>
+          <p>
+            <label>operatingSystem:
+              <select name="operatingSystem">
+                <option>auto</option>
+                <option>Linux</option>
+                <option>Windows</option>
+                <option>Mac</option>
+              </select>
+            </label>
+          </p>
+          <p>
+            <label>browser:
+              <select name="browser">
+                <option>Firefox</option>
+                <option>Safari</option>
+                <option>Chrome</option>
+                <option>Opera</option>
+                <option>MSIE</option>
+                <option>Konqueror</option>
+              </select>
+            </label>
+          </p>
+          <p>
+            <label>browserMode (MSIE):
+              <select name="browserMode">
+                <option>StandardMode</option>
+                <option>Quirks</option>
+                <option>IE7</option>
+                <option>IE8</option>
+                <option>IE9</option>
+              </select>
+            </label>
+          </p>
+          <p>
+            <label>browserPath:
+              <input name="browserPath" type="text" value="auto"
+                     readonly="readonly"/>
+            </label>
+          </p>
+          <p>
+            <label>font:
+              <select name="font">
+                <option>STIX</option>
+                <option>TeX</option>
+                <option>ImageTeX</option>
+              </select>
+            </label>
+          </p>
+          <p>
+            <label>nativeMathML:
+              <input name="nativeMathML" type="checkbox"/>
+            </label>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Testsuite:</legend>
+          <p>
+            <label>runSlowTests:
+              <input name="runSlowTests" type="checkbox" checked="checked"/>
+            </label>
+          </p>
+          <p>
+            <label>runSkipTests:
+              <input name="runSkipTests" type="checkbox"/>
+            </label>
+          </p>
+          <p>
+            <label>listOfTests:
+              <input name="listOfTests" type="text" value="all" size="100"
+                           pattern="(all|([0-2]+))"/>
+            </label>
+          </p>
+          <p>
+            <label>startID:
+              <input name="startID" type="text" value="" size="100"
+                     pattern="([a-z]|[A-Z]|[0-9]|_|-|\.|/)+" />
+            </label>
+          </p>
+        </fieldset>
+
+        <p style="visibility: hidden; height: 0;">
+            <input name="command" type="text"
+                   value="ADD" readonly="readonly"/>
+        </p>
+
+        <p style="text-align: right;">
+          <input type="submit" value="Create new task"/>
+        </p>
+
+      </form>
+
+    </div>
+  </body>
+</html>

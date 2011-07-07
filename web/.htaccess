@@ -1,0 +1,7 @@
+<Files ~ "taskEditor.xhtml|taskEditor.php">
+AuthUserFile /home/fred/mathjax-project/.password
+AuthGroupFile /dev/null
+AuthName "Secured Access to MathJax Testing Tools"
+AuthType Basic
+require user MathJaxDev
+</Files>
