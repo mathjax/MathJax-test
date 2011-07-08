@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Task Editor</title>
+    <title>Task Creator</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <link rel="stylesheet" type="text/css" href="default.css"/>
@@ -20,7 +20,7 @@
     </div>  
 
     <div class="body">
-      <h1>Task Editor</h1>
+      <h1>Task Creator</h1>
       
       <form action="taskEditor.php" method="post">
         <fieldset>
@@ -34,16 +34,10 @@
             </label>
           </p>
           <p>
-            <label>transmitToTaskHandler:
-              <input name="transmitToTaskHandler" type="checkbox"
-                     checked="checked" readonly="readonly"/>
-            </label>
-          </p>
-          <p>
             <label>host:
               <input name="host" type="text" required="required"
                      pattern="([a-z]|[A-Z]|[0-9]|-|\.)+"
-                     value="192.168.0.18"
+                     value="fred-VirtualBox.local"
                      maxlength="255"/>
             </label>
           </p>
@@ -160,17 +154,25 @@
           </p>
           <p>
             <label>listOfTests:
-              <input name="listOfTests" type="text" value="all" size="100"
+              <input name="listOfTests" type="text" value="all" size="50"
                            pattern="(all|([0-2]+))"/>
             </label>
+            <a href="selectReftests.xhtml">Reftest Selector</a>
           </p>
           <p>
             <label>startID:
-              <input name="startID" type="text" value="" size="100"
+              <input name="startID" type="text" value="" size="50"
                      pattern="([a-z]|[A-Z]|[0-9]|_|-|\.|/)+" />
             </label>
           </p>
         </fieldset>
+
+        <p>
+          Store results in directory (optional):
+          <input name="outputDirectory" type="text"
+                 pattern="([a-z]|[A-Z]|[0-9])*" maxlength="20"
+                 value=""/>
+        </p>
 
         <p style="visibility: hidden; height: 0;">
             <input name="command" type="text"

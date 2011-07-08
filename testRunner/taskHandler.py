@@ -22,9 +22,10 @@
 #
 # ***** END LICENSE BLOCK *****
 
+import socket
 import SocketServer
 import subprocess
-from signal import SIGINT
+from signal import SIGINT, SIGCHLD
 from datetime import datetime, timedelta
 
 def boolToString(aBoolean):
@@ -40,6 +41,15 @@ def boolToString(aBoolean):
 
 class requestHandler(SocketServer.StreamRequestHandler):
 
+    def getTaskList(self):
+        if (len(gServer.mTasks) == 0):
+            return "TASK LIST EMPTY\n"
+
+        taskList = "TASK LIST NONEMPTY\n"
+        for k in gServer.mTasks.keys():
+            taskList += k + " " + gServer.mTasks[k].serialize() + "\n"
+        return taskList
+
     def addParameter(self, aTask):
         
         request = self.rfile.readline().strip()
@@ -52,8 +62,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
         parameterName = items[0]
         parameterValue = items[1]
     
-        if (parameterName == "transmitToTaskHandler" or
-            parameterName == "fullScreenMode" or
+        if (parameterName == "fullScreenMode" or
             parameterName == "formatOutput" or
             parameterName == "compressOutput" or
             parameterName == "nativeMathML" or
@@ -80,37 +89,83 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         return True
 
-    def addTask(self, aTaskName):
+    def addTask(self, aTaskName, aOutputDirectory):
         global gServer
 
-        if aTaskName not in gServer.mTasks.keys():
-            t = task()
-            t.mName = aTaskName
-            t.mOutputDirectory = t.mOutputDirectory + aTaskName + "/"
-            while (self.addParameter(t)):
-                None
-            gServer.mTasks[aTaskName] = t
-            t.createConfigFile()
-            t.mPopen = t.execute()
-            return "Task '" + aTaskName + "' added\n"
+        if aTaskName in gServer.mTasks.keys():
+            return "'" + aTaskName + "' is already in the task list!" + "'\n"
 
-        return "Failed to add task '" + aTaskName + "'\n"
+        t = task()
+        t.mName = aTaskName
+        t.mOutputDirectory = t.mOutputDirectory + aOutputDirectory + "/"
+
+        # read the configuration parameters of the task
+        while (self.addParameter(t)): None
+
+        gServer.mTasks[aTaskName] = t
+        return "'" + aTaskName + "' added to the task list.\n"
 
     def removeTask(self, aTaskName):
         global gServer
 
-        if aTaskName in gServer.mTasks.keys():
-            t = gServer.mTasks[aTaskName]
-            if (t.mPopen == None or
-                t.mPopen.poll() != None):
-                del gServer.mTasks[aTaskName]
-                return "Task '" + aTaskName + "' removed\n"
-            elif t.mPopen.poll() == None:
-                t.mPopen.send_signal(SIGINT)
-                return "SIGINT sent to '" + aTaskName + "'\n"
+        if aTaskName not in gServer.mTasks.keys():
+            return "'" + aTaskName + "' was not found in the task list!"
 
-        return "Failed to add remove '" + aTaskName + "'\n"
+        t = gServer.mTasks[aTaskName]
+        if (not t.isRunning()):
+            del gServer.mTasks[aTaskName]
+            return "'" + aTaskName + "' removed from the task list.\n"
         
+        return "'" + aTaskName + "' is running and can not be removed!\n"
+
+    def runTask(self, aTaskName, aRestart = False):
+        global gServer
+
+        if aTaskName not in gServer.mTasks.keys():
+            return "'" + aTaskName + "' was not found in the task list!"
+
+        t = gServer.mTasks[aTaskName]
+
+        if (t.isRunning()):
+            return "'" + aTaskName + "' is already running!\n"
+
+        h = t.host()
+        if (h in gServer.mMachines.keys()):
+            return "'" + gServer.mMachines[h].mName + \
+                "' is already running on this machine!\n"
+
+        if (aRestart):
+            t.mParameters["startID"] = ""
+
+        t.generateConfigFile()
+        t.mPopen = t.execute()
+        gServer.mPID[str(t.mPopen.pid)] = t
+        gServer.mMachines[t.host()] = t
+        return "Run signal sent to '" + aTaskName + "'.\n"
+
+    def stopTask(self, aTaskName):
+        global gServer
+
+        if aTaskName not in gServer.mTasks.keys():
+            return "'" + aTaskName + "' was not found in the task list!"
+
+        t = gServer.mTasks[aTaskName]
+
+        if (t.isRunning()):
+            t.mPopen.send_signal(SIGINT)
+            return "Stop signal sent to '" + aTaskName + "'.\n"
+
+        return "'" + aTaskName + "' is not running!\n"
+
+    def getTaskInfo(self, aTaskName):
+
+        global gServer
+
+        if aTaskName not in gServer.mTasks.keys():
+            return "<p>No task '" + aTaskName + "' in the task list.</p>"
+
+        return gServer.mTasks[aTaskName].serializeHTML();
+
     def handle(self):
         global gServer
 
@@ -121,21 +176,44 @@ class requestHandler(SocketServer.StreamRequestHandler):
             items = request.split()
             client = items[0]
             if (client == "TASKVIEWER"):
-                for k in gServer.mTasks.keys():
-                    self.wfile.write(k + " " +
-                                     gServer.mTasks[k].serialize() + "\n")
+                self.wfile.write(self.getTaskList())
             elif (client == "TASK"):
                 taskName = items[1]
                 if taskName in gServer.mTasks.keys():
-                    gServer.mTasks[taskName].mStatus = items[2]
-                    gServer.mTasks[taskName].mProgress = items[3]
+                    t = gServer.mTasks[taskName]
+                    t.mStatus = items[2]
+                    if (t.mStatus == "Interrupted"):
+                        t.mParameters["startID"] = items[3]
+                    else:
+                        t.mProgress = items[3]
+            elif (client == "TASKDEATH"):
+                death = items[1]
+                pid = str(items[2])
+                if (pid in gServer.mPID.keys()):
+                    t = gServer.mPID[pid]
+                    del gServer.mPID[pid]
+                    del gServer.mMachines[t.host()]
+                    if (death == "UNEXPECTED"):
+                        t.mStatus = "Killed"
+
+
             elif (client == "TASKEDITOR"):
                 command = items[1]
                 taskName = items[2]
                 if command == "ADD":
-                    self.wfile.write(self.addTask(taskName))
+                    outputDirectory = items[3]
+                    self.wfile.write(self.addTask(taskName, outputDirectory))
                 elif command == "REMOVE":
                     self.wfile.write(self.removeTask(taskName))
+                elif command == "RUN":
+                    self.wfile.write(self.runTask(taskName, False))
+                elif command == "RESTART":
+                    self.wfile.write(self.runTask(taskName, True))
+                elif command == "STOP":
+                    self.wfile.write(self.stopTask(taskName))
+            elif (client == "TASKINFO"):
+                taskName = items[1]
+                self.wfile.write(self.getTaskInfo(taskName))
         else:
             print "Received request by unknown host " + self.client_address[0]
 
@@ -143,79 +221,86 @@ class task:
 
     def __init__(self):
         self.mName = "Unknown"
-        self.mStatus = "Unknown"
-        self.mProgress = "Unknown"
+        self.mStatus = "Pending"
+        self.mProgress = "-"
         self.mParameters = {}
         self.mParameters["host"] = "Unknown"
         self.mPopen = None
         self.mOutputDirectory = datetime.utcnow().strftime("%Y-%m-%d/")
 
+    def isRunning(self):
+        return (self.mPopen != None and self.mPopen.poll() == None)
+
     def host(self):
-        return self.mParameters["host"]
+        return socket.gethostbyname(self.mParameters["host"])
 
     def serialize(self):
-        return self.host() + " " + self.mStatus + " " + self.mProgress + " " + \
-            self.mOutputDirectory
+        s = ""
+        s += self.mParameters["host"] + " "
+        s += self.mStatus + " ";
+        s += self.mProgress + " "
+        if (self.mStatus == "Pending"):
+            s += "-"
+        else:
+            s += self.mOutputDirectory
+
+        return s
+
+    def serializeHTML(self):
+        s = ""
+        s += "<p><table>"
+        s += "<tr><th>Name</th><td>" + self.mName + "</td></tr>"
+
+        for k in self.mParameters.keys():
+            s += "<tr><th>" + k + "</th><td>" + \
+                self.mParameters[k].__str__() + "</td></tr>"
+
+        s += "</table></p>"
+
+        return s
 
     def getConfigName(self):
         return "config/" + self.mName + ".cfg"
 
-    def createConfigFile(self):
+    def generateConfigFile(self):
+        p = self.mParameters;
+
         fp = file(self.getConfigName(), "wb")
 
         fp.write("[framework]\n")        
         fp.write("taskName = " + self.mName + "\n")
-        fp.write("transmitToTaskHandler = " +
-                 boolToString(self.mParameters["transmitToTaskHandler"]) + "\n")
-        fp.write("host = " +
-                 self.mParameters["host"] + "\n")
-        fp.write("port = " +
-                 str(self.mParameters["port"]) + "\n")
-        fp.write("mathJaxPath = " +
-                 self.mParameters["mathJaxPath"] + "\n")
-        fp.write("mathJaxTestPath = " +
-                 self.mParameters["mathJaxTestPath"] + "\n")
-        fp.write("timeOut = " +
-                 str(self.mParameters["timeOut"]) + "\n")
-        fp.write("fullScreenMode = " +
-                 boolToString(self.mParameters["fullScreenMode"]) + "\n")
-        fp.write("formatOutput = " +
-                 boolToString(self.mParameters["formatOutput"]) + "\n")
-        fp.write("compressOutput = " +
-                 boolToString(self.mParameters["compressOutput"]) + "\n")
+        fp.write("host = " + p["host"] + "\n")
+        fp.write("port = " + str(p["port"]) + "\n")
+        fp.write("mathJaxPath = " + p["mathJaxPath"] + "\n")
+        fp.write("mathJaxTestPath = " + p["mathJaxTestPath"] + "\n")
+        fp.write("timeOut = " + str(p["timeOut"]) + "\n")
+        fp.write("fullScreenMode = " + boolToString(p["fullScreenMode"]) + "\n")
+        fp.write("formatOutput = " + boolToString(p["formatOutput"]) + "\n")
+        fp.write("compressOutput = " + boolToString(p["compressOutput"]) + "\n")
         fp.write("\n")
 
         fp.write("[platform]\n")
-        fp.write("operatingSystem = " +
-                 self.mParameters["operatingSystem"] + "\n")
-        fp.write("browser = " +
-                 self.mParameters["browser"] + "\n")
-        fp.write("browserMode = " +
-                 self.mParameters["browserMode"] + "\n")
-        fp.write("browserPath = " +
-                 self.mParameters["browserPath"] + "\n")
-        fp.write("font = " +
-                 self.mParameters["font"] + "\n")
-        fp.write("nativeMathML = " +
-                 boolToString(self.mParameters["nativeMathML"]) + "\n")
+        fp.write("operatingSystem = " + p["operatingSystem"] + "\n")
+        fp.write("browser = " + p["browser"] + "\n")
+        fp.write("browserMode = " + p["browserMode"] + "\n")
+        fp.write("browserPath = " + p["browserPath"] + "\n")
+        fp.write("font = " + p["font"] + "\n")
+        fp.write("nativeMathML = " + boolToString(p["nativeMathML"]) + "\n")
         fp.write("\n")
 
         fp.write("[testsuite]\n")
-        fp.write("runSlowTests = " +
-                 boolToString(self.mParameters["runSlowTests"]) + "\n")
-        fp.write("runSkipTests = " +
-                 boolToString(self.mParameters["runSkipTests"]) + "\n")
-        fp.write("listOfTests = " +
-                 self.mParameters["listOfTests"] + "\n")
-        fp.write("startID = " +
-                 self.mParameters["startID"] + "\n")
+        fp.write("runSlowTests = " + boolToString(p["runSlowTests"]) + "\n")
+        fp.write("runSkipTests = " + boolToString(p["runSkipTests"]) + "\n")
+        fp.write("listOfTests = " + p["listOfTests"] + "\n")
+        fp.write("startID = " + p["startID"] + "\n")
 
         fp.close()
 
     def execute(self):
         return subprocess.Popen(['python', 'runTestsuite.py',
                                  '-c', self.getConfigName(),
-                                 '-o', self.mOutputDirectory])
+                                 '-o', self.mOutputDirectory,
+                                 '-t'])
    
 class taskHandler:
 
@@ -223,6 +308,8 @@ class taskHandler:
         self.mHost = aHost
         self.mPort = aPort
         self.mTasks = {}
+        self.mMachines = {}
+        self.mPID = {}
 
     def start(self):
         server = SocketServer.TCPServer((self.mHost, self.mPort),

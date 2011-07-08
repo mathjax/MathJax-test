@@ -1,8 +1,6 @@
 <?php
-  if (!isset($_POST['command']) ||
-      ($_POST['command'] != 'ADD' && $_POST['command'] != 'REMOVE') ||
-      !isset($_POST['taskName'])) {
-    header('Location: taskEditor.xhtml');
+  if (!isset($_POST['command']) || !isset($_POST['taskName'])) {
+    header('Location: taskViewer.php');
     exit;
   }
   echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -17,6 +15,7 @@
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <link rel="stylesheet" type="text/css" href="default.css"/>
+    <meta http-equiv="refresh" content="1; url=./taskViewer.php">
   </head>
 
   <body>
@@ -24,8 +23,6 @@
       <h3>Navigation</h3>
       <ul>
         <li><a href="./">Back to home</a></li> 
-        <li><a href="./taskViewer.php">Task Viewer</a></li> 
-        <li><a href="./taskEditor.xhtml">Task Editor</a></li> 
       </ul>
     </div>  
 
@@ -54,8 +51,6 @@
         $taskName = truncateString($_POST['taskName'], 10);
 
         if ($_POST['command'] == 'ADD') {
-
-          $transmitToTaskHandler = boolToString(True);
 
           if (isset($_POST['host'])) {
             $host = truncateString($_POST['host'], 255);
@@ -117,11 +112,17 @@
           $runSkipTests = boolToString(isset($_POST['runSkipTests']));
           $listOfTests = $_POST['listOfTests'];
           $startID = $_POST['startID'];
+
+          if (isset($_POST['outputDirectory']) &&
+              $_POST['outputDirectory'] != "") {
+            $outputDirectory = truncateString($_POST['outputDirectory'], 20);
+          } else {
+            $outputDirectory = $taskName;
+          }
    
           $file = fsockopen("localhost", 4445);
           if ($file) {
-             fwrite($file, "TASKEDITOR ADD ".$taskName."\n".
-                           "transmitToTaskHandler=".$transmitToTaskHandler."\n".
+             fwrite($file, "TASKEDITOR ADD ".$taskName." ".$outputDirectory."\n".
                            "host=".$host."\n".
                            "port=".$port."\n".
                            "mathJaxPath=".$mathJaxPath."\n".
@@ -147,18 +148,24 @@
           } else {
             echo '<p>Could not connect to the task handler.</p>';
           }
-        } else if ($_POST['command'] == 'REMOVE') {
-
+        } else if ($_POST['command'] == 'REMOVE' ||
+                   $_POST['command'] == 'RUN' ||
+                   $_POST['command'] == 'RESTART' ||
+                   $_POST['command'] == 'STOP') {
           $file = fsockopen("localhost", 4445);
           if ($file) {
-             fwrite($file, "TASKEDITOR REMOVE ".$taskName."\n");
+             fwrite($file, "TASKEDITOR ".$_POST['command']." ".$taskName."\n");
              echo fgets($file);
              fclose($file);
           } else {
             echo '<p>Could not connect to the task handler.</p>';
           }
+        } else {
+          echo '<p>Unknown command "'.$_POST['command'].'"</p>';
         }
         ?>
+
+        <p>You will be redirected to the task viewer page.</p>
     </div>
   </body>
 </html>

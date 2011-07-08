@@ -29,13 +29,6 @@ a[href^="./taskEditor.xhtml"] {
 
 #taskList {
     width: 100%;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-#taskList td, th {
-    border: 1px solid black;
-    padding: .5em;
 }
 
 #taskList form {
@@ -53,5 +46,4 @@ a[href^="./taskEditor.xhtml"] {
   height: 16px;
   padding: 0;
   border: 0;
-  background-image: url('remove.png');
 }
