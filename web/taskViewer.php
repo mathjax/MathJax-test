@@ -1,4 +1,35 @@
-<?php echo '<?xml version="1.0" encoding="UTF-8"?>';?>
+<?php
+/* -*- Mode: PHP; tab-width: 2; indent-tabs-mode:nil; -*- */
+/* vim: set ts=2 et sw=2 tw=80: */
+/* ***** BEGIN LICENSE BLOCK *****
+/* Version: Apache License 2.0
+ *
+ * Copyright (c) 2011 Design Science, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Contributor(s):
+ *   Frederic Wang <fred.wang@free.fr> (original author)
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+/**
+ *  @file taskViewer.php
+ *  @brief TODO
+ */
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
@@ -62,7 +93,7 @@
             echo '<th>Result directory</th>';
             echo '</tr>';
             while(!feof($file)) {
-              $line = fgets($file);
+              $line = trim(fgets($file));
               $argument = explode(" ", $line, 5);
               if (count($argument) == 5) {
                 $taskName = $argument[0];
@@ -75,15 +106,21 @@
                 echo '<td><a href="taskInfo.php?taskName='.$taskName.'">';
                 echo $taskName.'</a></td>';
                 echo '<td>'.$host.'</td>';
-                echo '<td>'.$status;
+                echo '<td>';
+		if ($status == "Killed") {
+                  echo '<a href="taskInfo.php?taskName='.$taskName;
+                  echo '#exceptionError">'.$status.'</a>';
+		} else {
+                  echo $status;
+		}
   
-              if ($status == "Initializing" || $status == "Running") {
+              if ($status == "Running") {
                   commandButton($taskName, "STOP");
-                } else if($status == "Interrupted" or $status == "Killed") {
+                } else if($status == "Interrupted") {
                   commandButton($taskName, "RUN");
                   commandButton($taskName, "RESTART");
                   commandButton($taskName, "REMOVE");
-                } else if ($status == "Complete"){
+                } else if ($status == "Complete" || $status == "Killed") {
                   commandButton($taskName, "RESTART");
                   commandButton($taskName, "REMOVE");
                 } else if ($status == "Pending") {
@@ -93,7 +130,13 @@
                 echo '</td>';
   
                 echo '<td>'.$progress.'</td>';
-                echo '<td><a href="results/'.$results.'">'.$results.'</td>';
+                echo '<td>';
+                if ($status == "Pending") {
+                  echo $results;
+                } else {
+                  echo '<a href="results/'.$results.'">'.$results.'</a>';
+                }
+                echo '</td>';
                 echo '</tr>';
               }
             }

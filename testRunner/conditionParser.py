@@ -23,6 +23,9 @@
 # ***** END LICENSE BLOCK *****
 
 """
+@file conditionParser.py
+The file for the @ref conditionParser module.
+
 @package conditionParser
 This module implements a simple parser for boolean expressions
 @see http://www.dabeaz.com/ply/ply.html
@@ -30,7 +33,7 @@ This module implements a simple parser for boolean expressions
 @details The tokens are simple strings named t_*. Among them, there are the
 usual boolean operators @ref t_NOT, @ref t_OR etc. The literals are simple
 token strings @ref t_OPERATINGSYSTEM, @ref t_BROWSER etc referring to a
-configuration. They are evaluated to true iff the testing framework satisfies
+configuration. They are evaluated to true iff the testing instance satisfies
 this configuration.
 
 The grammar is defined by the expressions p_*. In BNF notation, it is:
@@ -81,9 +84,9 @@ the parser
 )
 """
 
-import seleniumMathJax
 import ply.lex as lex
 import ply.yacc as yacc
+import seleniumMathJax
 
 gSelenium = None
 

@@ -23,7 +23,9 @@
  * ***** END LICENSE BLOCK ***** */
 
 /**
- *  @file
+ *  @file selectReftests.js
+ *  @brief script for selectReftests.html
+ *
  *  This file is used by selectReftests.html to provide a user interface to
  *  the test suite and allow to select some tests to execute.
  */

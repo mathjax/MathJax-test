@@ -38,6 +38,10 @@
 #
 # ***** END LICENSE BLOCK *****
 
+## @file clean-reftest-output.pl
+#  @brief TODO
+#
+
 # This script is intended to be run over the standard output of a
 # reftest run.  It will extract the parts of the output run relevant to
 # reftest and convert it to an HTML page.

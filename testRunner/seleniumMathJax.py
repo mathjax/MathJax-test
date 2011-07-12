@@ -23,18 +23,21 @@
 # ***** END LICENSE BLOCK *****
 
 """
+@file seleniumMathJax.py
+The file for the @ref seleniumMathJax module.
+
 @package seleniumMathJax
 This module implements a selenium object augmented with features specific to
 the MathJax testing framework.
 """
 
-import time
+from PIL import Image, ImageChops
+import StringIO
+import base64
+import difflib
 import selenium
 import string
-import base64
-import StringIO
-from PIL import Image, ImageChops
-import difflib
+import time
 import urlparse
 
 VK_TAB = 9
@@ -191,6 +194,7 @@ class seleniumMathJax(selenium.selenium):
     def start(self):
         """
         @fn start(self)
+        @brief start Selenium
         """
         selenium.selenium.start(self)
 
@@ -369,7 +373,14 @@ class seleniumMathJax(selenium.selenium):
         selenium.selenium.stop(self)
         
     def clearBrowserData(self):
-        print "clearBrowserData: not implemented"
+        """
+        @fn clearBrowserData(self)
+        @brief Clear the browser data.
+        @exception "clearBrowserData: not implemented"
+        @note Selenium 1 can not be used to clear the browser data, so this
+        is not implemented at the moment.
+        """
+        raise NameError("clearBrowserData: not implemented")
 
     def takeScreenshot(self, aWaitTime = 0.5):
         """

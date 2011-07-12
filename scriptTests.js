@@ -23,8 +23,8 @@
  * ***** END LICENSE BLOCK ***** */
 
 /**
- *  @file
- *  This file is for test pages of type @ref reftest::scriptReftest
+ *  @file scriptTests.js
+ *  @brief header for test pages of type @ref reftest::scriptReftest
  */
 
 /**

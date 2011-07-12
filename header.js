@@ -23,7 +23,9 @@
    * ***** END LICENSE BLOCK ***** */
 
 /**
- *  @file
+ *  @file header.js
+ *  @brief main header for test files.
+ *
  *  This file should be included in all test pages to allow usage of MathJax
  *  and communication with the test launcher.
  */
@@ -306,10 +308,11 @@ function finalizeReftests()
   *
   * @treturn Boolean true
   *
-  * @note we store the message in a comment at the end of the <html> node
-  * instead of a textarea inside <body>, because some javascript errors may
-  * prevent document.body to exist. When doing manual testing, we are supposed
-  * to use the browser debugger directly, so such a textarea is not useful.
+  * @note we store the message in a comment at the end of the &lt;html&gt; node
+  * instead of a textarea inside &lt;body&gt;, because some javascript errors
+  * may prevent document.body to exist. When doing manual testing, we are
+  * supposed to use the browser debugger directly, so such a textarea is not
+  * useful.
   */
 function errorHandler(aErrorMessage, aURL, aLineNumber)
 {

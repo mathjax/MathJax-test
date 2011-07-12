@@ -23,20 +23,23 @@
 # ***** END LICENSE BLOCK *****
 
 """
+@file reftest.py
+The file for the @ref reftest module.
+
 @package reftest
 This module implements various types of reftests, controls the executions and
 reports the results.
 """
 
+from PIL import Image, ImageChops
+import conditionParser
+import difflib
+import seleniumMathJax
+import socket
+import string
+import sys
 import time
 import unittest
-import seleniumMathJax
-import string
-from PIL import Image, ImageChops
-import difflib
-import conditionParser
-import socket
-import sys
 
 """ 
 @var EXPECTED_PASS
@@ -71,24 +74,31 @@ class reftestSuite(unittest.TestSuite):
     """
 
     def __init__(self,
-                 aTransmitToTaskHandler = False,
-                 aTaskName = "",
+                 aTaskHandler = None,
                  aRunSlowTests = True,
                  aRunSkipTests = True,
                  aListOfTests = None,
                  aStartID = ""):
         """
         @fn __init__(self,
-                     aTransmitToTaskHandler = False,
+                     aTaskHandler = None,
                      aRunSlowTests = True,
                      aRunSkipTests = True,
                      aListOfTests = None,
                      aStartID = "")
     
+        @param aTaskHandler  Value to assign to @ref mTaskHandler
         @param aRunSlowTests Value to assign to @ref mRunSlowTests
         @param aRunSkipTests Value to assign to @ref mRunSkipTests
         @param aListOfTests  Value to assign to @ref mListOfTests
         @param aStartID      Initial value of @ref mRunningTestID.
+
+        @property mTaskHandler
+        This variable describes the task handler to which the test runner will
+        send the status and progress of the testing instance.
+        It is made of three elements: the task handler host, task handler port
+        and name of the task running. If this table is set to None, then the
+        testing framework will not send any information.
 
         @property mRunSlowTests
         Indicate whether the suite should run tests marked slow.
@@ -114,10 +124,16 @@ class reftestSuite(unittest.TestSuite):
 
         @property mPreviousImageRef
         The previous screenshot taken, the one of the page at mPreviousURIRef.
+
+        @property mTestsExecuted
+        Number of tests in the suite that have been executed in the testing
+        instance.
+
+        @property mNumberOfTests
+        Total number of tests in the suite.
         """
         unittest.TestSuite.__init__(self)
-        self.mTransmitToTaskHandler = aTransmitToTaskHandler
-        self.mTaskName = aTaskName
+        self.mTaskHandler = aTaskHandler
         self.mRunSlowTests = aRunSlowTests
         self.mRunSkipTests = aRunSkipTests
         self.mListOfTests = aListOfTests
@@ -162,7 +178,7 @@ class reftestSuite(unittest.TestSuite):
 
         @param aSelenium @ref seleniumMathJax object that will be used for
         the test suite.
-        @param aRoot root of the MathJax-Test directory
+        @param aRoot root of the MathJax-test directory
         @param aManifestFile manifest file to parse
         @param aIndex index of the manifest file inside the @ref mListOfTests
         string. -1 means run all tests.
@@ -407,24 +423,40 @@ fails/random")
         self.mPreviousImageRef = aSelenium.takeScreenshot()
         return self.mPreviousImageRef
 
-    def sendRequest(self, aStatus, aProgress = ""):
-        if not self.mTransmitToTaskHandler:
+    def sendRequest(self, aStatus, aProgress = None):
+        """
+        @fn sendRequest(self, aStatus, aProgress = None):
+        @brief Send status information to the task handler
+        
+        @details If @ref mTaskHandler is None, this function does nothing.
+        Otherwise, it connects to the task handler using the specified host and
+        port and send the request "TASK taskName aStatus Progress", where
+        Progress is either the specified aProgress or the string
+        @ref mTestsExecuted / @ref mNumberOfTests if aProgress is None.
+        """
+
+        if self.mTaskHandler == None:
             return
 
-        if aProgress == "":
-           aProgress = str(self.mTestsExecuted) + "/" + \
-               str(self.mNumberOfTests)
-
-        # host and port of the task handler server
-        HOST, PORT = "localhost", 4445
+        if aProgress == None:
+           aProgress = \
+               str(self.mTestsExecuted) + "/" + str(self.mNumberOfTests)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((HOST, PORT))
+        sock.connect((self.mTaskHandler[0], self.mTaskHandler[1]))
         sock.send("TASK " +
-                  self.mTaskName + " " +
+                  self.mTaskHandler[2] + " " +
                   aStatus + " " +
                   aProgress + "\n")
 
     def testComplete(self, aReftest):
+        """
+        @fn testComplete(self, aReftest)
+        @brief Function called after completion of a test in the suite
+        @details This function flushes the output buffer (so that the test
+        information will really be written in the output file), increments
+        @ref mTestsExecuted and sends the new status to the task handler.
+        """
+
         sys.stdout.flush()
         self.mTestsExecuted = self.mTestsExecuted + 1
         self.sendRequest("Running")
