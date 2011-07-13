@@ -42,6 +42,8 @@ Recall that it is either a single page or a pair test/reference. These Web pages
 may also point to external resources so be sure to download these files too. In
 particular, the following Javascript files are important:
 
+.. _mathjax-test-headers:
+
 - `header.js </MathJax-test/header.js>`_: this script is supposed to be used in
   all the unit tests. Among other things, it loads MathJax, executes pre and
   post actions and communicates with the test launcher.
@@ -63,8 +65,9 @@ Loading a Unit Test
 ===================
 
 To load a unit test, you just have to open the test pages in the browser you
-want to test. It is also possible to provide some configuration options in
-the query string of the URI:
+want to test. It is also possible to provide some
+:ref:`configuration options <test-runner-config>` in the query string of the
+URI:
 
 - **mathJaxPath**. By default, the test page looks for an ancestor directory
   called ``MathJax-test/``. Then it uses a ``MathJax/`` directory at the same

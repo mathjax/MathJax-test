@@ -25,7 +25,12 @@
 
 /**
  *  @file taskInfo.php
- *  @brief TODO
+ *  @brief Displays information on a task.
+ *  
+ *  If no taskName parameter is present in the query string, this PHP script
+ *  redirects to @ref taskViewer.php. Otherwise, it tries to connect to a task
+ *  handler on host "localhost" and port = 4445. It displays an error message if
+ *  it fails and the result of a "TASKINFO taskName" request if it succeeds.
  */
 
   if (!isset($_GET['taskName'])) {

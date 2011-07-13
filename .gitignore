@@ -1,5 +1,6 @@
 *.pyc
 *~
+testRunner/config/taskList/
 testRunner/parser.out
 testRunner/parsetab.py
 web/docs/doxygen/

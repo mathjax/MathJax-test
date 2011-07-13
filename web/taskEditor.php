@@ -25,7 +25,9 @@
 
 /**
  *  @file taskEditor.php
- *  @brief TODO
+ *  @brief Sends editing command to the task handler
+ *
+ *  
  */
 
   if (!isset($_POST['command']) || !isset($_POST['taskName'])) {
@@ -77,7 +79,7 @@
           return substr($aString, 0, $aMaxLength);
         }
 
-        $taskName = truncateString($_POST['taskName'], 10);
+        $taskName = truncateString($_POST['taskName'], 50);
 
         if ($_POST['command'] == 'ADD') {
 

@@ -1,5 +1,5 @@
-#!gmake
-#
+# -*- Mode: Python; tab-width: 2; indent-tabs-mode:nil; -*-
+# vim: set ts=2 et sw=2 tw=80:
 # ***** BEGIN LICENSE BLOCK *****
 # Version: Apache License 2.0
 #
@@ -22,19 +22,27 @@
 #
 # ***** END LICENSE BLOCK *****
 
-SPHINXBUILD   = sphinx-build
-DOXYGEN       = doxygen
-DOT           = dot
+"""
+@file taskViewer.py
+@brief Script to view the list of elements in the task handler
 
-all: doxygen html
+@var TASK_HANDLER_HOST
+Host address of the task handler
 
-doxygen:
-	$(DOXYGEN) doxygen.cfg
+@var TASK_HANDLER_PORT
+Port of the task handler
+"""
 
-diagrams:
-	$(DOT) -Tsvg source/testing-framework.dot > source/testing-framework.svg
+TASK_HANDLER_HOST = "localhost"
+TASK_HANDLER_PORT = 4445
 
-html: source diagrams
-	$(SPHINXBUILD) -b html source html
+import SocketServer
+import socket
 
-.PHONY: doxygen
+if __name__ == "__main__":
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((TASK_HANDLER_HOST, TASK_HANDLER_PORT))
+    sock.send("TASKVIEWER\n")
+
+    response = sock.recv(4096)
+    print response

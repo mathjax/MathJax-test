@@ -45,7 +45,9 @@ Port of the task handler
 
 TASK_HANDLER_HOST = "localhost"
 TASK_HANDLER_PORT = 4445
+TASK_LIST_DIRECTORY = "config/taskList/"
 
+import os
 import socket
 import SocketServer
 import subprocess
@@ -119,26 +121,26 @@ class requestHandler(SocketServer.StreamRequestHandler):
         @return The exception message read from the socket
 
         This function reads line from the socket and concatenated them in a
-        string until it reaches a "TASKDEATH END" line.
+        string until it reaches a "TASK DEATH END" line.
         """
 
         s = ""
 
         while (True):
             request = self.rfile.readline().strip()
-            if (request == "TASKDEATH END"):
+            if (request == "TASK DEATH END"):
                 break
             s += request + "\n"
 
         return s
 
-    def addParameter(self, aTask):
+    def readParameter(self, aTask):
         """
-        @fn addParameter(self, aTask)
+        @fn readParameter(self, aTask)
         @brief read one parameter from the socket and store it in the task
         @param aTask task to which we want to add a parameter
         @return Whether we should continue to read more parameters.
-        @see [ADD-REFERENCE-TO-CONFIG-PARAMETERS-IN-MATHJAX-TEST-DOC]
+        @see ../html/components.html\#test-runner-config
 
         This function reads one line from the socket. If this line is
 
@@ -156,12 +158,21 @@ class requestHandler(SocketServer.StreamRequestHandler):
         """
         request = self.rfile.readline().strip()
 
+        print request
+
         if (request == "TASKEDITOR ADD END"):
             return False
 
         items = request.split("=")
-        parameterName = items[0]
-        parameterValue = items[1]
+        parameterName = items[0].strip()
+        parameterValue = items[1].strip().split()
+        if (len(parameterValue) == 0):
+            parameterValue = ""
+        else:
+            if (len(parameterValue) > 1):
+                print "warning: the task handler does not accept multiple\
+option values"
+            parameterValue = parameterValue[0]
     
         if (parameterName == "fullScreenMode" or
             parameterName == "formatOutput" or
@@ -217,10 +228,11 @@ class requestHandler(SocketServer.StreamRequestHandler):
                  aOutputDirectory + "/")
 
         # read the configuration parameters of the task
-        while (self.addParameter(t)): None
+        while (self.readParameter(t)): None
 
         # add the task to the list
         gServer.mTasks[aTaskName] = t
+        t.generateConfigFile()
         return "'" + aTaskName + "' added to the task list.\n"
 
     def removeTask(self, aTaskName):
@@ -241,6 +253,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
         t = gServer.mTasks[aTaskName]
         if (not t.isRunning()):
             # remove the task from the list
+            t.removeConfigFile()
             del gServer.mTasks[aTaskName]
             return "'" + aTaskName + "' removed from the task list.\n"
         
@@ -331,13 +344,14 @@ class requestHandler(SocketServer.StreamRequestHandler):
         - If the request is "TASKINFO taskName", it send the result of
         @ref getTaskInfo for the corresponding task.
 
-        - If the request is "TASK taskName status progress", it updates the
-        members of the given task accordingly. If status is "Interrupted",
-        progress is actually the startID to use to recover the testing instance.
+        - If the request is "TASK UPDATE pid status progress", where pid the PID
+        of the process of a running task, it updates the members of the given
+        task accordingly. If status is "Interrupted", progress is actually the
+        startID to use to recover the testing instance.
         In particular, it can be ommited if the task was interrupted before
         any tests have been run (i.e. startID should be an empty string).
 
-        - If the request is "TASKDEATH death pid" where death is either
+        - If the request is "TASK *_DEATH pid" where * is either
           "EXPECTED" or "UNEXPECTED" and pid the PID of the process of a running
           task, then that task is removed from the hash tables of running tasks.
           If the death is unexpected, the @ref task::mStatus is set to
@@ -370,38 +384,39 @@ class requestHandler(SocketServer.StreamRequestHandler):
                 taskName = items[1]
                 self.wfile.write(self.getTaskInfo(taskName))
             elif (client == "TASK"):
-                taskName = items[1]
-                if taskName in gServer.mTasks.keys():
-                    t = gServer.mTasks[taskName]
-                    if (items[2] in
-                        ["Running", "Complete", "Interrupted"]):
-                        t.mStatus = items[2]
-                    if (t.mStatus == "Interrupted"):
-                        if (len(items) >= 3):
-                            t.mParameters["startID"] = items[3]
-                        else:
-                            t.mParameters["startID"] = ""
-                    else:
-                        t.mProgress = items[3]
-            elif (client == "TASKDEATH"):
-                death = items[1]
-                if (death == "EXPECTED" or death == "UNEXPECTED"):
-                    pid = items[2]
-                    if (pid in gServer.mRunningTaskFromPID.keys()):
-                        t = gServer.mRunningTaskFromPID[pid]
+                command = items[1]
+                pid = items[2]
+                if pid in gServer.mRunningTaskFromPID.keys():
+                    t = gServer.mRunningTaskFromPID[pid]
+                    if (command == "UPDATE"):
+                        status = items[3]
+                        if (status in
+                            ["Running", "Complete", "Interrupted"]):
+                            t.mStatus = status
+                            if (t.mStatus == "Interrupted"):
+                                if (len(items) >= 5):
+                                    t.mParameters["startID"] = items[4]
+                                else:
+                                    t.mParameters["startID"] = ""
+                            else:
+                                t.mProgress = items[4]
+                    elif (command == "EXPECTED_DEATH" or
+                          command == "UNEXPECTED_DEATH"):
                         del gServer.mRunningTaskFromPID[pid]
                         h = t.host()
                         if h in gServer.mRunningTaskFromHost.keys():
                             del gServer.mRunningTaskFromHost[h]
-                            if (death == "UNEXPECTED"):
-                                t.mStatus = "Killed"
-                                t.mExceptionMessage = \
-                                    self.readExceptionMessage()
+                        if (command == "UNEXPECTED_DEATH"):
+                            t.mStatus = "Killed"
+                            t.mExceptionMessage = self.readExceptionMessage()
             elif (client == "TASKEDITOR"):
                 command = items[1]
                 taskName = items[2]
                 if command == "ADD":
-                    outputDirectory = items[3]
+                    if (len(items) >= 4):
+                        outputDirectory = items[3]
+                    else:
+                        outputDirectory = taskName
                     self.wfile.write(self.addTask(taskName, outputDirectory))
                 elif command == "REMOVE":
                     self.wfile.write(self.removeTask(taskName))
@@ -446,7 +461,7 @@ class task:
         @property mParameters
         Hash table of task parameters, corresponding to those in the config
         file.
-        @see [ADD-REFERENCE-TO-CONFIG-PARAMETERS-IN-MATHJAX-TEST-DOC]
+        @see ../html/components.html\#test-runner-config
 
         @property mPopen
         The result of the subprocess.Popen or None if the task was never
@@ -633,7 +648,8 @@ class task:
         The path is the concatenation of "config/", the name of the task
         and the extension ".cfg".
         """
-        return "config/" + self.mName + ".cfg"
+        global TASK_LIST_DIRECTORY
+        return TASK_LIST_DIRECTORY + self.mName + ".cfg"
 
     def generateConfigFile(self):
         """
@@ -648,7 +664,6 @@ class task:
         fp = file(self.getConfigPath(), "w")
 
         fp.write("[framework]\n")        
-        fp.write("taskName = " + self.mName + "\n")
         fp.write("host = " + p["host"] + "\n")
         fp.write("port = " + str(p["port"]) + "\n")
         fp.write("mathJaxPath = " + p["mathJaxPath"] + "\n")
@@ -675,6 +690,13 @@ class task:
         fp.write("startID = " + p["startID"] + "\n")
 
         fp.close()
+
+    def removeConfigFile(self):
+        """
+        @fn removeConfigFile(self)
+        @brief remove the configuration file for this task
+        """
+        os.remove(self.getConfigPath())
 
     def execute(self):
         """
@@ -737,4 +759,6 @@ class taskHandler:
 gServer = taskHandler(TASK_HANDLER_HOST, TASK_HANDLER_PORT)
  
 if __name__ == "__main__":
+    if not os.path.exists(TASK_LIST_DIRECTORY):
+        os.makedirs(TASK_LIST_DIRECTORY)
     gServer.start()

@@ -23,8 +23,9 @@
       <h1>Task Creator</h1>
       
       <form action="taskEditor.php" method="post">
+
         <fieldset>
-          <legend>Framework:</legend>
+          <legend>Task</legend>
           <p>
             <label>task name:
               <input name="taskName" type="text" required="required"
@@ -33,6 +34,16 @@
                      maxlength="20"/> (alphanumeric)
             </label>
           </p>
+          <p>
+            Store results in directory:
+            <input name="outputDirectory" type="text"
+                   pattern="([a-z]|[A-Z]|[0-9])*" maxlength="20"
+                   value=""/> (optional)
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Framework:</legend>
           <p>
             <label>host:
               <input name="host" type="text" required="required"
@@ -166,13 +177,6 @@
             </label>
           </p>
         </fieldset>
-
-        <p>
-          Store results in directory (optional):
-          <input name="outputDirectory" type="text"
-                 pattern="([a-z]|[A-Z]|[0-9])*" maxlength="20"
-                 value=""/>
-        </p>
 
         <p style="visibility: hidden; height: 0;">
             <input name="command" type="text"

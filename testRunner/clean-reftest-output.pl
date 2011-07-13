@@ -39,9 +39,8 @@
 # ***** END LICENSE BLOCK *****
 
 ## @file clean-reftest-output.pl
-#  @brief TODO
+#  @brief A Perl script to format a reftest output into a HTML page.
 #
-
 # This script is intended to be run over the standard output of a
 # reftest run.  It will extract the parts of the output run relevant to
 # reftest and convert it to an HTML page.
@@ -49,14 +48,22 @@
 use strict;
 use URI::Escape;
 
-# root of the test framework
+## @var String root
+#  @brief Root of the test framework
+#
 my $root = "/MathJax-test/";
 
-# counter of tests
+## @var Integer N_TESTS
+#  @brief Counter of tests
+#
 my $N_TESTS = 0;
 
-# information for failure types
-# [string in input file, class name, background color, counter of tests]
+## @var Array testTypes
+#  @brief Information for failure types
+#
+#  This array contains tables of failure types, which use this format:
+#
+#  [string in input file, class name, background color, counter of tests]
 my @testTypes = (
  ["PASS", "pass", "lightgreen", 0],
  ["UNEXPECTED-FAIL", "unexpected_fail", "red", 0],
@@ -108,8 +115,14 @@ print <<EOM
 EOM
 ;
 
+## @var Integer state
+#  @brief an integer indicating the state of the parser
 my $state = 0;
+## @var String unparsedContent
+#  @brief the text output of the test currently read
 my $unparsedContent;
+## @var String parsedContent
+#  @brief the formatted HTML output for the test currently read
 my $parsedContent;
 
 while (<>) {
@@ -257,6 +270,12 @@ EOM
 ;
 
 sub drawSector {
+## @fn void drawSector (scalar start, scalar end, scalar color)
+#  @brief Generate an SVG &lt;path&gt; element representing a sector
+#  @param start   @ref N_TESTS * start angle in radian
+#  @param end     @ref N_TESTS * end angle in radian
+#  @param color   color to fill the sector with, in HTML format
+#
   my($start, $end, $color) = @_;
   my $c = 2 * 3.1415926535 / $N_TESTS;
   my $x1 = 100 * (1 + cos($c * $start));
@@ -271,7 +290,10 @@ EOM
 }
 
 sub drawLegend {
-  my $i = @_[0];
+## @fn void drawLegend (scalar i)
+#  @brief Generate a SVG representation of a legend for the i-th failure type.
+# 
+  my($i) = @_;
   my $y = 20 + $i*30;
 print <<EOM
   <rect fill="$testTypes[$i][2]" stroke="black" x="240" y="$y"
@@ -287,7 +309,11 @@ EOM
 # Javascript
 
 
-# Errors are UNEXPECTED-FAIL and UNEXPECTED-PASS
+## @var Integer Nerrors
+#  @brief Number of errors found
+#  
+#  This counts the UNEXPECTED-FAIL and UNEXPECTED-PASS results.
+#
 my $Nerrors = $testTypes[1][3] + $testTypes[2][3];
 
 print <<EOM

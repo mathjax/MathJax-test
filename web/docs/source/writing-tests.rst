@@ -392,3 +392,91 @@ synchronisation tests:
    function finalizeScriptReftests() // finalizer for script tests
    function finalizeReftests()       // default finalizer
 
+
+.. _reftest-manifest:
+
+The Reftest Manifest
+======================================
+
+A reftest manifest is a file describing the tests in a directory. A basic
+can be found in the :ref:`test-suite` section. This section gives the syntax for
+reftest manifest, in a more formal way.
+
+The test manifest format is a plain text file.  A line starting with a
+"#" is a comment.  Lines may be commented using whitespace followed by
+a "#" and the comment.  Each non-blank line (after removal of comments)
+must be one of the following:
+
+1. Inclusion of another manifest
+
+    <failure-type>* include <relative_path>
+ 
+    <failure-type> is the same as listed below for a test item.  As for 
+    test items, multiple failure types listed on the same line are 
+    combined by using the last matching failure type listed.  However, 
+    the failure type on a manifest is combined with the failure type on 
+    the test (or on a nested manifest) with the rule that the last in the
+    following list wins:  fails, random, skip.  (In other words, skip 
+    always wins, and random beats fails.)
+
+2. A test item
+
+   <failure-type>* <type> <url> <url_ref>
+
+   where
+
+   a. <failure-type> (optional) is one of the following:
+
+      fails  The test passes if the test result DOES NOT
+             meet the conditions specified in the <type>.
+
+      fails-if(condition) If the condition is met, the test passes if the 
+                          test result DOES NOT meet the 
+                          conditions of <type>. If the condition is not met,
+                          the test passes if the conditions of <type> are met.
+
+      random  The results of the test are random and therefore not to be
+              considered in the output.
+
+      random-if(condition) The results of the test are random if a given
+                           condition is met.
+
+      skip  This test should not be run. This is useful when a test fails in a
+            catastrophic way, such as crashing or hanging the browser. Using
+            'skip' is preferred to simply commenting out the test because we
+            want to report the test failure at the end of the test run.
+
+      skip-if(condition) If the condition is met, the test is not run. This is
+                         useful if, for example, the test crashes only on a
+                         particular platform (i.e. it allows us to get test
+                         coverage on the other platforms).
+
+      slow  The test may take a long time to run, so run it if slow tests are
+            either enabled or not disabled.
+
+      slow-if(condition) If the condition is met, the test is treated as if
+                         'slow' had been specified. 
+
+      require(condition) The test is run only if the condition is met. This is
+      useful for tests written for a particular configuration and irrelevant
+      otherwise. Contrary to skip, the test is not considered as a failure and
+      is even not taken into account for the statistical outputs.
+
+      Conditions are boolean expressions with literals given by the
+      configuration options ``operatingSystem, browser, browserVersion,
+      browserMode, font, nativeMathML``. For example ``(STIX&&Windows||!Linux)``
+
+   b. <type> is one of the following:
+
+      - ==     (== reftest)
+      - !=     (!= reftest)
+      - ==tree (==tree reftest)
+      - !=tree (!=tree reftest)
+      - load   (load test)
+      - script (script test)
+
+   c. <url> is either a relative file path or an absolute URL for the
+      test page
+
+   d. <url_ref> is either a relative file path or an absolute URL for
+      the reference page

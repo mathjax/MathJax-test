@@ -151,10 +151,11 @@ Test Results
 ============
 
 The **test results** are text or HTML files, possibly compressed with the gzip
-tool. They are located in the `results/ </MathJax-test/results/>`_ directory.
-The name of the output files is determined according to the configuration
-options of the Test Launcher. For example ``Linux_Chrome_StandardMode_STIX``
-means a testing instance run on Chrome for Linux, using the STIX fonts.
+tool. They are located in a `results/ </MathJax-test/web/results/>`_
+directory. The name of the output files is determined according to the
+configuration options of the Test Launcher. For example
+``Linux_Chrome_StandardMode_STIX`` means a testing instance run on Chrome for
+Linux, using the STIX fonts.
 
 A testing instance output contains various information, such as the start/end
 time, the time spent and the configuration options. The remainder is a status
@@ -182,5 +183,5 @@ Each test result in the formatted output is marked with a specific color
 according to which category it belongs. A link to the test page is provided.
 For failing tree/visual reftests, a link to the content (source or screenshot)
 is also given as well as a link to a diff. Visual reftest's diff are analysed
-using `Mozilla's reftest analyser <MathJax-test/reftest-analyzer.xhtml>`_.
+using `Mozilla's reftest analyser </MathJax-test/web/reftest-analyzer.xhtml>`_.
 Detailed results are also provided for script reftest.

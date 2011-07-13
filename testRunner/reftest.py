@@ -430,7 +430,7 @@ fails/random")
         
         @details If @ref mTaskHandler is None, this function does nothing.
         Otherwise, it connects to the task handler using the specified host and
-        port and send the request "TASK taskName aStatus Progress", where
+        port and send the request "TASK UPDATE pid aStatus Progress", where
         Progress is either the specified aProgress or the string
         @ref mTestsExecuted / @ref mNumberOfTests if aProgress is None.
         """
@@ -443,7 +443,7 @@ fails/random")
                str(self.mTestsExecuted) + "/" + str(self.mNumberOfTests)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((self.mTaskHandler[0], self.mTaskHandler[1]))
-        sock.send("TASK " +
+        sock.send("TASK UPDATE " +
                   self.mTaskHandler[2] + " " +
                   aStatus + " " +
                   aProgress + "\n")

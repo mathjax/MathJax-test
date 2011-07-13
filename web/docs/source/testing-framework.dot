@@ -1,0 +1,65 @@
+graph "MathJax Testing Framework" {
+  rankdir=LR;
+  size="10,10"
+
+  subgraph "clusterTaskController" {
+    label = "Task Controller"
+
+    TaskHander    [shape="box" label="Task Handler"]
+    TaskScheduler [shape="box" label="Task Scheduler"]
+    TestRunner1   [shape="box" label="Test Runner"]
+    TestRunner2   [shape="box" label="Test Runner"]         
+    TestRunner3   [shape="box" label="Test Runner"]
+
+    TaskScheduler -- TaskHander
+    TaskHander -- TestRunner1
+    TaskHander -- TestRunner2
+    TaskHander -- TestRunner3
+    QAUI [shape="ellipse" label="QA UI"]
+  }
+
+  subgraph "clusterWebServer" {
+    label = "Web Server"
+
+    TestPages [shape="ellipse" label="Test pages"]         
+    MathJaxScripts [shape="ellipse" label="MathJax Scripts"]
+    MathJaxTestHeaders [shape="ellipse" label="MathJax-test Headers"]
+  }
+
+  subgraph "clusterTestMachine1" {
+    label = "Test Machine 1"
+
+    SeleniumServer1 [shape="ellipse" label="Selenium Server"]
+    Browser1 [shape="box" label="Browser"]
+    SeleniumServer1 -- Browser1
+  }
+
+  subgraph "clusterTestMachine2" {
+    label = "Test Machine 2"
+
+    SeleniumServer2 [shape="ellipse" label="Selenium Server"]
+    Browser2 [shape="box" label="Browser"]
+    SeleniumServer2 -- Browser2
+  }
+
+  subgraph "clusterTestMachine3" {
+    label = "Test Machine 3"
+
+    SeleniumServer3 [shape="ellipse" label="Selenium Server"]
+    Browser3 [shape="box" label="Browser"]
+    SeleniumServer3 -- Browser3
+  }
+
+  TestRunner1 -- SeleniumServer1
+  TestRunner2 -- SeleniumServer2
+  TestRunner3 -- SeleniumServer3
+
+  QAUI -- TaskHander
+
+  Browser1 -- TestPages
+  Browser2 -- TestPages
+  Browser3 -- TestPages
+
+  TestPages -- MathJaxScripts
+  TestPages -- MathJaxTestHeaders
+}

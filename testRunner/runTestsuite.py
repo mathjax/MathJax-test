@@ -392,7 +392,6 @@ def main(aArgs, aTransmitToTaskHandler):
         fullScreenMode = config.getboolean(section, "fullScreenMode")
         formatOutput = config.getboolean(section, "formatOutput")
         compressOutput = config.getboolean(section, "compressOutput")
-        taskName = config.get(section, "taskName").split()
 
         # platform section
         section = "platform"
@@ -464,7 +463,7 @@ def main(aArgs, aTransmitToTaskHandler):
                             if aTransmitToTaskHandler:
                                 taskHandler = [TASK_HANDLER_HOST,
                                                TASK_HANDLER_PORT,
-                                               taskName[i]]
+                                               str(os.getpid())]
                             else:
                                 taskHandler = None
                             # Create the test suite
@@ -499,11 +498,11 @@ def announceDeath(aDeath, aExceptionMessage = None):
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((TASK_HANDLER_HOST, TASK_HANDLER_PORT))
-        s = "TASKDEATH " + aDeath + " " + str(os.getpid()) + "\n"
+        s = "TASK " + aDeath + "_DEATH " + str(os.getpid()) + "\n"
 
         if aExceptionMessage != None:
             s += aExceptionMessage
-            s += "\nTASKDEATH END\n"
+            s += "\nTASK DEATH END\n"
 
         sock.send(s)
     except socket.error:

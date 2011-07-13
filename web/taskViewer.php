@@ -25,7 +25,16 @@
 
 /**
  *  @file taskViewer.php
- *  @brief TODO
+ *  @brief Gives a preview of all the tasks in the task lists.
+ *
+ *  This PHP script tries to connect to a task handler on host "localhost" and
+ *  port = 4445. It displays an error message if it fails. Otherwise, it gets
+ *  the answer of the server:
+ *  - If it is "TASK LIST EMPTY" it displays a message providing that information.
+ *  - If it is "TASK LIST NONEMPTY", it displays a HTML table. It reads the
+ *    socket line by line until the end and convert each line into a row giving
+ *    information on a task. The table contains also various useful links to
+ *    task information, test outputs and command of @ref taskEditor.php.
  */
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -107,12 +116,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                 echo $taskName.'</a></td>';
                 echo '<td>'.$host.'</td>';
                 echo '<td>';
-		if ($status == "Killed") {
+                if ($status == "Killed") {
                   echo '<a href="taskInfo.php?taskName='.$taskName;
                   echo '#exceptionError">'.$status.'</a>';
-		} else {
+		            } else {
                   echo $status;
-		}
+		            }
   
               if ($status == "Running") {
                   commandButton($taskName, "STOP");
