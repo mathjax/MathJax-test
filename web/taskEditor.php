@@ -148,12 +148,12 @@
               $_POST['outputDirectory'] != "") {
             $outputDirectory = truncateString($_POST['outputDirectory'], 20);
           } else {
-            $outputDirectory = $taskName;
+            $outputDirectory = "None";
           }
    
           $file = fsockopen("localhost", 4445);
           if ($file) {
-             fwrite($file, "TASKEDITOR ADD ".$taskName." ".$outputDirectory."\n".
+             fwrite($file, "TASKEDITOR ADD ".$taskName." None ".$outputDirectory."\n".
                            "host=".$host."\n".
                            "port=".$port."\n".
                            "mathJaxPath=".$mathJaxPath."\n".

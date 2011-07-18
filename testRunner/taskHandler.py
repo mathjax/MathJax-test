@@ -47,12 +47,13 @@ TASK_HANDLER_HOST = "localhost"
 TASK_HANDLER_PORT = 4445
 TASK_LIST_DIRECTORY = "config/taskList/"
 
+from datetime import datetime, timedelta
+from signal import SIGINT
+import ConfigParser
+import SocketServer
 import os
 import socket
-import SocketServer
 import subprocess
-from signal import SIGINT
-from datetime import datetime, timedelta
 
 def boolToString(aBoolean):
     """
@@ -134,20 +135,32 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         return s
 
-    def readParameter(self, aTask):
+    def readParametersFromConfigFile(self, aTask, aConfigFile):
         """
-        @fn readParameter(self, aTask)
-        @brief read one parameter from the socket and store it in the task
-        @param aTask task to which we want to add a parameter
-        @return Whether we should continue to read more parameters.
-        @see ../html/components.html\#test-runner-config
+        @fn readParametersFromConfigFile(aTask, aConfigFile)
+        @brief read parameters from a configuration file
+        @param aTask task to which we want to add parameters
+        @param aConfigFile configuration file to use
+        """
+        configParser = ConfigParser.ConfigParser()
+        configParser.optionxform = str # to preserve the case of parameter name
+        configParser.readfp(open(aConfigFile))
 
-        This function reads one line from the socket. If this line is
+        for section in ["framework", "platform", "testsuite"]:
+            for item in configParser.items(section):
+                aTask.setParameter(item[0], item[1])
+
+    def readParametersFromSocket(self, aTask):
+        """
+        @fn readParametersFromSocket(self, aTask)
+        @brief read parameters from the socket and store it in the task
+        @param aTask task to which we want to add parameters
+
+        This function reads lines from the socket until it reaches
 
         "TASKEDITOR ADD END"
 
-        then the function return False to indicate that no more parameters
-        should be read. Otherwise, the function expects to read a line
+        The function expects to read lines
 
         "parameterName = parameterValue"
 
@@ -156,57 +169,26 @@ class requestHandler(SocketServer.StreamRequestHandler):
         added to the task::mParameters table of aTask. Otherwise it is ignored.
         In any case, the function return True.
         """
-        request = self.rfile.readline().strip()
 
-        print request
+        while(True):
+            request = self.rfile.readline().strip()
+            print request
 
-        if (request == "TASKEDITOR ADD END"):
-            return False
+            if (request == "TASKEDITOR ADD END"):
+                break
 
-        items = request.split("=")
-        parameterName = items[0].strip()
-        parameterValue = items[1].strip().split()
-        if (len(parameterValue) == 0):
-            parameterValue = ""
-        else:
-            if (len(parameterValue) > 1):
-                print "warning: the task handler does not accept multiple\
-option values"
-            parameterValue = parameterValue[0]
-    
-        if (parameterName == "fullScreenMode" or
-            parameterName == "formatOutput" or
-            parameterName == "compressOutput" or
-            parameterName == "nativeMathML" or
-            parameterName == "runSlowTests" or
-            parameterName == "runSkipTests"):
-            aTask.mParameters[parameterName] = (parameterValue == "true")
-        elif (parameterName == "port" or
-              parameterName == "timeOut"):
-            aTask.mParameters[parameterName] = int(parameterValue)
-        elif (parameterName == "host" or
-              parameterName == "mathJaxPath" or
-              parameterName == "mathJaxTestPath" or
-              parameterName == "mathJaxTestPath" or
-              parameterName == "operatingSystem" or
-              parameterName == "browser" or
-              parameterName == "browserMode" or
-              parameterName == "browserPath" or
-              parameterName == "font" or
-              parameterName == "listOfTests" or
-              parameterName == "startID"):
-            aTask.mParameters[parameterName] = parameterValue
-        else:
-            print "Unknown parameter " + parameterName
+            item = request.split("=")
+            aTask.setParameter(item[0], item[1])
 
-        return True
-
-    def addTask(self, aTaskName, aOutputDirectory):
+    def addTask(self, aTaskName, aConfigFile, aOutputDirectory):
         """
-        @fn addTask(self, aTaskName, aOutputDirectory)
-        @brief add a new item in the task list
+        @fn addTask(self, aTaskName, aConfigFile, aOutputDirectory)
+        @brief add a new item to the task list
         @param aTaskName name of the task
-        @param aOutputDirectory directory to store results of the task
+        @param aConfigFile configuration file to use. If it is None, the
+        config parameters will be read from the socket.
+        @param aOutputDirectory directory to store results of the task. If it
+        is None, the task name is used instead.
         @return a message indicating whether the task has been successfully
         added or not.
 
@@ -223,12 +205,19 @@ option values"
             return "'" + aTaskName + "' is already in the task list!" + "'\n"
 
         # create a new task
+        if aOutputDirectory == None:
+            aOutputDirectory = aTaskName
         t = task(aTaskName, "Pending",
                  datetime.utcnow().strftime("%Y-%m-%d/") +
                  aOutputDirectory + "/")
 
         # read the configuration parameters of the task
-        while (self.readParameter(t)): None
+        if aConfigFile == None:
+            self.readParametersFromSocket(t)
+        else:
+            if (not os.path.exists(aConfigFile)):
+                return "File '" + aConfigFile + "' not found."
+            self.readParametersFromConfigFile(t, aConfigFile)
 
         # add the task to the list
         gServer.mTasks[aTaskName] = t
@@ -361,7 +350,7 @@ option values"
         - If the request starts by "TASKEDITOR command taskName", then it
         performs one of the following command and returns the information
         message:
-            - "TASKEDITOR ADD taskName outputDirectory": @ref addTask
+            - "TASKEDITOR ADD taskName configFile outputDirectory": @ref addTask
             - "TASKEDITOR REMOVE taskName": @ref removeTask
             - "TASKEDITOR RUN taskName": @ref runTask with aRestart = False
             - "TASKEDITOR RESTART taskName": @ref runTask with aRestart = True
@@ -413,11 +402,17 @@ option values"
                 command = items[1]
                 taskName = items[2]
                 if command == "ADD":
-                    if (len(items) >= 4):
-                        outputDirectory = items[3]
+                    if items[3] == "None":
+                        configFile = None
                     else:
-                        outputDirectory = taskName
-                    self.wfile.write(self.addTask(taskName, outputDirectory))
+                        configFile = items[3]
+                    if items[4] == "None":
+                        outputDirectory = None
+                    else:
+                        outputDirectory = items[4]
+                    self.wfile.write(self.addTask(taskName,
+                                                  configFile,
+                                                  outputDirectory))
                 elif command == "REMOVE":
                     self.wfile.write(self.removeTask(taskName))
                 elif command == "RUN":
@@ -712,7 +707,50 @@ class task:
                                  '-c', self.getConfigPath(),
                                  '-o', self.mOutputDirectory,
                                  '-t'])
-   
+
+    def setParameter(self, aParameterName, aParameterValue):
+        """
+        @fn setParameter(self, aParameterName, aParameterValue)
+        @param aParameterName name of the parameter
+        @param aParameterValue value of the parameter
+        @see ../html/components.html\#test-runner-config
+        @note multiple option values and unknown parameters are rejected
+        """
+        parameterName = aParameterName.strip()
+        parameterValue = aParameterValue.strip().split()
+        if (len(parameterValue) == 0):
+            parameterValue = ""
+        else:
+            if (len(parameterValue) > 1):
+                print "warning: the task handler does not accept multiple\
+option values"
+            parameterValue = parameterValue[0]
+    
+        if (parameterName == "fullScreenMode" or
+            parameterName == "formatOutput" or
+            parameterName == "compressOutput" or
+            parameterName == "nativeMathML" or
+            parameterName == "runSlowTests" or
+            parameterName == "runSkipTests"):
+            self.mParameters[parameterName] = (parameterValue == "true")
+        elif (parameterName == "port" or
+              parameterName == "timeOut"):
+            self.mParameters[parameterName] = int(parameterValue)
+        elif (parameterName == "host" or
+              parameterName == "mathJaxPath" or
+              parameterName == "mathJaxTestPath" or
+              parameterName == "mathJaxTestPath" or
+              parameterName == "operatingSystem" or
+              parameterName == "browser" or
+              parameterName == "browserMode" or
+              parameterName == "browserPath" or
+              parameterName == "font" or
+              parameterName == "listOfTests" or
+              parameterName == "startID"):
+            self.mParameters[parameterName] = parameterValue
+        else:
+            print "Unknown parameter " + parameterName
+  
 class taskHandler:
     """
     @class taskHandler::taskHandler

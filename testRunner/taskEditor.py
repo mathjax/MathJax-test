@@ -42,8 +42,8 @@ TASK_HANDLER_PORT = 4445
 
 gRequest = ""
 
-import ConfigParser
 import SocketServer
+import os
 import socket
 import sys
 
@@ -52,25 +52,17 @@ def usage():
     @fn usage()
     @brief Display command line usage for this script
     """
-    print "Usage: python taskEditor.py command taskName [configFile\
-[outputDirectory]]"
-    print "where command is ADD, REMOVE, RUN, RESTART or STOP and taskName\
-corresponds to an element in the task list. The optional parameters should only\
-be specified with the ADD command and in that case configFile is mandatory."
+    print
+    print "Usage:"
+    print
+    print "python taskEditor.py command taskName"
+    print
+    print "where command is REMOVE, RUN, RESTART or STOP and taskName"
+    print "corresponds to an element in the task list, or"
+    print
+    print "python taskEditor.py ADD taskName configFile [outputDirectory]"
+    print
     exit(1)
-
-def sendConfigParameter(aParameter, aValue):
-    global gRequest
-    gRequest += (aParameter + "=" + aValue + "\n")
-
-def sendConfigParameters(aConfigFile):
-    configParser = ConfigParser.ConfigParser()
-    configParser.optionxform = str # to preserve the case of parameter name
-    configParser.readfp(open(aConfigFile))
-
-    for section in ["framework", "platform", "testsuite"]:
-        for item in configParser.items(section):
-            sendConfigParameter(item[0], item[1])
 
 if __name__ == "__main__":
 
@@ -85,25 +77,28 @@ if __name__ == "__main__":
         usage()
 
     if ((command != "ADD" and l != 3) or
-        (command == "ADD" and (l <= 3 or l >= 6))):
+        (command == "ADD" and l != 4 and l != 5)):
         usage()
 
     taskName = sys.argv[2]
 
     if (command == "ADD"):
         configFile = sys.argv[3]
+        if (not os.path.exists(configFile)):
+            print "File '" + configFile + "' not found."
+            exit(1)
+        if l == 5:
+            outputDirectory = sys.argv[4]
+        else:
+            outputDirectory = "None"
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((TASK_HANDLER_HOST, TASK_HANDLER_PORT))
     
     gRequest = "TASKEDITOR " + command + " " + taskName
-    if (command == "ADD" and l == 5):
-        gRequest += " " + sys.argv[4]
-    gRequest += "\n"
-
     if (command == "ADD"):
-        sendConfigParameters(configFile)
-        gRequest += "TASKEDITOR ADD END\n"
+        gRequest += " " + configFile + " " + outputDirectory
+    gRequest += "\n"
 
     print gRequest
     sock.send(gRequest)
@@ -111,7 +106,9 @@ if __name__ == "__main__":
     response = sock.recv(128).strip()
     print response
     
-    if ((command == "REMOVE" and
+    if ((command == "ADD" and
+         response == ("'" + taskName + "' added to the task list.")) or
+        (command == "REMOVE" and
          response == ("'" + taskName + "' removed from the task list.")) or
         ((command == "RUN" or command == "RESTART") and
          response == ("Run signal sent to '" + taskName + "'.")) or
