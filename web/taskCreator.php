@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?php
+  echo '<?xml version="1.0" encoding="UTF-8"?>';
+?>
+
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <!DOCTYPE html>
@@ -8,9 +11,25 @@
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <link rel="stylesheet" type="text/css" href="default.css"/>
+    <script type="text/javascript">
+      function updateScheduleFieldVisibility()
+      {
+        el = document.getElementById("crontabParameters");
+        if (document.getElementById("scheduled").checked) {
+          el.style.visibility = "visible";
+        } else {
+          el.style.visibility = "hidden";
+        }
+      }
+
+      function init()
+      {
+        updateScheduleFieldVisibility();
+      }
+    </script>
   </head>
 
-  <body>
+  <body onload="init()">
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -31,14 +50,77 @@
               <input name="taskName" type="text" required="required"
                      pattern="([a-z]|[A-Z]|[0-9]){1,10}"
                      value="task1"
-                     maxlength="20"/> (alphanumeric)
-            </label>
+                     maxlength="20"/></label> (alphanumeric)
           </p>
           <p>
-            Store results in directory:
+            <label>outputDirectory:
             <input name="outputDirectory" type="text"
                    pattern="([a-z]|[A-Z]|[0-9])*" maxlength="20"
-                   value=""/> (optional)
+                   value=""/>
+            </label> (optional)
+          </p>
+          <p>
+            <label>schedule task:
+              <input id="scheduled" name="taskSchedule" type="checkbox"
+                     onchange="updateScheduleFieldVisibility()"/>
+            </label>
+            <span id="crontabParameters" style="visibility: hidden;">
+            <span>day: 
+            <select name="crontabDow">
+              <option>*</option>
+              <option>Monday</option>
+              <option>Tuesday</option>
+              <option>Wednesday</option>
+              <option>Thursday</option>
+              <option>Friday</option>
+              <option>Saturday</option>
+              <option>Sunday</option>
+            </select>
+            <select name="crontabDom">
+              <option>*</option>
+              <?php
+                for ($i = 1; $i <= 31; $i++) {
+                  echo '<option>'.$i.'</option>';
+                }
+              ?>
+            </select>
+            <select name="crontabMon">
+              <option>*</option>
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+            </select>
+            </span>
+            <span>time:
+              <select name="crontabH">
+                <option>*</option>
+                <?php
+                  for ($i = 0; $i < 24; $i++) {
+                    echo '<option>'.$i.'</option>';
+                  }
+                ?>
+              </select> :
+              <select name="crontabM">
+                <option>*</option>
+                <?php
+                  for ($i = 0; $i < 60; $i++) {
+                    echo '<option>'.$i.'</option>';
+                  }
+                ?>
+              </select>
+            </span>
+
+            (<a href="http://en.wikipedia.org/wiki/Cron">cron syntax</a>)
+            </span>
           </p>
         </fieldset>
 

@@ -60,7 +60,8 @@ def usage():
     print "where command is REMOVE, RUN, RESTART or STOP and taskName"
     print "corresponds to an element in the task list, or"
     print
-    print "python taskEditor.py ADD taskName configFile [outputDirectory]"
+    print "python taskEditor.py ADD taskName configFile [outputDirectory\
+ [taskSchedule]]"
     print
     exit(1)
 
@@ -77,7 +78,7 @@ if __name__ == "__main__":
         usage()
 
     if ((command != "ADD" and l != 3) or
-        (command == "ADD" and l != 4 and l != 5)):
+        (command == "ADD" and l < 4 and l > 6)):
         usage()
 
     taskName = sys.argv[2]
@@ -87,10 +88,14 @@ if __name__ == "__main__":
         if (not os.path.exists(configFile)):
             print "File '" + configFile + "' not found."
             exit(1)
-        if l == 5:
+        if l >= 5:
             outputDirectory = sys.argv[4]
         else:
             outputDirectory = "None"
+        if l >= 6:
+            taskSchedule = sys.argv[5]
+        else:
+            taskSchedule = "None"
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((TASK_HANDLER_HOST, TASK_HANDLER_PORT))
@@ -98,6 +103,7 @@ if __name__ == "__main__":
     gRequest = "TASKEDITOR " + command + " " + taskName
     if (command == "ADD"):
         gRequest += " " + configFile + " " + outputDirectory
+        gRequest += " " + taskSchedule
     gRequest += "\n"
 
     print gRequest

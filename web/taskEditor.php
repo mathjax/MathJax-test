@@ -74,6 +74,16 @@
           return $aPostValue;
         }
 
+        function selectToCronItem($aPostValue, $aSelectValues)
+        {
+          for ($i = 0; $i < count($aSelectValues); $i++) {
+             if ($aSelectValues[$i] == $aPostValue) {
+               return strval(1 + $i);
+             }
+          }
+          return "*";
+        }
+
         function truncateString($aString, $aMaxLength)
         {
           return substr($aString, 0, $aMaxLength);
@@ -92,8 +102,7 @@
           $port = 4444; // $_POST['host']
           $mathJaxPath = 'http://localhost/MathJax/';
           $mathJaxTestPath = 'http://localhost/MathJax-test/';
-  
-  
+    
           $timeOut = intval($_POST['timeOut']);
           if ($timeOut < 0) {
             $timeOut = 0;
@@ -151,9 +160,40 @@
             $outputDirectory = "None";
           }
    
+          if (isset($_POST['taskSchedule'])) {
+            $taskSchedule = "";
+            $taskSchedule .= truncateString($_POST['crontabM'], 2).",";
+            $taskSchedule .= truncateString($_POST['crontabH'], 2).",";
+            $taskSchedule .= truncateString($_POST['crontabDom'], 2).",";
+            $taskSchedule .= selectToCronItem($_POST['crontabMon'],
+                                             array('January',
+                                                   'February',
+                                                   'March',
+                                                   'April',
+                                                   'May',
+                                                   'June',
+                                                   'July',
+                                                   'August',
+                                                   'September',
+                                                   'October',
+                                                   'November',
+                                                   'December')).",";
+            $taskSchedule .= selectToCronItem($_POST['crontabDow'],
+                                             array('Monday',
+                                                   'Tuesday',
+                                                   'Wednesday',
+                                                   'Thursday',
+                                                   'Friday',
+                                                   'Saturday',
+                                                   'Sunday'));
+          } else {
+            $taskSchedule = "None";
+          }
+
           $file = fsockopen("localhost", 4445);
           if ($file) {
-             fwrite($file, "TASKEDITOR ADD ".$taskName." None ".$outputDirectory."\n".
+             fwrite($file, "TASKEDITOR ADD ".$taskName." None ".
+                           $outputDirectory." ".$taskSchedule."\n".
                            "host=".$host."\n".
                            "port=".$port."\n".
                            "mathJaxPath=".$mathJaxPath."\n".

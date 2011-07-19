@@ -37,11 +37,15 @@ Host address of the task handler
 
 @var TASK_HANDLER_PORT
 Port of the task handler
+
+@var MAX_FILES_WITH_SAME_NAME
+The maximum number of files sharing the same name in the result directory.
 """
 
 MATHJAX_TEST_ROOT = "../"
 TASK_HANDLER_HOST = "localhost"
 TASK_HANDLER_PORT = 4445
+MAX_FILES_WITH_SAME_NAME = 100
 
 from datetime import datetime, timedelta
 import ConfigParser
@@ -122,25 +126,48 @@ def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
     
     return startCommand
 
-def getOutputFileName(aDirectory, aSelenium):
-
+def resultsExist(aName):
     """
-    @fn getOutputFileName(aDirectory, aSelenium)
+    @fn resultsExist(aName)
+    @brief verify whether there are results with the given name
+
+    @return whether one file with the specified name and extension ".txt",
+            ".html", ".txt.gz" or ".html.gz" exists.
+    """
+    return (os.path.exists(aName + ".txt") or
+            os.path.exists(aName + ".html") or
+            os.path.exists(aName + ".txt.gz") or
+            os.path.exists(aName + ".html.gz"))
+
+def getOutputFileName(aDirectory, aSelenium, aDoNotOverwrite):
+    """
+    @fn getOutputFileName(aDirectory, aSelenium, aDoNotOverwrite)
     @brief build a file name for the output
 
     @param aDirectory directory where the test output will be stored
     @param aSelenium @ref seleniumMathJax::seleniumMathJax object
+    @param aDoNotOverwrite whether the name should be changed to prevent
+           overwriting the result files.
 
     @return Concatenation of aDirectory, the operating system, the browser,
-    the browser mode and the font, separated by underscores.
+    the browser mode and the font, separated by underscores. Sometimes followed
+    by a "-number" to prevent overwriting files.
     """
 
-    return \
-        aDirectory + \
+    name = aDirectory + \
         aSelenium.mOperatingSystem + "_" + \
         aSelenium.mBrowser + "_" + \
         aSelenium.mBrowserMode + "_" + \
         aSelenium.mFont
+
+    if aDoNotOverwrite and resultsExist(name):
+        i = 1
+        while (resultsExist(name + "-" + str(i)) and
+               i < MAX_FILES_WITH_SAME_NAME):
+            i = i + 1
+        name += "-" + str(i)
+
+    return name
 
 def boolToString(aBoolean):
     """
@@ -211,14 +238,18 @@ def removeTemporaryData(aSelenium):
     aSelenium.clearBrowserData()
     aSelenium.stop()
 
-def runTestingInstance(aDirectory, aSelenium, aSuite):
+def runTestingInstance(aDirectory, aSelenium, aSuite,
+                       aFormatOutput, aCompressOutput):
     """
-    @fn runTestingInstance(aDirectory, aSelenium, aSuite)
+    @fn runTestingInstance(aDirectory, aSelenium, aSuite,
+                           aFormatOutput, aCompressOutput)
     @brief Execute a testing instance
     
     @param aDirectory  directory where the test output will be stored
     @param aSelenium @ref seleniumMathJax::seleniumMathJax object
     @param aSuite    @ref reftest::reftestSuite object
+    @param aFormatOutput whether output should be formatted
+    @param aCompressOutput whether output should be compressed
 
     @note This function may send the status "Running", "Complete" and
     "Interrupted" to the task handler.
@@ -233,8 +264,10 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
         
     aSuite.addReftests(aSelenium, MATHJAX_TEST_ROOT, "reftest.list", index)
 
-    # Create the output file
-    output = getOutputFileName(aDirectory, aSelenium)
+    # Create the output file. Do not overwrite the file name if we are not
+    # recovering a previous testing instance
+    output = getOutputFileName(aDirectory, aSelenium,
+                               aSuite.mRunningTestID == "")
     outputTxt = output + ".txt"
     outputHTML= output + ".html"
 
@@ -302,7 +335,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
     fp.close()
 
     if not interrupted:
-        if formatOutput:
+        if aFormatOutput:
             # Execute the Perl script to format the output
             print "Formatting the text ouput...",
             pipe = subprocess.Popen(["perl", "clean-reftest-output.pl",
@@ -313,11 +346,11 @@ def runTestingInstance(aDirectory, aSelenium, aSuite):
             fp.close()
             print "done"
 
-        if compressOutput:
+        if aCompressOutput:
             # gzip the outputs
             print "Compressing the output files...",
             gzipFile(outputTxt)
-            if formatOutput:
+            if aFormatOutput:
                 gzipFile(outputHTML)
             print "done"
 
@@ -472,7 +505,8 @@ def main(aArgs, aTransmitToTaskHandler):
                                                          runSkipTests,
                                                          listOfTests,
                                                          startID)
-                            runTestingInstance(directory, selenium, suite)
+                            runTestingInstance(directory, selenium, suite,
+                                               formatOutput, compressOutput)
 
                     # end if browserStartCommand
 

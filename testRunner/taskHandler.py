@@ -47,10 +47,12 @@ TASK_HANDLER_HOST = "localhost"
 TASK_HANDLER_PORT = 4445
 TASK_LIST_DIRECTORY = "config/taskList/"
 
+from crontab import CronTab
 from datetime import datetime, timedelta
 from signal import SIGINT
 import ConfigParser
 import SocketServer
+import collections
 import os
 import socket
 import subprocess
@@ -66,54 +68,21 @@ def boolToString(aBoolean):
         return "true"
     return "false"
 
+def getDirectoryFromDate():
+    """
+    @fn getDirectoryFromDate()
+    @brief generate a directory name from the current date of the day
+
+    @return "YEAR-MONTH-DATE/"
+    """
+    return datetime.utcnow().strftime("%Y-%m-%d/")
+
 class requestHandler(SocketServer.StreamRequestHandler):
     """
     @class taskHandler::requestHandler
     @brief A class inheriting from SocketServer.StreamRequestHandler and dealing
     with the requests received by the task handler.
     """
-
-    def getTaskList(self):
-        """
-        @fn getTaskList(self)
-        @brief return a string representing a task list
-
-        If the task list is empty, one line
-
-        "TASK LIST EMPTY"
-
-        is returned. Otherwise, the returned string starts with the line
-
-        "TASK LIST NONEMPTY"
-
-        and continue with one line per task, each one of the form
-
-        "Task Name	Host Status Progress outputDirectory"
-        """
-        if (len(gServer.mTasks) == 0):
-            return "TASK LIST EMPTY\n"
-
-        taskList = "TASK LIST NONEMPTY\n"
-        for k in gServer.mTasks.keys():
-            taskList += k + " " + gServer.mTasks[k].serialize() + "\n"
-        return taskList
-
-    def getTaskInfo(self, aTaskName):
-        """
-        @fn getTaskInfo(self, aTaskName)
-        @brief Get an HTML representation of properties of a given task.
-        @param aTaskName Name of the task from which to retrieve information.
-        
-        If the task is not in the list, this function returns a message
-        indicating so. Otherwise, it calls the task::serializeHTML function.
-        """
-
-        global gServer
-
-        if aTaskName not in gServer.mTasks.keys():
-            return "<p>No task '" + aTaskName + "' in the task list.</p>"
-
-        return gServer.mTasks[aTaskName].serializeHTML();
 
     def readExceptionMessage(self):
         """
@@ -135,66 +104,22 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         return s
 
-    def readParametersFromConfigFile(self, aTask, aConfigFile):
+    def addTask(self, aTaskName, aConfigFile, aOutputDirectory, aSchedule):
         """
-        @fn readParametersFromConfigFile(aTask, aConfigFile)
-        @brief read parameters from a configuration file
-        @param aTask task to which we want to add parameters
-        @param aConfigFile configuration file to use
-        """
-        configParser = ConfigParser.ConfigParser()
-        configParser.optionxform = str # to preserve the case of parameter name
-        configParser.readfp(open(aConfigFile))
-
-        for section in ["framework", "platform", "testsuite"]:
-            for item in configParser.items(section):
-                aTask.setParameter(item[0], item[1])
-
-    def readParametersFromSocket(self, aTask):
-        """
-        @fn readParametersFromSocket(self, aTask)
-        @brief read parameters from the socket and store it in the task
-        @param aTask task to which we want to add parameters
-
-        This function reads lines from the socket until it reaches
-
-        "TASKEDITOR ADD END"
-
-        The function expects to read lines
-
-        "parameterName = parameterValue"
-
-        where the pair (parameterName, parameterValue) is a testing instance
-        configuration option. If the option is known, then this parameter is
-        added to the task::mParameters table of aTask. Otherwise it is ignored.
-        In any case, the function return True.
-        """
-
-        while(True):
-            request = self.rfile.readline().strip()
-            print request
-
-            if (request == "TASKEDITOR ADD END"):
-                break
-
-            item = request.split("=")
-            aTask.setParameter(item[0], item[1])
-
-    def addTask(self, aTaskName, aConfigFile, aOutputDirectory):
-        """
-        @fn addTask(self, aTaskName, aConfigFile, aOutputDirectory)
+        @fn addTask(self, aTaskName, aConfigFile, aOutputDirectory, aSchedule)
         @brief add a new item to the task list
         @param aTaskName name of the task
         @param aConfigFile configuration file to use. If it is None, the
         config parameters will be read from the socket.
         @param aOutputDirectory directory to store results of the task. If it
         is None, the task name is used instead.
+        @param aSchedule @ref taskHandler::task::mSchedule of the task
         @return a message indicating whether the task has been successfully
         added or not.
 
         If the task with the same name is not already in the task list,
         this function creates a new task with the specified name, a status
-        "Pending". The output directory is of the form DATE/aOutputDirectory.
+        "Inactive". The output directory is of the form DATE/aOutputDirectory.
         Task configuration are read from the socket and stored in the
         task::mParameters table of the task.
         """
@@ -207,21 +132,30 @@ class requestHandler(SocketServer.StreamRequestHandler):
         # create a new task
         if aOutputDirectory == None:
             aOutputDirectory = aTaskName
-        t = task(aTaskName, "Pending",
-                 datetime.utcnow().strftime("%Y-%m-%d/") +
-                 aOutputDirectory + "/")
+
+        if aSchedule == None:
+            # if the task is not scheduled, store the results in a directory
+            # with the date of the day
+            aOutputDirectory = getDirectoryFromDate() + aOutputDirectory
+
+        t = task(aTaskName, "Inactive", aOutputDirectory + "/", aSchedule)
 
         # read the configuration parameters of the task
         if aConfigFile == None:
-            self.readParametersFromSocket(t)
+            t.readParametersFromSocket(self)
         else:
             if (not os.path.exists(aConfigFile)):
                 return "File '" + aConfigFile + "' not found."
-            self.readParametersFromConfigFile(t, aConfigFile)
+            t.readParametersFromConfigFile(aConfigFile)
 
         # add the task to the list
         gServer.mTasks[aTaskName] = t
         t.generateConfigFile()
+
+        if t.mSchedule != None:
+            # add the task to the scheduler
+            gServer.addScheduledTask(t)
+
         return "'" + aTaskName + "' added to the task list.\n"
 
     def removeTask(self, aTaskName):
@@ -241,11 +175,15 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         t = gServer.mTasks[aTaskName]
         if (not t.isRunning()):
+            if t.mSchedule != None:
+                # remove the task from the scheduler
+                gServer.removeScheduledTask(t)
+
             # remove the task from the list
             t.removeConfigFile()
             del gServer.mTasks[aTaskName]
             return "'" + aTaskName + "' removed from the task list.\n"
-        
+       
         return "'" + aTaskName + "' is running and can not be removed!\n"
 
     def runTask(self, aTaskName, aRestart = False):
@@ -278,20 +216,19 @@ class requestHandler(SocketServer.StreamRequestHandler):
         if (t.isRunning()):
             return "'" + aTaskName + "' is already running!\n"
 
-        h = t.host()
-        if (h in gServer.mRunningTaskFromHost.keys()):
-            return "'" + gServer.mRunningTaskFromHost[h].mName + \
-                "' is already running on this machine!\n"
+        if (t.isPending()):
+            return "'" + aTaskName + "' is already pending!\n"
 
         if (aRestart):
             t.mParameters["startID"] = ""
 
-        t.generateConfigFile()
-        t.mExceptionMessage = None
-        t.mPopen = t.execute()
-        gServer.mRunningTaskFromPID[str(t.mPopen.pid)] = t
-        gServer.mRunningTaskFromHost[h] = t
-        return "Run signal sent to '" + aTaskName + "'.\n"
+        h = t.host()
+        if (h in gServer.mRunningTaskFromHost.keys()):
+            gServer.addTaskToPendingQueue(t)
+            return "'" + aTaskName + "' added to the pending queue.\n"
+        else:
+            t.execute()
+            return "Run signal sent to '" + aTaskName + "'.\n"
 
     def stopTask(self, aTaskName):
         """
@@ -328,10 +265,10 @@ class requestHandler(SocketServer.StreamRequestHandler):
         response:
 
         - If the request is "TASKVIEWER", it sends the result of
-        @ref getTaskList
+        @ref taskHandler::getTaskList
 
         - If the request is "TASKINFO taskName", it send the result of
-        @ref getTaskInfo for the corresponding task.
+        @ref taskHandler::getTaskInfo for the corresponding task.
 
         - If the request is "TASK UPDATE pid status progress", where pid the PID
         of the process of a running task, it updates the members of the given
@@ -368,10 +305,10 @@ class requestHandler(SocketServer.StreamRequestHandler):
             items = request.split()
             client = items[0]
             if (client == "TASKVIEWER"):
-                self.wfile.write(self.getTaskList())
+                self.wfile.write(gServer.getTaskList())
             elif (client == "TASKINFO"):
                 taskName = items[1]
-                self.wfile.write(self.getTaskInfo(taskName))
+                self.wfile.write(gServer.getTaskInfo(taskName))
             elif (client == "TASK"):
                 command = items[1]
                 pid = items[2]
@@ -398,6 +335,8 @@ class requestHandler(SocketServer.StreamRequestHandler):
                         if (command == "UNEXPECTED_DEATH"):
                             t.mStatus = "Killed"
                             t.mExceptionMessage = self.readExceptionMessage()
+                        gServer.runNextTaskFromPendingQueue(h)
+                        
             elif (client == "TASKEDITOR"):
                 command = items[1]
                 taskName = items[2]
@@ -410,9 +349,14 @@ class requestHandler(SocketServer.StreamRequestHandler):
                         outputDirectory = None
                     else:
                         outputDirectory = items[4]
+                    if items[5] == "None":
+                        schedule = None
+                    else:
+                        schedule = items[5]
                     self.wfile.write(self.addTask(taskName,
                                                   configFile,
-                                                  outputDirectory))
+                                                  outputDirectory,
+                                                  schedule))
                 elif command == "REMOVE":
                     self.wfile.write(self.removeTask(taskName))
                 elif command == "RUN":
@@ -430,20 +374,22 @@ class task:
     @brief A class representing items in the task list.
     """
 
-    def __init__(self, aName, aStatus, aOutputDirectory):
+    def __init__(self, aName, aStatus, aOutputDirectory, aSchedule):
         """
-        @fn __init__(self, aName, aStatus, aOutputDirectory)
+        @fn __init__(self, aName, aStatus, aOutputDirectory, aSchedule)
 
         @param aName            Value to assign to @ref mName
         @param aStatus          Value to assign to @ref mStatus
         @param aOutputDirectory Value to assign to @ref mOutputDirectory
+        @param aSchedule        Value to assign to @ref mSchedule
 
         @property mName
         Name of the task
 
         @property mStatus
         Status of the task:
-          - Process not executed yet: "Pending", (TODO: "Scheduled"?)
+          - Process not executed yet: "Inactive", "Scheduled"
+          - Process waiting to execute: "Pending"
           - Process executing: "Running"
           - Process executed: "Complete", "Interrupted", "Killed"
 
@@ -467,6 +413,10 @@ class task:
         the task process before dying or "No exception raised" if the death was
         not reported. Otherwise, it is None.
 
+        @property mSchedule
+        If the task is scheduled, the string "m,h,dom,mon,dow" representing an
+        entry in the crontab. Otherwise, it is None.
+
         This function initializes @ref mName, @ref mStatus and
         @ref mOutputDirectory with the given arguments ; @ref mProgress to "-",
         @ref mPopen and @ref mExceptionMessage to None ; @ref mParameters to an
@@ -480,6 +430,7 @@ class task:
         self.mPopen = None
         self.mOutputDirectory = aOutputDirectory
         self.mExceptionMessage = None
+        self.mSchedule = aSchedule
 
     def host(self):
         """
@@ -493,6 +444,12 @@ class task:
             return socket.gethostbyname(h)
         else:
             return "Unknown"
+
+    def isPending(self):
+        """
+        @fn isPending(self)
+        """
+        return (self.mStatus == "Pending")
 
     def isRunning(self):
         """
@@ -517,10 +474,12 @@ class task:
         of running process. This may happen if the runTestsuite process died
         unexpectedly, without raising a BaseException.
 
-        If the process is running but the @ref mStatus says "Pending", set the
-        status to "Running". This may happen if the runTestsuite did not send
-        the "Running" status yet.
+        If the process is running but the @ref mStatus says "Inactive" or
+        "Pending", set the status to "Running". This may happen if the
+        runTestsuite did not send the "Running" status yet.
         """
+        global gServer
+
         running = self.isRunning()
 
         if ((not running) and self.mStatus == "Running"):
@@ -532,7 +491,10 @@ class task:
             pid = str(self.mPopen.pid)
             if pid in gServer.mRunningTaskFromPID.keys():
                 del gServer.mRunningTaskFromPID[pid]
-        elif (running and self.mStatus == "Pending"):
+            gServer.runNextTaskFromPendingQueue(h)
+        elif (running and
+              (self.mStatus == "Inactive" or
+               self.mStatus == "Pending")):
             self.mStatus = "Running"
 
     def serialize(self):
@@ -550,7 +512,11 @@ class task:
         s += self.mParameters["host"] + " "
         s += self.mStatus + " ";
         s += self.mProgress + " "
-        s += self.mOutputDirectory
+        s += self.mOutputDirectory + " "
+        if (self.mSchedule != None):
+            s += self.mSchedule
+        else:
+            s += "None"
 
         return s
 
@@ -570,6 +536,57 @@ class task:
         """
         return self.serializeMember(aKey, self.mParameters[aKey].__str__())
 
+    def serializeSchedule(self, aSchedule):
+        """
+        @fn serializeSchedule(self, aSchedule)
+        @brief serialize the date of scheduled task
+        """
+        items = aSchedule.split(",")
+        date = ""
+
+        if (items[4] == "*"):
+            date += "******"
+        else:
+            date += ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+                     "Saturday", "Sunday"][int(items[4]) - 1]
+
+        date += " "
+
+        if (items[2] == "*"):
+            date += "**"
+        else:
+            date += items[2]
+
+        date += " "
+
+        if (items[3] == "*"):
+            date += "******"
+        else:
+            date += ["January", "February", "March", "April", "May", "June",
+                     "August", "September", "October", "November", "December"
+                     ][int(items[3]) - 1]
+
+        date += " ; "
+
+        if (items[1] == "*"):
+            date += "**"
+        else:
+            if (len(items[1]) == 1):
+                # add a 0 if hours are < 10
+                date += "0"
+                date += items[1]
+        date += ":"
+
+        if (items[0] == "*"):
+            date += "**"
+        else:
+            if (len(items[0]) == 1):
+                # add a 0 if minutes are < 10
+                date += "0"
+                date += items[0]
+
+        return self.serializeMember("Scheduled", date)
+
     def serializeHTML(self):
         """
         @fn serializeHTML(self)
@@ -588,11 +605,14 @@ class task:
 
         s += "<tr><th>Result directory</th><td>"
 
-        if (self.mStatus == "Pending"):
-            s += self.mOutputDirectory
-        else:
+        if (os.path.exists(self.mOutputDirectory)):
             s += "<a href=\"results/" + self.mOutputDirectory + "\">"
             s += self.mOutputDirectory + "</a></td></tr>"
+        else:
+            s += self.mOutputDirectory
+
+        if (self.mSchedule != None):
+            s += self.serializeSchedule(self.mSchedule)
 
         if (self.mExceptionMessage != None):
             s += "<tr style=\"color: red;\">"
@@ -703,10 +723,15 @@ class task:
         where configName is the value returned by @ref getConfigPath and
         outputDirectory is @ref mOutputDirectory.
         """
-        return subprocess.Popen(['python', 'runTestsuite.py',
-                                 '-c', self.getConfigPath(),
-                                 '-o', self.mOutputDirectory,
-                                 '-t'])
+        global gServer
+        self.generateConfigFile()
+        self.mExceptionMessage = None
+        self.mPopen = subprocess.Popen(['python', 'runTestsuite.py',
+                                        '-c', self.getConfigPath(),
+                                        '-o', self.mOutputDirectory,
+                                        '-t'])
+        gServer.mRunningTaskFromPID[str(self.mPopen.pid)] = self
+        gServer.mRunningTaskFromHost[self.host()] = self
 
     def setParameter(self, aParameterName, aParameterValue):
         """
@@ -750,6 +775,61 @@ option values"
             self.mParameters[parameterName] = parameterValue
         else:
             print "Unknown parameter " + parameterName
+
+    def readParametersFromSocket(self, aRequestHandler):
+        """
+        @fn readParametersFromSocket(self, aRequestHandler)
+        @brief read parameters from the socket and store it in the task
+
+        This function reads lines from the socket until it reaches
+
+        "TASKEDITOR ADD END"
+
+        The function expects to read lines
+
+        "parameterName = parameterValue"
+
+        where the pair (parameterName, parameterValue) is a testing instance
+        configuration option. If the option is known, then this parameter is
+        added to the task::mParameters table of the task. Otherwise it is
+        ignored.
+        In any case, the function return True.
+        """
+
+        while(True):
+            request = aRequestHandler.rfile.readline().strip()
+            print request
+
+            if (request == "TASKEDITOR ADD END"):
+                break
+
+            item = request.split("=")
+            self.setParameter(item[0], item[1])
+
+    def readParametersFromConfigFile(self, aConfigFile):
+        """
+        @fn readParametersFromConfigFile(self, aConfigFile)
+        @brief read parameters from a configuration file
+        @param aConfigFile configuration file to use
+        """
+        configParser = ConfigParser.ConfigParser()
+        configParser.optionxform = str # to preserve the case of parameter name
+        configParser.readfp(open(aConfigFile))
+
+        for section in ["framework", "platform", "testsuite"]:
+            for item in configParser.items(section):
+                self.setParameter(item[0], item[1])
+
+    def getScheduledCommand(self):
+        """
+        @fn getScheduledCommand(self)
+        @return the shell command to RESTART the task
+        """
+        cmd = "python "
+        cmd += os.getcwdu() + "/taskEditor.py "
+        cmd += "RESTART "
+        cmd += self.mName
+        return cmd
   
 class taskHandler:
     """
@@ -778,25 +858,174 @@ class taskHandler:
 
         @property mRunningTaskFromPID
         A hash table of tasks which are currently running, indexed by the PIDs.
+
+        @property mPendingTasksFromHost
+        A hash table of task queues, indexed by the hosts. Each task queue is
+        the list of tasks which are waiting to run on the host.
+
+        @property mCronTab
+        A representation of the crontab used for task scheduling
         """
         self.mHost = aHost
         self.mPort = aPort
         self.mTasks = {}
         self.mRunningTaskFromHost = {}
         self.mRunningTaskFromPID = {}
+        self.mPendingTasksFromHost = {}
+        self.mCronTab = CronTab()
 
     def start(self):
         """
         @fn start(self)
         @brief start the server
         """
+        print "Task Handler started."
+        self.loadTaskList()
         server = SocketServer.TCPServer((self.mHost, self.mPort),
                                         requestHandler)
+
         server.serve_forever()
+
+    def stop(self):
+        """
+        @fn start(self)
+        @brief stop the server
+        """
+        print "Task Handler received SIGINT!"
+        self.saveTaskList()
+
+    def getTaskInfo(self, aTaskName):
+        """
+        @fn getTaskInfo(self, aTaskName)
+        @brief Get an HTML representation of properties of a given task.
+        @param aTaskName Name of the task from which to retrieve information.
+        
+        If the task is not in the list, this function returns a message
+        indicating so. Otherwise, it calls the task::serializeHTML function.
+        """
+        if aTaskName not in self.mTasks.keys():
+            return "<p>No task '" + aTaskName + "' in the task list.</p>"
+
+        return self.mTasks[aTaskName].serializeHTML();
+
+    def getTaskList(self):
+        """
+        @fn getTaskList(self)
+        @brief return a string representing a task list
+
+        If the task list is empty, one line
+
+        "TASK LIST EMPTY"
+
+        is returned. Otherwise, the returned string starts with the line
+
+        "TASK LIST NONEMPTY"
+
+        and continue with one line per task, each one of the form
+
+        "Task Name	Host Status Progress outputDirectory"
+        """
+        if (len(self.mTasks) == 0):
+            return "TASK LIST EMPTY\n"
+
+        taskList = "TASK LIST NONEMPTY\n"
+        for k in self.mTasks.keys():
+            taskList += k + " " + self.mTasks[k].serialize() + "\n"
+        return taskList
+
+    def loadTaskList(self):
+        """
+        @fn loadTaskList(self)
+        @brief Load the task list from taskList.txt
+        """
+        fp = file("taskList.txt", "r")
+        line = fp.readline().strip()
+        if (line == "TASK LIST NONEMPTY"):
+            while line:
+                line = fp.readline().strip()
+                items = line.split()
+                if (len(items) > 0):
+                    if (items[2] == "Running"):
+                        status = "Interrupted"
+                    elif (items[2] == "Pending"):
+                        status = "Inactive"
+                    else:
+                        status = items[2]
+                    t = task(items[0], status, items[4], items[5])
+                    t.mProgress = items[3]
+                    # host = items[1] is already saved in the config file.
+                    t.readParametersFromConfigFile(t.getConfigPath())
+                    self.mTasks[t.mName] = t
+        fp.close()
+    
+    def saveTaskList(self):
+        """
+        @fn saveTaskList(self)
+        @brief Save the task list in taskList.txt
+        """
+        fp = file("taskList.txt", "w")
+        fp.write(self.getTaskList())
+        fp.close()
+
+    def addTaskToPendingQueue(self, aTask):
+        """
+        @fn addTaskToPendingQueue(self, aTask)
+        @brief add the specified task on the pending queue of aTask.host()
+        @param aTask task to add to the pending list
+        """
+        aTask.mStatus = "Pending"
+        h = aTask.host()
+        if h in self.mPendingTasksFromHost.keys():
+            q = self.mPendingTasksFromHost[h]
+            q.append(aTask)
+        else:
+            q = collections.deque()
+            q.append(aTask)
+            self.mPendingTasksFromHost[h] = q
+
+    def runNextTaskFromPendingQueue(self, aHost):
+        """
+        @fn runNextTaskFromPendingQueue(self, aHost)
+        @brief run the next pending task for the specified host, if there is one
+        @param aHost on which we want to run the next task
+        """
+        if aHost in self.mPendingTasksFromHost.keys():
+            q = self.mPendingTasksFromHost[aHost]
+            if len(q) != 0:
+                t = q.popleft()
+                t.execute()
+                if len(q) == 0:
+                    del self.mPendingTasksFromHost[aHost]
+
+    def addScheduledTask(self, aTask):
+        """
+        @fn addScheduledTask(self, aTask)
+        @brief add the task to the scheduler
+        @param aTask task to add
+        """
+        items = aTask.mSchedule.split(",")
+        entry = self.mCronTab.new(aTask.getScheduledCommand(), aTask.mName)
+        for i in range(0, 5):
+            if (items[i] != "*"):
+                entry.slices[i] = int(items[i])
+
+        self.mCronTab.write()
+
+    def removeScheduledTask(self, aTask):
+        """
+        @fn removeScheduledTask(self, aTask)
+        @brief remove the task from the scheduler
+        @param aTask task to remove
+        """
+        self.mCronTab.remove_all(aTask.getScheduledCommand())
+        self.mCronTab.write()
 
 gServer = taskHandler(TASK_HANDLER_HOST, TASK_HANDLER_PORT)
  
 if __name__ == "__main__":
     if not os.path.exists(TASK_LIST_DIRECTORY):
         os.makedirs(TASK_LIST_DIRECTORY)
-    gServer.start()
+    try:
+        gServer.start()
+    except KeyboardInterrupt:
+        gServer.stop()

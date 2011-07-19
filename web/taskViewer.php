@@ -103,14 +103,15 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             echo '</tr>';
             while(!feof($file)) {
               $line = trim(fgets($file));
-              $argument = explode(" ", $line, 5);
-              if (count($argument) == 5) {
+              $argument = explode(" ", $line, 6);
+              if (count($argument) == 6) {
                 $taskName = $argument[0];
                 $host = $argument[1];
                 $status = $argument[2];
                 $progress = $argument[3];
                 $results = $argument[4];
-  
+                $schedule = $argument[5];
+
                 echo '<tr>';
                 echo '<td><a href="taskInfo.php?taskName='.$taskName.'">';
                 echo $taskName.'</a></td>';
@@ -122,28 +123,40 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		            } else {
                   echo $status;
 		            }
-  
-              if ($status == "Running") {
+
+                $isScheduled = ($schedule != "None");
+                if ($isScheduled) {
+                  echo " (scheduled)";
+                }
+
+                if ($status == "Running" || $status == "Pending") {
                   commandButton($taskName, "STOP");
                 } else if($status == "Interrupted") {
-                  commandButton($taskName, "RUN");
-                  commandButton($taskName, "RESTART");
+                  if (!$isScheduled) {
+                    commandButton($taskName, "RUN");
+                    commandButton($taskName, "RESTART");
+                  }
                   commandButton($taskName, "REMOVE");
                 } else if ($status == "Complete" || $status == "Killed") {
-                  commandButton($taskName, "RESTART");
+                  if (!$isScheduled) {
+                    commandButton($taskName, "RESTART");
+                  }
                   commandButton($taskName, "REMOVE");
-                } else if ($status == "Pending") {
-                  commandButton($taskName, "RUN");
+                } else if ($status == "Inactive") {
+                  if (!$isScheduled) {
+                    commandButton($taskName, "RUN");
+                  }
                   commandButton($taskName, "REMOVE");
                 }
+
                 echo '</td>';
   
                 echo '<td>'.$progress.'</td>';
                 echo '<td>';
-                if ($status == "Pending") {
-                  echo $results;
-                } else {
+                if (file_exists("results/".$results)) {
                   echo '<a href="results/'.$results.'">'.$results.'</a>';
+                } else {
+                  echo $results;
                 }
                 echo '</td>';
                 echo '</tr>';
@@ -157,7 +170,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         }
       ?>
 
-      <p><a href="taskCreator.xhtml">Create a new task</a></p>
+      <p><a href="taskCreator.php">Create a new task</a></p>
 
     </div>
   </body>

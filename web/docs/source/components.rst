@@ -181,14 +181,14 @@ runs a task, it creates a new :ref:`test runner <test-runner>` process and
 communicates with it to stay informed of the testing instance status and
 progress, to know whether the process has been killed etc
 
-The script ``MathJax-tests/testRunner/taskEditor.py`` can be used to edit the
-task with the command line. (ADD MORE INFO)
-
 A **QA User Interface** is available to verify the status of each task, the
-information on the task, to edit and run tasks etc It directly send the
-instructions to the task handler. This interface also gives access to various
-other :ref:`QA tools <qa-tools>`.
+information on the task, to edit, schedule and run tasks etc It directly sends
+the instructions to the task handler. Actions can be made throughout the command
+line with the help of the ``taskViewer.py`` and ``taskEditor.py`` Python
+scripts. A web interface is also available. See the section
+:ref:`QA tools <qa-tools>`. 
 
-A **Task Scheduler**  (NOT IMPLEMENTED YET) can memorize tasks to run at a given
-time. It sends run instructions to the task handler when a task should be
-started.
+A **Task Scheduler** can memorize tasks to run regularly at a specified date and
+time. It is based on the `cron <http://en.wikipedia.org/wiki/Cron>`_ tool and
+thus accepts the same syntax. It sends run instructions to the task handler
+when a task should be started. 
