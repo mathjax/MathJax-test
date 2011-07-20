@@ -2,14 +2,16 @@
 MathJax-test Documentation
 ##########################
 
-MathJax-test is a project to provide a testing framework for MathJax, with three
-main components:
+MathJax-test is a project to provide a testing framework for
+`MathJax <http://www.mathjax.org/>`_, based on
+`Selenium testing system <http://seleniumhq.org/>`_. MathJax-test has three main
+components:
 
 - Test Suite: a set of Web pages intended to cover all the features of MathJax
   and ensure non regression.
 - Test Runner: a set of scripts to automatically run the Test Suite in all
   the platforms supported.
-- Quality Assurance Framework: a set of tools to control the framework and
+- Quality Assurance Framework: interface and tools to control the framework and
   analyse the results.
 
 User Documentation

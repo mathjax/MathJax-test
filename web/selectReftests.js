@@ -109,7 +109,7 @@ function checkboxClick(aEvent)
 
 /**
  * Check all the checkboxes from bottom to top, starting from aCheckBox and
- * ending to the one representing the /MathJax-test/ root
+ * ending to the one representing the testsuite/ root
  *
  * @tparam Element aCheckBox the starting checkbox
  *
@@ -156,6 +156,14 @@ function init()
     writeReftestList(gTestSuite, document.getElementById("root"));
 
     document.title += " (" + gNumberOfTests + " tests)";
+
+    if (window.opener) {
+        // The selectReftest was opened from taskCreator.php
+        document.getElementById("parse").style.visibility = "hidden";
+        document.getElementById("listOfTests").value =
+            window.opener.document.getElementById("listOfTests").value
+        read();
+    }
 }
 
 /**
@@ -224,8 +232,15 @@ function generate()
         document.getElementById("listOfTests").value = "";
     } else {
         // selection of tests
-        // ignore the first character (representing the root /MathJax-test/)
+        // ignore the first character (representing the root testsuite/)
         document.getElementById("listOfTests").value = result.str.substr(1);
+    }
+
+    if (window.opener) {
+        // The selectReftest was opened from taskCreator.php
+        window.opener.document.getElementById("listOfTests").value =
+            document.getElementById("listOfTests").value;
+        window.close()
     }
 }
 
@@ -295,6 +310,6 @@ function read()
     }
 
     // check the checkboxes according to what is in the listOfTests string
-    // "1" is for the root root /MathJax-test/
+    // "1" is for the root root testsuite/
     readListOfTests("1" + listOfTests, 0, root);
 }

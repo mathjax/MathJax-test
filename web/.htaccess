@@ -1,7 +1,26 @@
-<Files ~ "taskCreator.php|taskEditor.php">
-AuthUserFile /home/fred/mathjax-project/.password
+# By default, we forbid everything in the web/ directory
+<LimitExcept POST>
+Deny from all
+</LimitExcept>
+<Limit POST>
+Deny from all
+</Limit>
+
+# Allow access to some files with a given extension
+<Files ~ "\.(css|html|js|php|png|svg|xhtml)$">
+Allow from all
+</Files>
+
+# Allow access to a repository, so that people are redirected to an index page.
+<Files ~ "^$">
+Allow from all
+</Files>
+
+# Pages allowing to edit the task list have restricted access
+<Files ~ "^(taskCreator\.php|taskEditor\.php)$">
+AuthUserFile [PATH-TO-THE-MATHJAX-TEST-PASSWORD].password
 AuthGroupFile /dev/null
 AuthName "Secured Access to MathJax Testing Tools"
 AuthType Basic
-require user MathJaxDev
+Require User MathJaxDev
 </Files>

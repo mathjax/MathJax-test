@@ -218,8 +218,9 @@ def printReftestList():
     print " * @var Array gTestSuite"
     print " * An array representing the file hierarchy of the test suite"
     print " */"
-    print "var gTestSuite = [\"/MathJax-test/\"",
-    suite.addReftests(None, MATHJAX_TEST_ROOT, "reftest.list", -1)
+    print "var gTestSuite = [\"testsuite/\"",
+    suite.addReftests(None, MATHJAX_TEST_ROOT + "testsuite/",
+                      "reftest.list", -1)
     print "]"
     sys.stdout = stdout
     fp.close()
@@ -262,7 +263,8 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
     else:
         index = 0 # tests indicated in listOfTests
         
-    aSuite.addReftests(aSelenium, MATHJAX_TEST_ROOT, "reftest.list", index)
+    aSuite.addReftests(aSelenium, MATHJAX_TEST_ROOT + "testsuite/",
+                       "reftest.list", index)
 
     # Create the output file. Do not overwrite the file name if we are not
     # recovering a previous testing instance

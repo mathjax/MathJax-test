@@ -11,22 +11,7 @@
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <link rel="stylesheet" type="text/css" href="default.css"/>
-    <script type="text/javascript">
-      function updateScheduleFieldVisibility()
-      {
-        el = document.getElementById("crontabParameters");
-        if (document.getElementById("scheduled").checked) {
-          el.style.visibility = "visible";
-        } else {
-          el.style.visibility = "hidden";
-        }
-      }
-
-      function init()
-      {
-        updateScheduleFieldVisibility();
-      }
-    </script>
+    <script type="text/javascript" src="taskCreator.js"></script>
   </head>
 
   <body onload="init()">
@@ -48,7 +33,7 @@
           <p>
             <label>task name:
               <input name="taskName" type="text" required="required"
-                     pattern="([a-z]|[A-Z]|[0-9]){1,10}"
+                     pattern="([a-z]|[A-Z]|[0-9]){1,20}"
                      value="task1"
                      maxlength="20"/></label> (alphanumeric)
           </p>
@@ -57,7 +42,7 @@
             <input name="outputDirectory" type="text"
                    pattern="([a-z]|[A-Z]|[0-9])*" maxlength="20"
                    value=""/>
-            </label> (optional)
+            </label> (optional, default is task name)
           </p>
           <p>
             <label>schedule task:
@@ -149,7 +134,7 @@
           <p>
             <label>mathJaxTestPath:
               <input name="mathJaxTestPath" type="text"
-                     value="http://localhost/MathJax-test/"
+                     value="http://localhost/MathJax-test/testsuite/"
                      readonly="readonly"/>
             </label>
           </p>
@@ -247,16 +232,17 @@
           </p>
           <p>
             <label>listOfTests:
-              <input name="listOfTests" type="text" value="all" size="50"
-                           pattern="(all|([0-2]+))"/>
+              <input id="listOfTests"
+                     name="listOfTests" type="text" value="all" size="50"
+                     pattern="(all|([0-2]+))"/>
             </label>
-            <a href="selectReftests.xhtml">Reftest Selector</a>
+            <a href="javascript:openReftestSelector();">Reftest Selector</a>
           </p>
           <p>
             <label>startID:
               <input name="startID" type="text" value="" size="50"
                      pattern="([a-z]|[A-Z]|[0-9]|_|-|\.|/)+" />
-            </label>
+            </label> (optional, used for test recovery) 
           </p>
         </fieldset>
 

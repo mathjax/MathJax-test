@@ -1,5 +1,10 @@
+# Allow access to all the results/ directory
+<Limit GET>
+Allow from all
+</Limit>
+
+# Allow to open .html.gz and .txt.gz files.
 RemoveType .gz
 AddEncoding gzip .gz
 AddType text/html .html.gz
 AddType text/plain .txt.gz
-

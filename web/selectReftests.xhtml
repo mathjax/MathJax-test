@@ -26,9 +26,11 @@
       <h1>Reftest Selector</h1>
 
       listOfTests =
-      <input type="text" id="listOfTests" style="width: 70%;"/>
-      <input type="button" onclick="generate()" value="get listOfTests"/>
-      <input type="button" onclick="read()" value="read listOfTests"/>
+      <input type="text" id="listOfTests" style="width: 100%;"/><br/>
+      <input type="button" onclick="generate()"
+             value="Get listOfTests from selection"/>
+      <input id="parse" type="button" onclick="read()"
+             value="Parse listOfTests"/>
       <div id="root"></div>
     </div>
 

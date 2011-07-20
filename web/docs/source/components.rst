@@ -68,7 +68,7 @@ The test runner is located in the ``MathJax-tests/testRunner/`` directory. It is
 made of a set of several Python scripts as well as configuration files in the
 ``MathJax-tests/testRunner/config/`` directory.
 
-Once you have correctly set up the :ref:`Web servers <web-server>` and at least
+Once you have correctly set up the :ref:`Web servers <web-servers>` and at least
 one :ref:`test machine <test-machine>`, you can execute a testing instance with
 the following command:
 

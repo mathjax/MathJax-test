@@ -101,7 +101,7 @@
 
           $port = 4444; // $_POST['host']
           $mathJaxPath = 'http://localhost/MathJax/';
-          $mathJaxTestPath = 'http://localhost/MathJax-test/';
+          $mathJaxTestPath = 'http://localhost/MathJax-test/testsuite/';
     
           $timeOut = intval($_POST['timeOut']);
           if ($timeOut < 0) {
