@@ -23,19 +23,22 @@
 # ***** END LICENSE BLOCK *****
 
 """
-@file taskViewer.py
-@brief Script to view the list of elements in the task handler
+@file config.py
+The file for the @ref config module.
+
+@package config
+This module contains general configuration for the task controller
 """
 
-from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
+TASK_HANDLER_HOST = "localhost"
+TASK_HANDLER_PORT = 4445
 
-import SocketServer
-import socket
+KNOWN_HOSTS = ["fred-VirtualBox.local", "192.168.0.20"]
+DEFAULT_SELENIUM_PORT = 4444
+DEFAULT_MATHJAX_PATH = "http://localhost/MathJax/"
+DEFAULT_MATHJAX_TEST_PATH = "http://localhost/MathJax-test/testsuite/"
+DEFAULT_TIMEOUT = 20000
 
-if __name__ == "__main__":
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((TASK_HANDLER_HOST, TASK_HANDLER_PORT))
-    sock.send("TASKVIEWER\n")
-
-    response = sock.recv(4096)
-    print response
+MATHJAX_WEB_URI = "http://localhost/MathJax-test/web/"
+MATHJAX_WEB_PATH = "../web/"
+MATHJAX_TESTSUITE_PATH = "../testsuite/"

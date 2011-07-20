@@ -36,15 +36,18 @@ knows the status and progress of each running task.
 @var gServer
 The server handling the task list.
 
-@var TASK_HANDLER_HOST
-Host address of the task handler
-
-@var TASK_HANDLER_PORT
-Port of the task handler
+@var TASK_LIST_DIRECTORY
+Path to the taskList directory
 """
 
-TASK_HANDLER_HOST = "localhost"
-TASK_HANDLER_PORT = 4445
+from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
+from config import MATHJAX_WEB_PATH
+
+from config import KNOWN_HOSTS, DEFAULT_SELENIUM_PORT
+from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH 
+from config import DEFAULT_TIMEOUT
+
+
 TASK_LIST_DIRECTORY = "config/taskList/"
 
 from crontab import CronTab
@@ -605,7 +608,8 @@ class task:
 
         s += "<tr><th>Result directory</th><td>"
 
-        if (os.path.exists(self.mOutputDirectory)):
+        if (os.path.exists(MATHJAX_WEB_PATH + "results/" +
+                           self.mOutputDirectory)):
             s += "<a href=\"results/" + self.mOutputDirectory + "\">"
             s += self.mOutputDirectory + "</a></td></tr>"
         else:
@@ -620,7 +624,6 @@ class task:
             s += "<td>" + self.mExceptionMessage + "</td></tr>"
 
         s += "</table></p>"
-
 
         s += "<h2>Framework Configuration</h2>"
         s += "<p><table>"
@@ -663,7 +666,6 @@ class task:
         The path is the concatenation of "config/", the name of the task
         and the extension ".cfg".
         """
-        global TASK_LIST_DIRECTORY
         return TASK_LIST_DIRECTORY + self.mName + ".cfg"
 
     def generateConfigFile(self):
@@ -760,7 +762,13 @@ option values"
             self.mParameters[parameterName] = (parameterValue == "true")
         elif (parameterName == "port" or
               parameterName == "timeOut"):
-            self.mParameters[parameterName] = int(parameterValue)
+            parameterValue = int(parameterValue)
+            if (parameterValue == -1):
+                if (parameterName == "port"):
+                    parameterValue = DEFAULT_SELENIUM_PORT
+                else: # timeout
+                    parameterValue = DEFAULT_TIMEOUT
+            self.mParameters[parameterName] = parameterValue
         elif (parameterName == "host" or
               parameterName == "mathJaxPath" or
               parameterName == "mathJaxTestPath" or
@@ -772,6 +780,13 @@ option values"
               parameterName == "font" or
               parameterName == "listOfTests" or
               parameterName == "startID"):
+            if (parameterValue == "default"):
+                if (parameterName == "host"):
+                    parameterValue = KNOWN_HOSTS[0]
+                elif (parameterName == "mathJaxPath"):
+                    parameterValue = DEFAULT_MATHJAX_PATH
+                else: # mathJaxTestPath
+                    parameterValue = DEFAULT_MATHJAX_TEST_PATH
             self.mParameters[parameterName] = parameterValue
         else:
             print "Unknown parameter " + parameterName

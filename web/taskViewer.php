@@ -27,9 +27,8 @@
  *  @file taskViewer.php
  *  @brief Gives a preview of all the tasks in the task lists.
  *
- *  This PHP script tries to connect to a task handler on host "localhost" and
- *  port = 4445. It displays an error message if it fails. Otherwise, it gets
- *  the answer of the server:
+ *  This PHP script tries to connect to a task handler. It displays an error
+ *  message if it fails. Otherwise, it gets the answer of the server:
  *  - If it is "TASK LIST EMPTY" it displays a message providing that information.
  *  - If it is "TASK LIST NONEMPTY", it displays a HTML table. It reads the
  *    socket line by line until the end and convert each line into a row giving
@@ -37,7 +36,8 @@
  *    task information, test outputs and command of @ref taskEditor.php.
  */
 
-echo '<?xml version="1.0" encoding="UTF-8"?>';
+  echo '<?xml version="1.0" encoding="UTF-8"?>';
+  include('config.php');
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -86,7 +86,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
           echo '</form>';
         }
 
-        $file = fsockopen("localhost", 4445);
+        $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
         if ($file) {
           fwrite($file, "TASKVIEWER\n");
           $line = trim(fgets($file));

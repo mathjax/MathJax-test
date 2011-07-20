@@ -44,14 +44,38 @@
 # This script is intended to be run over the standard output of a
 # reftest run.  It will extract the parts of the output run relevant to
 # reftest and convert it to an HTML page.
+#
+# Usage: clean-reftest-output.pl output.txt [[testsuiteURI] webURI] > output.html
+#
 
 use strict;
 use URI::Escape;
 
-## @var String root
-#  @brief Root of the test framework
+my $nargs = $#ARGV + 1;
+
+## @var String gReftestOutput
+#  @brief Reftest output text to parse
 #
-my $root = "/MathJax-test/";
+my $gReftestOutput = *STDIN;
+if ($nargs >= 1) {
+    open($gReftestOutput, "<$ARGV[0]");
+}
+
+## @var String gTestsuiteURI
+#  @brief URI to the testsuite/ directory
+#
+my $gTestsuiteURI = "http://localhost/MathJax-test/testsuite/";
+if ($nargs >= 2) {
+    $gTestsuiteURI = $ARGV[1];
+}
+
+## @var String gWebURI
+#  @brief URI of the web/ directory
+#
+my $gWebURI = "http://localhost/MathJax-test/web/";
+if ($nargs >= 3) {
+    $gWebURI = $ARGV[2];
+}
 
 ## @var Integer N_TESTS
 #  @brief Counter of tests
@@ -125,7 +149,7 @@ my $unparsedContent;
 #  @brief the formatted HTML output for the test currently read
 my $parsedContent;
 
-while (<>) {
+while (<$gReftestOutput>) {
     next unless /^REFTEST/;
     chomp;
     chop if /\r$/;
@@ -143,7 +167,7 @@ while (<>) {
                 if ($2 eq $testTypes[$i][0]) {
                     $testTypes[$i][3]++;
                     $unparsedContent;
-                    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),\1\2: <a href="$root\3">\3</a>\4,;
+                    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),\1\2: <a href="$gTestsuiteURI\3">\3</a>\4,;
                     $parsedContent = "<div class=\"$testTypes[$i][1]\">" . $_;
                     last;
                 }
@@ -204,8 +228,8 @@ while (<>) {
 
     if ($state == 4) {
         if ($unparsedContent) {
-            $parsedContent .= "\nREFTEST   <a href=\"".$root;
-            $parsedContent .= "web/reftest-analyzer.xhtml#log=";
+            $parsedContent .= "\nREFTEST   <a href=\"".$gWebURI;
+            $parsedContent .= "reftest-analyzer.xhtml#log=";
             $parsedContent .= uri_escape(uri_escape($unparsedContent));
             $parsedContent .= "\">DIFF</a>";
         }
@@ -223,6 +247,9 @@ print <<EOM
 EOM
 ;
 
+if ($nargs >= 1) {
+    close($gReftestOutput);
+}
 ################################################################################
 # Result summary
 

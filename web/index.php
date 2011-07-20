@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?php
+  echo '<?xml version="1.0" encoding="UTF-8"?>';
+  include('config.php');
+?>
+
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
 <!-- vim: set ts=2 et sw=2 tw=80: !-->
 <!DOCTYPE html>
@@ -15,14 +19,19 @@
       <h1>MathJax Test</h1>
 
       <h2>Test Suite </h2>
+
       <ul>
-        <li><a href="../testsuite/API/">API/</a></li>
-        <li><a href="../testsuite/Configuration/">Configuration/</a></li>
-        <li><a href="../testsuite/Crashtests/">Crashtests/</a></li>
-        <li><a href="../testsuite/LaTeXToMathML/">LaTeXToMathML/</a></li>
-        <li><a href="../testsuite/MathMLToDisplay/">MathMLToDisplay/</a></li>
-        <li><a href="../testsuite/Parsing/">Parsing/</a></li>
-        <li><a href="../testsuite/UI/">UI/</a></li>
+      <?php
+         $directories = array("API", "Configuration", "Crashtests",
+                              "LaTeXToMathML", "MathMLToDisplay", "Parsing",
+                              "UI");
+         for ($i = 0; $i < count($directories); $i++) {
+           echo "<li><a href=\"";
+           echo $DEFAULT_MATHJAX_TEST_PATH.$directories[$i];
+           echo "/\">";
+           echo $directories[$i]."/</a></li>";
+         } 
+       ?>
       </ul>
 
       <h2>Tools</h2>

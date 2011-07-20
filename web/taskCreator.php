@@ -1,5 +1,6 @@
 <?php
   echo '<?xml version="1.0" encoding="UTF-8"?>';
+  include('config.php');
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -34,7 +35,7 @@
             <label>task name:
               <input name="taskName" type="text" required="required"
                      pattern="([a-z]|[A-Z]|[0-9]){1,20}"
-                     value="task1"
+                     value="<?php echo $DEFAUL_TASK_NAME;?>"
                      maxlength="20"/></label> (alphanumeric)
           </p>
           <p>
@@ -113,35 +114,42 @@
           <legend>Framework:</legend>
           <p>
             <label>host:
-              <input name="host" type="text" required="required"
+              <input id="host" name="host" type="text" required="required"
                      pattern="([a-z]|[A-Z]|[0-9]|-|\.)+"
-                     value="fred-VirtualBox.local"
+                     value=""
                      maxlength="255"/>
-            </label>
+            </label> (or choose among known hosts:
+            <select id="host_select" onchange="updateHostField()">
+              <?php
+                for ($i = 0; $i < count($KNOWN_HOSTS); $i++) {
+                  echo "<option>".$KNOWN_HOSTS[$i]."</option>";
+                }
+              ?>
+            </select>)
+
           </p>
           <p>
             <label>port:
-              <input name="port" type="text" value="4444" readonly="readonly"/>
+              <input name="port" type="text"
+                     value="<?php echo $DEFAULT_SELENIUM_PORT;?>"/>
             </label>
           </p>
           <p>
             <label>mathJaxPath:
-              <input name="mathJaxPath" type="text"
-                     value="http://localhost/MathJax/"
-                     readonly="readonly"/>
+              <input name="mathJaxPath" type="text" size="50"
+                     value="<?php echo $DEFAULT_MATHJAX_PATH;?>"/>
             </label>
           </p>
           <p>
             <label>mathJaxTestPath:
-              <input name="mathJaxTestPath" type="text"
-                     value="http://localhost/MathJax-test/testsuite/"
-                     readonly="readonly"/>
+              <input name="mathJaxTestPath" type="text" size="50"
+                     value="<?php echo $DEFAULT_MATHJAX_TEST_PATH;?>"/>
             </label>
           </p>
           <p>
             <label>timeOut:
               <input name="timeOut" type="number" min="1" max="120"
-                                    value="20"/> (seconds)
+                     value="<?php echo $DEFAULT_TIMEOUT/1000?>"/> (seconds)
             </label>
           </p>
           <p>

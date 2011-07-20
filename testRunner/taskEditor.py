@@ -29,16 +29,9 @@
 This script can be called to send TASKEDITOR request to the task handler.
 Currently, the following commands are accepted: REMOVE, RUN, RESTART and STOP.
 It returns 1 if the command failed and 0 otherwise.
-
-@var TASK_HANDLER_HOST
-Host address of the task handler
-
-@var TASK_HANDLER_PORT
-Port of the task handler
 """
 
-TASK_HANDLER_HOST = "localhost"
-TASK_HANDLER_PORT = 4445
+from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 
 gRequest = ""
 

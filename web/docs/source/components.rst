@@ -111,8 +111,8 @@ list:
   - ``mathJaxPath``: the absolute uri to a ``MathJax/`` installation. This
     allows to test different versions of MathJax.
   
-  - ``mathJaxTestPath``: the absolute uri to a ``MathJax-test/`` directory
-    containing the test pages.
+  - ``mathJaxTestPath``: the absolute uri to a ``MathJax-test/testsuite/``
+    directory containing the test pages.
   
   - ``timeOut``: time in ms before aborting the loading of a page.
   

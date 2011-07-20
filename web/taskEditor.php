@@ -35,6 +35,7 @@
     exit;
   }
   echo '<?xml version="1.0" encoding="UTF-8"?>';
+  include('config.php');
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -99,9 +100,23 @@
             $host = "localhost";
           }
 
-          $port = 4444; // $_POST['host']
-          $mathJaxPath = 'http://localhost/MathJax/';
-          $mathJaxTestPath = 'http://localhost/MathJax-test/testsuite/';
+          if (isset($_POST['port'])) {
+            $port = $_POST['port'];
+          } else {
+            $port = strval($DEFAULT_SELENIUM_PORT);
+          }
+
+          if (isset($_POST['mathJaxPath'])) {
+            $mathJaxPath = truncateString($_POST['mathJaxPath'], 255);
+          } else {
+            $mathJaxPath = $DEFAULT_MATHJAX_PATH;
+          }
+
+          if (isset($_POST['mathJaxTestPath'])) {
+            $mathJaxTestPath = truncateString($_POST['mathJaxTestPath'], 255);
+          } else {
+            $mathJaxTestPath = $DEFAULT_MATHJAX_TEST_PATH;
+          }
     
           $timeOut = intval($_POST['timeOut']);
           if ($timeOut < 0) {
@@ -190,7 +205,7 @@
             $taskSchedule = "None";
           }
 
-          $file = fsockopen("localhost", 4445);
+          $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
           if ($file) {
              fwrite($file, "TASKEDITOR ADD ".$taskName." None ".
                            $outputDirectory." ".$taskSchedule."\n".
@@ -223,7 +238,7 @@
                    $_POST['command'] == 'RUN' ||
                    $_POST['command'] == 'RESTART' ||
                    $_POST['command'] == 'STOP') {
-          $file = fsockopen("localhost", 4445);
+          $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
           if ($file) {
              fwrite($file, "TASKEDITOR ".$_POST['command']." ".$taskName."\n");
              echo trim(fgets($file));

@@ -1,4 +1,5 @@
-/* -*- Mode: Javascript; tab-width: 2; indent-tabs-mode:nil; -*- */
+<?php
+/* -*- Mode: PHP; tab-width: 2; indent-tabs-mode:nil; -*- */
 /* vim: set ts=2 et sw=2 tw=80: */
 /* ***** BEGIN LICENSE BLOCK *****
 /* Version: Apache License 2.0
@@ -22,36 +23,14 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-/**
- *  @file taskCreator.js
- *  @brief script for taskCreator.php
- *
- *  This file is used by taskCreator.php
- */
+  $TASK_HANDLER_HOST = "localhost";
+  $TASK_HANDLER_PORT = 4445;
 
-function updateScheduleFieldVisibility()
-{
-    el = document.getElementById("crontabParameters");
-    if (document.getElementById("scheduled").checked) {
-        el.style.visibility = "visible";
-    } else {
-        el.style.visibility = "hidden";
-    }
-}
+  $DEFAUL_TASK_NAME = "experimentalTask";
+  $KNOWN_HOSTS = array("fred-VirtualBox.local", "192.168.0.20");
+  $DEFAULT_SELENIUM_PORT = 4444;
+  $DEFAULT_MATHJAX_PATH = "http://localhost/MathJax/";
+  $DEFAULT_MATHJAX_TEST_PATH = "http://localhost/MathJax-test/testsuite/";
+  $DEFAULT_TIMEOUT = 20000;
+?>
 
-function updateHostField()
-{
-    document.getElementById("host").value =
-        document.getElementById("host_select").value
-}
-
-function openReftestSelector()
-{
-    window.open("selectReftests.xhtml","","");
-}
-
-function init()
-{
-    updateScheduleFieldVisibility();
-    updateHostField();
-}

@@ -29,8 +29,8 @@
  *  
  *  If no taskName parameter is present in the query string, this PHP script
  *  redirects to @ref taskViewer.php. Otherwise, it tries to connect to a task
- *  handler on host "localhost" and port = 4445. It displays an error message if
- *  it fails and the result of a "TASKINFO taskName" request if it succeeds.
+ *  handler It displays an error message if it fails and the result of 
+ *  a "TASKINFO taskName" request if it succeeds.
  */
 
   if (!isset($_GET['taskName'])) {
@@ -38,6 +38,7 @@
     exit;
   }
   echo '<?xml version="1.0" encoding="UTF-8"?>';
+  include('config.php');
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -64,7 +65,7 @@
 
       <?php
              
-          $file = fsockopen("localhost", 4445);
+          $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
           if ($file) {
              fwrite($file, "TASKINFO ".$_GET['taskName']."\n");
              while (!feof($file)) {
