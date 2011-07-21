@@ -63,6 +63,7 @@ configParser = ConfigParser.ConfigParser()
 configParser.optionxform = str # to preserve the case of parameter name
 configParser.readfp(open("config.tmp"))
 PYTHON = configParser.get("bin", "PYTHON")
+PERL = configParser.get("bin", "PERL")
 QA_USER_NAME = configParser.get("qa", "QA_USER_NAME")
 QA_PASSWORD_FILE = configParser.get("qa", "QA_PASSWORD_FILE")
 TASK_HANDLER_HOST = configParser.get("task_handler", "TASK_HANDLER_HOST")

@@ -9,7 +9,7 @@ This section gives an overview of the different testing framework components.
 Overview
 ========
 
-.. image:: ../source/testing-framework.svg
+.. image:: testing-framework.svg
 
 The diagram above summarizes the components of the testing framework. There are
 several :ref:`test machines <test-machine>` on which a browser is executing test

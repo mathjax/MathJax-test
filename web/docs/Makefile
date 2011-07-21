@@ -30,7 +30,7 @@ doxygen:
 	$(DOXYGEN) doxygen.cfg
 
 diagrams:
-	$(DOT) -Tsvg source/testing-framework.dot > source/testing-framework.svg
+	$(DOT) -Tsvg source/testing-framework.dot > html/testing-framework.svg
 
 html: source diagrams
 	$(SPHINXBUILD) -b html source html

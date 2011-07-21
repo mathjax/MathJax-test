@@ -16,7 +16,7 @@ platforms supported.
 - Quality Assurance Framework: interface and tools to control the framework and
 analyse the results.
 
-![Testing Framework Infrastructure](https://raw.github.com/mathjax/MathJax-test/master/web/docs/source/testing-framework.svg)
+![Testing Framework Infrastructure](http://devel.mathjax.org/testing/docs/html/testing-framework.svg)
 
 The files for these components are respectively in the directories testsuite/,
 testRunner/ and web/. MathJax-test is distributed under the Apache License but
@@ -30,7 +30,8 @@ web/docs/html/ directory of the MathJax-test distribution. People willing to
 work on the development of this framework may also be interested in the
 doxygen documentation in the web/docs/doxygen/ directory. The documents are
 also available on the MathJax-test web site on line at
-<https://github.com/mathjax/MathJax-test/tree/master/web/docs/source>
+<http://devel.mathjax.org/testing/web/docs/html/> and
+<http://devel.mathjax.org/testing/web/docs/doxygen/>.
 
 ## Community
 

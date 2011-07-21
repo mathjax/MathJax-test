@@ -36,6 +36,7 @@ directory.
 
 MAX_TEST_RESULTS_WITH_SAME_NAME = 100
 
+from config import PERL
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import MATHJAX_WEB_PATH, MATHJAX_TESTSUITE_PATH
 from config import MATHJAX_WEB_URI
@@ -336,7 +337,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         if aFormatOutput:
             # Execute the Perl script to format the output
             print "Formatting the text ouput...",
-            pipe = subprocess.Popen(["perl", "clean-reftest-output.pl",
+            pipe = subprocess.Popen([PERL, "clean-reftest-output.pl",
                                      outputTxt, aSelenium.mMathJaxTestPath,
                                      MATHJAX_WEB_URI],
                                     stdout=subprocess.PIPE)
