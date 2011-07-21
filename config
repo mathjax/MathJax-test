@@ -6,7 +6,19 @@ PYTHON        = python
 SED           = sed
 SPHINXBUILD   = sphinx-build
 
+# XXXfred: some tools should be made configurable.
+#
+# - External libraries included in MathJax-test repository
+#    testRunner/crontab.py (for crontab editing)
+#    testRunner/lex.py, testRunner/yacc.py (to implement condition parser)
+#    web/docs/js2doxy.pl (for doxygen Javascript)
+#    selenium/selenium.py
+#
+# - Other external programs that should be installed:
+#    doxygenfilter (for Perl doxygen)
+
 ###[qa]
+# Create htpasswd to create a user and password file and reference them here.
 QA_USER_NAME = username
 QA_PASSWORD_FILE = passwordfile
 
@@ -29,7 +41,4 @@ FONT_LIST = STIX, TeX, ImageTeX
 
 ###[paths]
 MATHJAX_WEB_URI = http://localhost/MathJax-test/web/
-
-MATHJAX_WEB_PATH = ../web/
-MATHJAX_TESTSUITE_PATH = ../testsuite/
 DOXYGEN_CONFIG = doxygen.cfg

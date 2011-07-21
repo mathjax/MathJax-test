@@ -42,14 +42,13 @@ Path to the taskList directory
 
 from config import PYTHON
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
-from config import MATHJAX_WEB_PATH
 
 from config import KNOWN_HOSTS, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH 
 from config import DEFAULT_TIMEOUT
 
-
 TASK_LIST_DIRECTORY = "config/taskList/"
+MATHJAX_WEB_PATH = "../web/"
 
 from crontab import CronTab
 from datetime import datetime, timedelta

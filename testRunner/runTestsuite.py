@@ -35,10 +35,11 @@ directory.
 """
 
 MAX_TEST_RESULTS_WITH_SAME_NAME = 100
+MATHJAX_WEB_PATH = "../web/"
+MATHJAX_TESTSUITE_PATH = "../testsuite/"
 
 from config import PERL
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
-from config import MATHJAX_WEB_PATH, MATHJAX_TESTSUITE_PATH
 from config import MATHJAX_WEB_URI
 
 from config import KNOWN_HOSTS, DEFAULT_SELENIUM_PORT

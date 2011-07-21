@@ -8,6 +8,7 @@ testRunner/parsetab.py
 web/.htaccess
 web/config.php
 web/docs/doxygen.cfg
+web/docs/doxygen.cfg.bak
 web/docs/doxygen/
 web/docs/html/
 web/reftestList.js
