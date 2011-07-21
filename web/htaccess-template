@@ -17,5 +17,5 @@ AuthUserFile QA_PASSWORD_FILE
 AuthGroupFile /dev/null
 AuthName "Secured Access to MathJax Testing Tools"
 AuthType Basic
-Require User MathJaxDev
+Require User QA_USER_NAME
 </Files>

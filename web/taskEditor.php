@@ -124,7 +124,6 @@
           } else if ($timeOut > 120) {
             $timeOut = 120;
           }
-          $timeOut *= 1000;
   
           $fullScreenMode = boolToString(isset($_POST['fullScreenMode']));
           $formatOutput = boolToString(isset($_POST['formatOutput']));

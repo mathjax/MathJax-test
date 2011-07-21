@@ -22,9 +22,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-SPHINXBUILD   = sphinx-build
-DOXYGEN       = doxygen
-DOT           = dot
+include ../../config
 
 all: doxygen html
 

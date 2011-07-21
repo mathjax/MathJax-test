@@ -152,7 +152,7 @@
           <p>
             <label>timeOut:
               <input name="timeOut" type="number" min="1" max="120"
-                     value="<?php echo $DEFAULT_TIMEOUT/1000?>"/> (seconds)
+                     value="<?php echo $DEFAULT_TIMEOUT?>"/> (seconds)
             </label>
           </p>
           <p>

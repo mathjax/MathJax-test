@@ -431,6 +431,7 @@ def main(aArgs, aTransmitToTaskHandler):
         timeOut = config.getint(section, "timeOut")
         if (timeOut == -1):
             timeOut = DEFAULT_TIMEOUT
+        timeOut = timeOut * 1000 # convert in ms
         fullScreenMode = config.getboolean(section, "fullScreenMode")
         formatOutput = config.getboolean(section, "formatOutput")
         compressOutput = config.getboolean(section, "compressOutput")

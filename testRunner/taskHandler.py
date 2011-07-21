@@ -40,6 +40,7 @@ The server handling the task list.
 Path to the taskList directory
 """
 
+from config import PYTHON
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import MATHJAX_WEB_PATH
 
@@ -728,7 +729,7 @@ class task:
         global gServer
         self.generateConfigFile()
         self.mExceptionMessage = None
-        self.mPopen = subprocess.Popen(['python', 'runTestsuite.py',
+        self.mPopen = subprocess.Popen([PYTHON, 'runTestsuite.py',
                                         '-c', self.getConfigPath(),
                                         '-o', self.mOutputDirectory,
                                         '-t'])
@@ -840,7 +841,7 @@ option values"
         @fn getScheduledCommand(self)
         @return the shell command to RESTART the task
         """
-        cmd = "python "
+        cmd = PYTHON + " "
         cmd += os.getcwdu() + "/taskEditor.py "
         cmd += "RESTART "
         cmd += self.mName

@@ -1,0 +1,35 @@
+###[bin]
+DOT           = dot
+DOXYGEN       = doxygen
+PERL          = perl
+PYTHON        = python
+SED           = sed
+SPHINXBUILD   = sphinx-build
+
+###[qa]
+QA_USER_NAME = username
+QA_PASSWORD_FILE = passwordfile
+
+###[task_handler]
+TASK_HANDLER_HOST = localhost
+TASK_HANDLER_PORT = 4445
+
+###[testing_instance]
+DEFAULT_TASK_NAME = experimentalTask
+KNOWN_HOSTS = localhost
+DEFAULT_SELENIUM_PORT = 4444
+DEFAULT_MATHJAX_PATH = http://localhost/MathJax/
+DEFAULT_MATHJAX_TEST_PATH = http://localhost/MathJax-test/testsuite/
+DEFAULT_TIMEOUT = 20
+
+BROWSER_LIST = Firefox, Safari, Chrome, Opera, MSIE, Konqueror
+OS_LIST = auto, Linux, Windows, Mac
+BROWSER_MODE_LIST = StandardMode, Quirks, IE7, IE8, IE9
+FONT_LIST = STIX, TeX, ImageTeX
+
+###[paths]
+MATHJAX_WEB_URI = http://localhost/MathJax-test/web/
+
+MATHJAX_WEB_PATH = ../web/
+MATHJAX_TESTSUITE_PATH = ../testsuite/
+DOXYGEN_CONFIG = doxygen.cfg

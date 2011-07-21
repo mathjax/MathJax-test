@@ -114,7 +114,7 @@ list:
   - ``mathJaxTestPath``: the absolute uri to a ``MathJax-test/testsuite/``
     directory containing the test pages.
   
-  - ``timeOut``: time in ms before aborting the loading of a page.
+  - ``timeOut``: time in seconds before aborting the loading of a page.
   
   - ``fullScreenMode``: indicates whether the browsers should be opened in full
     screen mode when possible.

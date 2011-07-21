@@ -84,8 +84,8 @@ the parser
 )
 """
 
-import ply.lex as lex
-import ply.yacc as yacc
+import lex
+import yacc
 import seleniumMathJax
 
 gSelenium = None
