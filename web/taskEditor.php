@@ -131,36 +131,21 @@
           $compressOutput = boolToString(isset($_POST['compressOutput']));
   
           $operatingSystem = selectToString($_POST['operatingSystem'],
-                                            array('auto',
-                                                  'Linux',
-                                                  'Windows',
-                                                  'Mac'));
+                                            $OS_LIST);
   
           $browser = selectToString($_POST['browser'],
-                                    array('Firefox',
-                                          'Safari',
-                                          'Chrome',
-                                          'Opera',
-                                          'MSIE',
-                                          'Konqueror'));
+                                    $BROWSER_LIST);
   
           if ($browser == "MSIE") {
             $browserMode = selectToString($_POST['browser'],
-                                          array('StandardMode',
-                                            'Quirks',
-                                            'IE7',
-                                            'IE8',
-                                            'IE9'));
+                                          $BROWSER_MODE_LIST);
           } else {
             $browserMode = "StandardMode";
           }
   
           $browserPath = "auto"; // $_POST['auto']
    
-          $font = selectToString($_POST['font'],
-                                 array('STIX',
-                                       'TeX',
-                                       'ImageTeX'));
+          $font = selectToString($_POST['font'], $FONT_LIST);
    
           $nativeMathML = boolToString(isset($_POST['nativeMathML']));
           $runSlowTests = boolToString(isset($_POST['runSlowTests']));

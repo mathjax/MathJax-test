@@ -1,0 +1,2 @@
+# Forbid everything in the testRunner/ directory
+Deny from all

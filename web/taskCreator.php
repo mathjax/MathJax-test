@@ -1,6 +1,13 @@
 <?php
   echo '<?xml version="1.0" encoding="UTF-8"?>';
   include('config.php');
+
+  function generateOptionList($aList)
+  {
+    for ($i = 0; $i < count($aList); $i++) {
+      echo '<option>'.$aList[$i].'</option>';
+    }
+  }
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -35,7 +42,7 @@
             <label>task name:
               <input name="taskName" type="text" required="required"
                      pattern="([a-z]|[A-Z]|[0-9]){1,20}"
-                     value="<?php echo $DEFAUL_TASK_NAME;?>"
+                     value="<?php echo $DEFAULT_TASK_NAME;?>"
                      maxlength="20"/></label> (alphanumeric)
           </p>
           <p>
@@ -120,11 +127,7 @@
                      maxlength="255"/>
             </label> (or choose among known hosts:
             <select id="host_select" onchange="updateHostField()">
-              <?php
-                for ($i = 0; $i < count($KNOWN_HOSTS); $i++) {
-                  echo "<option>".$KNOWN_HOSTS[$i]."</option>";
-                }
-              ?>
+              <?php generateOptionList($KNOWN_HOSTS); ?>
             </select>)
 
           </p>
@@ -174,33 +177,21 @@
           <p>
             <label>operatingSystem:
               <select name="operatingSystem">
-                <option>auto</option>
-                <option>Linux</option>
-                <option>Windows</option>
-                <option>Mac</option>
+                <?php generateOptionList($OS_LIST); ?>
               </select>
             </label>
           </p>
           <p>
             <label>browser:
               <select name="browser">
-                <option>Firefox</option>
-                <option>Safari</option>
-                <option>Chrome</option>
-                <option>Opera</option>
-                <option>MSIE</option>
-                <option>Konqueror</option>
+              <?php generateOptionList($BROWSER_LIST); ?>
               </select>
             </label>
           </p>
           <p>
             <label>browserMode (MSIE):
               <select name="browserMode">
-                <option>StandardMode</option>
-                <option>Quirks</option>
-                <option>IE7</option>
-                <option>IE8</option>
-                <option>IE9</option>
+              <?php generateOptionList($BROWSER_MODE_LIST); ?>
               </select>
             </label>
           </p>
@@ -213,9 +204,7 @@
           <p>
             <label>font:
               <select name="font">
-                <option>STIX</option>
-                <option>TeX</option>
-                <option>ImageTeX</option>
+              <?php generateOptionList($FONT_LIST); ?>
               </select>
             </label>
           </p>

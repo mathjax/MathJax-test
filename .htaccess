@@ -1,0 +1,2 @@
+# By default, we forbid everything
+Deny from all

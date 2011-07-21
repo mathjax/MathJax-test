@@ -1,8 +1,12 @@
 *.pyc
 *~
+testRunner/config.py
 testRunner/config/taskList/
 testRunner/parser.out
 testRunner/parsetab.py
+web/.htaccess
+web/config.php
 web/docs/doxygen/
 web/docs/html/
+web/reftestList.js
 web/results/

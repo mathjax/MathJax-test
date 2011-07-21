@@ -1,5 +1,5 @@
-# -*- Mode: Python; tab-width: 2; indent-tabs-mode:nil; -*-
-# vim: set ts=2 et sw=2 tw=80:
+#!gmake
+#
 # ***** BEGIN LICENSE BLOCK *****
 # Version: Apache License 2.0
 #
@@ -22,23 +22,18 @@
 #
 # ***** END LICENSE BLOCK *****
 
-"""
-@file config.py
-The file for the @ref config module.
+PYTHON   = python
 
-@package config
-This module contains general configuration for the task controller
-"""
+all: config doc
 
-TASK_HANDLER_HOST = "localhost"
-TASK_HANDLER_PORT = 4445
+config:
+	 # generate web/.htaccess, testRunner/config.py and web/config.php
+	python generateConfigFiles.py;
+	 # generate selectReftests.js
+	cd testRunner/; python runTestsuite.py -p ; cd -;
 
-KNOWN_HOSTS = ["fred-VirtualBox.local", "192.168.0.20"]
-DEFAULT_SELENIUM_PORT = 4444
-DEFAULT_MATHJAX_PATH = "http://localhost/MathJax/"
-DEFAULT_MATHJAX_TEST_PATH = "http://localhost/MathJax-test/testsuite/"
-DEFAULT_TIMEOUT = 20000
+doc:
+	 # build doxygen and html documentation
+	cd web/docs ; make; cd -;
 
-MATHJAX_WEB_URI = "http://localhost/MathJax-test/web/"
-MATHJAX_WEB_PATH = "../web/"
-MATHJAX_TESTSUITE_PATH = "../testsuite/"
+.PHONY: config doc

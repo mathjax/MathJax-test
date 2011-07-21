@@ -1,0 +1,4 @@
+# Give access to all the licenses/ directory
+<Limit GET>
+Allow from all
+</Limit>
