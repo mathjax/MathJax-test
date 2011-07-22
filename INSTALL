@@ -1,0 +1,12 @@
+**** INTALLATION ****
+
+1) cp default.cfg custom.cfg
+
+2) edit custom.cfg to parameter the testing framework. You should install the
+programs listed in the [bin] section and use htpasswd to create a user/password
+that matches the informations of the [qa] section. The http:// URI should also
+map to the corresponding directories.
+
+3) make config
+
+4) make doc

@@ -48,6 +48,7 @@ from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH
 from config import DEFAULT_TIMEOUT
 
 TASK_LIST_DIRECTORY = "config/taskList/"
+TASK_LIST_TXT = "taskList.txt"
 MATHJAX_WEB_PATH = "../web/"
 
 from crontab import CronTab
@@ -895,7 +896,11 @@ class taskHandler:
         @brief start the server
         """
         print "Task Handler started."
-        self.loadTaskList()
+        if (not os.path.exists(TASK_LIST_TXT)):
+            # save an empty task list
+            self.saveTaskList()
+        else:
+            self.loadTaskList()
         server = SocketServer.TCPServer((self.mHost, self.mPort),
                                         requestHandler)
 
@@ -953,7 +958,7 @@ class taskHandler:
         @fn loadTaskList(self)
         @brief Load the task list from taskList.txt
         """
-        fp = file("taskList.txt", "r")
+        fp = file(TASK_LIST_TXT, "r")
         line = fp.readline().strip()
         if (line == "TASK LIST NONEMPTY"):
             while line:
@@ -978,7 +983,7 @@ class taskHandler:
         @fn saveTaskList(self)
         @brief Save the task list in taskList.txt
         """
-        fp = file("taskList.txt", "w")
+        fp = file(TASK_LIST_TXT, "w")
         fp.write(self.getTaskList())
         fp.close()
 

@@ -22,15 +22,15 @@
 #
 # ***** END LICENSE BLOCK *****
 
-include config
+include custom.cfg
 
 all: config doc
 
 config:
 	@ echo 'Generate $(CONFIG_PY) and $(CONFIG_PHP)...'
-	@ $(SED) 's|###||' <config >config.tmp
+	@ $(SED) 's|###||' <custom.cfg >custom.cfg.tmp
 	@ $(PYTHON) generateConfigFiles.py
-	@ rm config.tmp
+	@ rm custom.cfg.tmp
 
 	@ echo 'Generate $(WEB_HTACCESS)...'
 	@ cp $(WEB_HTACCESS)-tpl $(WEB_HTACCESS)

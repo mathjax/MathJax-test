@@ -28,7 +28,7 @@ import sys
 import ConfigParser
 
 def parseStringArray(aValue):
-    return [string.strip(obj) for ind,obj in enumerate(aValue.split(","))]
+    return [string.strip(obj) for ind,obj in enumerate(aValue.split())]
 
 def declarePythonString(aStream, aName, aValue):
     print >>aStream, aName + " = '" + aValue + "'"
@@ -61,7 +61,7 @@ def declarePhpStringArray(aStream, aName, aValue):
 # Parse the config file
 configParser = ConfigParser.ConfigParser()
 configParser.optionxform = str # to preserve the case of parameter name
-configParser.readfp(open("config.tmp"))
+configParser.readfp(open("custom.cfg.tmp"))
 PYTHON = configParser.get("bin", "PYTHON")
 PERL = configParser.get("bin", "PERL")
 QA_USER_NAME = configParser.get("qa", "QA_USER_NAME")

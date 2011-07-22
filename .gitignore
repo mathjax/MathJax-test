@@ -1,11 +1,13 @@
 *.pyc
 *~
 .htpasswd
-testsuite/header.js
+custom.cfg
 testRunner/config.py
 testRunner/config/taskList/
 testRunner/parser.out
 testRunner/parsetab.py
+testRunner/taskList.txt
+testsuite/header.js
 web/.htaccess
 web/config.php
 web/docs/doxygen.cfg
