@@ -1,6 +1,7 @@
 *.pyc
 *~
 .htpasswd
+testsuite/header.js
 testRunner/config.py
 testRunner/config/taskList/
 testRunner/parser.out

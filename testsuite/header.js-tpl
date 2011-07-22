@@ -52,7 +52,7 @@
  * @var Boolean gErrorHandler
  * Whether the custom error handler should be used.
  */
-var gMathJaxPath;
+var gMathJaxPath = "DEFAULT_MATHJAX_PATH";
 var gMathJaxQueryString = "config=default";
 var gNativeMathML = false;
 var gFont = "STIX";
@@ -68,28 +68,6 @@ var gErrorHandler = false;
 function getCurrentPath()
 {
     return location.protocol + "//" + location.host + location.pathname;
-}
-
-/**
-  *  get the current directory of the test file, which is the current URI
-  *  without the file name.
-  *
-  *  @treturn String the directory
-  */
-function getCurrentDirectory()
-{
-    src = getCurrentPath();
-    return src.substring(0, src.lastIndexOf("/") + 1);
-}
-
-/**
- *  get the default MathJaxPath. It is determined by going to the same level as
- *  MathJax-test/.
- */
-function getDefaultMathJaxPath()
-{
-    src = getCurrentPath();
-    return src.substring(0, src.indexOf("MathJax-test")) + "MathJax/";
 }
 
 /**
@@ -327,7 +305,6 @@ function errorHandler(aErrorMessage, aURL, aLineNumber)
     return true;
 }
 
-gMathJaxPath = getDefaultMathJaxPath();
 parseQueryString();
 if (gErrorHandler) {
     window.onerror = errorHandler;
