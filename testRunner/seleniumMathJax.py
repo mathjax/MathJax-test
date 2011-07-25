@@ -36,7 +36,7 @@ import StringIO
 import base64
 import difflib
 import platform
-import selenium
+from selenium import selenium
 import string
 import time
 import urlparse
@@ -120,7 +120,7 @@ def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
     
     return startCommand
 
-class seleniumMathJax(selenium.selenium):
+class seleniumMathJax(selenium):
 
     """
     @class seleniumMathJax::seleniumMathJax
@@ -186,7 +186,7 @@ class seleniumMathJax(selenium.selenium):
         The dimension of reftest images. It is set to 800x1000 px, to follow
         the size of screenshots used by Mozilla
         """
-        selenium.selenium.__init__(self, aHost, aPort, aBrowserStartCommand,
+        selenium.__init__(self, aHost, aPort, aBrowserStartCommand,
                                    aMathJaxTestPath)
         self.mMathJaxPath = aMathJaxPath
         self.mMathJaxTestPath = aMathJaxTestPath
@@ -241,7 +241,7 @@ class seleniumMathJax(selenium.selenium):
                                       a.fragment))
 
         # open the page and wait for 'reftest-wait' removal
-        selenium.selenium.open(self, newURI)
+        selenium.open(self, newURI)
         self.wait_for_condition(
             "selenium.browserbot.getCurrentWindow().\
              document.documentElement.className != 'reftest-wait'",
@@ -258,7 +258,7 @@ class seleniumMathJax(selenium.selenium):
         @fn start(self)
         @brief start Selenium
         """
-        selenium.selenium.start(self)
+        selenium.start(self)
 
     def pre(self):
         """
@@ -407,7 +407,7 @@ class seleniumMathJax(selenium.selenium):
         @fn stop(self)
         @brief stop selenium
         """
-        # selenium.selenium.stop does not seem to close Konqueror/MSIE
+        # selenium.stop does not seem to close Konqueror/MSIE
         # correctly. Leave the browser manually instead.
         if (self.mBrowser == "Konqueror"):
             # Close the two windows with Ctrl+q
@@ -432,7 +432,7 @@ class seleniumMathJax(selenium.selenium):
             time.sleep(.1)
             time.sleep(4)
 
-        selenium.selenium.stop(self)
+        selenium.stop(self)
         
     def clearBrowserData(self):
         """

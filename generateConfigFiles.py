@@ -117,6 +117,7 @@ TESTSUITE_TOPDIR_LIST = \
 # Create testRunner/conditionParser.py
 f_in = open(CONDITION_PARSER + "-tpl", "r")
 f_out = open(CONDITION_PARSER, "w")
+print >>f_out, "# " + WARNING_GENERATED_FILE
 content = f_in.read()
 content = content.replace("OS_LIST", createLexExpression(OS_LIST))
 content = content.replace("BROWSER_LIST", createLexExpression(BROWSER_LIST))

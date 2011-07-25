@@ -67,9 +67,9 @@ INPUT = ../../web/ ../../testsuite/ ../../testRunner/ ./doxygenMain.txt' $(DOXYG
 	@ $(SED) -i '/FILE_PATTERNS / c\
 FILE_PATTERNS = *.py *.pl *.php *.js' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/EXCLUDE / c\
-EXCLUDE = ../../testRunner/parsetab.py ../../testRunner/selenium.py ../../testRunner/crontab.py ../../testRunner/lex.py ../../testRunner/yacc.py ../testRunner/config.py ../web/config.php' $(DOXYGEN_CONFIG)
+EXCLUDE = ../testRunner/parsetab.py ../testRunner/config.py ../web/config.php' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/FILTER_PATTERNS / c\
-FILTER_PATTERNS = *.py=doxypy *.js=./js2doxy.pl *.pl=doxygenfilter' $(DOXYGEN_CONFIG)
+FILTER_PATTERNS = *.py=$(DOXYGEN_PYTHON_FILTER) *.pl=$(DOXYGEN_PERL_FILER) *.js=$(DOXYGEN_JAVASCRIPT_FILTER)' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/FILTER_SOURCE_FILES / c\
 FILTER_SOURCE_FILES = YES' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/HTML_OUTPUT / c\
