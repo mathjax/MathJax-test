@@ -5,5 +5,3 @@ include LaTeXToMathML/reftest.list
 include MathMLToDisplay/reftest.list
 include Parsing/reftest.list
 include UI/reftest.list
-
-

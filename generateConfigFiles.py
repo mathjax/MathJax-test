@@ -57,6 +57,14 @@ def declarePhpStringArray(aStream, aName, aValue):
         for i in range(1, len(aValue)):
             aStream.write(",'" + aValue[i] + "'")
     aStream.write(");\n")
+
+def createLexExpression(aList):
+    v = ""
+    if (len(aList) > 0):
+        v = v + aList[0]
+        for i in range(1, len(aList)):
+            v = v + "|" + aList[i]
+    return v
     
 # Parse the config file
 configParser = ConfigParser.ConfigParser()
@@ -70,8 +78,8 @@ TASK_HANDLER_HOST = configParser.get("task_handler", "TASK_HANDLER_HOST")
 TASK_HANDLER_PORT = configParser.getint("task_handler", "TASK_HANDLER_PORT")
 
 DEFAULT_TASK_NAME = configParser.get("testing_instance", "DEFAULT_TASK_NAME")
-KNOWN_HOSTS = parseStringArray(configParser.get("testing_instance",
-                                                "KNOWN_HOSTS"))
+HOST_LIST = parseStringArray(configParser.get("testing_instance",
+                                              "HOST_LIST"))
 DEFAULT_SELENIUM_PORT = configParser.getint("testing_instance",
                                             "DEFAULT_SELENIUM_PORT")
 DEFAULT_MATHJAX_PATH = configParser.get("testing_instance",
@@ -83,27 +91,52 @@ DEFAULT_TIMEOUT = configParser.getint("testing_instance",
 
 BROWSER_LIST = parseStringArray(configParser.get("testing_instance",
                                                  "BROWSER_LIST"))
-OS_LIST = parseStringArray(configParser.get("testing_instance",
-                                            "OS_LIST"))
+OS_LIST = ["auto"]
+OS_LIST.extend(parseStringArray(configParser.get("testing_instance",
+                                                 "OS_LIST")))
+
 BROWSER_MODE_LIST = parseStringArray(configParser.get("testing_instance",
                                                       "BROWSER_MODE_LIST"))
 FONT_LIST = parseStringArray(configParser.get("testing_instance",
                                               "FONT_LIST"))
-WARNING = configParser.get("generated_files", "WARNING")
+CONDITION_PARSER = configParser.get("generated_files", "CONDITION_PARSER")
 CONFIG_PY = configParser.get("generated_files", "CONFIG_PY")
 CONFIG_PHP = configParser.get("generated_files", "CONFIG_PHP")
+
+WARNING_GENERATED_FILE = configParser.get("messages",
+                                          "WARNING_GENERATED_FILE")
+ERROR_CONNECTION_TASK_HANDLER = \
+    configParser.get("messages", "ERROR_CONNECTION_TASK_HANDLER")
+
 MATHJAX_WEB_URI = configParser.get("other", "MATHJAX_WEB_URI")
+MONTH_LIST = parseStringArray(configParser.get("other", "MONTH_LIST"))
+WEEKDAY_LIST = parseStringArray(configParser.get("other", "WEEKDAY_LIST"))
+TESTSUITE_TOPDIR_LIST = \
+    parseStringArray(configParser.get("other", "TESTSUITE_TOPDIR_LIST"))
+
+# Create testRunner/conditionParser.py
+f_in = open(CONDITION_PARSER + "-tpl", "r")
+f_out = open(CONDITION_PARSER, "w")
+content = f_in.read()
+content = content.replace("OS_LIST", createLexExpression(OS_LIST))
+content = content.replace("BROWSER_LIST", createLexExpression(BROWSER_LIST))
+content = content.replace("BROWSER_MODE_LIST",
+                          createLexExpression(BROWSER_MODE_LIST))
+content = content.replace("FONT_LIST", createLexExpression(FONT_LIST))
+f_out.write(content)
+f_out.close()
+f_in.close()
 
 # Create testRunner/config.py
 f_out = open(CONFIG_PY, "w")
-print >>f_out, "# " + WARNING
+print >>f_out, "# " + WARNING_GENERATED_FILE
 
 declarePythonString(f_out, "PYTHON", PYTHON)
 declarePythonString(f_out, "PERL", PERL)
 declarePythonString(f_out, "TASK_HANDLER_HOST", TASK_HANDLER_HOST)
 declarePythonInteger(f_out, "TASK_HANDLER_PORT", TASK_HANDLER_PORT)
 
-declarePythonStringArray(f_out, "KNOWN_HOSTS", KNOWN_HOSTS)
+declarePythonStringArray(f_out, "HOST_LIST", HOST_LIST)
 declarePythonInteger(f_out, "DEFAULT_SELENIUM_PORT", DEFAULT_SELENIUM_PORT)
 declarePythonString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
 declarePythonString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
@@ -111,19 +144,21 @@ declarePythonString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
 declarePythonInteger(f_out, "DEFAULT_TIMEOUT", DEFAULT_TIMEOUT)
 
 declarePythonString(f_out, "MATHJAX_WEB_URI", MATHJAX_WEB_URI)
+declarePythonStringArray(f_out, "MONTH_LIST", MONTH_LIST)
+declarePythonStringArray(f_out, "WEEKDAY_LIST", WEEKDAY_LIST)
 
 f_out.close()
 
 # Create web/config.php
 f_out = open(CONFIG_PHP, "w")
 print >>f_out, "<?php"
-print >>f_out, "/* " + WARNING + " */"
+print >>f_out, "/* " + WARNING_GENERATED_FILE + " */"
 
 declarePhpString(f_out, "TASK_HANDLER_HOST", TASK_HANDLER_HOST)
 declarePhpInteger(f_out, "TASK_HANDLER_PORT", TASK_HANDLER_PORT)
 
 declarePhpString(f_out, "DEFAULT_TASK_NAME", DEFAULT_TASK_NAME)
-declarePhpStringArray(f_out, "KNOWN_HOSTS", KNOWN_HOSTS)
+declarePhpStringArray(f_out, "HOST_LIST", HOST_LIST)
 declarePhpInteger(f_out, "DEFAULT_SELENIUM_PORT", DEFAULT_SELENIUM_PORT)
 declarePhpString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
 declarePhpString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
@@ -134,6 +169,13 @@ declarePhpStringArray(f_out, "BROWSER_LIST", BROWSER_LIST)
 declarePhpStringArray(f_out, "OS_LIST", OS_LIST)
 declarePhpStringArray(f_out, "BROWSER_MODE_LIST", BROWSER_MODE_LIST)
 declarePhpStringArray(f_out, "FONT_LIST", FONT_LIST)
+
+declarePhpString(f_out, "ERROR_CONNECTION_TASK_HANDLER",
+                 ERROR_CONNECTION_TASK_HANDLER)
+
+declarePhpStringArray(f_out, "MONTH_LIST", MONTH_LIST)
+declarePhpStringArray(f_out, "WEEKDAY_LIST", WEEKDAY_LIST)
+declarePhpStringArray(f_out, "TESTSUITE_TOPDIR_LIST", TESTSUITE_TOPDIR_LIST)
 
 print >>f_out, "?>"
 f_out.close()

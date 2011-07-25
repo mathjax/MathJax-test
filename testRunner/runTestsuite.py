@@ -42,7 +42,7 @@ from config import PERL
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import MATHJAX_WEB_URI
 
-from config import KNOWN_HOSTS, DEFAULT_SELENIUM_PORT
+from config import HOST_LIST, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH
 from config import DEFAULT_TIMEOUT
 
@@ -53,7 +53,6 @@ import errno
 import gzip
 import math
 import os
-import platform
 import re
 import reftest
 import seleniumMathJax
@@ -64,66 +63,16 @@ import sys
 import time
 import unittest
 
-def getOperatingSystem(aOperatingSystem):
-
+def boolToString(aBoolean):
     """
-    @fn getOperatingSystem(aOperatingSystem)
-    @brief get the operating system
+    @fn boolToString(aBoolean)
+    @brief A simple function to convert a boolean to a string
 
-    @param aOperatingSystem the name of an operating system or "auto"
-    @return the name of the operating system
-
-    @details The result used is the operating system if it specified or the
-    value of Python's platform.system()
+    @return the string "true" or "false"
     """
-
-    if aOperatingSystem != "auto":
-        return aOperatingSystem
-
-    return platform.system()
-
-def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
-
-    """
-    @fn getBrowserStartCommand(aBrowserPath, aOS, aBrowser)
-    @brief get the browser start command
-
-    @param aBrowserPath the path to the executable of the browser or "auto"
-    @param aOS the name of the operating system
-    @param aBrowser the name of the browser
-    @return the start command to be used by Selenium 
-
-    @details The return value is "*firefox", "*googlechrome", "*opera",
-    "*iexploreproxy", "*konqueror /usr/bin/konqueror" or "unknown" if the
-    browser was not recognized.
-    """
-
-    if aBrowser == "Firefox":
-        startCommand = "*firefox"
-    elif (aOS == "Windows" or aOS == "Mac") and aBrowser == "Safari":
-        startCommand = "*safariproxy"
-    elif aBrowser == "Chrome":
-        startCommand = "*googlechrome"
-    elif aBrowser == "Opera":
-        startCommand = "*opera"
-    elif aOS == "Windows" and aBrowser == "MSIE":
-        startCommand = "*iexploreproxy"
-    elif aOS == "Linux" and aBrowser == "Konqueror":
-        startCommand = "*konqueror"
-    else:
-        startCommand = "*custom"
-    
-    if aBrowserPath == "auto":
-        if startCommand == "*custom":
-            print >> sys.stderr, "Unknown browser"
-            return "unknown"
-
-        if aOS == "Linux" and aBrowser == "Konqueror":
-           startCommand = startCommand + " /usr/bin/konqueror" 
-    else:
-        startCommand = startCommand + " " + aBrowserPath
-    
-    return startCommand
+    if aBoolean:
+        return "true"
+    return "false"
 
 def resultsExist(aName):
     """
@@ -167,17 +116,6 @@ def getOutputFileName(aDirectory, aSelenium, aDoNotOverwrite):
         name += "-" + str(i)
 
     return name
-
-def boolToString(aBoolean):
-    """
-    @fn boolToString(aBoolean)
-    @brief A simple function to convert a boolean to a string
-
-    @return the string "true" or "false"
-    """
-    if aBoolean:
-        return "true"
-    return "false"
 
 def gzipFile(aFile):
     """
@@ -420,7 +358,7 @@ def main(aArgs, aTransmitToTaskHandler):
         section = "framework"
         host = config.get(section, "host")
         if (host == "default"):
-            host = KNOWN_HOSTS[0]
+            host = HOST_LIST[0]
         port = config.getint(section, "port")
         if (port == -1):
             port = DEFAULT_SELENIUM_PORT
@@ -440,8 +378,9 @@ def main(aArgs, aTransmitToTaskHandler):
 
         # platform section
         section = "platform"
-        operatingSystem = getOperatingSystem(config.get(section,
-                                                        "operatingSystem"))
+        operatingSystem = \
+            seleniumMathJax.getOperatingSystem(config.get(section,
+                                                          "operatingSystem"))
         browserList = config.get(section, "browser").split()
         browserModeList = config.get(section, "browserMode").split()
         browserPath = config.get(section, "browserPath")
@@ -481,9 +420,9 @@ def main(aArgs, aTransmitToTaskHandler):
                 for browserMode in browserModeList2:
 
                     browserStartCommand = \
-                        getBrowserStartCommand(browserPath,
-                                               operatingSystem,
-                                               browser)
+                        seleniumMathJax.getBrowserStartCommand(browserPath,
+                                                               operatingSystem,
+                                                               browser)
 
                     if browserStartCommand != "unknown":
 

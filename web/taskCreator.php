@@ -1,7 +1,42 @@
 <?php
+/* -*- Mode: PHP; tab-width: 2; indent-tabs-mode:nil; -*- */
+/* vim: set ts=2 et sw=2 tw=80: */
+/* ***** BEGIN LICENSE BLOCK *****
+/* Version: Apache License 2.0
+ *
+ * Copyright (c) 2011 Design Science, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Contributor(s):
+ *   Frederic Wang <fred.wang@free.fr> (original author)
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+/**
+ *  @file taskCreator.php
+ *  @brief This file contains a form to create a new task
+ *  
+ */
+
   echo '<?xml version="1.0" encoding="UTF-8"?>';
   include('config.php');
 
+  /**
+   *  @fn generateOptionList($aList)
+   *  @brief write several a list of &lt;option&gt;...&lt;/option&gt; 
+   *  @param aList list of options
+   */
   function generateOptionList($aList)
   {
     for ($i = 0; $i < count($aList); $i++) {
@@ -61,13 +96,7 @@
             <span>day: 
             <select name="crontabDow">
               <option>*</option>
-              <option>Monday</option>
-              <option>Tuesday</option>
-              <option>Wednesday</option>
-              <option>Thursday</option>
-              <option>Friday</option>
-              <option>Saturday</option>
-              <option>Sunday</option>
+              <?php generateOptionList($WEEKDAY_LIST); ?>
             </select>
             <select name="crontabDom">
               <option>*</option>
@@ -79,18 +108,7 @@
             </select>
             <select name="crontabMon">
               <option>*</option>
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
+              <?php generateOptionList($MONTH_LIST); ?>
             </select>
             </span>
             <span>time:
@@ -127,7 +145,7 @@
                      maxlength="255"/>
             </label> (or choose among known hosts:
             <select id="host_select" onchange="updateHostField()">
-              <?php generateOptionList($KNOWN_HOSTS); ?>
+              <?php generateOptionList($HOST_LIST); ?>
             </select>)
 
           </p>

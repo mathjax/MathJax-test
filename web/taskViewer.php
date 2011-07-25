@@ -38,6 +38,26 @@
 
   echo '<?xml version="1.0" encoding="UTF-8"?>';
   include('config.php');
+
+  /**
+   *  @brief print HTML code to generate a command button.
+   *  @param aTaskName name of the task to control
+   *  @param aCommand name of the command to execute
+   */
+  function commandButton($aTaskName, $aCommand)
+  {
+  $c = strtolower($aCommand);
+
+  echo '<form action="taskEditor.php" method="post">';
+  echo '<input name="command" type="text" readonly="readonly"';
+  echo       ' value="'.$aCommand.'" class="hiddenField"/>';
+  echo '<input name="taskName" type="text" readonly="readonly"';
+  echo       ' value="'.$aTaskName.'" class="hiddenField"/>';
+  echo '<input type="submit" value="" class="submitField"';
+  echo       ' style="background-image: url(icons/'.$c.'.png)" ';
+  echo       ' title="'.$c.' task" />';
+  echo '</form>';
+  }
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -71,21 +91,6 @@
       </h1>
 
       <?php
-        function commandButton($aTaskName, $aCommand)
-        {
-          $c = strtolower($aCommand);
-
-          echo '<form action="taskEditor.php" method="post">';
-          echo '<input name="command" type="text" readonly="readonly"';
-          echo       ' value="'.$aCommand.'" class="hiddenField"/>';
-          echo '<input name="taskName" type="text" readonly="readonly"';
-          echo       ' value="'.$aTaskName.'" class="hiddenField"/>';
-          echo '<input type="submit" value="" class="submitField"';
-          echo       ' style="background-image: url(icons/'.$c.'.png)" ';
-          echo       ' title="'.$c.' task" />';
-          echo '</form>';
-        }
-
         $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
         if ($file) {
           fwrite($file, "TASKVIEWER\n");
@@ -166,7 +171,7 @@
             fclose($file);
           }
         } else {
-          echo '<p>Could not connect to the task handler.</p>';
+            echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
         }
       ?>
 

@@ -42,10 +42,10 @@ Path to the taskList directory
 
 from config import PYTHON
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
-
-from config import KNOWN_HOSTS, DEFAULT_SELENIUM_PORT
+from config import HOST_LIST, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH 
 from config import DEFAULT_TIMEOUT
+from config import MONTH_LIST, WEEKDAY_LIST
 
 TASK_LIST_DIRECTORY = "config/taskList/"
 TASK_LIST_TXT = "taskList.txt"
@@ -551,8 +551,7 @@ class task:
         if (items[4] == "*"):
             date += "******"
         else:
-            date += ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
-                     "Saturday", "Sunday"][int(items[4]) - 1]
+            date += WEEKDAY_LIST[int(items[4]) - 1]
 
         date += " "
 
@@ -566,9 +565,7 @@ class task:
         if (items[3] == "*"):
             date += "******"
         else:
-            date += ["January", "February", "March", "April", "May", "June",
-                     "August", "September", "October", "November", "December"
-                     ][int(items[3]) - 1]
+            date += MONTH_LIST[int(items[3]) - 1]
 
         date += " ; "
 
@@ -783,7 +780,7 @@ option values"
               parameterName == "startID"):
             if (parameterValue == "default"):
                 if (parameterName == "host"):
-                    parameterValue = KNOWN_HOSTS[0]
+                    parameterValue = HOST_LIST[0]
                 elif (parameterName == "mathJaxPath"):
                     parameterValue = DEFAULT_MATHJAX_PATH
                 else: # mathJaxTestPath

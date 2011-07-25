@@ -35,6 +35,7 @@ from PIL import Image, ImageChops
 import StringIO
 import base64
 import difflib
+import platform
 import selenium
 import string
 import time
@@ -57,6 +58,67 @@ VK_F4 = 115
 VK_F11 = 122
 VK_F12 = 123
 VK_DELETE =	127
+
+def getOperatingSystem(aOperatingSystem):
+
+    """
+    @fn getOperatingSystem(aOperatingSystem)
+    @brief get the operating system
+
+    @param aOperatingSystem the name of an operating system or "auto"
+    @return the name of the operating system
+
+    @details The result used is the operating system if it specified or the
+    value of Python's platform.system()
+    """
+
+    if aOperatingSystem != "auto":
+        return aOperatingSystem
+
+    return platform.system()
+
+def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
+
+    """
+    @fn getBrowserStartCommand(aBrowserPath, aOS, aBrowser)
+    @brief get the browser start command
+
+    @param aBrowserPath the path to the executable of the browser or "auto"
+    @param aOS the name of the operating system
+    @param aBrowser the name of the browser
+    @return the start command to be used by Selenium 
+
+    @details The return value is "*firefox", "*googlechrome", "*opera",
+    "*iexploreproxy", "*konqueror /usr/bin/konqueror" or "unknown" if the
+    browser was not recognized.
+    """
+
+    if aBrowser == "Firefox":
+        startCommand = "*firefox"
+    elif (aOS == "Windows" or aOS == "Mac") and aBrowser == "Safari":
+        startCommand = "*safariproxy"
+    elif aBrowser == "Chrome":
+        startCommand = "*googlechrome"
+    elif aBrowser == "Opera":
+        startCommand = "*opera"
+    elif aOS == "Windows" and aBrowser == "MSIE":
+        startCommand = "*iexploreproxy"
+    elif aOS == "Linux" and aBrowser == "Konqueror":
+        startCommand = "*konqueror"
+    else:
+        startCommand = "*custom"
+    
+    if aBrowserPath == "auto":
+        if startCommand == "*custom":
+            print >> sys.stderr, "Unknown browser"
+            return "unknown"
+
+        if aOS == "Linux" and aBrowser == "Konqueror":
+           startCommand = startCommand + " /usr/bin/konqueror" 
+    else:
+        startCommand = startCommand + " " + aBrowserPath
+    
+    return startCommand
 
 class seleniumMathJax(selenium.selenium):
 

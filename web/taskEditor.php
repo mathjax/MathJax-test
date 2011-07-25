@@ -26,16 +26,74 @@
 /**
  *  @file taskEditor.php
  *  @brief Sends editing command to the task handler
- *
  *  
  */
 
-  if (!isset($_POST['command']) || !isset($_POST['taskName'])) {
-    header('Location: taskViewer.php');
-    exit;
+if (!isset($_POST['command']) || !isset($_POST['taskName'])) {
+  header('Location: taskViewer.php');
+  exit;
+}
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+include('config.php');
+
+/**
+ *  @brief convert a boolean value to a string
+ *  @param aValue boolean value to convert
+ *  @return 'true' or 'false'
+ */
+function boolToString($aValue)
+{
+  return $aValue ? 'true' : 'false';
+}
+
+/**
+ *  @brief convert a string from a select form into a valid string
+ *  @param aValue string value to convert
+ *  @param aSelectValues possible values of the select form
+ *  @return aValue if it is found in aSelectValues, or the first element of
+ *          aSelectValues otherwise.
+ *  
+ */
+function selectToString($aValue, $aSelectValues)
+{
+  if (!in_array($aValue, $aSelectValues)) {
+    $aValue = $aSelectValues[0];
   }
-  echo '<?xml version="1.0" encoding="UTF-8"?>';
-  include('config.php');
+  return $aValue;
+}
+
+/**
+ * @fn selectToCronItem($aValue, $aSelectValues)
+ * @brief convert a string from a select form into a cron item
+ * @param aValue string value to convert
+ * @param aSelectValues possible values of the select form (minus the first
+          item, which is always "*")
+ * @return a string representing the index of aValue in the select form, if it
+           is found in aSelectValues, or "*" otherwise.
+ */
+function selectToCronItem($aValue, $aSelectValues)
+{
+  for ($i = 0; $i < count($aSelectValues); $i++) {
+    if ($aSelectValues[$i] == $aValue) {
+      return strval(1 + $i);
+    }
+  }
+  return "*";
+}
+
+/**
+ *  @fn truncateString($aValue, $aMaxLength)
+ *  @brief truncate a string
+ *  @param aValue the string to truncate
+ *  @param aMaxLength maximum length of the result
+ *  @return the longest prefix of the string with at most aMaxLength
+ *          characters
+ */
+function truncateString($aValue, $aMaxLength)
+{
+  return substr($aValue, 0, $aMaxLength);
+}
+
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -62,34 +120,6 @@
       <h1>Task Editor</h1>
 
      <?php
-        function boolToString($aPostValue)
-        {
-          return $aPostValue ? 'true' : 'false';
-        }
-
-        function selectToString($aPostValue, $aSelectValues)
-        {
-          if (!in_array($aPostValue, $aSelectValues)) {
-            $aPostValue = $aSelectValues[0];
-          }
-          return $aPostValue;
-        }
-
-        function selectToCronItem($aPostValue, $aSelectValues)
-        {
-          for ($i = 0; $i < count($aSelectValues); $i++) {
-             if ($aSelectValues[$i] == $aPostValue) {
-               return strval(1 + $i);
-             }
-          }
-          return "*";
-        }
-
-        function truncateString($aString, $aMaxLength)
-        {
-          return substr($aString, 0, $aMaxLength);
-        }
-
         $taskName = truncateString($_POST['taskName'], 50);
 
         if ($_POST['command'] == 'ADD') {
@@ -101,9 +131,9 @@
           }
 
           if (isset($_POST['port'])) {
-            $port = $_POST['port'];
+            $port = intval($_POST['port']);
           } else {
-            $port = strval($DEFAULT_SELENIUM_PORT);
+            $port = $DEFAULT_SELENIUM_PORT;
           }
 
           if (isset($_POST['mathJaxPath'])) {
@@ -132,8 +162,7 @@
           $operatingSystem = selectToString($_POST['operatingSystem'],
                                             $OS_LIST);
   
-          $browser = selectToString($_POST['browser'],
-                                    $BROWSER_LIST);
+          $browser = selectToString($_POST['browser'], $BROWSER_LIST);
   
           if ($browser == "MSIE") {
             $browserMode = selectToString($_POST['browser'],
@@ -165,26 +194,9 @@
             $taskSchedule .= truncateString($_POST['crontabH'], 2).",";
             $taskSchedule .= truncateString($_POST['crontabDom'], 2).",";
             $taskSchedule .= selectToCronItem($_POST['crontabMon'],
-                                             array('January',
-                                                   'February',
-                                                   'March',
-                                                   'April',
-                                                   'May',
-                                                   'June',
-                                                   'July',
-                                                   'August',
-                                                   'September',
-                                                   'October',
-                                                   'November',
-                                                   'December')).",";
+                                              $MONTH_LIST).",";
             $taskSchedule .= selectToCronItem($_POST['crontabDow'],
-                                             array('Monday',
-                                                   'Tuesday',
-                                                   'Wednesday',
-                                                   'Thursday',
-                                                   'Friday',
-                                                   'Saturday',
-                                                   'Sunday'));
+                                              $WEEKDAY_LIST);
           } else {
             $taskSchedule = "None";
           }
@@ -194,11 +206,11 @@
              fwrite($file, "TASKEDITOR ADD ".$taskName." None ".
                            $outputDirectory." ".$taskSchedule."\n".
                            "host=".$host."\n".
-                           "port=".$port."\n".
+                           "port=".strval($port)."\n".
                            "mathJaxPath=".$mathJaxPath."\n".
                            "mathJaxTestPath=".$mathJaxTestPath."\n".
                            "mathJaxTestPath=".$mathJaxTestPath."\n".
-                           "timeOut=".$timeOut."\n".
+                           "timeOut=".strval($timeOut)."\n".
                            "fullScreenMode=".$fullScreenMode."\n".
                            "formatOutput=".$formatOutput."\n".
                            "compressOutput=".$compressOutput."\n".
@@ -216,7 +228,7 @@
              echo trim(fgets($file));
              fclose($file);
           } else {
-            echo '<p>Could not connect to the task handler.</p>';
+            echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
           }
         } else if ($_POST['command'] == 'REMOVE' ||
                    $_POST['command'] == 'RUN' ||
@@ -228,10 +240,8 @@
              echo trim(fgets($file));
              fclose($file);
           } else {
-            echo '<p>Could not connect to the task handler.</p>';
+            echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
           }
-        } else {
-          echo '<p>Unknown command "'.$_POST['command'].'"</p>';
         }
         ?>
 

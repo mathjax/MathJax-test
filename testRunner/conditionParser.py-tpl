@@ -124,31 +124,31 @@ t_OR = r"\|\|"
 t_LEFTPARENTHESIS = r"\("
 t_RIGHTPARENTHESIS = r"\)"
 
-## Windows, Linux or Mac
+## Operating system
 def t_OPERATINGSYSTEM(t):
-    r"Windows|Linux|Mac"
+    r"OS_LIST"
     t.value = (gSelenium == None or t.value == gSelenium.mOperatingSystem)
     return t
 
-##  Firefox, Safari, Chrome, Opera, MSIE or Konqueror
+## Browser
 def t_BROWSER(t):
-    r"Firefox|Safari|Chrome|Opera|MSIE|Konqueror"
+    r"BROWSER_LIST"
     t.value = (gSelenium == None or t.value == gSelenium.mBrowser)
     return t
 
-## StandardMode, Quirks, IE7, IE8 or IE9
+## Browser mode
 def t_BROWSERMODE(t):
-    r"StandardMode|Quirks|IE7|IE8|IE9"
+    r"BROWSER_MODE_LIST"
     t.value = (gSelenium == None or t.value == gSelenium.mBrowserMode)
     return t
 
-## STIX, TeX or ImageTeX
+## Font
 def t_FONT(t):
-    r"STIX|TeX|ImageTeX"
+    r"FONT_LIST"
     t.value = (gSelenium == None or t.value == gSelenium.mFont)
     return t
 
-##  nativeMathML
+## Native MathML
 def t_NATIVEMATHML(t):
     r"nativeMathML"
     t.value = (gSelenium == None or gSelenium.mNativeMathML)

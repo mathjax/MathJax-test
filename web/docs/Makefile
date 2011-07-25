@@ -22,11 +22,12 @@
 #
 # ***** END LICENSE BLOCK *****
 
-include ../../config
+include ../../custom.cfg
 
 all: doxygen html
 
 doxygen:
+	rm -rf doxygen/
 	$(DOXYGEN) doxygen.cfg
 
 diagrams:

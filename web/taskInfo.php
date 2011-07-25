@@ -64,7 +64,6 @@
       <h1>Task Info</h1>
 
       <?php
-             
           $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
           if ($file) {
              fwrite($file, "TASKINFO ".$_GET['taskName']."\n");
@@ -73,9 +72,8 @@
              }
              fclose($file);
           } else {
-            echo '<p>Could not connect to the task handler.</p>';
+            echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
           }
-
       ?>
     </div>
   </body>

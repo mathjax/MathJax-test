@@ -27,7 +27,7 @@ include custom.cfg
 all: config doc
 
 config:
-	@ echo 'Generate $(CONFIG_PY) and $(CONFIG_PHP)...'
+	@ echo 'Generate $(CONDITION_PARSER), $(CONFIG_PY) and $(CONFIG_PHP)...'
 	@ $(SED) 's|###||' <custom.cfg >custom.cfg.tmp
 	@ $(PYTHON) generateConfigFiles.py
 	@ rm custom.cfg.tmp
@@ -35,23 +35,23 @@ config:
 	@ echo 'Generate $(WEB_HTACCESS)...'
 	@ cp $(WEB_HTACCESS)-tpl $(WEB_HTACCESS)
 	@ $(SED) -i '1i\
-# $(WARNING)' $(WEB_HTACCESS)
+# $(WARNING_GENERATED_FILE)' $(WEB_HTACCESS)
 	@ $(SED) -i 's|QA_USER_NAME|$(QA_USER_NAME)|' $(WEB_HTACCESS)
 	@ $(SED) -i 's|QA_PASSWORD_FILE|$(QA_PASSWORD_FILE)|' $(WEB_HTACCESS)
-
-	@ echo 'Generate $(WEB_REFTEST_LIST)...'
-	@  cd testRunner/; $(PYTHON) runTestsuite.py -p > /dev/null
 
 	@ echo 'Generate $(TESTSUITE_HEADER)'
 	@ cp $(TESTSUITE_HEADER)-tpl $(TESTSUITE_HEADER)
 	@ $(SED) -i '1i\
-/* $(WARNING) */'  $(TESTSUITE_HEADER)
+/* $(WARNING_GENERATED_FILE) */' $(TESTSUITE_HEADER)
 	@ $(SED) -i 's|DEFAULT_MATHJAX_PATH|$(DEFAULT_MATHJAX_PATH)|' $(TESTSUITE_HEADER)
 
+	@ echo 'Generate $(WEB_REFTEST_LIST)...'
+	@ cd testRunner/; $(PYTHON) runTestsuite.py -p > /dev/null
+
 	@ echo 'Generate $(DOXYGEN_CONFIG)...'
-	@  $(DOXYGEN) -s -g $(DOXYGEN_CONFIG) > /dev/null
+	@ $(DOXYGEN) -s -g $(DOXYGEN_CONFIG) > /dev/null
 	@ $(SED) -i '1i\
-# $(WARNING)' $(DOXYGEN_CONFIG)
+# $(WARNING_GENERATED_FILE)' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/PROJECT_NAME / c\
 PROJECT_NAME = MathJax-test/' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/INLINE_INHERITED_MEMB / c\
@@ -63,9 +63,11 @@ HIDE_UNDOC_MEMBERS = YES' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/SHOW_DIRECTORIES / c\
 SHOW_DIRECTORIES = YES' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/INPUT / c\
-INPUT = ../../web/ ../../testsuite/ ../../testRunner/' $(DOXYGEN_CONFIG)
+INPUT = ../../web/ ../../testsuite/ ../../testRunner/ ./doxygenMain.txt' $(DOXYGEN_CONFIG)
+	@ $(SED) -i '/FILE_PATTERNS / c\
+FILE_PATTERNS = *.py *.pl *.php *.js' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/EXCLUDE / c\
-EXCLUDE = ../../testRunner/parsetab.py ../../testRunner/selenium.py ../../testRunner/crontab.py ../../testRunner/lex.py ../../testRunner/yacc.py ' $(DOXYGEN_CONFIG)
+EXCLUDE = ../../testRunner/parsetab.py ../../testRunner/selenium.py ../../testRunner/crontab.py ../../testRunner/lex.py ../../testRunner/yacc.py ../testRunner/config.py ../web/config.php' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/FILTER_PATTERNS / c\
 FILTER_PATTERNS = *.py=doxypy *.js=./js2doxy.pl *.pl=doxygenfilter' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/FILTER_SOURCE_FILES / c\
