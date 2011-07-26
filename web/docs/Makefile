@@ -23,7 +23,6 @@
 # ***** END LICENSE BLOCK *****
 
 include ../../custom.cfg
-PERL5LIB:=$(PERL5LIB):/home/dessci/testing-deps/doxyperl/lib/
 
 all: doxygen html
 
