@@ -23,6 +23,7 @@
 # ***** END LICENSE BLOCK *****
 
 include ../../custom.cfg
+PERL5LIB:=$(PERL5LIB):/home/dessci/testing-deps/doxyperl/lib/
 
 all: doxygen html
 
@@ -31,6 +32,7 @@ doxygen:
 	$(DOXYGEN) doxygen.cfg
 
 diagrams:
+	mkdir -p html
 	$(DOT) -Tsvg source/testing-framework.dot > html/testing-framework.svg
 
 html: source diagrams

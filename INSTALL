@@ -1,6 +1,6 @@
 **** DEPENDENCIES ****
 
-- The [bin] section of the configuration file contains various program required
+- The [bin] section of the configuration file contains various programs required
   by the testing framework.
 
 - You should install some Python libraries:
