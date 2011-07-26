@@ -53,6 +53,7 @@ import errno
 import gzip
 import math
 import os
+import platform
 import re
 import reftest
 import seleniumMathJax
@@ -225,8 +226,8 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
     aSuite.printInfo("Starting Testing Instance ; " + startTime.isoformat())
     interrupted = False
     try:
-        aSuite.printInfo("host =" + str(aSelenium.host))
-        aSuite.printInfo("port =" + str(aSelenium.port))
+        aSuite.printInfo("host =" + str(aSelenium.mHost))
+        aSuite.printInfo("port =" + str(aSelenium.mPort))
         aSuite.printInfo("mathJaxPath = " + aSelenium.mMathJaxPath)
         aSuite.printInfo("mathJaxTestPath = " + aSelenium.mMathJaxTestPath)
         aSuite.printInfo("operatingSystem = " + aSelenium.mOperatingSystem)
@@ -372,15 +373,16 @@ def main(aArgs, aTransmitToTaskHandler):
         if (timeOut == -1):
             timeOut = DEFAULT_TIMEOUT
         timeOut = timeOut * 1000 # convert in ms
+        useWebDriver = config.getboolean(section, "useWebDriver")
         fullScreenMode = config.getboolean(section, "fullScreenMode")
         formatOutput = config.getboolean(section, "formatOutput")
         compressOutput = config.getboolean(section, "compressOutput")
 
         # platform section
         section = "platform"
-        operatingSystem = \
-            seleniumMathJax.getOperatingSystem(config.get(section,
-                                                          "operatingSystem"))
+        operatingSystem = config.get(section, "operatingSystem")
+        if (operatingSystem == "auto"):
+            operatingSystem = platform.system()
         browserList = config.get(section, "browser").split()
         browserModeList = config.get(section, "browserMode").split()
         browserPath = config.get(section, "browserPath")
@@ -420,15 +422,17 @@ def main(aArgs, aTransmitToTaskHandler):
                 for browserMode in browserModeList2:
 
                     browserStartCommand = \
-                        seleniumMathJax.getBrowserStartCommand(browserPath,
+                        seleniumMathJax.getBrowserStartCommand(useWebDriver,
+                                                               browserPath,
                                                                operatingSystem,
                                                                browser)
 
-                    if browserStartCommand != "unknown":
+                    if browserStartCommand != None:
 
                         # Create a Selenium instance
                         selenium = \
-                            seleniumMathJax.seleniumMathJax(host,
+                            seleniumMathJax.seleniumMathJax(useWebDriver,
+                                                            host,
                                                             port,
                                                             mathJaxPath,
                                                             mathJaxTestPath,

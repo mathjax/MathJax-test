@@ -89,8 +89,10 @@
           </p>
           <p>
             <label>schedule task:
-              <input id="scheduled" name="taskSchedule" type="checkbox"
-                     onchange="updateScheduleFieldVisibility()"/>
+              <input id="taskSchedule" name="taskSchedule" type="checkbox"
+                     onchange="updateFieldVisibility('taskSchedule',
+                                                     'crontabParameters',
+                                                     true)"/>
             </label>
             <span id="crontabParameters" style="visibility: hidden;">
             <span>day: 
@@ -144,7 +146,8 @@
                      value=""
                      maxlength="255"/>
             </label> (or choose among known hosts:
-            <select id="host_select" onchange="updateHostField()">
+            <select id="host_select"
+                    onchange="updateFieldValue('host_select', 'host')">
               <?php generateOptionList($HOST_LIST); ?>
             </select>)
 
@@ -174,9 +177,16 @@
             </label>
           </p>
           <p>
+            <label>use WebDriver (Selenium 2, experimental):
+              <input id="useWebDriver" name="useWebDriver" type="checkbox"
+                     onchange="updateFieldVisibility('useWebDriver',
+                                                     'fullScreenMode', false)"/>
+            </label>
+          <span id="fullScreenMode">
             <label>fullScreenMode:
               <input name="fullScreenMode" type="checkbox" checked="checked"/>
             </label>
+          </span>
           </p>
           <p>
             <label>formatOutput:

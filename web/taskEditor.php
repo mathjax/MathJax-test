@@ -155,7 +155,9 @@ function truncateString($aValue, $aMaxLength)
             $timeOut = 120;
           }
   
+          $useWebDriver = boolToString(isset($_POST['useWebDriver']));
           $fullScreenMode = boolToString(isset($_POST['fullScreenMode']));
+
           $formatOutput = boolToString(isset($_POST['formatOutput']));
           $compressOutput = boolToString(isset($_POST['compressOutput']));
   
@@ -211,6 +213,7 @@ function truncateString($aValue, $aMaxLength)
                            "mathJaxTestPath=".$mathJaxTestPath."\n".
                            "mathJaxTestPath=".$mathJaxTestPath."\n".
                            "timeOut=".strval($timeOut)."\n".
+                           "useWebDriver=".$useWebDriver."\n".
                            "fullScreenMode=".$fullScreenMode."\n".
                            "formatOutput=".$formatOutput."\n".
                            "compressOutput=".$compressOutput."\n".

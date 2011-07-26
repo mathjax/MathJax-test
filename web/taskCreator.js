@@ -29,20 +29,20 @@
  *  This file is used by taskCreator.php
  */
 
-function updateScheduleFieldVisibility()
+function updateFieldVisibility(aCheckboxId, aFieldId, aCond)
 {
-    el = document.getElementById("crontabParameters");
-    if (document.getElementById("scheduled").checked) {
+    el = document.getElementById(aFieldId);
+    if (document.getElementById(aCheckboxId).checked == aCond) {
         el.style.visibility = "visible";
     } else {
         el.style.visibility = "hidden";
     }
 }
 
-function updateHostField()
+function updateFieldValue(aSelectId, aFieldId)
 {
-    document.getElementById("host").value =
-        document.getElementById("host_select").value
+    document.getElementById(aFieldId).value =
+        document.getElementById(aSelectId).value
 }
 
 function openReftestSelector()
@@ -52,6 +52,7 @@ function openReftestSelector()
 
 function init()
 {
-    updateScheduleFieldVisibility();
-    updateHostField();
+    updateFieldVisibility("taskSchedule", "crontabParameters", true);
+    updateFieldVisibility("useWebDriver", "fullScreenMode", false);
+    updateFieldValue("host_select", "host");
 }

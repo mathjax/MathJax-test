@@ -35,8 +35,7 @@ from PIL import Image, ImageChops
 import StringIO
 import base64
 import difflib
-import platform
-from selenium import selenium
+from selenium import webdriver, selenium
 import string
 import time
 import urlparse
@@ -59,25 +58,7 @@ VK_F11 = 122
 VK_F12 = 123
 VK_DELETE =	127
 
-def getOperatingSystem(aOperatingSystem):
-
-    """
-    @fn getOperatingSystem(aOperatingSystem)
-    @brief get the operating system
-
-    @param aOperatingSystem the name of an operating system or "auto"
-    @return the name of the operating system
-
-    @details The result used is the operating system if it specified or the
-    value of Python's platform.system()
-    """
-
-    if aOperatingSystem != "auto":
-        return aOperatingSystem
-
-    return platform.system()
-
-def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
+def getBrowserStartCommand(aUseWebDriver, aBrowserPath, aOS, aBrowser):
 
     """
     @fn getBrowserStartCommand(aBrowserPath, aOS, aBrowser)
@@ -92,6 +73,19 @@ def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
     "*iexploreproxy", "*konqueror /usr/bin/konqueror" or "unknown" if the
     browser was not recognized.
     """
+
+    if aUseWebDriver:
+        if aBrowser == "Firefox":
+            return webdriver.DesiredCapabilities.FIREFOX
+        elif aBrowser == "Chrome":
+            return webdriver.DesiredCapabilities.CHROME
+        elif aOS == "Windows" and aBrowser == "MSIE":
+            return webdriver.DesiredCapabilities.INTERNETEXPLORER
+        elif aBrowser == "Opera":
+            return webdriver.DesiredCapabilities.OPERA
+        else:
+            print >> sys.stderr, "Unknown browser"
+            return None
 
     if aBrowser == "Firefox":
         startCommand = "*firefox"
@@ -111,23 +105,24 @@ def getBrowserStartCommand(aBrowserPath, aOS, aBrowser):
     if aBrowserPath == "auto":
         if startCommand == "*custom":
             print >> sys.stderr, "Unknown browser"
-            return "unknown"
-
+            return None
+        
         if aOS == "Linux" and aBrowser == "Konqueror":
-           startCommand = startCommand + " /usr/bin/konqueror" 
+            startCommand = startCommand + " /usr/bin/konqueror" 
     else:
         startCommand = startCommand + " " + aBrowserPath
-    
+
     return startCommand
 
-class seleniumMathJax(selenium):
+class seleniumMathJax(object):
 
     """
     @class seleniumMathJax::seleniumMathJax
     @brief a selenium object with MathJax testing framework features
     """
 
-    def __init__(self, aHost, aPort, aMathJaxPath, aMathJaxTestPath,
+    def __init__(self, aUseWebDriver,
+                 aHost, aPort, aMathJaxPath, aMathJaxTestPath,
                  aOperatingSystem,
                  aBrowser,
                  aBrowserMode,
@@ -137,7 +132,8 @@ class seleniumMathJax(selenium):
                  aTimeOut,
                  aFullScreenMode):
         """
-        @fn __init__(self, aHost, aPort, aMathJaxPath, aMathJaxTestPath,
+        @fn __init__(self, aUseWebDriver,
+                     aHost, aPort, aMathJaxPath, aMathJaxTestPath,
                      aOperatingSystem,
                      aBrowser,
                      aBrowserMode,
@@ -147,6 +143,7 @@ class seleniumMathJax(selenium):
                      aTimeOut,
                      aFullScreenMode)
 
+        @param aUseWebDriver
         @param aHost host of the Selenium server
         @param aPort port of the Selenium server
         @param aMathJaxPath Value to assign to mMathJaxPath
@@ -186,8 +183,8 @@ class seleniumMathJax(selenium):
         The dimension of reftest images. It is set to 800x1000 px, to follow
         the size of screenshots used by Mozilla
         """
-        selenium.__init__(self, aHost, aPort, aBrowserStartCommand,
-                                   aMathJaxTestPath)
+        self.mHost = aHost
+        self.mPort = aPort
         self.mMathJaxPath = aMathJaxPath
         self.mMathJaxTestPath = aMathJaxTestPath
         self.mOperatingSystem = aOperatingSystem
@@ -200,6 +197,17 @@ class seleniumMathJax(selenium):
 
         self.mCanvas = None
         self.mReftestSize = (800, 1000)
+
+        if (aUseWebDriver):
+            self.mWebDriver = webdriver.Remote("http://" + aHost + ":" +
+                                               str(aPort) + "/wd/hub",
+                                               aBrowserStartCommand)
+            self.mSelenium = None
+            self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
+        else:
+            self.mWebDriver = None
+            self.mSelenium = selenium(aHost, aPort, aBrowserStartCommand,
+                                      aMathJaxTestPath)
 
     def open(self, aURI, aWaitTime = 0.5):
 
@@ -241,24 +249,46 @@ class seleniumMathJax(selenium):
                                       a.fragment))
 
         # open the page and wait for 'reftest-wait' removal
-        selenium.open(self, newURI)
-        self.wait_for_condition(
-            "selenium.browserbot.getCurrentWindow().\
-             document.documentElement.className != 'reftest-wait'",
-            self.mTimeOut)
-        time.sleep(aWaitTime)
-        if (self.get_eval("selenium.browserbot.getCurrentWindow().\
-             document.documentElement.className") == "reftest-error"):
-            message = self.get_eval("selenium.browserbot.getCurrentWindow().\
-             document.documentElement.lastChild.nodeValue")
-            raise Exception, message
+        if self.mWebDriver:
+            self.mWebDriver.get(self.mMathJaxTestPath + newURI)
+
+            # XXXfred Find a better solution to replace wait_for_condition?
+            while(True):
+                if (self.mWebDriver.\
+                        execute_script("return document.documentElement.\
+                                        className != 'reftest-wait'")):
+                    break
+                time.sleep(.1)
+
+            if (self.mWebDriver.execute_script(\
+                    "return document.documentElement.className ==\
+                     'reftest-error'")):
+                message = self.mWebDriver.\
+                    execute_script("return document.documentElement.\
+                                    lastChild.nodeValue")
+                raise Exception, message
+        else:
+            self.mSelenium.open(newURI)
+            self.mSelenium.wait_for_condition(
+                "selenium.browserbot.getCurrentWindow().\
+                 document.documentElement.className != 'reftest-wait'",
+                self.mTimeOut)
+            time.sleep(aWaitTime)
+            if (self.mSelenium.get_eval("selenium.browserbot.\
+                getCurrentWindow().document.documentElement.className") ==
+                "reftest-error"):
+                message = self.mSelenium.get_eval("selenium.browserbot.\
+                          getCurrentWindow().document.documentElement.\
+                          lastChild.nodeValue")
+                raise Exception, message
 
     def start(self):
         """
         @fn start(self)
         @brief start Selenium
         """
-        selenium.start(self)
+        if (self.mSelenium):
+            self.mSelenium.start(self)
 
     def pre(self):
         """
@@ -286,153 +316,171 @@ class seleniumMathJax(selenium):
         long delay before the tests actually start. Hopefully, this will be
         improved in future versions of Selenium :-)
         """
-        # Open the blank page and maximize it
-        self.open("blank.html", 3)
-        self.window_focus()
-        self.window_maximize()
-        time.sleep(2)
 
-        # For Konqueror, we remove some bars to get a true fullscreen mode
-        if self.mFullScreenMode and self.mBrowser == "Konqueror":
-            # Location Bar: alt+s, t, l
-            self.key_down_native(VK_ALT)
-            time.sleep(.1)
-            self.key_press_native(VK_S)
-            time.sleep(.1)
-            self.key_up_native(VK_ALT)
-            time.sleep(.1)
-            self.key_press_native(VK_T)
-            time.sleep(.1)
-            self.key_press_native(VK_L)
-            time.sleep(1)
-
-            # Main Toolbar: alt+s, t, m
-            self.key_down_native(VK_ALT)
-            time.sleep(.1)
-            self.key_press_native(VK_S)
-            time.sleep(.1)
-            self.key_up_native(VK_ALT)
-            time.sleep(.1)
-            self.key_press_native(VK_T)
-            time.sleep(.1)
-            self.key_press_native(VK_M)
-            time.sleep(1)
-
-            # Menu Bar: ctrl+m
-            self.key_down_native(VK_CONTROL)
-            time.sleep(.1)
-            self.key_press_native(VK_M)
-            time.sleep(.1)
-            self.key_up_native(VK_CONTROL)
-            time.sleep(1)
-
-        if self.mFullScreenMode and \
-           (self.mBrowser == "Firefox" or self.mBrowser == "Chrome" or \
-            self.mBrowser == "Opera"   or self.mBrowser == "MSIE" or \
-            self.mBrowser == "Konqueror"):
-            # FullScreen Mode: 
-            self.key_press_native(VK_F11)
-            time.sleep(3)
-
-        if (self.mBrowser == "MSIE" and
-            not(self.mBrowserMode == "StandardMode")):
-            # For MSIE, we choose the document mode
-
-            #  opening developer tools
-            self.key_down_native(VK_F12)
-            time.sleep(3)
-
-            if self.mBrowserMode == "Quirks":
-                self.key_down_native(VK_ALT)
-                time.sleep(.1)
-                self.key_press_native(VK_Q)
-                time.sleep(.1)
-                self.key_up_native(VK_ALT)
-                time.sleep(.1)
-            elif self.mBrowserMode == "IE7":
-                self.key_down_native(VK_ALT)
-                time.sleep(.1)
-                self.key_press_native(VK_7)
-                time.sleep(.1)
-                self.key_up_native(VK_ALT)
-                time.sleep(.1)
-            elif self.mBrowserMode == "IE8":
-                self.key_down_native(VK_ALT)
-                time.sleep(.1)
-                self.key_press_native(VK_8)
-                time.sleep(.1)
-                self.key_up_native(VK_ALT)
-                time.sleep(.1)
-            elif self.mBrowserMode == "IE9":
-                self.key_down_native(VK_ALT)
-                time.sleep(.1)
-                self.key_press_native(VK_9)
-                time.sleep(.1)
-                self.key_up_native(VK_ALT)
-                time.sleep(.1)
-            time.sleep(3)
-
-            # closing developer tools
-            self.key_down_native(123) # F12
-            time.sleep(3)
-
-        # Determine the canvas
-        image1 = self.takeScreenshot(1.0)
-        self.click("id=button")
-        time.sleep(.5)
-        image2 = self.takeScreenshot(1.0)
-        image3 = ImageChops.difference(image1, image2)
-        box = image3.getbbox()
-        if box != None:
-            # Take a bounding box of size at most mReftestSize
-            self.mCanvas = \
-                box[0], box[1], \
-                min(box[2], box[0] + self.mReftestSize[0]), \
-                min(box[3], box[1] + self.mReftestSize[1])
+        if self.mWebDriver:
+            # Only open the blank page...
+            self.open("blank.html")
+            if (self.mBrowser == "MSIE" and
+                not(self.mBrowserMode == "StandardMode")):
+                # For MSIE, we choose the document mode
+                # XXXfred TODO!
+                None
         else:
-            # We failed to determine the bounding box...
-            self.mCanvas = self.mReftestSize
+            # Open the blank page and maximize it
+            self.open("blank.html", 3)
+            self.mSelenium.window_focus()
+            self.mSelenium.window_maximize()
+            time.sleep(2)
+
+            # For Konqueror, we remove some bars to get a true fullscreen mode
+            if self.mFullScreenMode and self.mBrowser == "Konqueror":
+                # Location Bar: alt+s, t, l
+                self.mSelenium.key_down_native(VK_ALT)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_S)
+                time.sleep(.1)
+                self.mSelenium.key_up_native(VK_ALT)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_T)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_L)
+                time.sleep(1)
+
+                # Main Toolbar: alt+s, t, m
+                self.mSelenium.key_down_native(VK_ALT)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_S)
+                time.sleep(.1)
+                self.mSelenium.key_up_native(VK_ALT)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_T)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_M)
+                time.sleep(1)
+
+                # Menu Bar: ctrl+m
+                self.mSelenium.key_down_native(VK_CONTROL)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_M)
+                time.sleep(.1)
+                self.mSelenium.key_up_native(VK_CONTROL)
+                time.sleep(1)
+
+            if self.mFullScreenMode and \
+                    (self.mBrowser == "Firefox" or
+                     self.mBrowser == "Chrome" or
+                     self.mBrowser == "Opera" or
+                     self.mBrowser == "MSIE" or
+                     self.mBrowser == "Konqueror"):
+                    # FullScreen Mode: 
+                    self.mSelenium.key_press_native(VK_F11)
+                    time.sleep(3)
+
+            if (self.mBrowser == "MSIE" and
+                not(self.mBrowserMode == "StandardMode")):
+                # For MSIE, we choose the document mode
+
+                #  opening developer tools
+                self.mSelenium.key_down_native(VK_F12)
+                time.sleep(3)
+
+                if self.mBrowserMode == "Quirks":
+                    self.mSelenium.key_down_native(VK_ALT)
+                    time.sleep(.1)
+                    self.mSelenium.key_press_native(VK_Q)
+                    time.sleep(.1)
+                    self.mSelenium.key_up_native(VK_ALT)
+                    time.sleep(.1)
+                elif self.mBrowserMode == "IE7":
+                    self.mSelenium.key_down_native(VK_ALT)
+                    time.sleep(.1)
+                    self.mSelenium.key_press_native(VK_7)
+                    time.sleep(.1)
+                    self.mSelenium.key_up_native(VK_ALT)
+                    time.sleep(.1)
+                elif self.mBrowserMode == "IE8":
+                    self.mSelenium.key_down_native(VK_ALT)
+                    time.sleep(.1)
+                    self.mSelenium.key_press_native(VK_8)
+                    time.sleep(.1)
+                    self.mSelenium.key_up_native(VK_ALT)
+                    time.sleep(.1)
+                elif self.mBrowserMode == "IE9":
+                    self.mSelenium.key_down_native(VK_ALT)
+                    time.sleep(.1)
+                    self.mSelenium.key_press_native(VK_9)
+                    time.sleep(.1)
+                    self.mSelenium.key_up_native(VK_ALT)
+                    time.sleep(.1)
+                    time.sleep(3)
+
+                # closing developer tools
+                self.mSelenium.key_down_native(123) # F12
+                time.sleep(3)
+
+            # Determine the canvas
+            image1 = self.takeScreenshot(1.0)
+            self.mSelenium.click("id=button")
+            time.sleep(.5)
+            image2 = self.takeScreenshot(1.0)
+            image3 = ImageChops.difference(image1, image2)
+            box = image3.getbbox()
+            if box != None:
+                # Take a bounding box of size at most mReftestSize
+                self.mCanvas = \
+                    box[0], box[1], \
+                    min(box[2], box[0] + self.mReftestSize[0]), \
+                    min(box[3], box[1] + self.mReftestSize[1])
+            else:
+                # We failed to determine the bounding box...
+                self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
 
     def post(self):
-        if self.mFullScreenMode and \
-           (self.mBrowser == "Firefox" or self.mBrowser == "Chrome" or \
-                self.mBrowser == "Opera"   or self.mBrowser == "MSIE" or \
-                self.mBrowser == "Konqueror"):
-            # Leave FullScreen Mode: 
-            self.key_press_native(VK_F11)
-            time.sleep(3)
+        if self.mSelenium:
+            if self.mFullScreenMode and \
+                    (self.mBrowser == "Firefox" or
+                     self.mBrowser == "Chrome" or
+                     self.mBrowser == "Opera" or
+                     self.mBrowser == "MSIE" or
+                     self.mBrowser == "Konqueror"):
+                    # Leave FullScreen Mode: 
+                    self.mSelenium.key_press_native(VK_F11)
+                    time.sleep(3)
 
     def stop(self):
         """
         @fn stop(self)
         @brief stop selenium
         """
-        # selenium.stop does not seem to close Konqueror/MSIE
-        # correctly. Leave the browser manually instead.
-        if (self.mBrowser == "Konqueror"):
-            # Close the two windows with Ctrl+q
-            self.key_down_native(VK_CONTROL)
-            time.sleep(.1)
-            self.key_press_native(VK_Q)
-            time.sleep(.1)
-            self.key_press_native(VK_Q)
-            time.sleep(.1)
-            self.key_up_native(VK_CONTROL)
-            time.sleep(.1)
-            time.sleep(4)
-        elif (self.mBrowser == "MSIE"):
-            # Close two tabs with Ctrl+F4
-            self.key_down_native(VK_CONTROL)
-            time.sleep(.1)
-            self.key_press_native(VK_F4)
-            time.sleep(.1)
-            self.key_press_native(VK_F4)
-            time.sleep(.1)
-            self.key_up_native(VK_CONTROL)
-            time.sleep(.1)
-            time.sleep(4)
+        if self.mWebDriver:
+            self.mWebDriver.quit()
+        else:
+            # selenium.stop does not seem to close Konqueror/MSIE
+            # correctly. Leave the browser manually instead.
+            if (self.mBrowser == "Konqueror"):
+                # Close the two windows with Ctrl+q
+                self.mSelenium.key_down_native(VK_CONTROL)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_Q)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_Q)
+                time.sleep(.1)
+                self.mSelenium.key_up_native(VK_CONTROL)
+                time.sleep(.1)
+                time.sleep(4)
+            elif (self.mBrowser == "MSIE"):
+                # Close two tabs with Ctrl+F4
+                self.mSelenium.key_down_native(VK_CONTROL)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_F4)
+                time.sleep(.1)
+                self.mSelenium.key_press_native(VK_F4)
+                time.sleep(.1)
+                self.mSelenium.key_up_native(VK_CONTROL)
+                time.sleep(.1)
+                time.sleep(4)
 
-        selenium.stop(self)
+                self.mSelenium.stop()
         
     def clearBrowserData(self):
         """
@@ -459,16 +507,20 @@ class seleniumMathJax(selenium):
         @see http://www.pythonware.com/library/pil/handbook/
         """
 
-        # Remarks:
-        #   - ImageGrab works on Windows only.
-        #   - selenium::capture_entire_page_screenshot_to_string does not
-        #     work in all browsers.
-        data = self.capture_screenshot_to_string()
-        time.sleep(aWaitTime)
+        if self.mWebDriver:
+            data = self.mWebDriver.get_screenshot_as_base64()
+        else:
+            data = self.mSelenium.capture_screenshot_to_string()
+
+        if self.mSelenium:
+            time.sleep(aWaitTime)
+
         image = Image.open(StringIO.StringIO(base64.b64decode(data)))
         image = image.convert("RGB")
+
         if self.mCanvas != None:
-          image = image.crop(self.mCanvas)
+            image = image.crop(self.mCanvas)
+
         return image
 
     def encodeImageToBase64(self, aImage):
@@ -512,9 +564,13 @@ class seleniumMathJax(selenium):
         in the test page. This textarea is generated by
         @ref finalizeTreeReftests 
         """
-        return self.get_eval(
-            "selenium.browserbot.getCurrentWindow().\
-             document.getElementById('source').value")
+        if self.mWebDriver:
+            return self.mWebDriver.\
+                execute_script("return document.getElementById('source').value")
+        else:
+            return self.mSelenium.get_eval(
+                "selenium.browserbot.getCurrentWindow().\
+                 document.getElementById('source').value")
 
     def getScriptReftestResult(self):
         """
@@ -529,13 +585,21 @@ class seleniumMathJax(selenium):
         This textarea is inserted by @ref finalizeScriptReftests.
         """
 
-        # Strangely, get_eval converts to a string not a boolean...
-        success = (self.get_eval(
-            "selenium.browserbot.getCurrentWindow().\
-             document.documentElement.className == 'reftest-success'")
-        == "true")
-        return (
-            success,
-            self.get_eval(
-                "selenium.browserbot.getCurrentWindow().\
-             document.getElementById('results').value"))
+        if self.mWebDriver:
+            success = self.mWebDriver.\
+                execute_script("return document.documentElement.className ==\
+                              'reftest-success'")
+            return (success,
+                    self.mWebDriver.execute_script(
+                    "return document.getElementById('results').value"))
+        else:
+            # Strangely, get_eval converts to a string not a boolean...
+            success = (self.mSelenium.get_eval(
+                    "selenium.browserbot.getCurrentWindow().\
+                     document.documentElement.className == 'reftest-success'")
+                       == "true")
+            return (
+                success,
+                self.mSelenium.get_eval(
+                    "selenium.browserbot.getCurrentWindow().\
+                     document.getElementById('results').value"))

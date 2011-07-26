@@ -566,7 +566,7 @@ class reftest(unittest.TestCase):
             return True
 
         if  ((not self.mTestSuite.mRunSlowTests) and self.mSlow):
-            msg = "\nREFTEST TEST-KNOWN-SLOW | " + self.mID + " | (SLOW)\n"
+            msg = "\nREFTEST INFO | " + self.mID + " | (SLOW)\n"
             # self.skipTest(msg)
             print msg
             self.mTestSuite.testComplete(self)

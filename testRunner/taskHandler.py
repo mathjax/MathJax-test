@@ -630,6 +630,7 @@ class task:
         s += self.serializeParameter("mathJaxPath")
         s += self.serializeParameter("mathJaxTestPath")
         s += self.serializeParameter("timeOut")
+        s += self.serializeParameter("useWebDriver")
         s += self.serializeParameter("fullScreenMode")
         s += self.serializeParameter("formatOutput")
         s += self.serializeParameter("compressOutput")
@@ -684,6 +685,7 @@ class task:
         fp.write("mathJaxPath = " + p["mathJaxPath"] + "\n")
         fp.write("mathJaxTestPath = " + p["mathJaxTestPath"] + "\n")
         fp.write("timeOut = " + str(p["timeOut"]) + "\n")
+        fp.write("useWebDriver = " + boolToString(p["useWebDriver"]) + "\n")
         fp.write("fullScreenMode = " + boolToString(p["fullScreenMode"]) + "\n")
         fp.write("formatOutput = " + boolToString(p["formatOutput"]) + "\n")
         fp.write("compressOutput = " + boolToString(p["compressOutput"]) + "\n")
@@ -751,7 +753,8 @@ class task:
 option values"
             parameterValue = parameterValue[0]
     
-        if (parameterName == "fullScreenMode" or
+        if (parameterName == "useWebDriver" or
+            parameterName == "fullScreenMode" or
             parameterName == "formatOutput" or
             parameterName == "compressOutput" or
             parameterName == "nativeMathML" or
