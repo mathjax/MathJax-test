@@ -28,7 +28,7 @@
 
       function postMathJax()
       {
-      MathJax.Hub.Queue(["Require", MathJax.Ajax, "myfile.js"]);
+      MathJax.Hub.Queue(["Load", MathJax.Ajax, "myfile.js"]);
       for (var x in MathJax.Ajax.loadHooks) {
         if (x == "myfile.js") {
           r4 = true;

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>filterText</title>
+    <title>Clear</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,11 +12,13 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      var id1, r1, r2;
+      var r1 = false, r2 = false;
+      var delay, tolerance = 100;
 
       function preMathJax()
       {
-      gConfigObject.messageStyle = "simple";
+      delay = getQueryInteger("delay", 600);
+      gConfigObject.messageStyle = "normal";
       }
 
       function checkValue(aValue)
@@ -28,25 +30,22 @@
       {
       MathJax.Hub.Queue(
       function () {
-      MathJax.Message.filterText = function(text, n) { return text + "@" + n; }
-      id1 = MathJax.Message.Set("mymsg");
-      r1 = checkValue("mymsg@" + id1);
-      MathJax.Message.Clear(id1, 0);
+        var id = MathJax.Message.Set("my message");
+        MathJax.Message.Clear(id, delay);
       },
       function () {
-      r2 = checkValue("");
-      });
+        setTimeout("r1 = checkValue('my message');", delay - tolerance);
+        setTimeout("r2 = checkValue('');", delay + tolerance);
+      },
+      ["Delay", MathJax.Callback, delay + tolerance + 100]
+      );
       }
 
       function getTestCases()
       {
       return [
-      newScriptReftestResult(
-      "File myfile", r1
-      ),
-      newScriptReftestResult(
-      "Clear id1", r2
-      )
+      newScriptReftestResult("Message before the clear delay...", r1),
+      newScriptReftestResult("Message after the clear delay...", r2)
       ];
       }    
     </script>
@@ -54,5 +53,6 @@
   </head>
 
   <body>
+
   </body>
 </html>

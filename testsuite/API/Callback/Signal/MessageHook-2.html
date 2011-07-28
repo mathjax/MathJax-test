@@ -16,12 +16,9 @@
       var unexpected = false, Nreceived = 0;
       var s = "";
 
-      function f(msg, arg1, arg2, arg3)
+      function f(msg)
       {
-      s += "(\""+ msg + "\", " + arg1 +", " + arg2 + ", " + arg3 + ") ; ";
-      if (msg != "msg") {
-        unexpected = true;
-      }
+      s += "["+ msg +"]"
       Nreceived++;
       }
 
@@ -40,12 +37,8 @@
       
       function getTestCases()
       {
-      var ref =
-      "(\"msg\", 1, 2, 3) ; (\"msg\", a, b, c) ; (\"msg\", foo, bar, baz) ; ";
-
+      var ref = "[msg,1,2,3][msg,a,b,c][msg,foo,bar,baz]"
       return [
-      newScriptReftestResult("String value of messages received is correct",
-                             !unexpected),
       newScriptReftestResult("Number of expected messages received is correct",
                              (Nreceived == 3)),
       newScriptReftestResult("Message received = " + s, s == ref)

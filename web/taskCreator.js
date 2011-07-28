@@ -29,13 +29,17 @@
  *  This file is used by taskCreator.php
  */
 
-function updateFieldVisibility(aCheckboxId, aFieldId, aCond)
+function updateFieldVisibility(aFieldId1, aFieldId2, aValue)
 {
-    el = document.getElementById(aFieldId);
-    if (document.getElementById(aCheckboxId).checked == aCond) {
-        el.style.visibility = "visible";
+    f1 = document.getElementById(aFieldId1);
+    f2 = document.getElementById(aFieldId2);
+    tag = f1.tagName.toLowerCase();
+    if ((tag == "input" &&
+         f1.type == "checkbox" && f1.checked == aValue) ||
+        (tag == "select" && f1.value == aValue)) {
+        f2.style.visibility = "visible";
     } else {
-        el.style.visibility = "hidden";
+        f2.style.visibility = "hidden";
     }
 }
 
@@ -55,4 +59,6 @@ function init()
     updateFieldVisibility("taskSchedule", "crontabParameters", true);
     updateFieldVisibility("useWebDriver", "fullScreenMode", false);
     updateFieldValue("host_select", "host");
+    updateFieldValue("taskName", "outputDirectory");
+    updateFieldVisibility("browser", "browserMode", "MSIE")
 }

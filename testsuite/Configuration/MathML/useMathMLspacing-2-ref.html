@@ -3,25 +3,25 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>styleSheets</title>
+    <title>useMathMLspacing</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
       function preMathJax()
       {
-      directory = getCurrentPath();
-      // styleSheets has one element
-      gConfigObject.styleSheets = [directory + "style1.css"];
+      gConfigObject.MathML = {useMathMLspacing: false};
       }
     </script>
-    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../header.js"></script>
   </head>
 
   <body>
 
-    <div id="box1" style="width: 100px; height: 100px; background: green;"></div>
-    <div id="box2" style="width: 100px; height: 100px; background: green;"></div>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" displaystyle="true">
+        <mi>a</mi>
+        <mo>&#x2211;</mo>
+    </math>
 
   </body>
 </html>

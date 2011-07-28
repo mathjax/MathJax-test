@@ -40,6 +40,7 @@ import string
 import sys
 import time
 import unittest
+from selenium.common.exceptions import WebDriverException
 
 """ 
 @var EXPECTED_PASS
@@ -544,7 +545,6 @@ class reftest(unittest.TestCase):
             if (self.mTestSuite.mRunningTestID == self.mID):
                 self.mTestSuite.mStarted = True
             else:
-                self.mTestSuite.testComplete(self)
                 return True
 
         self.mTestSuite.mRunningTestID = self.mID
@@ -554,7 +554,6 @@ class reftest(unittest.TestCase):
             msg += " is irrelevant for this configuration\n"
             # self.skipTest(msg)
             print msg
-            self.mTestSuite.testComplete(self)
             return True
 
         if ((not self.mTestSuite.mRunSkipTests) and
@@ -562,14 +561,12 @@ class reftest(unittest.TestCase):
             msg = "\nREFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)\n"
             # self.skipTest(msg)
             print msg
-            self.mTestSuite.testComplete(self)
             return True
 
         if  ((not self.mTestSuite.mRunSlowTests) and self.mSlow):
             msg = "\nREFTEST INFO | " + self.mID + " | (SLOW)\n"
             # self.skipTest(msg)
             print msg
-            self.mTestSuite.testComplete(self)
             return True
 
         return False
@@ -615,6 +612,39 @@ class reftest(unittest.TestCase):
 
         return success, msg
 
+    def runTest(self):
+
+        if self.shouldSkipTest():
+            # skip the test
+            self.mTestSuite.testComplete(self)
+            return
+
+        try:
+            # execute the test
+            self.runTest_()
+            self.mTestSuite.testComplete(self)
+        except AssertionError:
+            # exception raised by a self.fail()
+            self.mTestSuite.testComplete(self)
+            pass
+        except WebDriverException as data:
+            # exception raised by WebDriver
+            (success, msg) = self.determineSuccess(None, False)
+            msg += data.msg
+            print msg
+            self.mTestSuite.testComplete(self)
+            self.fail()
+        except Exception as data:
+            # other exception
+            (success, msg) = self.determineSuccess(None, False)
+            msg += repr(data)
+            print msg
+            self.mTestSuite.testComplete(self)
+            self.fail()
+        
+    def runTest_(self):
+        None
+
 class loadReftest(reftest):
 
     """
@@ -624,29 +654,17 @@ class loadReftest(reftest):
     (crash, hang etc) the test fails.
     """
 
-    def runTest(self):
-
+    def runTest_(self):
         """
-        @fn runTest(self)
+        @fn runTest_(self)
         @brief run the loadReftest
         """
 
-        if self.shouldSkipTest():
-            return
-
-        try:
-            self.mSelenium.open(self.mURI)
-        except Exception, data:
-            (success, msg) = self.determineSuccess(None, False)
-            msg += repr(data)
-            print msg
-            self.mTestSuite.testComplete(self)
-            self.fail()
+        self.mSelenium.open(self.mURI)
 
         (success, msg) = self.determineSuccess(self.mType, True)
         msg += "(LOAD ONLY)\n"
         print msg
-        self.mTestSuite.testComplete(self)
 
 class scriptReftest(reftest):
 
@@ -657,24 +675,14 @@ class scriptReftest(reftest):
     returns the success.
     """
 
-    def runTest(self):
+    def runTest_(self):
 
         """
-        @fn runTest(self)
+        @fn runTest_(self)
         @brief run the scriptReftest
         """
 
-        if self.shouldSkipTest():
-            return
-
-        try:
-            self.mSelenium.open(self.mURI)
-        except Exception, data:
-            (success, msg) = self.determineSuccess(None, False)
-            msg += repr(data)
-            print msg
-            self.mTestSuite.testComplete(self)
-            self.fail()
+        self.mSelenium.open(self.mURI)
 
         (success1, msg1) = self.mSelenium.getScriptReftestResult()
         (success, msg) = self.determineSuccess(self.mType, success1)
@@ -682,11 +690,9 @@ class scriptReftest(reftest):
         if success:
             print msg
             self.mTestSuite.printInfo(msg1)
-            self.mTestSuite.testComplete(self)
         else:
             print msg
             self.mTestSuite.printInfo(msg1)
-            self.mTestSuite.testComplete(self)
             self.fail()
        
 class treeReftest(reftest):
@@ -697,27 +703,17 @@ class treeReftest(reftest):
     @details A tree reftest compares the MathML source of two pages.
     """
 
-    def runTest(self):
+    def runTest_(self):
 
         """
-        @fn runTest(self)
+        @fn runTest_(self)
         @brief run the treeReftest
         """
 
-        if self.shouldSkipTest():
-            return
-
-        try:
-            self.mSelenium.open(self.mURI)
-            source = self.mSelenium.getMathJaxSourceMathML()
-            self.mSelenium.open(self.mURIRef)
-            sourceRef = self.mSelenium.getMathJaxSourceMathML()
-        except Exception as data:
-            (success, msg) = self.determineSuccess(None, False)
-            msg += repr(data)
-            print msg
-            self.mTestSuite.testComplete(self)
-            self.fail()
+        self.mSelenium.open(self.mURI)
+        source = self.mSelenium.getMathJaxSourceMathML()
+        self.mSelenium.open(self.mURIRef)
+        sourceRef = self.mSelenium.getMathJaxSourceMathML()
 
         # Compare source == sourceRef
         isEqual = (source == sourceRef)
@@ -725,7 +721,6 @@ class treeReftest(reftest):
 
         if success:
             print msg
-            self.mTestSuite.testComplete(self)
         else:
             # Return failure together with a diff of the sources
             msg += "source comparison ("+ self.mType +") \n"
@@ -749,7 +744,6 @@ class treeReftest(reftest):
                     self.mSelenium.encodeSourceToBase64(source)
 
             print msg
-            self.mTestSuite.testComplete(self)
             self.fail()
 
 class visualReftest(reftest):
@@ -760,31 +754,21 @@ class visualReftest(reftest):
     @details A visual reftest compare the visual rendering of two pages.
     """
 
-    def runTest(self):
+    def runTest_(self):
 
         """
-        @fn runTest(self)
+        @fn runTest_(self)
         @brief run the visualReftest
         """
 
-        if self.shouldSkipTest():
-            return
-
-        try:
-            # take the screenshot of the test
-            self.mSelenium.open(self.mURI)
-            image = self.mSelenium.takeScreenshot()
-
-            # take the screenshot of the reftest using the one in memory if it
-            # has been used just before.
-            imageRef = self.mTestSuite.takeReferenceScreenshot(self.mURIRef,
-                                                               self.mSelenium)
-        except Exception, data:
-            (success, msg) = self.determineSuccess(None, False)
-            msg += repr(data)
-            print msg
-            self.mTestSuite.testComplete(self)
-            self.fail()
+        # take the screenshot of the test
+        self.mSelenium.open(self.mURI)
+        image = self.mSelenium.takeScreenshot()
+        
+        # take the screenshot of the reftest using the one in memory if it
+        # has been used just before.
+        imageRef = self.mTestSuite.takeReferenceScreenshot(self.mURIRef,
+                                                           self.mSelenium)
 
         # Compare image and imageRef
         box = ImageChops.difference(image, imageRef).getbbox()
@@ -793,7 +777,6 @@ class visualReftest(reftest):
 
         if success:
             print msg
-            self.mTestSuite.testComplete(self)
         else:
             # Return failure together with base64 images of the reftest
             msg += "image comparison ("+ self.mType +") \n"
@@ -806,5 +789,4 @@ class visualReftest(reftest):
                 msg += "REFTEST   IMAGE: " + \
                     self.mSelenium.encodeImageToBase64(image)
             print msg
-            self.mTestSuite.testComplete(self)
             self.fail()

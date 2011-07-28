@@ -5,6 +5,6 @@ script SourceElement-1.html
 script Reprocess-2.html
 == Text-1.html Text-1-ref.html
 script Text-2.html
-script variables-1.html
+fails script variables-1.html
 script variables-2.html
 

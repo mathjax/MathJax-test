@@ -53,7 +53,6 @@ import errno
 import gzip
 import math
 import os
-import platform
 import re
 import reftest
 import seleniumMathJax
@@ -381,8 +380,6 @@ def main(aArgs, aTransmitToTaskHandler):
         # platform section
         section = "platform"
         operatingSystem = config.get(section, "operatingSystem")
-        if (operatingSystem == "auto"):
-            operatingSystem = platform.system()
         browserList = config.get(section, "browser").split()
         browserModeList = config.get(section, "browserMode").split()
         browserPath = config.get(section, "browserPath")

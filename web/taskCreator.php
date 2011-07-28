@@ -75,17 +75,19 @@
           <legend>Task</legend>
           <p>
             <label>task name:
-              <input name="taskName" type="text" required="required"
+              <input id="taskName" name="taskName" type="text"
+                     required="required"
                      pattern="([a-z]|[A-Z]|[0-9]){1,20}"
                      value="<?php echo $DEFAULT_TASK_NAME;?>"
+                     onchange="updateFieldValue('taskName', 'outputDirectory')"
                      maxlength="20"/></label> (alphanumeric)
           </p>
           <p>
             <label>outputDirectory:
-            <input name="outputDirectory" type="text"
+            <input id="outputDirectory" name="outputDirectory" type="text"
                    pattern="([a-z]|[A-Z]|[0-9])*" maxlength="20"
                    value=""/>
-            </label> (optional, default is task name)
+            </label>
           </p>
           <p>
             <label>schedule task:
@@ -211,20 +213,20 @@
           </p>
           <p>
             <label>browser:
-              <select name="browser">
+              <select id="browser" name="browser"
+                      onchange="updateFieldVisibility('browser',
+                                                      'browserMode', 'MSIE')">
               <?php generateOptionList($BROWSER_LIST); ?>
               </select>
             </label>
-          </p>
-          <p>
-            <label>browserMode (MSIE):
+          <span id="browserMode">
+            <label>browserMode:
               <select name="browserMode">
               <?php generateOptionList($BROWSER_MODE_LIST); ?>
               </select>
             </label>
-          </p>
-          <p>
-            <label>browserPath:
+          </span>
+            <label style="visibility: hidden;">browserPath:
               <input name="browserPath" type="text" value="auto"
                      readonly="readonly"/>
             </label>
@@ -247,7 +249,7 @@
           <legend>Testsuite:</legend>
           <p>
             <label>runSlowTests:
-              <input name="runSlowTests" type="checkbox" checked="checked"/>
+              <input name="runSlowTests" type="checkbox"/>
             </label>
           </p>
           <p>
@@ -257,8 +259,8 @@
           </p>
           <p>
             <label>listOfTests:
-              <input id="listOfTests"
-                     name="listOfTests" type="text" value="all" size="50"
+              <input style="visibility: hidden; position: absolute;" id="listOfTests"
+                     name="listOfTests" type="text" value="all"
                      pattern="(all|([0-2]+))"/>
             </label>
             <a href="javascript:openReftestSelector();">Reftest Selector</a>
@@ -267,7 +269,7 @@
             <label>startID:
               <input name="startID" type="text" value="" size="50"
                      pattern="([a-z]|[A-Z]|[0-9]|_|-|\.|/)+" />
-            </label> (optional, used for test recovery) 
+            </label> (optional, used for test recovery)
           </p>
         </fieldset>
 

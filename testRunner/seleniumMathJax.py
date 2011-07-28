@@ -32,11 +32,13 @@ the MathJax testing framework.
 """
 
 from PIL import Image, ImageChops
+from datetime import datetime, timedelta
+from selenium import webdriver, selenium
 import StringIO
 import base64
 import difflib
-from selenium import webdriver, selenium
 import string
+import sys
 import time
 import urlparse
 
@@ -202,6 +204,8 @@ class seleniumMathJax(object):
             self.mWebDriver = webdriver.Remote("http://" + aHost + ":" +
                                                str(aPort) + "/wd/hub",
                                                aBrowserStartCommand)
+            self.mWebDriver.implicitly_wait(aTimeOut / 1000)
+            self.mWebDriver.set_script_timeout(aTimeOut / 1000)
             self.mSelenium = None
             self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
         else:
@@ -253,12 +257,16 @@ class seleniumMathJax(object):
             self.mWebDriver.get(self.mMathJaxTestPath + newURI)
 
             # XXXfred Find a better solution to replace wait_for_condition?
-            while(True):
-                if (self.mWebDriver.\
-                        execute_script("return document.documentElement.\
-                                        className != 'reftest-wait'")):
+            startTime = datetime.utcnow()
+            delta = 0
+            while(delta < self.mTimeOut):
+                if (self.mWebDriver.
+                    execute_script("return document.documentElement.\
+                                    className != 'reftest-wait'")):
                     break
-                time.sleep(.1)
+                time.sleep(0.1)
+                deltaTime = datetime.utcnow() - startTime
+                delta = deltaTime.seconds * 1000 + deltaTime.microseconds / 1000
 
             if (self.mWebDriver.execute_script(\
                     "return document.documentElement.className ==\

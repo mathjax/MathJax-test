@@ -91,9 +91,8 @@ DEFAULT_TIMEOUT = configParser.getint("testing_instance",
 
 BROWSER_LIST = parseStringArray(configParser.get("testing_instance",
                                                  "BROWSER_LIST"))
-OS_LIST = ["auto"]
-OS_LIST.extend(parseStringArray(configParser.get("testing_instance",
-                                                 "OS_LIST")))
+OS_LIST = parseStringArray(configParser.get("testing_instance",
+                                            "OS_LIST"))
 
 BROWSER_MODE_LIST = parseStringArray(configParser.get("testing_instance",
                                                       "BROWSER_MODE_LIST"))

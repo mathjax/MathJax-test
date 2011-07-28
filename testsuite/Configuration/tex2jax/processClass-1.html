@@ -33,13 +33,13 @@
       codeContent = document.getElementById("code").innerHTML;
 
       return [
-        newScriptReftestResult("div", divContent == "\\(x\\)"),
-        newScriptReftestResult("script", scriptContent == "// \\(x\\)"),
-        newScriptReftestResult("noscript", noscriptContent == "\\(x\\)"),
-        newScriptReftestResult("style", styleContent == "/* \\(x\\) */"),
-        newScriptReftestResult("textarea", textareaContent == "\\(x\\)"),
-        newScriptReftestResult("pre", preContent == "\\(x\\)"),
-        newScriptReftestResult("code", codeContent == "\\(x\\)")
+        newScriptReftestResult("div", divContent != "\\(x\\)"),
+        newScriptReftestResult("script", scriptContent != "// \\(x\\)"),
+        newScriptReftestResult("noscript", noscriptContent != "\\(x\\)"),
+        newScriptReftestResult("style", styleContent != "/* \\(x\\) */"),
+        newScriptReftestResult("textarea", textareaContent != "\\(x\\)"),
+        newScriptReftestResult("pre", preContent != "\\(x\\)"),
+        newScriptReftestResult("code", codeContent != "\\(x\\)")
       ];
       }
     </script>

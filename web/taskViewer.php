@@ -134,7 +134,9 @@
                   echo " (scheduled)";
                 }
 
-                if ($status == "Running" || $status == "Pending") {
+		if ($status == "Pending") {
+		  commandButton($taskName, "RUN");
+		} else if ($status == "Running") {
                   commandButton($taskName, "STOP");
                 } else if($status == "Interrupted") {
                   if (!$isScheduled) {

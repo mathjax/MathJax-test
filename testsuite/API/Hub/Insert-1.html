@@ -14,21 +14,34 @@
     <script type="text/javascript">
       function getTestCases()
       {
-      var dst = { x:1, y:2, z:3 };
-      var src = { x:0, w:4 };
+      var dst = { x: { a: 0, b: 1}, y: 2, z: 3 };
+      var src = { x: { a: 2, c: 3}, y: 4, w: 5 };
       MathJax.Hub.Insert(dst, src);
 
-      var s = 0;
-      for (x in dst) {
-        s++;
+      var s1 = 0, s2 = 0;
+      for (v in dst) {
+        s1++;
       }
-
+      for (v in dst.x) {
+        s2++;
+      }
       return [
-      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; s", s == 4),
-      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; x", dst.x == 1),
-      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; y", dst.y == 2),
-      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; z", dst.z == 3),
-      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; w", dst.w == 4)
+      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; size of dst",
+                             s1 == 4),
+      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; size of dst.x",
+                             s2 == 3),
+      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; x.a",
+                             dst.x.a == 2),
+      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; x.b",
+                             dst.x.b == 1),
+      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; x.c",
+                             dst.x.c == 3),
+      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; y",
+                             dst.y == 4),
+      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; z",
+                             dst.z == 3),
+      newScriptReftestResult("MathJax.Hub.Insert(dst, src) ; w",
+                             dst.w == 5)
       ];
       }
     </script>

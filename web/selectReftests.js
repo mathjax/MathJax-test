@@ -159,7 +159,6 @@ function init()
 
     if (window.opener) {
         // The selectReftest was opened from taskCreator.php
-        document.getElementById("parse").style.visibility = "hidden";
         document.getElementById("listOfTests").value =
             window.opener.document.getElementById("listOfTests").value
         read();
@@ -229,7 +228,8 @@ function generate()
         document.getElementById("listOfTests").value = "all";
     } else if(result.none) {
         // no tests
-        document.getElementById("listOfTests").value = "";
+        alert("You must select at least one test!");
+        return;
     } else {
         // selection of tests
         // ignore the first character (representing the root testsuite/)

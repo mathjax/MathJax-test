@@ -24,7 +24,6 @@
 
       function getTestCases()
       {
-      // Just checking that all the variables exist
       return [
       newScriptReftestResult("fn", (MathJax.Callback(f1)() == 1)),
       newScriptReftestResult("[fn]", (MathJax.Callback([f2])() == 2)),
@@ -35,9 +34,9 @@
       newScriptReftestResult("[object, fn, data...]",
       (MathJax.Callback([{x:3}, f5, 4])() == 7)),
       newScriptReftestResult("['method', object]",
-      (MathJax.Callback(["length",[1,2,3,4]])() == 4)),
+      (MathJax.Callback(["toString",[1,2,3,4]])() == "1,2,3,4")),
       newScriptReftestResult("['method', object, data...]",
-      (MathJax.Callback(["slice",[1,2,3,4],1,3])() == [2,3])),
+      (MathJax.Callback(["slice",[1,2,3,4],1,3])().toString() == "2,3")),
       newScriptReftestResult("{hook: fn, data: [...], object: this}",
       (MathJax.Callback({hook: f8, data: [1,2], object: {x:11}})() == 10)),
       newScriptReftestResult("{data: [...], object: this}",

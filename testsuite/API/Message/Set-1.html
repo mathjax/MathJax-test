@@ -26,8 +26,7 @@
 
       function postMathJax()
       {
-      var cbSpecSleep = ["Delay", MathJax.Callback, 5];
-      var id1, id2, id3, id4, id5, id6;
+      var id;
 
       MathJax.Hub.Queue(
       function () {
@@ -35,7 +34,6 @@
         r1 = checkValue("msg1");
         MathJax.Message.Clear(id1, 0);
       },
-      cbSpecSleep,
       function () {
         r2 = checkValue("");
         id2 = MathJax.Message.Set("msg2");
@@ -44,12 +42,10 @@
         r4 = checkValue("msg3");
         MathJax.Message.Clear(id3, 0);
       },
-      cbSpecSleep,
       function () {
         r5 = checkValue("msg2");
         MathJax.Message.Clear(id2, 0);
       },
-      cbSpecSleep,
       function () {
         r6 = checkValue("");
       }

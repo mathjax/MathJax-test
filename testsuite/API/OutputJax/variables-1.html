@@ -16,8 +16,12 @@
       {
       // Just checking that all the variables exist
       return [
-      newScriptReftestResult("MathJax.Ajax.timeout",
-      MathJax.Ajax.hasOwnProperty("timeout"))
+      newScriptReftestResult("MathJax.OutputJax.id",
+      MathJax.OutputJax.hasOwnProperty("id")),
+      newScriptReftestResult("MathJax.OutputJax.version",
+      MathJax.OutputJax.hasOwnProperty("version")),
+      newScriptReftestResult("MathJax.OutputJax.directory",
+      MathJax.OutputJax.hasOwnProperty("directory"))
       ];
       }    
     </script>

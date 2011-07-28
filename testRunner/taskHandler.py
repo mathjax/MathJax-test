@@ -220,19 +220,26 @@ class requestHandler(SocketServer.StreamRequestHandler):
         if (t.isRunning()):
             return "'" + aTaskName + "' is already running!\n"
 
-        if (t.isPending()):
-            return "'" + aTaskName + "' is already pending!\n"
-
         if (aRestart):
             t.mParameters["startID"] = ""
 
         h = t.host()
         if (h in gServer.mRunningTaskFromHost.keys()):
-            gServer.addTaskToPendingQueue(t)
-            return "'" + aTaskName + "' added to the pending queue.\n"
-        else:
-            t.execute()
-            return "Run signal sent to '" + aTaskName + "'.\n"
+            # A task is already running on this host: verify its status.
+            # This may change the list of running/pending tasks!
+            gServer.mRunningTaskFromHost[h].verifyStatus()
+            if (t.isRunning()):
+                return "'" + aTaskName + "' is already running!\n"
+
+        if (t.isPending()):
+            return "'" + aTaskName + "' is already pending!\n"
+
+        gServer.addTaskToPendingQueue(t)
+
+        if (h not in gServer.mRunningTaskFromHost.keys()):
+            gServer.runNextTaskFromPendingQueue(h)
+
+        return "'" + aTaskName + "' added to the pending queue.\n"
 
     def stopTask(self, aTaskName):
         """

@@ -34,16 +34,14 @@
       function postMathJax()
       {
       cb = MathJax.Callback.ExecuteHooks([
-      MathJax.Callback.Delay(100, MathJax.Callback(f)),
+      MathJax.Callback(["Delay", MathJax.Callback, 100, f]),
       MathJax.Callback(f),
-      MathJax.Callback.Delay(300, MathJax.Callback(f)),
-      MathJax.Callback.Delay(200, MathJax.Callback(f)),
+      MathJax.Callback(["Delay", MathJax.Callback, 300, f]),
+      MathJax.Callback(["Delay", MathJax.Callback, 200, f]),
       MathJax.Callback(f),
-      MathJax.Callback(f),
-      MathJax.Callback(f),
-      MathJax.Callback.Delay(500, MathJax.Callback(f)),
-      MathJax.Callback.Delay(400, MathJax.Callback(f))]);
-
+      MathJax.Callback(["Delay", MathJax.Callback, 500, f]),
+      MathJax.Callback(["Delay", MathJax.Callback, 400, f]),
+      ]);
       if (cb != null) {
         MathJax.Hub.Queue(setStartTime, cb, setEndTime);
       }

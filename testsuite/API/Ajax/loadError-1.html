@@ -17,7 +17,7 @@
       myError = function(aFile)
       {
       r1 = true;
-      r2 = (aFile == "unknown.js");
+      r2 = (aFile == "timeout.js");
       setEndTime();
       }
 
@@ -42,9 +42,9 @@
       {
       MathJax.Ajax.timeout = 2000;
       MathJax.Ajax.loadError = myError;
-      MathJax.Hub.Queue([updateMessage, "Loading unknown.js..."]);
+      MathJax.Hub.Queue([updateMessage, "Loading timeout.js..."]);
       MathJax.Hub.Queue([setStartTime]);
-      MathJax.Hub.Queue(["Require", MathJax.Ajax, "unknown.js"  ]);
+      MathJax.Hub.Queue(["Load", MathJax.Ajax, "timeout.js"  ]);
       MathJax.Hub.Queue([updateMessage, " done."]);
       }
 
@@ -56,7 +56,7 @@
       return [
       newScriptReftestResult("MathJax.Ajax.loadError called", r1),
       newScriptReftestResult("MathJax.Ajax.loadError argument", r2),
-      newScriptReftestResult("Require unknown.js, timeout (delta = " +
+      newScriptReftestResult("Load timeout.js, timeout (delta = " +
                              delta + ")", (error < 100)) // tolerance of 100ms
       ];
       }    
