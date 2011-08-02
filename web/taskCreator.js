@@ -38,8 +38,10 @@ function updateFieldVisibility(aFieldId1, aFieldId2, aValue)
          f1.type == "checkbox" && f1.checked == aValue) ||
         (tag == "select" && f1.value == aValue)) {
         f2.style.visibility = "visible";
+        f2.style.position = "relative";
     } else {
         f2.style.visibility = "hidden";
+        f2.style.position = "absolute";
     }
 }
 
@@ -58,6 +60,7 @@ function init()
 {
     updateFieldVisibility("taskSchedule", "crontabParameters", true);
     updateFieldVisibility("useWebDriver", "fullScreenMode", false);
+    updateFieldVisibility("useWebDriver", "aloneOnHost", true);
     updateFieldValue("host_select", "host");
     updateFieldValue("taskName", "outputDirectory");
     updateFieldVisibility("browser", "browserMode", "MSIE")

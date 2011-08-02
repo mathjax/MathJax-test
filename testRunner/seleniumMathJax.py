@@ -63,17 +63,21 @@ VK_DELETE =	127
 def getBrowserStartCommand(aUseWebDriver, aBrowserPath, aOS, aBrowser):
 
     """
-    @fn getBrowserStartCommand(aBrowserPath, aOS, aBrowser)
-    @brief get the browser start command
+    @fn getBrowserStartCommand(aUseWebDriver, aBrowserPath, aOS, aBrowser)
+    @brief get the browser's start command / desired capabilities
 
+    @param aUseWebDriver whether or not we use WebDriver (Selenium 2 API).
     @param aBrowserPath the path to the executable of the browser or "auto"
     @param aOS the name of the operating system
     @param aBrowser the name of the browser
-    @return the start command to be used by Selenium 
+    @return start command / desired capabilities to be used by Selenium
 
-    @details The return value is "*firefox", "*googlechrome", "*opera",
-    "*iexploreproxy", "*konqueror /usr/bin/konqueror" or "unknown" if the
-    browser was not recognized.
+    @details If Selenium 1 API is used, the return value is "*firefox",
+    "*googlechrome", "*opera", "*iexploreproxy",
+    "*konqueror /usr/bin/konqueror" or "unknown" (if the browser is not
+    recognized). If Selenium 2 API is used, the return value is a member of
+    the webdriver.DesiredCapabilities describing the browser or None (if the
+    browser is not recognized).
     """
 
     if aUseWebDriver:

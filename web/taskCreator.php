@@ -182,11 +182,18 @@
             <label>use WebDriver (Selenium 2, experimental):
               <input id="useWebDriver" name="useWebDriver" type="checkbox"
                      onchange="updateFieldVisibility('useWebDriver',
-                                                     'fullScreenMode', false)"/>
+                                                     'fullScreenMode', false);
+                              updateFieldVisibility('useWebDriver',
+                                                    'aloneOnHost', true);"/>
             </label>
           <span id="fullScreenMode">
             <label>fullScreenMode:
               <input name="fullScreenMode" type="checkbox" checked="checked"/>
+            </label>
+          </span>
+          <span id="aloneOnHost">
+            <label>aloneOnHost:
+              <input name="aloneOnHost" type="checkbox"/>
             </label>
           </span>
           </p>

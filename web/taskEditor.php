@@ -156,7 +156,13 @@ function truncateString($aValue, $aMaxLength)
           }
   
           $useWebDriver = boolToString(isset($_POST['useWebDriver']));
-          $fullScreenMode = boolToString(isset($_POST['fullScreenMode']));
+          if ($useWebDriver == 'true') {
+            $aloneOnHost = boolToString(isset($_POST['aloneOnHost']));
+            $fullScreenMode = boolToString(False);
+          } else {
+            $aloneOnHost = boolToString(True);
+            $fullScreenMode = boolToString(isset($_POST['fullScreenMode']));
+          }
 
           $formatOutput = boolToString(isset($_POST['formatOutput']));
           $compressOutput = boolToString(isset($_POST['compressOutput']));
@@ -215,6 +221,7 @@ function truncateString($aValue, $aMaxLength)
                            "timeOut=".strval($timeOut)."\n".
                            "useWebDriver=".$useWebDriver."\n".
                            "fullScreenMode=".$fullScreenMode."\n".
+                           "aloneOnHost=".$aloneOnHost."\n".
                            "formatOutput=".$formatOutput."\n".
                            "compressOutput=".$compressOutput."\n".
                            "operatingSystem=".$operatingSystem."\n".
