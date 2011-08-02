@@ -8,5 +8,6 @@
 == mfrac-08.html mfrac-08-ref.html
 == mfrac-09.html mfrac-09-ref.html
 == mfrac-10.html mfrac-10-ref.html
-== mfrac-11.html mfrac-11-ref.html
-== mfrac-12.html mfrac-12-ref.html
+skip == mfrac-11.html mfrac-11-ref.html
+skip == mfrac-12.html mfrac-12-ref.html
+

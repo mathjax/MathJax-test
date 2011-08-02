@@ -16,7 +16,7 @@
       function f()
       {
         r1 = true;
-        mspace = document.getElementById("mspace");
+        var mspace = document.getElementById("mspace");
         r4 = (mspace.offsetHeight == 100);
         r5 = (mspace.offsetWidth == 100);
       }
@@ -25,7 +25,7 @@
       {
       var math = MathJax.Hub.getAllJax("div")[0];
       document.getElementById("div").style.fontSize = "24pt" 
-      mspace = document.getElementById("mspace");
+      var mspace = document.getElementById("mspace");
       r2 = (mspace.offsetHeight == 200);
       r3 = (mspace.offsetWidth == 200);
 

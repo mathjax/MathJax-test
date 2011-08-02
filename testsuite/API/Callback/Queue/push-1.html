@@ -12,6 +12,8 @@
     <script type="text/javascript" src="../../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      var obj = { x : false };
+
       function f()
       {
         this.x = true;
@@ -19,12 +21,10 @@
 
       function getTestCases()
       {
-      var obj = { x : false };
       var queue = MathJax.Callback.Queue();
       queue.Push([obj, f]);
-
       return [
-      newScriptReftestResult("Push()", obj.x),
+      newScriptReftestResult("Push()", obj.x)
       ];
       }    
     </script>

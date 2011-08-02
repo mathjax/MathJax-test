@@ -2,11 +2,11 @@
 == mi2.html mi2-ref.html
 == mi3.html mi3-ref.html
 == mi4.html mi4-ref.html
-== miAtoken5.html miAtoken5-ref.html
-== miequivalents11.html miequivalents11-ref.html
+fails == miAtoken5.html miAtoken5-ref.html
+random == miequivalents11.html miequivalents11-ref.html
 == mifontstyle12.html mifontstyle12-ref.html
-== mimathvariant13.html mimathvariant13-ref.html
-== mimathvariant14.html mimathvariant14-ref.html
+random == mimathvariant13.html mimathvariant13-ref.html
+random == mimathvariant14.html mimathvariant14-ref.html
 == mi-mathvariant-1.html mi-mathvariant-1-ref.html
 fails == mi-mathvariant-2.html mi-mathvariant-2-ref.html
 == miScolorname6.html miScolorname6-ref.html

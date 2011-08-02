@@ -1,4 +1,4 @@
-include Variants/reftest.list
+random include Variants/reftest.list
 
 # The XML whitespaces &NewLine; and &Tab; are not included in the following
 # tests:

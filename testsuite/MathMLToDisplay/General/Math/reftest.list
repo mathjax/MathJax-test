@@ -13,5 +13,5 @@ fails == mathAmode1.html mathAmode1-ref.html
 == math-as-mstyle-1-2.html math-as-mstyle-1-2-ref.html
 == mathBevelledFrac.html mathBevelledFrac-ref.html
 == mathColorSize.html mathColorSize-ref.html
-== mathDir.html mathDir-ref.html
+fails == mathDir.html mathDir-ref.html
 == mathTable1.html mathTable1-ref.html
