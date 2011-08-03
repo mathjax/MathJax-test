@@ -214,6 +214,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
             t.mParameters["startID"] = ""
 
         h = t.host()
+        if h == None:
+            return "Unknown host '" + t.mParameters["host"] + "'\n"
+
         if (h in gServer.mRunningTasksFromHost.keys()):
             # Tasks are already running on this host: verify the status.
             # This may change the list of running/pending tasks!
@@ -266,8 +269,11 @@ class requestHandler(SocketServer.StreamRequestHandler):
         - If the request is "TASKVIEWER", it sends the result of
         @ref taskHandler::getTaskList
 
-        - If the request is "TASKINFO taskName", it send the result of
+        - If the request is "TASKINFO taskName", it sends the result of
         @ref taskHandler::getTaskInfo for the corresponding task.
+
+        - If the request is "HOSTINFO host", it sends the the result of
+        @ref taskHandler::getHostInfo for the corresponding host.
 
         - If the request is "TASK UPDATE pid status progress", where pid the PID
         of the process of a running task, it updates the members of the given
@@ -308,6 +314,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
             elif (client == "TASKINFO"):
                 taskName = items[1]
                 self.wfile.write(gServer.getTaskInfo(taskName))
+            elif (client == "HOSTINFO"):
+                host = items[1]
+                self.wfile.write(gServer.getHostInfo(host))
             elif (client == "TASK"):
                 command = items[1]
                 pid = items[2]
@@ -423,7 +432,8 @@ class task:
         self.mStatus = aStatus
         self.mProgress = "-"
         self.mParameters = {}
-        self.mParameters["host"] = None
+        self.mParameters["host"] = HOST_LIST[0]
+        self.mParameters["aloneOnHost"] = True
         self.mPopen = None
         self.mOutputDirectory = aOutputDirectory
         self.mExceptionMessage = None
@@ -437,10 +447,12 @@ class task:
         this parameter is None.
         """
         h = self.mParameters["host"]
-        if h != None:
+        try:
             return socket.gethostbyname(h)
-        else:
-            return "Unknown"
+        except socket.gaierror, err:
+            self.mExceptionMessage = \
+                "can't resolve hostname %s: %s" % (h, err[1])
+            return None
 
     def isPending(self):
         """
@@ -490,11 +502,11 @@ class task:
         if ((not running) and self.mStatus == "Running"):
             self.mStatus = "Killed"
             self.mExceptionMessage = "No exception raised"
-            gServer.removeTaskFromRunningList(t)
+            gServer.removeTaskFromRunningList(self)
             pid = str(self.mPopen.pid)
             if pid in gServer.mRunningTaskFromPID.keys():
                 del gServer.mRunningTaskFromPID[pid]
-            gServer.runNextTasksFromPendingQueue(t.host())
+            gServer.runNextTasksFromPendingQueue(self.host())
         elif (running and
               (self.mStatus == "Inactive" or
                self.mStatus == "Pending")):
@@ -930,6 +942,48 @@ class taskHandler:
 
         return self.mTasks[aTaskName].serializeHTML();
 
+    def getHostInfo(self, aHost):
+        """
+        @fn getHostInfo(self, aHost)
+        @brief get the lists of running/pending tasks on the host
+        """
+     
+        try:
+            h = socket.gethostbyname(aHost)
+        except socket.gaierror, err:
+            return "UNKNOWN_HOST\n"
+           
+        s = ""
+
+        s += "HOST " + aHost
+        if aHost != h:
+            s += " (" + h + ")"
+        s += "\n"
+
+        s += "RUNNING_TASKS\n"
+
+        if h in gServer.mRunningTasksFromHost.keys():
+            for t in gServer.mRunningTasksFromHost[h]:
+                s += t.mName + " "
+            s += "\n"
+
+        s += "RUNNING_TASKS END\n"
+        
+        s += "PENDING_TASKS\n"
+
+        if h in gServer.mPendingTasksFromHost.keys():
+            alone = False
+            for t in gServer.mPendingTasksFromHost[h]:
+                if (alone):
+                    s += "\n"
+                s += t.mName + " "
+                alone = t.aloneOnHost()
+            s += "\n"
+
+        s += "PENDING_TASKS END\n"
+
+        return s
+
     def getTaskList(self):
         """
         @fn getTaskList(self)
@@ -973,6 +1027,8 @@ class taskHandler:
                         status = "Inactive"
                     else:
                         status = items[2]
+                    if (items[5] == "None"):
+                        items[5] = None
                     t = task(items[0], status, items[4], items[5])
                     t.mProgress = items[3]
                     # host = items[1] is already saved in the config file.
@@ -992,7 +1048,7 @@ class taskHandler:
     def verifyHostStatus(self, aHost):
         """
         @fn verifyHostStatus
-        @brief TODO
+        @brief Call task::verifyStatus for all the tasks running on this host
         """
         for t in gServer.mRunningTasksFromHost[aHost]:
             t.verifyStatus()
@@ -1005,20 +1061,29 @@ class taskHandler:
         """
         aTask.mStatus = "Pending"
         h = aTask.host()
-        if h in self.mPendingTasksFromHost.keys():
-            q = self.mPendingTasksFromHost[h]
-            q.append(aTask)
-        else:
-            q = collections.deque()
-            q.append(aTask)
-            self.mPendingTasksFromHost[h] = q
+        if h != None:
+            if h in self.mPendingTasksFromHost.keys():
+                q = self.mPendingTasksFromHost[h]
+                q.append(aTask)
+            else:
+                q = collections.deque()
+                q.append(aTask)
+                self.mPendingTasksFromHost[h] = q
 
     def runNextTasksFromPendingQueue(self, aHost):
         """
         @fn runNextTaskFromPendingQueue(self, aHost)
-        @brief run the next pending tasks for the specified host, if possible.
+        @brief run the next pending tasks for the specified host
         @param aHost on which we want to run the next task
+        @details This function gets the tasks from the pending queue for aHost
+        and starts them as long as it is possible. This is determined by the
+        aloneOnHost property of the tasks: no new tasks can be added if an
+        'aloneOnHost' task is running and an 'aloneOnHost' task can not be
+        added if other tasks are still running.
         """
+        if aHost == None:
+            return
+
         if aHost in self.mPendingTasksFromHost.keys():
             q = self.mPendingTasksFromHost[aHost]
             
@@ -1045,24 +1110,26 @@ class taskHandler:
     def addTaskToRunningList(self, aTask):
         """
         @fn addTaskToRunningList(self, aTask)
-        @brief TODO
+        @brief add aTask to the list of running tasks on aTask.host()
         """
         h = aTask.host()
-        if h not in self.mRunningTasksFromHost.keys():
-            self.mRunningTasksFromHost[h] = [aTask]
-        else:
-            self.mRunningTasksFromHost[h].append(aTask)
+        if h != None:
+            if h not in self.mRunningTasksFromHost.keys():
+                self.mRunningTasksFromHost[h] = [aTask]
+            else:
+                self.mRunningTasksFromHost[h].append(aTask)
 
     def removeTaskFromRunningList(self, aTask):
         """
         @fn removeTaskFromRunningList(self, aTask)
-        @brief TODO
+        @brief remove aTask from the list of running tasks on aTask.host()
         """
         h = aTask.host()
-        l = self.mRunningTasksFromHost[h]
-        l.remove(aTask)
-        if (len(l) == 0):
-            del self.mRunningTasksFromHost[h]
+        if h != None:
+            l = self.mRunningTasksFromHost[h]
+            l.remove(aTask)
+            if (len(l) == 0):
+                del self.mRunningTasksFromHost[h]
 
     def addScheduledTask(self, aTask):
         """

@@ -120,7 +120,8 @@
                 echo '<tr>';
                 echo '<td><a href="taskInfo.php?taskName='.$taskName.'">';
                 echo $taskName.'</a></td>';
-                echo '<td>'.$host.'</td>';
+                echo '<td><a href="hostInfo.php?host='.$host.'">';
+                echo $host.'</a></td>';
                 echo '<td>';
                 if ($status == "Killed") {
                   echo '<a href="taskInfo.php?taskName='.$taskName;
