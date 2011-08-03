@@ -58,6 +58,14 @@ def declarePhpStringArray(aStream, aName, aValue):
             aStream.write(",'" + aValue[i] + "'")
     aStream.write(");\n")
 
+def declareJsIntegerArray(aStream, aName, aValue):
+    aStream.write("var " + aName + " = [")
+    if (len(aValue) > 0):
+        aStream.write(str(aValue[0]))
+        for i in range(1, len(aValue)):
+            aStream.write("," + str(aValue[i]))
+    aStream.write("];\n")
+
 def createLexExpression(aList):
     v = ""
     if (len(aList) > 0):
@@ -80,6 +88,8 @@ TASK_HANDLER_PORT = configParser.getint("task_handler", "TASK_HANDLER_PORT")
 DEFAULT_TASK_NAME = configParser.get("testing_instance", "DEFAULT_TASK_NAME")
 HOST_LIST = parseStringArray(configParser.get("testing_instance",
                                               "HOST_LIST"))
+HOST_LIST_OS_ = parseStringArray(configParser.get("testing_instance",
+                                                 "HOST_LIST_OS"))
 DEFAULT_SELENIUM_PORT = configParser.getint("testing_instance",
                                             "DEFAULT_SELENIUM_PORT")
 DEFAULT_MATHJAX_PATH = configParser.get("testing_instance",
@@ -101,6 +111,7 @@ FONT_LIST = parseStringArray(configParser.get("testing_instance",
 CONDITION_PARSER = configParser.get("generated_files", "CONDITION_PARSER")
 CONFIG_PY = configParser.get("generated_files", "CONFIG_PY")
 CONFIG_PHP = configParser.get("generated_files", "CONFIG_PHP")
+CONFIG_JS = configParser.get("generated_files", "CONFIG_JS")
 
 WARNING_GENERATED_FILE = configParser.get("messages",
                                           "WARNING_GENERATED_FILE")
@@ -112,6 +123,11 @@ MONTH_LIST = parseStringArray(configParser.get("other", "MONTH_LIST"))
 WEEKDAY_LIST = parseStringArray(configParser.get("other", "WEEKDAY_LIST"))
 TESTSUITE_TOPDIR_LIST = \
     parseStringArray(configParser.get("other", "TESTSUITE_TOPDIR_LIST"))
+
+# convert HOST_LIST_OS_ to a list of indices
+HOST_LIST_OS = []
+for v in HOST_LIST_OS_:
+    HOST_LIST_OS.append(OS_LIST.index(v))
 
 # Create testRunner/conditionParser.py
 f_in = open(CONDITION_PARSER + "-tpl", "r")
@@ -178,4 +194,10 @@ declarePhpStringArray(f_out, "WEEKDAY_LIST", WEEKDAY_LIST)
 declarePhpStringArray(f_out, "TESTSUITE_TOPDIR_LIST", TESTSUITE_TOPDIR_LIST)
 
 print >>f_out, "?>"
+f_out.close()
+
+# Create web/config.js
+f_out = open(CONFIG_JS, "w")
+print >>f_out, "/* " + WARNING_GENERATED_FILE + " */"
+declareJsIntegerArray(f_out, "HOST_LIST_OS", HOST_LIST_OS)
 f_out.close()

@@ -51,6 +51,12 @@ function updateFieldValue(aSelectId, aFieldId)
         document.getElementById(aSelectId).value
 }
 
+function updateSelectIndex(aSelectId1, aSelectId2, aArray)
+{
+    document.getElementById(aSelectId2).selectedIndex =
+        aArray[document.getElementById(aSelectId1).selectedIndex];
+}
+
 function openReftestSelector()
 {
     window.open("selectReftests.xhtml","","");
@@ -64,4 +70,5 @@ function init()
     updateFieldValue("host_select", "host");
     updateFieldValue("taskName", "outputDirectory");
     updateFieldVisibility("browser", "browserMode", "MSIE")
+    updateSelectIndex("host_select", "operatingSystem", HOST_LIST_OS)
 }

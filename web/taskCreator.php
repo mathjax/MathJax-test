@@ -54,6 +54,7 @@
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <link rel="stylesheet" type="text/css" href="default.css"/>
+    <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript" src="taskCreator.js"></script>
   </head>
 
@@ -149,7 +150,10 @@
                      maxlength="255"/>
             </label> (or choose among known hosts:
             <select id="host_select"
-                    onchange="updateFieldValue('host_select', 'host')">
+                    onchange="updateFieldValue('host_select', 'host');
+                              updateSelectIndex('host_select',
+                                                'operatingSystem',
+                                                HOST_LIST_OS)">
               <?php generateOptionList($HOST_LIST); ?>
             </select>)
 
@@ -213,7 +217,7 @@
           <legend>Platform:</legend>
           <p>
             <label>operatingSystem:
-              <select name="operatingSystem">
+              <select id="operatingSystem" name="operatingSystem">
                 <?php generateOptionList($OS_LIST); ?>
               </select>
             </label>

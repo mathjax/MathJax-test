@@ -27,7 +27,7 @@ include custom.cfg
 all: config doc
 
 config:
-	@ echo 'Generate $(CONDITION_PARSER), $(CONFIG_PY) and $(CONFIG_PHP)...'
+	@ echo 'Generate $(CONDITION_PARSER), $(CONFIG_PY), $(CONFIG_PHP) and $(CONFIG_JS)...'
 	@ $(SED) 's|###||' <custom.cfg >custom.cfg.tmp
 	@ $(PYTHON) generateConfigFiles.py
 	@ rm custom.cfg.tmp
