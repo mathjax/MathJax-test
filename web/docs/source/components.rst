@@ -52,12 +52,19 @@ command
 
    java -jar name-of-the-selenium-server.jar
 
-Note that because some unit tests need to take screenshots of test pages, one
+Note for Selenium 1: 
+because some unit tests need to take screenshots of test pages, one
 should not do any actions on the test machines that could disturb the rendering
 of the pages. In particular, it is neither possible to run several testing
 instances on the same test machine simultaneously nor to use the operating
 system graphical interface to do other work while the tests are running. If you
 want to run tests on your local machine, a tip is to use virtual test machines.
+
+Note for Selenium 2 (Webdriver):
+The test machine may require intallation of other programs than simply the
+Selenium server. See
+`Selenium And Platform Support <https://sites.google.com/site/mathjaxproject/design-documents/testing/selenium-and-platform-support>`_ for a more precise
+description of the requirements.
 
 .. _test-runner:
 
@@ -116,8 +123,11 @@ list:
   
   - ``timeOut``: time in seconds before aborting the loading of a page.
   
+  - ``useWebDriver``: whether the testing instance should use Selenium
+    (Webdriver) or Selenium 1.
+
   - ``fullScreenMode``: indicates whether the browsers should be opened in full
-    screen mode when possible.
+    screen mode when possible. Only relevant with Selenium 1.
   
   - ``formatOutput`` : indicates whether the output should be formatted in HTML,
     using the Perl script
@@ -127,9 +137,9 @@ list:
   
 - Platform configuration options
 
-  - ``operatingSystem``: Windows, Linux (Mac not tested yet)
+  - ``operatingSystem``: Windows, Linux, Mac
   
-  - ``browser``: Firefox, Safari, Chrome, Opera (not supported), MSIE, Konqueror
+  - ``browser``: Firefox, Safari, Chrome, Opera, MSIE, Konqueror, HTMLUnit, iPhone, Android
   
   - ``browserMode``: Internet Explorer mode among StandardMode, Quirks, IE7, IE8
     and IE9.
@@ -140,7 +150,8 @@ list:
   - ``font``: STIX, TeX or ImageTeX
   
   - ``nativeMathML``: for unit tests which do not specify the MathML engine,
-    this option forces the use of the browser's native MathML.
+    this option forces the use of the browser's native MathML. Use this option
+    to test MathPlayer.
   
 - Test Suite configuration options
 
@@ -175,7 +186,7 @@ instances and make it more convenient for QA engineers.
 
 The **task handler** is a server that maintains a list of tasks. It
 can receive instructions to add new tasks, run tasks etc It stores information
-on each task, such that
+on each task, such as
 :ref:`configuration options <test-runner-config>` to use. When the task handler
 runs a task, it creates a new :ref:`test runner <test-runner>` process and
 communicates with it to stay informed of the testing instance status and
@@ -184,9 +195,9 @@ progress, to know whether the process has been killed etc
 A **QA User Interface** is available to verify the status of each task, the
 information on the task, to edit, schedule and run tasks etc It directly sends
 the instructions to the task handler. Actions can be made throughout the command
-line with the help of the ``taskViewer.py`` and ``taskEditor.py`` Python
-scripts. A web interface is also available. See the section
-:ref:`QA tools <qa-tools>`. 
+line with the help of the ``taskViewer.py``,  ``hostInfo.py`` and
+``taskEditor.py`` Python scripts. A web interface is also available. See the
+section :ref:`QA tools <qa-tools>`. 
 
 A **Task Scheduler** can memorize tasks to run regularly at a specified date and
 time. It is based on the `cron <http://en.wikipedia.org/wiki/Cron>`_ tool and

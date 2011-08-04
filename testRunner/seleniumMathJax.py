@@ -89,9 +89,14 @@ def getBrowserStartCommand(aUseWebDriver, aBrowserPath, aOS, aBrowser):
             return webdriver.DesiredCapabilities.INTERNETEXPLORER
         elif aBrowser == "Opera":
             return webdriver.DesiredCapabilities.OPERA
+        elif aBrowser == "HTMLUnit":
+            return webdriver.DesiredCapabilities.HTMLUNITWITHJS
+        elif aOS == "Mac" and aBrowser == "iPhone":
+            return webdriver.DesiredCapabilities.IPHONE
+        elif aOS == "Linux" and aBrowser == "Android":
+            return webdriver.DesiredCapabilities.ANDROID
         else:
-            print >> sys.stderr, "Unknown browser"
-            return None
+            raise NameError("Unknown Platform")
 
     if aBrowser == "Firefox":
         startCommand = "*firefox"
@@ -110,8 +115,7 @@ def getBrowserStartCommand(aUseWebDriver, aBrowserPath, aOS, aBrowser):
     
     if aBrowserPath == "auto":
         if startCommand == "*custom":
-            print >> sys.stderr, "Unknown browser"
-            return None
+            raise NameError("Unknown Platform")
         
         if aOS == "Linux" and aBrowser == "Konqueror":
             startCommand = startCommand + " /usr/bin/konqueror" 
@@ -263,7 +267,7 @@ class seleniumMathJax(object):
             # XXXfred Find a better solution to replace wait_for_condition?
             startTime = datetime.utcnow()
             delta = 0
-            while(delta < self.mTimeOut):
+            while(True):
                 if (self.mWebDriver.
                     execute_script("return document.documentElement.\
                                     className != 'reftest-wait'")):
@@ -271,6 +275,8 @@ class seleniumMathJax(object):
                 time.sleep(0.1)
                 deltaTime = datetime.utcnow() - startTime
                 delta = deltaTime.seconds * 1000 + deltaTime.microseconds / 1000
+                if delta > self.mTimeOut:
+                    raise Exception, "timeout"
 
             if (self.mWebDriver.execute_script(\
                     "return document.documentElement.className ==\

@@ -15,8 +15,6 @@ setup.
 Public Test Suite
 =================
 
-XXXfred: this server is not available yet!
-
 A public server with the :ref:`MathJax testsuite <test-suite>` is available.
 This testsuite uses the development version of
 `MathJax <https://github.com/mathjax/MathJax>`_ and
@@ -44,20 +42,27 @@ particular, the following Javascript files are important:
 
 .. _mathjax-test-headers:
 
-- `header.js </MathJax-test/header.js>`_: this script is supposed to be used in
+- `header.js </MathJax-test/testsuite/header.js>`_: this script is supposed to be used in
   all the unit tests. Among other things, it loads MathJax, executes pre and
   post actions and communicates with the test launcher.
 
-- `treeReftests.js </MathJax-test/treeReftests.js>`_: this script is needed for
+- `treeReftests.js </MathJax-test/testsuite/treeReftests.js>`_: this script is needed for
   tree reftests to serialize DOM trees.
 
-- `scriptTests.js </MathJax-test/scriptTests.js>`_: this script is needed for
+- `scriptTests.js </MathJax-test/testsuite/scriptTests.js>`_: this script is needed for
   script tests to determine whether all the Javascript tests passed.
 
-The best thing to do is to create a ``MathJax-test/`` directory where you put
+The best thing to do is to create a ``testsuite/`` directory where you put
 the scripts above as well as the Web pages and resources of the test suite,
 respecting its file hierarchy. One way to do that is to download the
 `MathJax-test GitHub repository <https://github.com/mathjax/MathJax-test/>`_.
+If you plan to run automated tests on your machine, you can do a complete
+configuration of MathJax-test [ADDREF]. Otherwise, you simply have to do this:
+
+- keep only the ``testsuite/`` directory
+- In ``header-tpl.js``, set ``gMathJaxPath`` to the location of a MathJax
+  installation.
+- rename this template file ``header.js``
 
 .. _loading-unit-test:
 
@@ -69,9 +74,9 @@ want to test. It is also possible to provide some
 :ref:`configuration options <test-runner-config>` in the query string of the
 URI:
 
-- **mathJaxPath**. By default, the test page looks for an ancestor directory
-  called ``MathJax-test/``. Then it uses a ``MathJax/`` directory at the same
-  level. This query parameter allows to specify your own MathJax installation.
+- **mathJaxPath**. By default, the test page use the MathJax installation
+  specified in the ``gMathJaxPath`` variable of ``header.js``. This query
+  parameter allows to specify your own MathJax installation.
 
 - **font**. One of the value ``STIX``, ``TeX``, ``ImageTeX`` indicating the
   font used by MathJax to render the mathematics. Default is ``STIX``.
@@ -79,7 +84,7 @@ URI:
 - **nativeMathML**. This indicates whether the browser's renderer should be used
   to display mathematics. This is either "false" or "true". Note that in some
   cases, tree reftests force the use of MathML output, so this parameter is
-  ignored. In the other cases, the default value is "false".  
+  ignored. In the other cases, the default value is "false".
 
 Some examples:
 

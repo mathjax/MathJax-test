@@ -138,6 +138,11 @@
             (<a href="http://en.wikipedia.org/wiki/Cron">cron syntax</a>)
             </span>
           </p>
+          <p id="aloneOnHost">
+            <label>aloneOnHost:
+              <input name="aloneOnHost" type="checkbox"/>
+            </label>
+          </p>
         </fieldset>
 
         <fieldset>
@@ -195,11 +200,6 @@
               <input name="fullScreenMode" type="checkbox" checked="checked"/>
             </label>
           </span>
-          <span id="aloneOnHost">
-            <label>aloneOnHost:
-              <input name="aloneOnHost" type="checkbox"/>
-            </label>
-          </span>
           </p>
           <p>
             <label>formatOutput:
@@ -236,8 +236,8 @@
               <?php generateOptionList($BROWSER_MODE_LIST); ?>
               </select>
             </label>
-          </span>
-            <label style="visibility: hidden;">browserPath:
+          </span></p><p>
+            <label>browserPath:
               <input name="browserPath" type="text" value="auto"
                      readonly="readonly"/>
             </label>

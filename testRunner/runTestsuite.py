@@ -424,43 +424,39 @@ def main(aArgs, aTransmitToTaskHandler):
                                                                operatingSystem,
                                                                browser)
 
-                    if browserStartCommand != None:
-
-                        # Create a Selenium instance
-                        selenium = \
-                            seleniumMathJax.seleniumMathJax(useWebDriver,
-                                                            host,
-                                                            port,
-                                                            mathJaxPath,
-                                                            mathJaxTestPath,
-                                                            operatingSystem,
-                                                            browser,
-                                                            browserMode,
-                                                            browserStartCommand,
-                                                            font,
-                                                            nativeMathML,
-                                                            timeOut,
-                                                            fullScreenMode)
+                    # Create a Selenium instance
+                    selenium = \
+                        seleniumMathJax.seleniumMathJax(useWebDriver,
+                                                        host,
+                                                        port,
+                                                        mathJaxPath,
+                                                        mathJaxTestPath,
+                                                        operatingSystem,
+                                                        browser,
+                                                        browserMode,
+                                                        browserStartCommand,
+                                                        font,
+                                                        nativeMathML,
+                                                        timeOut,
+                                                        fullScreenMode)
                         
-                        if (clearBrowsersData):
-                            removeTemporaryData(selenium)
+                    if (clearBrowsersData):
+                        removeTemporaryData(selenium)
+                    else:
+                        if aTransmitToTaskHandler:
+                            taskHandler = [TASK_HANDLER_HOST,
+                                           TASK_HANDLER_PORT,
+                                           str(os.getpid())]
                         else:
-                            if aTransmitToTaskHandler:
-                                taskHandler = [TASK_HANDLER_HOST,
-                                               TASK_HANDLER_PORT,
-                                               str(os.getpid())]
-                            else:
-                                taskHandler = None
-                            # Create the test suite
-                            suite = reftest.reftestSuite(taskHandler,
-                                                         runSlowTests,
-                                                         runSkipTests,
-                                                         listOfTests,
-                                                         startID)
-                            runTestingInstance(directory, selenium, suite,
-                                               formatOutput, compressOutput)
-
-                    # end if browserStartCommand
+                            taskHandler = None
+                        # Create the test suite
+                        suite = reftest.reftestSuite(taskHandler,
+                                                     runSlowTests,
+                                                     runSkipTests,
+                                                     listOfTests,
+                                                     startID)
+                        runTestingInstance(directory, selenium, suite,
+                                           formatOutput, compressOutput)
 
                     i = i + 1
 

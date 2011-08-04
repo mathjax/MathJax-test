@@ -383,7 +383,7 @@ after the call to ``MathJax.Hub.Config`` and before one to
 For each test, finalize functions are pushed into ``MathJax.Hub.queue`` after
 ``postMathJax()`` is executed. These functions add serialization, script results
 etc and alert the test launcher that the test is complete. In general you do not
-need to call them, but it may sometimes useful to know them for advanced
+need to call them, but it may sometimes be useful to know them for advanced
 synchronisation tests:
 
 .. code-block:: javascript
@@ -399,8 +399,8 @@ The Reftest Manifest
 ======================================
 
 A reftest manifest is a file describing the tests in a directory. A basic
-can be found in the :ref:`test-suite` section. This section gives the syntax for
-reftest manifest, in a more formal way.
+example can be found in the :ref:`test-suite` section. This section gives
+the syntax for reftest manifest, in a more formal way.
 
 The test manifest format is a plain text file.  A line starting with a
 "#" is a comment.  Lines may be commented using whitespace followed by

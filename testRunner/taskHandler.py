@@ -1047,7 +1047,7 @@ class taskHandler:
 
     def verifyHostStatus(self, aHost):
         """
-        @fn verifyHostStatus
+        @fn verifyHostStatus(self, aHost)
         @brief Call task::verifyStatus for all the tasks running on this host
         """
         for t in gServer.mRunningTasksFromHost[aHost]:
@@ -1072,7 +1072,7 @@ class taskHandler:
 
     def runNextTasksFromPendingQueue(self, aHost):
         """
-        @fn runNextTaskFromPendingQueue(self, aHost)
+        @fn runNextTasksFromPendingQueue(self, aHost)
         @brief run the next pending tasks for the specified host
         @param aHost on which we want to run the next task
         @details This function gets the tasks from the pending queue for aHost

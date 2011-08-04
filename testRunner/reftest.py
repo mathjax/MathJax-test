@@ -626,7 +626,7 @@ class reftest(unittest.TestCase):
         except AssertionError:
             # exception raised by a self.fail()
             self.mTestSuite.testComplete(self)
-            pass
+            self.fail()
         except WebDriverException as data:
             # exception raised by WebDriver
             (success, msg) = self.determineSuccess(None, False)
