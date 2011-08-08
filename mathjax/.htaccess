@@ -1,0 +1,5 @@
+Allow from all
+
+<Files ~ "\.sh$">
+Deny from all
+</Files>

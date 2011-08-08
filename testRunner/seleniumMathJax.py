@@ -60,70 +60,6 @@ VK_F11 = 122
 VK_F12 = 123
 VK_DELETE =	127
 
-def getBrowserStartCommand(aUseWebDriver, aBrowserPath, aOS, aBrowser):
-
-    """
-    @fn getBrowserStartCommand(aUseWebDriver, aBrowserPath, aOS, aBrowser)
-    @brief get the browser's start command / desired capabilities
-
-    @param aUseWebDriver whether or not we use WebDriver (Selenium 2 API).
-    @param aBrowserPath the path to the executable of the browser or "auto"
-    @param aOS the name of the operating system
-    @param aBrowser the name of the browser
-    @return start command / desired capabilities to be used by Selenium
-
-    @details If Selenium 1 API is used, the return value is "*firefox",
-    "*googlechrome", "*opera", "*iexploreproxy",
-    "*konqueror /usr/bin/konqueror" or "unknown" (if the browser is not
-    recognized). If Selenium 2 API is used, the return value is a member of
-    the webdriver.DesiredCapabilities describing the browser or None (if the
-    browser is not recognized).
-    """
-
-    if aUseWebDriver:
-        if aBrowser == "Firefox":
-            return webdriver.DesiredCapabilities.FIREFOX
-        elif aBrowser == "Chrome":
-            return webdriver.DesiredCapabilities.CHROME
-        elif aOS == "Windows" and aBrowser == "MSIE":
-            return webdriver.DesiredCapabilities.INTERNETEXPLORER
-        elif aBrowser == "Opera":
-            return webdriver.DesiredCapabilities.OPERA
-        elif aBrowser == "HTMLUnit":
-            return webdriver.DesiredCapabilities.HTMLUNITWITHJS
-        elif aOS == "Mac" and aBrowser == "iPhone":
-            return webdriver.DesiredCapabilities.IPHONE
-        elif aOS == "Linux" and aBrowser == "Android":
-            return webdriver.DesiredCapabilities.ANDROID
-        else:
-            raise NameError("Unknown Platform")
-
-    if aBrowser == "Firefox":
-        startCommand = "*firefox"
-    elif (aOS == "Windows" or aOS == "Mac") and aBrowser == "Safari":
-        startCommand = "*safariproxy"
-    elif aBrowser == "Chrome":
-        startCommand = "*googlechrome"
-    elif aBrowser == "Opera":
-        startCommand = "*opera"
-    elif aOS == "Windows" and aBrowser == "MSIE":
-        startCommand = "*iexploreproxy"
-    elif aOS == "Linux" and aBrowser == "Konqueror":
-        startCommand = "*konqueror"
-    else:
-        startCommand = "*custom"
-    
-    if aBrowserPath == "auto":
-        if startCommand == "*custom":
-            raise NameError("Unknown Platform")
-        
-        if aOS == "Linux" and aBrowser == "Konqueror":
-            startCommand = startCommand + " /usr/bin/konqueror" 
-    else:
-        startCommand = startCommand + " " + aBrowserPath
-
-    return startCommand
-
 class seleniumMathJax(object):
 
     """
@@ -136,7 +72,7 @@ class seleniumMathJax(object):
                  aOperatingSystem,
                  aBrowser,
                  aBrowserMode,
-                 aBrowserStartCommand, 
+                 aBrowserPath,
                  aFont,
                  aNativeMathML,
                  aTimeOut,
@@ -147,36 +83,42 @@ class seleniumMathJax(object):
                      aOperatingSystem,
                      aBrowser,
                      aBrowserMode,
-                     aBrowserStartCommand, 
+                     aBrowserPath, 
                      aFont,
                      aNativeMathML,
                      aTimeOut,
                      aFullScreenMode)
 
-        @param aUseWebDriver
-        @param aHost host of the Selenium server
-        @param aPort port of the Selenium server
-        @param aMathJaxPath Value to assign to mMathJaxPath
-        @param aMathJaxTestPath Value to assign to mMathJaxTestPath
-        @param aOperatingSystem Value to assign to mOperatingSystem
-        @param aBrowser Value to assign to mBrowser
-        @param aBrowserMode Value to assign to mBrowserMode
-        @param aBrowserStartCommand start command of the browser
-        @param aFont Value to assign to mFont
-        @param aNativeMathML Value to assign to mNativeMathML
-        @param aTimeOut Value to assign to mTimeOut
-        @param aFullScreenMode Value to assign to mFullScreenMode
+        @param aUseWebDriver Whether to use Selenium 2 (Webdriver)
+        @param aHost Value to assign to @ref mHost
+        @param aPort Value to assign to @ref mPort
+        @param aMathJaxPath Value to assign to @ref mMathJaxPath
+        @param aMathJaxTestPath Value to assign to @ref mMathJaxTestPath
+        @param aOperatingSystem Value to assign to @ref mOperatingSystem
+        @param aBrowser Value to assign to @ref mBrowser
+        @param aBrowserMode Value to assign to @ref mBrowserMode
+        @param aBrowserPath Path to the browser executable, or "auto".
+        @param aFont Value to assign to @ref mFont
+        @param aNativeMathML Value to assign to @ref mNativeMathML
+        @param aTimeOut Value to assign to @ref mTimeOut
+        @param aFullScreenMode Value to assign to @ref mFullScreenMode
 
+        @see http://devel.mathjax.org/testing/web/docs/html/components.html#test-runner-config
+
+        @property mHost
+        Host of the Selenium server
+        @property mPort
+        Port of the Selenium server
         @property mMathJaxPath
-        Path to MathJax
+        URI of a MathJax installation
         @property mMathJaxTestPath
-        Path to MathJax-test
+        URI of a testsuite
         @property mOperatingSystem
-        operating system of the slave machine: Windows, Linux, Mac
+        Operating system of the test machine
         @property mBrowser
-        browser to run: Firefox, Safari, Chrome, Opera, MSIE, Konqueror
+        Name of the browser to run
         @property mBrowserMode
-        browser mode: StandardMode, Quirks, IE7, IE8, IE9
+        Browser mode for Internet Explorer
         @property mFont
         font to use: STIX, TeX, ImageTeX
         @property mNativeMathML
@@ -209,16 +151,65 @@ class seleniumMathJax(object):
         self.mReftestSize = (800, 1000)
 
         if (aUseWebDriver):
+            if aBrowser == "Firefox":
+                desireCapabilities = webdriver.DesiredCapabilities.FIREFOX
+            elif aBrowser == "Chrome":
+                desireCapabilities = webdriver.DesiredCapabilities.CHROME
+            elif aOperatingSystem == "Windows" and aBrowser == "MSIE":
+                desireCapabilities = \
+                    webdriver.DesiredCapabilities.INTERNETEXPLORER
+            elif aBrowser == "Opera":
+                desireCapabilities = webdriver.DesiredCapabilities.OPERA
+            elif aBrowser == "HTMLUnit":
+                desireCapabilities = \
+                    webdriver.DesiredCapabilities.HTMLUNITWITHJS
+            elif aOperatingSystem == "Mac" and aBrowser == "iPhone":
+                desireCapabilities = webdriver.DesiredCapabilities.IPHONE
+            elif aOperatingSystem == "Linux" and aBrowser == "Android":
+                desireCapabilities = webdriver.DesiredCapabilities.ANDROID
+            else:
+                raise NameError("Unknown Platform")
+
+            if aBrowserPath != "auto":
+                # XXXfred TODO: custom path for the browser. Does not seem
+                # available yet with remote Webdriver.
+                pass
+
             self.mWebDriver = webdriver.Remote("http://" + aHost + ":" +
                                                str(aPort) + "/wd/hub",
-                                               aBrowserStartCommand)
+                                               desireCapabilities)
             self.mWebDriver.implicitly_wait(aTimeOut / 1000)
             self.mWebDriver.set_script_timeout(aTimeOut / 1000)
             self.mSelenium = None
             self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
         else:
             self.mWebDriver = None
-            self.mSelenium = selenium(aHost, aPort, aBrowserStartCommand,
+            if aBrowser == "Firefox":
+                startCommand = "*firefox"
+            elif (aOperatingSystem == "Windows" or
+                  aOperatingSystem == "Mac") and aBrowser == "Safari":
+                startCommand = "*safariproxy"
+            elif aBrowser == "Chrome":
+                startCommand = "*googlechrome"
+            elif aBrowser == "Opera":
+                startCommand = "*opera"
+            elif aOperatingSystem == "Windows" and aBrowser == "MSIE":
+                startCommand = "*iexploreproxy"
+            elif aOperatingSystem == "Linux" and aBrowser == "Konqueror":
+                startCommand = "*konqueror"
+            else:
+                startCommand = "*custom"
+                
+            if aBrowserPath == "auto":
+                if startCommand == "*custom":
+                    raise NameError("Unknown Platform")
+        
+                if aOperatingSystem == "Linux" and aBrowser == "Konqueror":
+                    startCommand = startCommand + " /usr/bin/konqueror" 
+            else:
+                startCommand = startCommand + " " + aBrowserPath
+                
+            self.mSelenium = selenium(aHost, aPort, startCommand,
                                       aMathJaxTestPath)
 
     def open(self, aURI, aWaitTime = 0.5):
@@ -342,7 +333,7 @@ class seleniumMathJax(object):
                 not(self.mBrowserMode == "StandardMode")):
                 # For MSIE, we choose the document mode
                 # XXXfred TODO!
-                None
+                pass
         else:
             # Open the blank page and maximize it
             self.open("blank.html", 3)
@@ -505,7 +496,7 @@ class seleniumMathJax(object):
         @fn clearBrowserData(self)
         @brief Clear the browser data.
         @exception "clearBrowserData: not implemented"
-        @note Selenium 1 can not be used to clear the browser data, so this
+        @note Selenium can not be used to clear the browser data, so this
         is not implemented at the moment.
         """
         raise NameError("clearBrowserData: not implemented")

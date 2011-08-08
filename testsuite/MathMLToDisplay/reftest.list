@@ -6,6 +6,7 @@ include Presentation/reftest.list
 include Topics/reftest.list
 include TortureTests/reftest.list
 
+fails-if(Opera) != issue155.html issue155-ref.html
 == nobr-1.html nobr-1-ref.html
 == unit-1a.html unit-1-ref.html
 == unit-1b.html unit-1-ref.html

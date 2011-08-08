@@ -2,7 +2,7 @@
 *~
 .htpasswd
 custom.cfg
-mathjax/
+mathjax/*/
 testRunner/conditionParser.py
 testRunner/config.py
 testRunner/config/taskList/

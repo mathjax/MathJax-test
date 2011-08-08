@@ -418,12 +418,6 @@ def main(aArgs, aTransmitToTaskHandler):
                
                 for browserMode in browserModeList2:
 
-                    browserStartCommand = \
-                        seleniumMathJax.getBrowserStartCommand(useWebDriver,
-                                                               browserPath,
-                                                               operatingSystem,
-                                                               browser)
-
                     # Create a Selenium instance
                     selenium = \
                         seleniumMathJax.seleniumMathJax(useWebDriver,
@@ -434,7 +428,7 @@ def main(aArgs, aTransmitToTaskHandler):
                                                         operatingSystem,
                                                         browser,
                                                         browserMode,
-                                                        browserStartCommand,
+                                                        browserPath,
                                                         font,
                                                         nativeMathML,
                                                         timeOut,
