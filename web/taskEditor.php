@@ -173,7 +173,7 @@ function truncateString($aValue, $aMaxLength)
           $browser = selectToString($_POST['browser'], $BROWSER_LIST);
   
           if ($browser == "MSIE") {
-            $browserMode = selectToString($_POST['browser'],
+            $browserMode = selectToString($_POST['browserMode'],
                                           $BROWSER_MODE_LIST);
           } else {
             $browserMode = "StandardMode";

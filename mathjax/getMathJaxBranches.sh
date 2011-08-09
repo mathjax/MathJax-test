@@ -53,11 +53,10 @@ else
     cd master
 fi
 
-# Remove some directories, to save space
+# Remove some directories, to save disk space
 rm -rf docs/
 rm -rf fonts/
 rm -rf test/
-rm -rf unpacked/
 
 # Get the list of branches, excluding "master"
 BRANCHES=`git branch -r | sed 's/  origin\///' | grep -v "master"`
@@ -72,10 +71,9 @@ do
     fi
     cd $branch
     git pull origin $branch
-    # Remove some directories, to save space
+    # Remove some directories, to save disk space
     rm -rf docs/
     rm -rf fonts/
     rm -rf test/
-    rm -rf unpacked/
     cd ..
 done

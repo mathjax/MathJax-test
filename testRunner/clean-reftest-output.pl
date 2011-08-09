@@ -253,6 +253,14 @@ if ($nargs >= 1) {
 ################################################################################
 # Result summary
 
+my $diskColor = "#999";
+for(my $i = 0; $i <= $#testTypes ; $i++) {
+  if ($testTypes[$i][3] > 0) {
+    $diskColor = $testTypes[$i][2];
+    last;
+  }
+}
+
 print <<EOM
   <div style="position: fixed; left: 0; top: 0; width: 100%; height: 250px;
               background: #f2f2f2;">
@@ -270,13 +278,11 @@ print <<EOM
       <svg width="700" height="250">
         <g transform="translate(15,15)">
           <circle cx="100" cy="100" r="100"
-                  style="fill: $testTypes[0][2]; stroke: black;"/>
+                  style="fill: $diskColor; stroke: black;"/>
 EOM
 ;
 
 # Draw the sectors and legend
-# XXXfred If all the result stati are equal, the disk is painted with the PASS
-# color, even if the status are not PASS.
 if ($N_TESTS > 0) {
     my $s;
     my $e = $N_TESTS / 3; # random starting angle

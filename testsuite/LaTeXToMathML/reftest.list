@@ -2,6 +2,7 @@ include above-below/reftest.list
 include arrows/reftest.list
 include atoms/reftest.list
 include basic-operators/reftest.list
+include colors/reftest.list
 include delimiters/reftest.list
 include environments/reftest.list
 include frac/reftest.list
@@ -16,7 +17,6 @@ include symbols/reftest.list
 
 tree== boxed-1.html boxed-1-ref.html
 fails == cases-1.html cases-1-ref.html
-fails tree== color-1.html color-1-ref.html
 tree== display-math-1.html display-math-ref.html
 tree== display-math-2.html display-math-ref.html
 tree== displaylines-1.html displaylines-1-ref.html
