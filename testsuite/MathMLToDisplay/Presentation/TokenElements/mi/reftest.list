@@ -12,7 +12,7 @@ fails == mi-mathvariant-2.html mi-mathvariant-2-ref.html
 == miScolorname6.html miScolorname6-ref.html
 == miScolorscope7.html miScolorscope7-ref.html
 == miSfonts8.html miSfonts8-ref.html
-== miSfontsize9 miSfontsize9-ref.html
+== miSfontsize9.html miSfontsize9-ref.html
 == miSmathsize16.html miSmathsize16-ref.html
 == miSmathsize17.html miSmathsize17-ref.html
 == miStoken10.html miStoken10-ref.html

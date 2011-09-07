@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>colorbox</title>
+    <title>Color</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,12 +12,14 @@
     <script type="text/javascript">
       function preMathJax()
       {
-      gConfigObject.TeX = { extensions: ["color.js"] };
+        gConfigObject.TeX.extensions.push("color.js");
       }
     </script>
   </head>
 
   <body>
-    <div id="reftest-element">\( \colorbox {red} x y z \)</div>
+    <!-- See issue 38
+         https://github.com/mathjax/MathJax/issues#issue/77 -->
+    <div id="reftest-element">\( \color {red} x y z \)</div>
   </body>
 </html>
