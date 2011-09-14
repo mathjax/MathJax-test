@@ -33,7 +33,7 @@
  *  - If it is "TASK LIST NONEMPTY", it displays a HTML table. It reads the
  *    socket line by line until the end and convert each line into a row giving
  *    information on a task. The table contains also various useful links to
- *    task information, test outputs and command of @ref taskEditor.php.
+ *    task information, test outputs and command of @ref commandHandler.php.
  */
 
   echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -48,14 +48,14 @@
   {
   $c = strtolower($aCommand);
 
-  echo '<form action="taskEditor.php" method="post">';
+  echo '<form action="commandHandler.php" method="post">';
   echo '<input name="command" type="text" readonly="readonly"';
   echo       ' value="'.$aCommand.'" class="hiddenField"/>';
   echo '<input name="taskName" type="text" readonly="readonly"';
   echo       ' value="'.$aTaskName.'" class="hiddenField"/>';
-  echo '<input type="submit" value="" class="submitField"';
+  echo '['.$c.' <input type="submit" value="" class="submitField"';
   echo       ' style="background-image: url(icons/'.$c.'.png)" ';
-  echo       ' title="'.$c.' task" />';
+  echo       ' title="'.$c.' task" />]';
   echo '</form>';
   }
 ?>
@@ -103,6 +103,7 @@
             echo '<th>Task Name</th>';
             echo '<th>Host</th>';
             echo '<th>Status</th>';
+            echo '<th>Actions</th>';
             echo '<th>Progress</th>';
             echo '<th>Result directory</th>';
             echo '</tr>';
@@ -135,9 +136,15 @@
                   echo " (scheduled)";
                 }
 
-		if ($status == "Pending") {
-		  commandButton($taskName, "RUN");
-		} else if ($status == "Running") {
+                echo '</td><td>';
+
+                if ($status != "Running") {
+                  echo '[<a href="taskEditor.php?taskName='.$taskName.'">edit</a>]';
+                }
+
+                if ($status == "Pending") {
+                 commandButton($taskName, "RUN");
+                } else if ($status == "Running") {
                   commandButton($taskName, "STOP");
                 } else if($status == "Interrupted") {
                   if (!$isScheduled) {
@@ -178,7 +185,7 @@
         }
       ?>
 
-      <p><a href="taskCreator.php">Create a new task</a></p>
+      <p><a href="taskEditor.php">Create a new task</a></p>
 
     </div>
   </body>

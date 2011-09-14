@@ -23,6 +23,7 @@ tree== displaylines-1.html displaylines-1-ref.html
 fails tree== functions-1.html functions-1-ref.html
 tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
+fails == issue139.html issue139-ref.html
 tree== LaTeX-1.html LaTeX-1-ref.html
 tree== limits-1.html limits-1-ref.html
 fails tree== limits-2.html limits-2-ref.html

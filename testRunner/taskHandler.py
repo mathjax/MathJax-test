@@ -60,6 +60,7 @@ import collections
 import os
 import socket
 import subprocess
+import cgi
 
 def boolToString(aBoolean):
     """
@@ -108,10 +109,10 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         return s
 
-    def addTask(self, aTaskName, aConfigFile, aOutputDirectory, aSchedule):
+    def editTask(self, aTaskName, aConfigFile, aOutputDirectory, aSchedule):
         """
-        @fn addTask(self, aTaskName, aConfigFile, aOutputDirectory, aSchedule)
-        @brief add a new item to the task list
+        @fn editTask(self, aTaskName, aConfigFile, aOutputDirectory, aSchedule)
+        @brief add/edit an item of the task list
         @param aTaskName name of the task
         @param aConfigFile configuration file to use. If it is None, the
         config parameters will be read from the socket.
@@ -119,22 +120,22 @@ class requestHandler(SocketServer.StreamRequestHandler):
         is None, the task name is used instead.
         @param aSchedule @ref taskHandler::task::mSchedule of the task
         @return a message indicating whether the task has been successfully
-        added or not.
+        added/edited or not.
 
         If the task with the same name is not already in the task list,
         this function creates a new task with the specified name, a status
         "Inactive". The output directory is of the form DATE/aOutputDirectory.
         Task configuration are read from the socket and stored in the
         task::mParameters table of the task.
+
+        If a task is already in the task list and is not running, then this
+        function updates the task parameters.
         """
 
         global gServer
 
-        if aTaskName in gServer.mTasks.keys():
-            return "'" + aTaskName + "' is already in the task list!" + "'\n"
-
-        # create a new task
         if aOutputDirectory == None:
+            # Default directory is the task name
             aOutputDirectory = aTaskName
 
         if aSchedule == None:
@@ -142,7 +143,20 @@ class requestHandler(SocketServer.StreamRequestHandler):
             # with the date of the day
             aOutputDirectory = getDirectoryFromDate() + aOutputDirectory
 
-        t = task(aTaskName, "Inactive", aOutputDirectory + "/", aSchedule)
+        if aTaskName in gServer.mTasks.keys():
+            # The task already exists, try to edit it
+            t = gServer.mTasks[aTaskName]
+            if t.isRunning():
+                return "'" + aTaskName + \
+                    "' is running and can not be edited!" + "'\n"
+            msg = "updated"
+            if t.mSchedule != None:
+                # remove the task from the scheduler
+                gServer.removeScheduledTask(t)
+        else:
+            # create a new task
+            t = task(aTaskName, "Inactive", aOutputDirectory + "/", aSchedule)
+            msg = "added to the task list"
 
         # read the configuration parameters of the task
         if aConfigFile == None:
@@ -151,16 +165,42 @@ class requestHandler(SocketServer.StreamRequestHandler):
             if (not os.path.exists(aConfigFile)):
                 return "File '" + aConfigFile + "' not found."
             t.readParametersFromConfigFile(aConfigFile)
+        
+        if aTaskName not in gServer.mTasks.keys():
+            # add the task to the list
+            gServer.mTasks[aTaskName] = t
 
-        # add the task to the list
-        gServer.mTasks[aTaskName] = t
         t.generateConfigFile()
 
         if t.mSchedule != None:
             # add the task to the scheduler
             gServer.addScheduledTask(t)
 
-        return "'" + aTaskName + "' added to the task list.\n"
+        return "'" + aTaskName + "' " + msg + ".\n"
+
+    def cloneTask(self, aTaskName, aCloneName):
+        """
+        @fn cloneTask(self, aTaskName, aCloneName):
+        @brief clone a task
+        @param aTaskName name of the task to clone
+        @param aCloneName name to give to the clone
+        @return a message indicating whether the task has been successfully
+        cloned or not.
+        """
+
+        return "'not implemented'.\n"
+
+    def renameTask(self, aOldName, aNewName):
+        """
+        @fn renameTask(self, aOldName, aNewName):
+        @brief rename a task
+        @param aOldName old name of the task
+        @param aNewName new name to give to the task
+        @return a message indicating whether the task has been successfully
+        renamed or not.
+        """
+
+        return "'not implemented'.\n"
 
     def removeTask(self, aTaskName):
         """
@@ -292,7 +332,10 @@ class requestHandler(SocketServer.StreamRequestHandler):
         - If the request starts by "TASKEDITOR command taskName", then it
         performs one of the following command and returns the information
         message:
-            - "TASKEDITOR ADD taskName configFile outputDirectory": @ref addTask
+            - "TASKEDITOR EDIT taskName configFile outputDirectory":
+              @ref editTask
+            - "TASKEDITOR CLONE taskName cloneName": @ref cloneTask
+            - "TASKEDITOR RENAME oldName newName": @ref renameTask
             - "TASKEDITOR REMOVE taskName": @ref removeTask
             - "TASKEDITOR RUN taskName": @ref runTask with aRestart = False
             - "TASKEDITOR RESTART taskName": @ref runTask with aRestart = True
@@ -346,7 +389,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
             elif (client == "TASKEDITOR"):
                 command = items[1]
                 taskName = items[2]
-                if command == "ADD":
+                if command == "EDIT":
                     if items[3] == "None":
                         configFile = None
                     else:
@@ -359,10 +402,16 @@ class requestHandler(SocketServer.StreamRequestHandler):
                         schedule = None
                     else:
                         schedule = items[5]
-                    self.wfile.write(self.addTask(taskName,
-                                                  configFile,
-                                                  outputDirectory,
-                                                  schedule))
+                    self.wfile.write(self.editTask(taskName,
+                                                   configFile,
+                                                   outputDirectory,
+                                                   schedule))
+                elif command == "CLONE":
+                    cloneName = items[3]
+                    self.wfile.write(self.cloneTask(taskName, cloneName))
+                elif command == "RENAME":
+                    newName = items[3]
+                    self.wfile.write(self.cloneTask(taskName, newName))
                 elif command == "REMOVE":
                     self.wfile.write(self.removeTask(taskName))
                 elif command == "RUN":
@@ -394,7 +443,7 @@ class task:
 
         @property mStatus
         Status of the task:
-          - Process not executed yet: "Inactive", "Scheduled"
+          - Process not executed yet: "Inactive"
           - Process waiting to execute: "Pending"
           - Process executing: "Running"
           - Process executed: "Complete", "Interrupted", "Killed"
@@ -620,9 +669,11 @@ class task:
         if (os.path.exists(MATHJAX_WEB_PATH + "results/" +
                            self.mOutputDirectory)):
             s += "<a href=\"results/" + self.mOutputDirectory + "\">"
-            s += self.mOutputDirectory + "</a></td></tr>"
+            s += self.mOutputDirectory + "</a>"
         else:
             s += self.mOutputDirectory
+
+        s += "</td></tr>"
 
         if (self.mSchedule != None):
             s += self.serializeSchedule(self.mSchedule)
@@ -630,7 +681,7 @@ class task:
         if (self.mExceptionMessage != None):
             s += "<tr style=\"color: red;\">"
             s += "<th id='exceptionError'>Exception Error</th>"
-            s += "<td>" + self.mExceptionMessage + "</td></tr>"
+            s += "<td>" + cgi.escape(self.mExceptionMessage) + "</td></tr>"
 
         s += "</table></p>"
 
@@ -813,7 +864,7 @@ option values"
 
         This function reads lines from the socket until it reaches
 
-        "TASKEDITOR ADD END"
+        "TASKEDITOR EDIT END"
 
         The function expects to read lines
 
@@ -830,7 +881,7 @@ option values"
             request = aRequestHandler.rfile.readline().strip()
             print request
 
-            if (request == "TASKEDITOR ADD END"):
+            if (request == "TASKEDITOR EDIT END"):
                 break
 
             item = request.split("=")

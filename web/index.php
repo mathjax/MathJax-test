@@ -62,7 +62,7 @@
       <h2>Tools</h2>
       <ul>
         <li><a href="taskViewer.php">Task viewer</a></li>
-        <li><a href="taskCreator.php">Task creator</a></li>
+        <li><a href="taskEditor.php">Task editor</a></li>
         <li><a href="results/">Reftest results</a></li>
         <li><a href="selectReftests.xhtml">Reftest selector</a></li>
         <li><a href="reftest-analyzer.xhtml">Reftest analyser</a></li>

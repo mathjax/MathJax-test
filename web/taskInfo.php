@@ -37,6 +37,7 @@
     header('Location: taskViewer.php');
     exit;
   }
+  header("Content-Type: application/xhtml+xml; charset= UTF-8");
   echo '<?xml version="1.0" encoding="UTF-8"?>';
   include('config.php');
 ?>
@@ -74,7 +75,7 @@
           } else {
             echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
           }
-      ?>
+    ?>
     </div>
   </body>
 </html>

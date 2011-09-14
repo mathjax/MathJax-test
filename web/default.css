@@ -24,7 +24,7 @@
 
 @import url('docs/html/_static/default.css');
 
-a[href^="taskCreator.php"] {
+a[href^="taskEditor.php"] {
     padding-right: 20px;
     background: url('icons/secure.png') no-repeat 100% 0;
 }

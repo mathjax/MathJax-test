@@ -158,7 +158,7 @@ function init()
     document.title += " (" + gNumberOfTests + " tests)";
 
     if (window.opener) {
-        // The selectReftest was opened from taskCreator.php
+        // The selectReftest was opened from taskEditor.php
         document.getElementById("listOfTests").value =
             window.opener.document.getElementById("listOfTests").value
         read();
@@ -237,10 +237,10 @@ function generate()
     }
 
     if (window.opener) {
-        // The selectReftest was opened from taskCreator.php
+        // The selectReftest was opened from taskEditor.php
         window.opener.document.getElementById("listOfTests").value =
             document.getElementById("listOfTests").value;
-        window.close()
+        //window.close();
     }
 }
 
