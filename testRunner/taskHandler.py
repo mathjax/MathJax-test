@@ -153,6 +153,12 @@ class requestHandler(SocketServer.StreamRequestHandler):
             if t.mSchedule != None:
                 # remove the task from the scheduler
                 gServer.removeScheduledTask(t)
+
+            t.mStatus = "Inactive"
+            t.mProgress = "-"
+            t.mOutputDirectory = aOutputDirectory
+            t.mExceptionMessage = None
+            t.mSchedule = aSchedule
         else:
             # create a new task
             t = task(aTaskName, "Inactive", aOutputDirectory + "/", aSchedule)
@@ -606,45 +612,48 @@ class task:
         @brief serialize the date of scheduled task
         """
         items = aSchedule.split(",")
-        date = ""
+        date = "<span id=\"taskSchedule\"></span>"
 
+        date += "<span id=\"crontabDow\">"
         if (items[4] == "*"):
-            date += "******"
+            date += "*"
         else:
             date += WEEKDAY_LIST[int(items[4]) - 1]
+        date += "</span> "
 
-        date += " "
-
+        date += "<span id=\"crontabDom\">"
         if (items[2] == "*"):
-            date += "**"
+            date += "*"
         else:
             date += items[2]
+        date += "</span> "
 
-        date += " "
-
+        date += "<span id=\"crontabMon\">"
         if (items[3] == "*"):
-            date += "******"
+            date += "*"
         else:
             date += MONTH_LIST[int(items[3]) - 1]
+        date += "</span> ; "
 
-        date += " ; "
-
+        date += "<span id=\"crontabH\">"
         if (items[1] == "*"):
-            date += "**"
+            date += "*"
         else:
             if (len(items[1]) == 1):
                 # add a 0 if hours are < 10
                 date += "0"
                 date += items[1]
-        date += ":"
+        date += "</span>:"
 
+        date += "<span id=\"crontabM\">"
         if (items[0] == "*"):
-            date += "**"
+            date += "*"
         else:
             if (len(items[0]) == 1):
                 # add a 0 if minutes are < 10
                 date += "0"
                 date += items[0]
+        date += "</span>"
 
         return self.serializeMember("Scheduled", date)
 
@@ -664,7 +673,7 @@ class task:
         s += self.serializeMember("Status", self.mStatus)
         s += self.serializeMember("Progress", self.mProgress)
 
-        s += "<tr><th>Result directory</th><td>"
+        s += "<tr><th>Result directory</th><td id=\"outputDirectory\">"
 
         if (os.path.exists(MATHJAX_WEB_PATH + "results/" +
                            self.mOutputDirectory)):

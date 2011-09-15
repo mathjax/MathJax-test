@@ -101,26 +101,53 @@ function updateFieldsFromTaskName()
         updateTaskExists(taskName, false);
         if (request.readyState == 4) {
             if (request.status == 200) {
-                tree = request.responseXML;
+                var tree = request.responseXML;
                 if (tree) {
-                    tables = tree.getElementsByTagName("table");
+                    var tables = tree.getElementsByTagName("table");
                     if (tables.length > 0) {
                         updateTaskExists(taskName, true);
 
-                        // First table is special...
-                        // Here are possible values to retrieve:
-                        // - Result directory
-                        // - Scheduled date
-                        // XXXfred, for now they are just ignored.
+                        // First table is special. We only take schedule and
+                        // output directory into account and need particular
+                        // treatment.
+
+                        var scheduled =
+                            (tree.getElementById("taskSchedule") != null);
+
+                        if (scheduled) {
+                            // Update the field 'taskSchedule'
+                            updateField("taskSchedule", "True");
+
+                            // Update the cron parameters
+                            cronParams = ["crontabDow", "crontabDom",
+                                          "crontabMon", "crontabH", "crontabM"];
+                            for (var i = 0; i < cronParams.length; i++) {
+                                var paramName = cronParams[i];
+                                var paramValue = tree.
+                                    getElementById(paramName).innerHTML;
+                                updateField(paramName, paramValue);
+                            }
+                        }
+
+                        // Update the field 'outputDirectory'
+                        var paramName = "outputDirectory";
+                        var paramValue = tree.
+                            getElementById(paramName).innerHTML;
+                        if (!scheduled) {
+                            // remove the date root directory from the path
+                            paramValue = paramValue.substring(
+                                paramValue.lastIndexOf("/") + 1);
+                        }
+                        updateField(paramName, paramValue);
 
                         // Update the field from the information of the tables
                         for (var i = 1; i < tables.length; i++) {
-                            trs = tables[i].getElementsByTagName("tr");
+                            var trs = tables[i].getElementsByTagName("tr");
                             for (var j = 0; j < trs.length; j++) {
-                                tr = trs[j];
-                                paramName = tr.
+                                var tr = trs[j];
+                                var paramName = tr.
                                     getElementsByTagName("th")[0].innerHTML;
-                                paramValue = tr.
+                                var paramValue = tr.
                                     getElementsByTagName("td")[0].innerHTML;
                                 updateField(paramName, paramValue);
                             }
@@ -128,26 +155,26 @@ function updateFieldsFromTaskName()
                     }
                 }
             }
-            updateAllFields();
+            updateAllFieldVisibilities();
         }
     }
 
     request.send(null);
 }
 
-function updateAllFields()
+function updateAllFieldVisibilities()
 {
     updateFieldVisibility("taskSchedule", "crontabParameters", true);
     updateFieldVisibility("useWebDriver", "fullScreenMode_", false);
     updateFieldVisibility("useWebDriver", "aloneOnHost_", true);
-    updateFieldValueFrom("host_select", "host");
-    updateFieldValueFrom("taskName", "outputDirectory");
     updateFieldVisibility("browser", "browserMode_", "MSIE")
-    updateSelectIndex("host_select", "operatingSystem", HOST_LIST_OS);
 }
 
 function init()
 {
-    updateAllFields();
+    updateAllFieldVisibilities();
+    updateFieldValueFrom("host_select", "host");
+    updateFieldValueFrom("taskName", "outputDirectory");
+    updateSelectIndex("host_select", "operatingSystem", HOST_LIST_OS);
     updateFieldsFromTaskName();
 }

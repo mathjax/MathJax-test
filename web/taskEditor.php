@@ -127,7 +127,8 @@
                 <option>*</option>
                 <?php
                   for ($i = 0; $i < 24; $i++) {
-                    echo '<option>'.$i.'</option>';
+                    $v = ($i < 10 ? '0' : '').$i;
+                    echo '<option>'.$v.'</option>';
                   }
                 ?>
               </select> :
@@ -135,7 +136,8 @@
                 <option>*</option>
                 <?php
                   for ($i = 0; $i < 60; $i++) {
-                    echo '<option>'.$i.'</option>';
+                    $v = ($i < 10 ? '0' : '').$i;
+                    echo '<option>'.$v.'</option>';
                   }
                 ?>
               </select>

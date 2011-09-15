@@ -198,8 +198,10 @@ function truncateString($aValue, $aMaxLength)
    
           if (isset($_POST['taskSchedule'])) {
             $taskSchedule = "";
-            $taskSchedule .= truncateString($_POST['crontabM'], 2).",";
-            $taskSchedule .= truncateString($_POST['crontabH'], 2).",";
+            $v = $_POST['crontabM']; if ($v != "*") $v = intval($v);
+            $taskSchedule .= $v.",";
+            $v = $_POST['crontabH']; if ($v != "*") $v = intval($v);
+            $taskSchedule .= $v.",";
             $taskSchedule .= truncateString($_POST['crontabDom'], 2).",";
             $taskSchedule .= selectToCronItem($_POST['crontabMon'],
                                               $MONTH_LIST).",";
