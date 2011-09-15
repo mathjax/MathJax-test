@@ -44,19 +44,24 @@
    *  @param aTaskName name of the task to control
    *  @param aCommand name of the command to execute
    */
-  function commandButton($aTaskName, $aCommand)
+  function commandButton($aTaskName, $aCommand, $aNewName = False)
   {
   $c = strtolower($aCommand);
 
-  echo '<form action="commandHandler.php" method="post">';
+  echo '[<form action="commandHandler.php" method="post">';
   echo '<input name="command" type="text" readonly="readonly"';
   echo       ' value="'.$aCommand.'" class="hiddenField"/>';
   echo '<input name="taskName" type="text" readonly="readonly"';
   echo       ' value="'.$aTaskName.'" class="hiddenField"/>';
-  echo '['.$c.' <input type="submit" value="" class="submitField"';
+  if ($aNewName) {
+    echo '<input name="newName" type="text" value="" size="8" ';
+    echo         'required="required" ';
+    echo         'pattern="([a-z]|[A-Z]|[0-9]){1,20}"/>';
+  }
+  echo '<input type="submit" value="" class="submitField"';
   echo       ' style="background-image: url(icons/'.$c.'.png)" ';
-  echo       ' title="'.$c.' task" />]';
-  echo '</form>';
+  echo       ' title="'.$c.' task" />';
+  echo '</form>]';
   }
 ?>
 
@@ -103,9 +108,9 @@
             echo '<th>Task Name</th>';
             echo '<th>Host</th>';
             echo '<th>Status</th>';
-            echo '<th>Actions</th>';
             echo '<th>Progress</th>';
             echo '<th>Result directory</th>';
+            echo '<th>Actions</th>';
             echo '</tr>';
             while(!feof($file)) {
               $line = trim(fgets($file));
@@ -135,10 +140,20 @@
                 if ($isScheduled) {
                   echo " (scheduled)";
                 }
+                echo '</td>';
+  
+                echo '<td>'.$progress.'</td>';
+                echo '<td>';
+                if (file_exists("results/".$results)) {
+                  echo '<a href="results/'.$results.'">'.$results.'</a>';
+                } else {
+                  echo $results;
+                }
+                echo '</td>';
 
-                echo '</td><td>';
+                echo '<td>';
 
-                if ($status != "Running") {
+                if ($status != "Pending" && $status != "Running") {
                   echo '[<a href="taskEditor.php?taskName='.$taskName.'">edit</a>]';
                 }
 
@@ -164,16 +179,11 @@
                   commandButton($taskName, "REMOVE");
                 }
 
+                commandButton($taskName, "CLONE", True);
+                commandButton($taskName, "RENAME", True);
+
                 echo '</td>';
-  
-                echo '<td>'.$progress.'</td>';
-                echo '<td>';
-                if (file_exists("results/".$results)) {
-                  echo '<a href="results/'.$results.'">'.$results.'</a>';
-                } else {
-                  echo $results;
-                }
-                echo '</td>';
+
                 echo '</tr>';
               }
             }

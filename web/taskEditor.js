@@ -133,11 +133,9 @@ function updateFieldsFromTaskName()
                         var paramName = "outputDirectory";
                         var paramValue = tree.
                             getElementById(paramName).innerHTML;
-                        if (!scheduled) {
-                            // remove the date root directory from the path
-                            paramValue = paramValue.substring(
-                                paramValue.lastIndexOf("/") + 1);
-                        }
+                        paramValue = paramValue.substring(
+                            (scheduled ? 0 : paramValue.IndexOf("/") + 1),
+                            paramValue.length - 1);
                         updateField(paramName, paramValue);
 
                         // Update the field from the information of the tables

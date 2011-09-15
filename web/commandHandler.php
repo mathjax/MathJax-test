@@ -30,6 +30,7 @@
  */
 
 if (!isset($_POST['command']) || !isset($_POST['taskName'])) {
+
   header('Location: taskViewer.php');
   exit;
 }
@@ -253,6 +254,17 @@ function truncateString($aValue, $aMaxLength)
              fclose($file);
           } else {
             echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
+          }
+        } else if ($_POST['command'] == 'CLONE' || $_POST['command'] == 'RENAME') {
+          if (isset($_POST['newName'])) {
+            $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
+            if ($file) {
+               fwrite($file, "TASKEDITOR ".$_POST['command']." ".$taskName." ".$_POST['newName']."\n");
+               echo trim(fgets($file));
+               fclose($file);
+            } else {
+              echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
+            }
           }
         }
         ?>

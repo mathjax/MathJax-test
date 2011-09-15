@@ -61,6 +61,7 @@ import os
 import socket
 import subprocess
 import cgi
+import copy
 
 def boolToString(aBoolean):
     """
@@ -143,6 +144,8 @@ class requestHandler(SocketServer.StreamRequestHandler):
             # with the date of the day
             aOutputDirectory = getDirectoryFromDate() + aOutputDirectory
 
+        aOutputDirectory += "/"
+
         if aTaskName in gServer.mTasks.keys():
             # The task already exists, try to edit it
             t = gServer.mTasks[aTaskName]
@@ -161,7 +164,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
             t.mSchedule = aSchedule
         else:
             # create a new task
-            t = task(aTaskName, "Inactive", aOutputDirectory + "/", aSchedule)
+            t = task(aTaskName, "Inactive", aOutputDirectory, aSchedule)
             msg = "added to the task list"
 
         # read the configuration parameters of the task
@@ -184,21 +187,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         return "'" + aTaskName + "' " + msg + ".\n"
 
-    def cloneTask(self, aTaskName, aCloneName):
-        """
-        @fn cloneTask(self, aTaskName, aCloneName):
-        @brief clone a task
-        @param aTaskName name of the task to clone
-        @param aCloneName name to give to the clone
-        @return a message indicating whether the task has been successfully
-        cloned or not.
-        """
-
-        return "'not implemented'.\n"
-
     def renameTask(self, aOldName, aNewName):
         """
-        @fn renameTask(self, aOldName, aNewName):
+        @fn renameTask(self, aOldName, aNewName)
         @brief rename a task
         @param aOldName old name of the task
         @param aNewName new name to give to the task
@@ -206,7 +197,61 @@ class requestHandler(SocketServer.StreamRequestHandler):
         renamed or not.
         """
 
-        return "'not implemented'.\n"
+        global gServer
+
+        if aOldName not in gServer.mTasks.keys():
+            return "'" + aOldName + "' was not found in the task list!"
+
+        if aNewName in gServer.mTasks.keys():
+            return "'" + aNewName + "' is already in the task list!"
+
+        t = gServer.mTasks[aOldName]
+        gServer.mTasks[aNewName] = t
+        t.removeConfigFile()
+        if t.mSchedule != None:
+            gServer.removeScheduledTask(t)
+        del gServer.mTasks[aOldName]
+
+        t.mName = aNewName
+        t.generateConfigFile()
+        if t.mSchedule != None:
+            gServer.addScheduledTask(t)
+
+        return "'" + aTaskName + "' cloned into '" + aCloneName + "'!"
+
+    def cloneTask(self, aTaskName, aCloneName):
+        """
+        @fn cloneTask(self, aTaskName, aNewName)
+        @brief clone a task
+        @param aTaskName task to clone
+        @param aNewName new name to give to the task
+        @return a message indicating whether the task has been successfully
+        cloned or not.
+        """
+
+        global gServer
+
+        if aTaskName not in gServer.mTasks.keys():
+            return "'" + aTaskName + "' was not found in the task list!"
+
+        if aCloneName in gServer.mTasks.keys():
+            return "'" + aCloneName + "' is already in the task list!"
+
+        t = copy.deepcopy(gServer.mTasks[aTaskName])
+        t.mName = aCloneName
+        t.mStatus = "Inactive"
+        t.mProgress = "-"
+        t.mPopen = None
+        t.mExceptionMessage = None
+        gServer.mTasks[aCloneName] = t
+
+        t.generateConfigFile()
+
+        if t.mSchedule != None:
+            # add the task to the scheduler
+            gServer.addScheduledTask(t)
+
+        return "'" + aTaskName + "' cloned into '" + aCloneName + "'!"
 
     def removeTask(self, aTaskName):
         """
@@ -417,7 +462,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
                     self.wfile.write(self.cloneTask(taskName, cloneName))
                 elif command == "RENAME":
                     newName = items[3]
-                    self.wfile.write(self.cloneTask(taskName, newName))
+                    self.wfile.write(self.renameTask(taskName, newName))
                 elif command == "REMOVE":
                     self.wfile.write(self.removeTask(taskName))
                 elif command == "RUN":
@@ -673,14 +718,17 @@ class task:
         s += self.serializeMember("Status", self.mStatus)
         s += self.serializeMember("Progress", self.mProgress)
 
-        s += "<tr><th>Result directory</th><td id=\"outputDirectory\">"
+        s += "<tr><th>Result directory</th><td>"
 
         if (os.path.exists(MATHJAX_WEB_PATH + "results/" +
                            self.mOutputDirectory)):
-            s += "<a href=\"results/" + self.mOutputDirectory + "\">"
+            s += "<a href=\"results/" + self.mOutputDirectory + "\""
+            s += " id=\"outputDirectory\">"
             s += self.mOutputDirectory + "</a>"
         else:
+            s += "<span id=\"outputDirectory\">"
             s += self.mOutputDirectory
+            s += "</span>"
 
         s += "</td></tr>"
 

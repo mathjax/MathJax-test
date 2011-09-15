@@ -36,8 +36,7 @@ a[href^="./taskEditor.xhtml"] {
 }
 
 #taskList input.hiddenField {
-  width: 0;
-  height: 0;
+  position: absolute;
   visibility: hidden;
 }
 
