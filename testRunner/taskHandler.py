@@ -217,7 +217,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
         if t.mSchedule != None:
             gServer.addScheduledTask(t)
 
-        return "'" + aTaskName + "' cloned into '" + aCloneName + "'!"
+        return "'" + aOldName + "' renamed into '" + aNewName + "'!"
 
     def cloneTask(self, aTaskName, aCloneName):
         """

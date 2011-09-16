@@ -43,6 +43,8 @@
    *  @brief print HTML code to generate a command button.
    *  @param aTaskName name of the task to control
    *  @param aCommand name of the command to execute
+   *  @param aNewName whether the user should pass a new task name (used by
+   *         clone and rename commands).
    */
   function commandButton($aTaskName, $aCommand, $aNewName = False)
   {

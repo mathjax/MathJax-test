@@ -44,6 +44,14 @@ def declarePythonStringArray(aStream, aName, aValue):
             aStream.write(",'" + aValue[i] + "'")
     aStream.write("]\n")
 
+def declarePythonIntegerArray(aStream, aName, aValue):
+    aStream.write(aName + " = [")
+    if (len(aValue) > 0):
+        aStream.write(str(aValue[0]))
+        for i in range(1, len(aValue)):
+            aStream.write("," + str(aValue[i]))
+    aStream.write("]\n")
+
 def declarePhpString(aStream, aName, aValue):
     print >>aStream, "$" + aName + " = '" + aValue + "';"
 
@@ -123,6 +131,8 @@ MONTH_LIST = parseStringArray(configParser.get("other", "MONTH_LIST"))
 WEEKDAY_LIST = parseStringArray(configParser.get("other", "WEEKDAY_LIST"))
 TESTSUITE_TOPDIR_LIST = \
     parseStringArray(configParser.get("other", "TESTSUITE_TOPDIR_LIST"))
+TEMPLATE_CONFIG_LIST = \
+    parseStringArray(configParser.get("other", "TEMPLATE_CONFIG_LIST"))
 
 # convert HOST_LIST_OS_ to a list of indices
 HOST_LIST_OS = []
@@ -153,6 +163,8 @@ declarePythonString(f_out, "TASK_HANDLER_HOST", TASK_HANDLER_HOST)
 declarePythonInteger(f_out, "TASK_HANDLER_PORT", TASK_HANDLER_PORT)
 
 declarePythonStringArray(f_out, "HOST_LIST", HOST_LIST)
+declarePythonStringArray(f_out, "OS_LIST", OS_LIST)
+declarePythonIntegerArray(f_out, "HOST_LIST_OS", HOST_LIST_OS)
 declarePythonInteger(f_out, "DEFAULT_SELENIUM_PORT", DEFAULT_SELENIUM_PORT)
 declarePythonString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
 declarePythonString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
@@ -192,6 +204,7 @@ declarePhpString(f_out, "ERROR_CONNECTION_TASK_HANDLER",
 declarePhpStringArray(f_out, "MONTH_LIST", MONTH_LIST)
 declarePhpStringArray(f_out, "WEEKDAY_LIST", WEEKDAY_LIST)
 declarePhpStringArray(f_out, "TESTSUITE_TOPDIR_LIST", TESTSUITE_TOPDIR_LIST)
+declarePhpStringArray(f_out, "TEMPLATE_CONFIG_LIST", TEMPLATE_CONFIG_LIST)
 
 print >>f_out, "?>"
 f_out.close()

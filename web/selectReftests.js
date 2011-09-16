@@ -240,7 +240,7 @@ function generate()
         // The selectReftest was opened from taskEditor.php
         window.opener.document.getElementById("listOfTests").value =
             document.getElementById("listOfTests").value;
-        //window.close();
+        window.close();
     }
 }
 

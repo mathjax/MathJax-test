@@ -146,6 +146,13 @@
             (<a href="http://en.wikipedia.org/wiki/Cron">cron syntax</a>)
             </span>
           </p>
+          <p>Fast configuration:
+            <select id="fast_config"
+                    onchange="fastConfiguration()">
+              <option>Select template...</option>
+              <?php generateOptionList($TEMPLATE_CONFIG_LIST); ?>
+            </select>
+          </p>
         </fieldset>
 
         <fieldset>
