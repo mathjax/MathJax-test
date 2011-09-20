@@ -40,6 +40,7 @@ fails == equalrows-1.html equalrows-1-ref.html
 == mtable-2-4.html mtable-2-4-ref.html
 == mtable-2-5.html mtable-2-5-ref.html
 == mtable-3.html mtable-3-ref.html
+== mtable-align-negative-rownumber.html mtable-align-negative-rownumber-ref.html
 fails == rowalign-1.html rowalign-1-ref.html
 == rowalign-2.html rowalign-2-ref.html
 fails == rowalign-3.html rowalign-3-ref.html

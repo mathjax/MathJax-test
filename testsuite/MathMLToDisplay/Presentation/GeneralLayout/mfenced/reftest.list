@@ -11,3 +11,8 @@
 == mfenced-5b.html mfenced-5-ref.html
 == mfenced-5c.html mfenced-5-ref.html
 == mfenced-5d.html mfenced-5-ref.html
+== mfenced-6.html mfenced-6-ref.html
+== mfenced-7.html mfenced-7-ref.html
+!= mfenced-8.html mfenced-8-ref.html
+== mfenced-9.html mfenced-9-ref.html
+== mfenced-10.html mfenced-10-ref.html

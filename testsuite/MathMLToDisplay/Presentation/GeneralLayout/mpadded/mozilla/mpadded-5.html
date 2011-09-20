@@ -1,0 +1,26 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>mpadded</title>
+    <!-- Copyright (C) 2011 Jonathan Hage
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../../header.js"></script>
+  </head>
+  <body>
+    <math>
+      <mpadded mathbackground="green" width="200px" height="100px" depth="100px"
+	             lspace="40px" voffset="20px">
+	      <mpadded mathbackground="blue" width="100px" height="50px" depth="50px"
+		             lspace="-25px" voffset="15px">
+          <mpadded mathbackground="red" width="20px" height="10px"
+                   depth="10px">
+          </mpadded>
+	      </mpadded>
+      </mpadded>
+    </math>
+  </body>
+</html>

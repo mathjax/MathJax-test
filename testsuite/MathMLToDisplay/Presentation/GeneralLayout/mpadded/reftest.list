@@ -1,3 +1,5 @@
+include mozilla/reftest.list
+
 == mpadded1.html mpadded1-ref.html
 == mpadded7.html mpadded7-ref.html
 == mpadded-1.html mpadded-1-ref.html

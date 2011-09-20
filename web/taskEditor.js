@@ -190,7 +190,7 @@ function updateFieldsFromTaskName()
                         var paramValue = tree.
                             getElementById(paramName).innerHTML;
                         paramValue = paramValue.substring(
-                            (scheduled ? 0 : paramValue.IndexOf("/") + 1),
+                            (scheduled ? 0 : paramValue.indexOf("/") + 1),
                             paramValue.length - 1);
                         updateField(paramName, paramValue);
 

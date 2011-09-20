@@ -1,0 +1,44 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>munderover</title>
+    <!-- Copyright (C) 2011 Frederic Wang
+     License: MPL 1.1 or later
+     Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    
+    <p>munder / munderover with empty overscript:
+    <math>
+      <munderover style="background: red;">
+        <mtext style="background-color: rgba(0, 0, 255, 0.4);">AAA</mtext>
+        <mtext style="background-color: rgba(0, 255, 0, 0.4);">bbb</mtext>
+        <mspace></mspace>
+      </munderover>
+    </math></p>
+
+    <p>mover / munderover with empty underscript:
+    <math>
+      <munderover style="background: red;">
+        <mtext style="background-color: rgba(0, 0, 255, 0.4);">AAA</mtext>
+        <mspace></mspace>
+        <mtext style="background-color: rgba(0, 255, 0, 0.4);">bbb</mtext>
+      </munderover>
+    </math></p>
+
+    <p>mrow / munder with empty scripts:
+    <math>
+      <munderover style="background: red;">
+        <mtext style="background-color: rgba(0, 0, 255, 0.4);">AAA</mtext>
+        <mspace></mspace>
+        <mspace></mspace>
+      </munderover>
+    </math></p>
+    
+  </body>
+</html>

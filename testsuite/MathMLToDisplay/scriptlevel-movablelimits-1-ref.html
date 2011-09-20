@@ -1,0 +1,35 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Scriptlevel and movablelimits</title>
+    <!-- Copyright (C) 2011 Jonathan Hage
+         License: MPL 1.1 or later
+         Source: Mozilla MathML reftests -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+  </head>
+
+  <body>    
+    <math displaystyle="false">
+      <munderover>
+	      <mo>&#x2211;</mo>
+	      <mi>a</mi>
+	      <mi>b</mi>
+      </munderover>
+    </math>
+    <math displaystyle="false">
+      <munder>
+	      <mo>&#x2211;</mo>
+	      <mi>a</mi>
+      </munder>
+    </math>
+    <math displaystyle="false">
+      <mover>
+	      <mo>&#x2211;</mo>
+	      <mi>a</mi>
+      </mover>
+    </math>
+  </body>
+</html>
