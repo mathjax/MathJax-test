@@ -179,10 +179,6 @@ function defaultConfigObject()
           availableFonts: [(gFont == "ImageTeX" ? "" : gFont)],
           preferredFont: null,
           webFont: null
-      },
-  
-      TeX: {
-          extensions: ["AMSmath.js", "AMSsymbols.js"]
       }
   }
 }
