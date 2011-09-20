@@ -14,6 +14,12 @@
       -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
+      }
+    </script>
   </head>
 
   <body>
@@ -23,12 +29,12 @@
          squares-per-line = 4
          number-of-squares = 64
          width = 4 * square-size + square-size / 2 = 45px
-         height > square-size * number-of-squares / squares-per-line = 160 px
+         height > 2 * square-size * number-of-squares / squares-per-line = 360px
       -->
 
     <div style="position: absolute; left: 5px; top: 5px;
                 border: 1px solid black;
-                width: 45px; height: 200px; overflow: visible;" >
+                width: 45px; height: 500px; overflow: visible;" >
       <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 
         <mrow>
@@ -72,6 +78,7 @@
                   mathbackground="red"/>
           <mspace width="10px" height="5px" depth="5px"
                   mathbackground="green"/>
+          <mspace width="0" linebreak="goodbreak"/>
         </mrow>
 
         <mrow>
@@ -115,6 +122,7 @@
                   mathbackground="orange"/>
           <mspace width="10px" height="5px" depth="5px"
                   mathbackground="yellow"/>
+          <mspace width="0" linebreak="goodbreak"/>
         </mrow>
 
         <mrow>
@@ -144,6 +152,7 @@
                   mathbackground="cyan"/>
           <mspace width="10px" height="5px" depth="5px"
                   mathbackground="blue"/>
+          <mspace width="0" linebreak="goodbreak"/>
         </mrow>
 
         <mrow>
