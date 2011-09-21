@@ -3,24 +3,26 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>class</title>
+    <title>extpfeil Newextarrow</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.TeX = { extensions: ["extpfeil.js"] };
+      }
+    </script>
   </head>
 
   <body>
     <div id="reftest-element">
-      <math xmlns="http://www.w3.org/1998/Math/MathML">
-        <mtext>&#65;<!-- A --></mtext>
-        <mtext>&#x41;<!-- A --></mtext>
-        <mtext>&#x22D6;<!-- ⋖ --></mtext>
-        <mtext fontfamily="Geramond">&#x22D6;<!-- ⋖ --></mtext>
-        <mtext fontfamily="Garamond">&#x22D6;<!-- ⋖ --></mtext>
-        <mtext fontfamily="Zapf Dingbats">&#x22D6;<!-- ⋖ --></mtext>
-      </math>
+      \(
+      \Newextarrow{\myarrow}{50,50}{0x219D}
+      {\myarrow x}
+      \)
     </div>
   </body>
 </html>
