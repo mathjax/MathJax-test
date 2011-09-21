@@ -1,9 +1,9 @@
-tree== eqref-1.html eqref-1-ref.html
-tree== label-1.html label-1-ref.html
-tree== ref-1a.html ref-1-ref.html
-tree== ref-1b.html ref-1-ref.html
-tree== ref-2.html ref-2-ref.html
-tree== ref-3.html ref-3-ref.html
+fails tree== eqref-1.html eqref-1-ref.html
+fails tree== label-1.html label-1-ref.html
+fails tree== ref-1a.html ref-1-ref.html
+fails tree== ref-1b.html ref-1-ref.html
+fails tree== ref-2.html ref-2-ref.html
+fails tree== ref-3.html ref-3-ref.html
 fails skip-if(Safari) == tag-1.html tag-1-ref.html
 == tag-2.html tag-2-ref.html
-== notag-1.html notag-1-ref.html
+fails == notag-1.html notag-1-ref.html

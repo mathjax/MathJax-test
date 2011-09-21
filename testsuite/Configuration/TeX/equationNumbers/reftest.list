@@ -1,8 +1,8 @@
-== autoNumber-1.html autoNumber-1-ref.html
-== autoNumber-2.html autoNumber-2-ref.html
+fails == autoNumber-1.html autoNumber-1-ref.html
+fails == autoNumber-2.html autoNumber-2-ref.html
 == autoNumber-3.html autoNumber-3-ref.html
 == autoNumber-4.html autoNumber-4-ref.html
-tree== formatID-1.html formatID-1-ref.html
-== formatNumber-1.html formatNumber-1-ref.html
-tree== formatTag-1.html formatTag-1-ref.html
-tree== formatURL-1.html formatURL-1-ref.html
+fails tree== formatID-1.html formatID-1-ref.html
+fails == formatNumber-1.html formatNumber-1-ref.html
+fails tree== formatTag-1.html formatTag-1-ref.html
+fails tree== formatURL-1.html formatURL-1-ref.html

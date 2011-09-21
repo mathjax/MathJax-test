@@ -194,7 +194,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
 
     # Build the testsuite
     aSuite.sendRequest("Running", "Init")
-    if aSuite.mListOfTests == "all":
+    if aSuite.mListOfTests == "all" or aSuite.mListOfTests == "default":
         index = -1 # all tests
     else:
         index = 0 # tests indicated in listOfTests
