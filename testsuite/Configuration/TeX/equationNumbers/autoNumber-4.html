@@ -1,0 +1,44 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>autoNumber-4</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.TeX = { 
+        equationNumbers: { autoNumber: "AMS" }
+      }
+      }
+    </script>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+    <!-- no numbering for star environments -->
+    \[ X \]
+    \( Y \)
+    \begin{align*}
+    c & = & d & + & e \\
+    f & = & g & + & h \\
+    i & = & j & + & k
+    \end{align*}
+    \begin{equation*}
+    \boxed{x^2+y^2 = z^2}
+    \end{equation*}
+    \begin{gather*}
+    a = 1 + x + y \\
+    d = 4 - y     \\
+    g = 2x - 5y
+    \end{gather*}
+    \begin{multline*}
+    \exp(x) = 1 + x + \cdots \\ 
+    \frac{x^4}4 + \frac{x^5}{5!} + \cdots \\
+    \cdots + \frac{x^n}{n!} + \cdots
+    \end{multline*} 
+  </body>
+</html>

@@ -3,18 +3,22 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>Tag</title>
+    <title>ref</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../treeReftests.js"></script>
   </head>
 
   <body>
-    <!-- See issue 77
-         https://github.com/mathjax/MathJax/issues#issue/77 -->
-    <div style="float:right; width:20em; height: 5em; background:blue;"></div>
-    <div style="clear: both; visibility: hidden;"></div>
-    $$ x = e = mc^2 \tag{1} $$
+   
+    <!-- reference to non-numbered label -->
+
+    \begin{equation} \label{a} a \end{equation}
+
+    <div id="reftest-element">
+      \( \ref{a} \)
+    </div>
   </body>
 </html>

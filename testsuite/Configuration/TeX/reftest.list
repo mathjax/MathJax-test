@@ -1,3 +1,5 @@
+include equationNumbers/reftest.list
+
 == Macros-1.html Macros-1-ref.html
 == MAXBUFFER-1.html MAXBUFFER-1-ref.html
 == MAXMACROS-1.html MAXMACROS-1-ref.html

@@ -19,5 +19,6 @@ fails script processClass-1.html
 == processEnvironments-6.html processEnvironments-6-ref.html
 == processEscapes-1.html processEscapes-1-ref.html
 == processEscapes-2.html processEscapes-2-ref.html
+script processRefs-1.html
 script skipTags-1.html
 script skipTags-2.html

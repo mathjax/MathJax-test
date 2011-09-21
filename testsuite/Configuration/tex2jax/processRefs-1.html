@@ -1,0 +1,40 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>processRefs</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.tex2jax = { processRefs: false };
+      gConfigObject.TeX = {
+        equationNumbers: { autoNumber: "all" }
+      };
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("\\ref outside math mode not processed",
+        document.getElementById("ref1").innerHTML == "\\ref{a}"),
+      newScriptReftestResult("\\ref inside math mode processed",
+        document.getElementById("ref2").getElementsByTagName("a").length == 1)
+      ];
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+  <body>
+
+    \begin{equation} \label{a} a \end{equation}
+    <div id="ref1">\ref{a}</div>
+    <div id="ref2">\( \ref{a} \)</div>
+
+  </body>
+</html>

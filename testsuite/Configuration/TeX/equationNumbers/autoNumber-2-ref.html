@@ -1,0 +1,36 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>autoNumber-2</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+    <!-- numbering of environments -->
+    \[ X \]
+    \( Y \)
+    \begin{align}
+    c & = & d & + & e \tag{1} \\
+    f & = & g & + & h \tag{2} \\
+    i & = & j & + & k \tag{3}
+    \end{align}
+    \begin{equation}
+    \boxed{x^2+y^2 = z^2} \tag{4}
+    \end{equation}
+    \begin{gather}
+    a = 1 + x + y \tag{5} \\
+    d = 4 - y     \tag{6} \\
+    g = 2x - 5y   \tag{7}
+    \end{gather}
+    \begin{multline}
+    \exp(x) = 1 + x + \cdots \tag{8} \\ 
+    \frac{x^4}4 + \frac{x^5}{5!} + \cdots \\
+    \cdots + \frac{x^n}{n!} + \cdots
+    \end{multline} 
+  </body>
+</html>
