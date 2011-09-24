@@ -24,7 +24,9 @@
 
 include custom.cfg
 
-all: config doc
+upgradeSelenium:
+	@ echo 'Upgrading Selenium python driver...'
+	@ pip install --upgrade selenium
 
 config:
 	@ echo 'Generate $(CONDITION_PARSER), $(CONFIG_PY), $(CONFIG_PHP) and $(CONFIG_JS)...'
@@ -84,4 +86,17 @@ doc:
 	@ echo 'Build html documentation...'
 	@ cd web/docs ; make html > /dev/null
 
-.PHONY: config doc
+runServer:
+	@ echo 'Running the task handler...'
+	@ cd testRunner/ ; python taskHandler.py
+
+clearTaskList:
+	@ echo 'Clearing task list...'
+	rm -f testRunner/taskList.txt
+	rm -f testRunner/config/taskList/*.cfg
+
+updateMathjaxBranches:
+	@ echo 'Updating dpvc branches...'
+	@ rm -rf mathjax/dpvc ; cd mathjax; ./getMathJaxBranches.sh dpvc
+	@ echo 'Updating mathjax branches...'
+	@ rm -rf mathjax/mathjax ; cd mathjax; ./getMathJaxBranches.sh mathjax
