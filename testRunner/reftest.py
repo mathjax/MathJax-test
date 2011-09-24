@@ -360,6 +360,10 @@ fails/random")
                             state = 6
                         elif testClass == scriptReftest:
                             state = 6
+                        elif testClass == visualReftest:
+                            if aSelenium.mBrowser == "HTMLUnit":
+                                testExpectedStatus = EXPECTED_IRRELEVANT
+                            state = 5
                         else:
                             state = 5
                         continue

@@ -95,7 +95,7 @@ clearTaskList:
 	rm -f testRunner/taskList.txt
 	rm -f testRunner/config/taskList/*.cfg
 
-updateMathjaxBranches:
+updateMathJaxBranches:
 	@ echo 'Updating dpvc branches...'
 	@ rm -rf mathjax/dpvc ; cd mathjax; ./getMathJaxBranches.sh dpvc
 	@ echo 'Updating mathjax branches...'
