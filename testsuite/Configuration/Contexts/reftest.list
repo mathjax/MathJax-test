@@ -1,3 +1,4 @@
+!= issue24.html issue24-ref.html
 == xhtml-1.xhtml basic-ref.html
 == xhtml-2.html basic-ref.html
 == namespace-1.html basic-ref.html
