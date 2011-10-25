@@ -3,18 +3,20 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>font-family</title>
+    <title>undefinedFamily</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../header.js"></script>
   </head>
 
   <body>
-    <!-- See issue 21
-         https://github.com/mathjax/MathJax/issues/21 -->
-    <div>
-      <math><mtext>MathJax</mtext></math>
-    </div>
+
+    <!-- See issue 19
+         https://github.com/mathjax/MathJax/issues/19 -->
+    <math>
+      <mtext>&#x2148;</mtext>
+    </math>
+
   </body>
 </html>

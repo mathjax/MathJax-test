@@ -1,6 +1,7 @@
 include mtextFontInherit/reftest.list
 
-require(TeX&&IE7) != undefinedFamily-1.html undefinedFamily-1-ref.html
+!= undefinedFamily-1.html undefinedFamily-1-ref.html
+!= undefinedFamily-2.html undefinedFamily-2-ref.html
 random == scale-1.html scale-1-ref.html
 == minScaleAdjust-1.html minScaleAdjust-1-ref.html
 
