@@ -1,0 +1,35 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 21</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].mtextFontInherit = true;
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- See issue 21
+         https://github.com/mathjax/MathJax/issues/21 -->
+    <div style="font-family: sans-serif">
+      <math><mtext>sans-serif</mtext></math>
+    </div>
+    <div style="font-family: serif">
+      <math><mtext>serif</mtext></math>
+    </div>
+    <div style="font-family: cursive">
+      <math><mtext>cursive</mtext></math>
+    </div>
+    <div style="font-family: fantasy">
+      <math><mtext>fantasy</mtext></math>
+    </div>
+  </body>
+</html>

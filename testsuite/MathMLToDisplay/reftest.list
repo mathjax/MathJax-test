@@ -12,6 +12,7 @@ fails != issue147b.html issue147d.html
 fails-if(Opera) != issue155.html issue155-ref.html
 == mathml-negativespace.html mathml-negativespace-ref.html 
 == nobr-1.html nobr-1-ref.html
+== positive-namedspace.html positive-namedspace-ref.html
 == scriptlevel-movablelimits-1.html scriptlevel-movablelimits-1-ref.html
 == unit-1a.html unit-1-ref.html
 == unit-1b.html unit-1-ref.html
