@@ -18,4 +18,4 @@ fails-if(Opera) != issue155.html issue155-ref.html
 == unit-1b.html unit-1-ref.html
 == unit-2a.html unit-2-ref.html
 == unit-2b.html unit-2-ref.html
-tree== unit-3.html unit-3-ref.html
+fails tree== unit-3.html unit-3-ref.html
