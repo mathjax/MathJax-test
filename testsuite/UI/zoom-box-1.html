@@ -21,8 +21,9 @@
 
       function postMathJax()
       {
-      var math = document.getElementsByTagName("math")[0];
-      MathJax.Extension.MathZoom.Zoom(math, null);
+      var jax = MathJax.Hub.getAllJax()[0];
+      var math = document.getElementById(jax.inputID+"-Frame").firstChild;
+      MathJax.Extension.MathZoom.Zoom(null, math);
       }
     </script>
   </head>

@@ -16,9 +16,10 @@
 
       function postMathJax()
       {
-      var math = document.getElementsByTagName("math")[0];
-      MathJax.Extension.MathZoom.Zoom(math, null);
-      document.getElementById("MathJax_Zoom").style.background = "red";
+      var jax = MathJax.Hub.getAllJax()[0];
+      var math = document.getElementById(jax.inputID+"-Frame").firstChild;
+      MathJax.Extension.MathZoom.Zoom(null, math);
+      document.getElementById("MathJax_Zoom").style.background = "red";      
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
