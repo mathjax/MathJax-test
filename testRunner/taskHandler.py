@@ -42,7 +42,7 @@ Path to the taskList directory
 
 from config import PYTHON
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
-from config import HOST_LIST, DEFAULT_SELENIUM_PORT
+from config import HOST_LIST, HOST_LIST_OS, OS_LIST, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH 
 from config import DEFAULT_TIMEOUT
 from config import MONTH_LIST, WEEKDAY_LIST
@@ -167,13 +167,15 @@ class requestHandler(SocketServer.StreamRequestHandler):
             t = task(aTaskName, "Inactive", aOutputDirectory, aSchedule)
             msg = "added to the task list"
 
-        # read the configuration parameters of the task
-        if aConfigFile == None:
-            t.readParametersFromSocket(self)
-        else:
+        # read the configuration parameters of the task:
+        #   - First look at the parameters given in the request
+        t.readParametersFromSocket(self)
+        #   - If a config file is given, overwrite some values
+        if aConfigFile:
             if (not os.path.exists(aConfigFile)):
                 return "File '" + aConfigFile + "' not found."
             t.readParametersFromConfigFile(aConfigFile)
+        t.chooseDefaultHost()
         
         if aTaskName not in gServer.mTasks.keys():
             # add the task to the list
@@ -856,11 +858,13 @@ class task:
         gServer.mRunningTaskFromPID[str(self.mPopen.pid)] = self
         gServer.addTaskToRunningList(self)
 
-    def setParameter(self, aParameterName, aParameterValue):
+    def setParameter(self, aParameterName, aParameterValue,
+                     aOverwrite = True):
         """
         @fn setParameter(self, aParameterName, aParameterValue)
         @param aParameterName name of the parameter
         @param aParameterValue value of the parameter
+        @param aOverwrite
         @see ../html/components.html\#test-runner-config
         @note multiple option values and unknown parameters are rejected
         """
@@ -874,6 +878,13 @@ class task:
 option values"
             parameterValue = parameterValue[0]
     
+        if (not(aOverwrite) and
+            (parameterName in self.mParameters) and
+            (parameterValue == "default" or parameterValue == -1)):
+            # If the parameter is already set and a default value is passed to
+            # this function, then we don't overwrite
+            return
+
         if (parameterName == "useWebDriver" or
             parameterName == "fullScreenMode" or
             parameterName == "aloneOnHost" or
@@ -904,15 +915,24 @@ option values"
               parameterName == "listOfTests" or
               parameterName == "startID"):
             if (parameterValue == "default"):
-                if (parameterName == "host"):
-                    parameterValue = HOST_LIST[0]
-                elif (parameterName == "mathJaxPath"):
+                if (parameterName == "mathJaxPath"):
                     parameterValue = DEFAULT_MATHJAX_PATH
-                else: # mathJaxTestPath
+                elif (parameterName == "mathJaxTestPath"):
                     parameterValue = DEFAULT_MATHJAX_TEST_PATH
+                else: # parameterName == "host"
+                    # This is dealt later, when the operating system is known
+                    pass
             self.mParameters[parameterName] = parameterValue
         else:
             print "Unknown parameter " + parameterName
+
+    def chooseDefaultHost(self):
+        """
+        @fn chooseDefaultHost(self)
+        @brief Choose a default host according to the operating system
+        """
+        if (self.mParameters["host"] == "default"):
+            self.mParameters["host"] = HOST_LIST[HOST_LIST_OS.index(OS_LIST.index(self.mParameters["operatingSystem"]))]
 
     def readParametersFromSocket(self, aRequestHandler):
         """
@@ -956,7 +976,7 @@ option values"
 
         for section in ["framework", "platform", "testsuite"]:
             for item in configParser.items(section):
-                self.setParameter(item[0], item[1])
+                self.setParameter(item[0], item[1], False)
 
     def getScheduledCommand(self):
         """
@@ -1141,6 +1161,7 @@ class taskHandler:
                     t.mProgress = items[3]
                     # host = items[1] is already saved in the config file.
                     t.readParametersFromConfigFile(t.getConfigPath())
+                    t.chooseDefaultHost()
                     self.mTasks[t.mName] = t
         fp.close()
     

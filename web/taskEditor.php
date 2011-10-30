@@ -49,6 +49,20 @@
       echo '<option>'.$aList[$i].'</option>';
     }
   }
+
+  /**
+   *  @fn generateCheckboxList($aList)
+   *  @brief write several a list of checkboxes
+   *  @param aList list of options
+   */
+  function generateCheckboxList($aList, $aName)
+  {
+    for ($i = 0; $i < count($aList); $i++) {
+      echo '<li><input type="checkbox" name="'.$aName.strval($i).'" value="';
+      echo $aList[$i].'" checked="checked"/>'.$aList[$i].'</li>';
+    }
+  }
+
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -76,7 +90,7 @@
     <div class="body">
       <h1>Task Editor</h1>
       
-      <form action="commandHandler.php" method="post">
+      <form action="commandHandler.php" method="post" id="commandHandlerForm">
 
         <fieldset>
           <legend>Task</legend>
@@ -84,10 +98,10 @@
             <label>task name:
               <input id="taskName" name="taskName" type="text"
                      required="required"
-                     pattern="([a-z]|[A-Z]|[0-9]){1,20}"
+                     pattern="([a-z]|[A-Z]|[0-9]|\-){1,40}"
                      value="<?php echo $taskName;?>"
-                     onchange="updateFieldValueFrom('taskName', 'outputDirectory'); updateFieldsFromTaskName();"
-                     maxlength="20"/></label> (alphanumeric)
+                     onchange="updateFieldValueFrom('taskName', 'outputDirectory'); updateFieldsFromTaskSingleMultiple();"
+                     maxlength="40"/></label> (alphanumeric)
           </p>
           <p>
             <label>outputDirectory:
@@ -147,11 +161,26 @@
             </span>
           </p>
           <p>Fast configuration:
-            <select id="fast_config"
+             <ul style="list-style: none;">
+               <li><input type="radio" name="taskSingleMultiple"
+                          value="single"
+                          onchange="updateFieldsFromTaskSingleMultiple()"/>
+                Create a single task:
+                <select id="fast_config"
                     onchange="fastConfiguration()">
-              <option>Select template...</option>
-              <?php generateOptionList($TEMPLATE_CONFIG_LIST); ?>
-            </select>
+                  <option>Select template...</option>
+                  <?php generateOptionList($TEMPLATE_CONFIG_LIST); ?>
+                </select>
+               </li>
+               <li><input type="radio" name="taskSingleMultiple" 
+                          value="multiple"
+                          onchange="updateFieldsFromTaskSingleMultiple()" />
+               Create multiple tasks:
+               <ul id="taskMultipleList" style="list-style: none;">
+               <?php generateCheckboxList($TEMPLATE_CONFIG_LIST,
+                                          "taskTemplate"); ?></li>
+               </ul>
+             </ul>
           </p>
         </fieldset>
 
@@ -252,7 +281,8 @@
             </label>
           </span></p><p>
             <label>browserPath:
-              <input id="browserPath" name="browserPath" type="text" value="auto"
+              <input id="browserPath" name="browserPath" type="text"
+                     value="default"
                      readonly="readonly"/>
             </label>
           </p>

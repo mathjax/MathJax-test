@@ -394,9 +394,9 @@ def main(aArgs, aTransmitToTaskHandler):
         startID = config.get(section, "startID")
        
         # When more than one browser is specified, browserPath is ignored.
-        if (len(browserList) > 1 and browserPath != "auto"):
+        if (len(browserList) > 1 and browserPath != "default"):
             print >> sys.stderr, "Warning: browserPath ignored"
-            browserPath = "auto"
+            browserPath = "default"
 
         # If we just want to clear browsers data, we ignore the list of fonts
         # and browser modes.

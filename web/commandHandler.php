@@ -64,7 +64,7 @@ function selectToString($aValue, $aSelectValues)
 }
 
 /**
- * @fn selectToCronItem($aValue, $aSelectValues)
+< * @fn selectToCronItem($aValue, $aSelectValues)
  * @brief convert a string from a select form into a cron item
  * @param aValue string value to convert
  * @param aSelectValues possible values of the select form (minus the first
@@ -95,6 +95,65 @@ function truncateString($aValue, $aMaxLength)
   return substr($aValue, 0, $aMaxLength);
 }
 
+/**
+ */
+function createTask($aTaskName,
+                    $aConfigFile,
+                    $aOutputDirectory,
+                    $aTaskSchedule,
+                    $aHost,
+                    $aPort,
+                    $aMathJaxPath,
+                    $aMathJaxTestPath,
+                    $aTimeOut,
+                    $aUseWebDriver,
+                    $aFullScreenMode,
+                    $aAloneOnHost,
+                    $aFormatOutput,
+                    $aCompressOutput,
+                    $aOperatingSystem,
+                    $aBrowser,
+                    $aBrowserMode,
+                    $aBrowserPath,
+                    $aFont,
+                    $aNativeMathML,
+                    $aRunSlowTests,
+                    $aRunSkipTests,
+                    $aListOfTests,
+                    $aStartID)
+{
+  global $TASK_HANDLER_HOST, $TASK_HANDLER_PORT, $ERROR_CONNECTION_TASK_HANDLER;  
+  $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
+  if ($file) {
+    fwrite($file, "TASKEDITOR EDIT ".$aTaskName." ".$aConfigFile." ".
+                  $aOutputDirectory." ".$aTaskSchedule."\n".
+                  "host=".$aHost."\n".
+                  "port=".strval($aPort)."\n".
+                  "mathJaxPath=".$aMathJaxPath."\n".
+                  "mathJaxTestPath=".$aMathJaxTestPath."\n".
+                  "timeOut=".strval($aTimeOut)."\n".
+                  "useWebDriver=".$aUseWebDriver."\n".
+                  "fullScreenMode=".$aFullScreenMode."\n".
+                  "aloneOnHost=".$aAloneOnHost."\n".
+                  "formatOutput=".$aFormatOutput."\n".
+                  "compressOutput=".$aCompressOutput."\n".
+                  "operatingSystem=".$aOperatingSystem."\n".
+                  "browser=".$aBrowser."\n".
+                  "browserMode=".$aBrowserMode."\n".
+                  "browserPath=".$aBrowserPath."\n".
+                  "font=".$aFont."\n".
+                  "nativeMathML=".$aNativeMathML."\n".
+                  "runSlowTests=".$aRunSlowTests."\n".
+                  "runSkipTests=".$aRunSkipTests."\n".
+                  "listOfTests=".$aListOfTests."\n".
+                  "startID=".$aStartID."\n".
+                  "TASKEDITOR EDIT END\n");
+    echo '<p>'.trim(fgets($file)).'</p>';
+    fclose($file);
+  } else {
+    echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
+  }
+}
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -125,10 +184,11 @@ function truncateString($aValue, $aMaxLength)
 
         if ($_POST['command'] == 'EDIT') {
 
-          if (isset($_POST['host'])) {
+          if ($_POST['taskSingleMultiple'] == 'single' &&
+              isset($_POST['host'])) {
             $host = truncateString($_POST['host'], 255);
           } else {
-            $host = "localhost";
+            $host = "default";
           }
 
           if (isset($_POST['port'])) {
@@ -180,7 +240,7 @@ function truncateString($aValue, $aMaxLength)
             $browserMode = "StandardMode";
           }
   
-          $browserPath = "auto"; // $_POST['auto']
+          $browserPath = "default"; // $_POST['default']
    
           $font = selectToString($_POST['font'], $FONT_LIST);
    
@@ -212,37 +272,61 @@ function truncateString($aValue, $aMaxLength)
             $taskSchedule = "None";
           }
 
-          $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
-          if ($file) {
-             fwrite($file, "TASKEDITOR EDIT ".$taskName." None ".
-                           $outputDirectory." ".$taskSchedule."\n".
-                           "host=".$host."\n".
-                           "port=".strval($port)."\n".
-                           "mathJaxPath=".$mathJaxPath."\n".
-                           "mathJaxTestPath=".$mathJaxTestPath."\n".
-                           "mathJaxTestPath=".$mathJaxTestPath."\n".
-                           "timeOut=".strval($timeOut)."\n".
-                           "useWebDriver=".$useWebDriver."\n".
-                           "fullScreenMode=".$fullScreenMode."\n".
-                           "aloneOnHost=".$aloneOnHost."\n".
-                           "formatOutput=".$formatOutput."\n".
-                           "compressOutput=".$compressOutput."\n".
-                           "operatingSystem=".$operatingSystem."\n".
-                           "browser=".$browser."\n".
-                           "browserMode=".$browserMode."\n".
-                           "browserPath=".$browserPath."\n".
-                           "font=".$font."\n".
-                           "nativeMathML=".$nativeMathML."\n".
-                           "runSlowTests=".$runSlowTests."\n".
-                           "runSkipTests=".$runSkipTests."\n".
-                           "listOfTests=".$listOfTests."\n".
-                           "startID=".$startID."\n".
-                           "TASKEDITOR EDIT END\n");
-             echo trim(fgets($file));
-             fclose($file);
-          } else {
-            echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
-          }
+          if ($_POST['taskSingleMultiple'] == 'single') {
+              createTask($taskName,
+                         "None",
+                         $outputDirectory,
+                         $taskSchedule,
+                         $host,
+                         $port,
+                         $mathJaxPath,
+                         $mathJaxTestPath,
+                         $timeOut,
+                         $useWebDriver,
+                         $fullScreenMode,
+                         $aloneOnHost,
+                         $formatOutput,
+                         $compressOutput,
+                         $operatingSystem,
+                         $browser,
+                         $browserMode,
+                         $browserPath,
+                         $font,
+                         $nativeMathML,
+                         $runSlowTests,
+                         $runSkipTests,
+                         $listOfTests,
+                         $startID);
+            } else {
+              for ($i = 0; $i < count($TEMPLATE_CONFIG_LIST); $i++) {
+                if (isset($_POST['taskTemplate'.strval($i)])) {
+                  createTask($taskName.'-'.$TEMPLATE_CONFIG_LIST[$i],
+                             "config/templates/".$TEMPLATE_CONFIG_LIST[$i].".cfg",
+                             $outputDirectory,
+                             $taskSchedule,
+                             $host,
+                             $port,
+                             $mathJaxPath,
+                             $mathJaxTestPath,
+                             $timeOut,
+                             $useWebDriver,
+                             $fullScreenMode,
+                             $aloneOnHost,
+                             $formatOutput,
+                             $compressOutput,
+                             $operatingSystem,
+                             $browser,
+                             $browserMode,
+                             $browserPath,
+                             $font,
+                             $nativeMathML,
+                             $runSlowTests,
+                             $runSkipTests,
+                             $listOfTests,
+                             $startID);
+                }
+              }
+            }
         } else if ($_POST['command'] == 'REMOVE' ||
                    $_POST['command'] == 'RUN' ||
                    $_POST['command'] == 'RESTART' ||

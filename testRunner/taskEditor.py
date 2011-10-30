@@ -27,8 +27,8 @@
 @brief Script to send editing commands to the task handler.
 
 This script can be called to send TASKEDITOR request to the task handler.
-Currently, the following commands are accepted: REMOVE, RUN, RESTART and STOP.
-It returns 1 if the command failed and 0 otherwise.
+Currently, the following commands are accepted: EDIT, REMOVE, RUN, RESTART and
+STOP. It returns 1 if the command failed and 0 otherwise.
 """
 
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
@@ -53,7 +53,7 @@ def usage():
     print "where command is REMOVE, RUN, RESTART or STOP and taskName"
     print "corresponds to an element in the task list, or"
     print
-    print "python taskEditor.py ADD taskName configFile [outputDirectory\
+    print "python taskEditor.py EDIT taskName configFile [outputDirectory\
  [taskSchedule]]"
     print
     exit(1)
@@ -67,16 +67,16 @@ if __name__ == "__main__":
     
     command = sys.argv[1]
 
-    if (command not in ["ADD", "REMOVE", "RUN", "RESTART", "STOP"]):
+    if (command not in ["EDIT", "REMOVE", "RUN", "RESTART", "STOP"]):
         usage()
 
-    if ((command != "ADD" and l != 3) or
-        (command == "ADD" and l < 4 and l > 6)):
+    if ((command != "EDIT" and l != 3) or
+        (command == "EDIT" and l < 4 and l > 6)):
         usage()
 
     taskName = sys.argv[2]
 
-    if (command == "ADD"):
+    if (command == "EDIT"):
         configFile = sys.argv[3]
         if (not os.path.exists(configFile)):
             print "File '" + configFile + "' not found."
@@ -94,9 +94,10 @@ if __name__ == "__main__":
     sock.connect((TASK_HANDLER_HOST, TASK_HANDLER_PORT))
     
     gRequest = "TASKEDITOR " + command + " " + taskName
-    if (command == "ADD"):
+    if (command == "EDIT"):
         gRequest += " " + configFile + " " + outputDirectory
         gRequest += " " + taskSchedule
+        gRequest += "\nTASKEDITOR EDIT END" 
     gRequest += "\n"
 
     print gRequest
@@ -105,8 +106,8 @@ if __name__ == "__main__":
     response = sock.recv(128).strip()
     print response
     
-    if ((command == "ADD" and
-         response == ("'" + taskName + "' added to the task list.")) or
+    if ((command == "EDIT" and
+         response == ("'" + taskName + "' edited.")) or
         (command == "REMOVE" and
          response == ("'" + taskName + "' removed from the task list.")) or
         ((command == "RUN" or command == "RESTART") and

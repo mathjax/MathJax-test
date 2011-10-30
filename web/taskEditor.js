@@ -289,14 +289,45 @@ function updateAllFieldVisibilities()
 }
 
 /**
+ * Update fields from single task / multiple tasks.
+ *
+ * This function checks whether the user chooses single task / multiple task.
+ * In the former case, it calls @ref updateFieldsFromTaskName and hide the task
+ * multiple checkboxes. In the latter case, it shows these checkboxes and
+ * update the submit button.
+ **/
+function updateFieldsFromTaskSingleMultiple()
+{
+    var taskSingleMultiple =
+        document.getElementById("commandHandlerForm").taskSingleMultiple;
+    var taskMultipleList = document.getElementById("taskMultipleList");
+
+    if (taskSingleMultiple[0].checked) {
+        updateFieldsFromTaskName();
+        taskMultipleList.style.visibility = "hidden";
+        taskMultipleList.style.position = "absolute";
+    } else {
+        document.getElementById("submit").value =
+            "Create or Update multiple tasks '" +
+            document.getElementById("taskName").value + "-*'";
+        taskMultipleList.style.visibility = "visible";
+        taskMultipleList.style.position = "relative";
+    }
+}
+
+/**
  * Initialize the field visibilities and values.
  */
 function init()
 {
+    var taskSingleMultiple =
+        document.getElementById("commandHandlerForm").taskSingleMultiple
+    taskSingleMultiple[0].checked = true;
+    taskSingleMultiple[1].checked = false;
     document.getElementById("fast_config").selectedIndex = 0;
     updateAllFieldVisibilities();
     updateFieldValueFrom("host_select", "host");
     updateFieldValueFrom("taskName", "outputDirectory");
     updateSelectIndex("host_select", "operatingSystem", HOST_LIST_OS);
-    updateFieldsFromTaskName();
+    updateFieldsFromTaskSingleMultiple();
 }
