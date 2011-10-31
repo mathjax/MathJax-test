@@ -12,7 +12,7 @@ Allow from all
 </Files>
 
 # Pages allowing to edit the task list have restricted access
-<Files ~ "^(taskCreator\.php|taskEditor\.php)$">
+<Files ~ "^(commandHandler\.php|taskEditor\.php)$">
 AuthUserFile QA_PASSWORD_FILE
 AuthGroupFile /dev/null
 AuthName "Secured Access to MathJax Testing Tools"

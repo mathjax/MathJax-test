@@ -22,27 +22,22 @@
    *
    * ***** END LICENSE BLOCK ***** */
 
-a[href^="./taskEditor.xhtml"] {
-    padding-right: 20px;
-    background: url('secure.png') no-repeat 100% 0;
-}
-
 #taskList {
     width: 100%;
 }
 
-#taskList form {
+form {
   display: inline;
 }
 
-#taskList input.hiddenField {
+input.hiddenField {
   position: absolute;
   visibility: hidden;
 }
 
 #taskList input.submitField {
-  width: 16px;
-  height: 16px;
   padding: 0;
   border: 0;
+  width: 16px;
+  height: 16px;
 }

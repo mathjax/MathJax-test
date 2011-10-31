@@ -24,7 +24,7 @@
 
 @import url('docs/html/_static/default.css');
 
-a[href^="taskEditor.php"] {
+a[href^="taskEditor.php"]:not(.noIcon) {
     padding-right: 20px;
     background: url('icons/secure.png') no-repeat 100% 0;
 }
@@ -35,6 +35,7 @@ table {
 }
 
 td, th {
+    font-size: small;
     border: 1px solid black;
     padding: .5em;
 }

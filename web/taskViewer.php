@@ -50,7 +50,8 @@
   {
   $c = strtolower($aCommand);
 
-  echo '[<form action="commandHandler.php" method="post">';
+  if ($aNewName) { echo ' ['; }
+  echo '<form action="commandHandler.php" method="post">';
   echo '<input name="command" type="text" readonly="readonly"';
   echo       ' value="'.$aCommand.'" class="hiddenField"/>';
   echo '<input name="taskName" type="text" readonly="readonly"';
@@ -63,7 +64,8 @@
   echo '<input type="submit" value="" class="submitField"';
   echo       ' style="background-image: url(icons/'.$c.'.png)" ';
   echo       ' title="'.$c.' task" />';
-  echo '</form>]';
+  echo '</form>';
+  if ($aNewName) { echo '] '; }
   }
 ?>
 
@@ -78,6 +80,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="default.css"/>
     <link type="text/css" rel="stylesheet" href="taskViewer.css"/>
+    <script type="text/javascript" src="taskViewer.js"></script>
   </head>
 
   <body>
@@ -155,8 +158,14 @@
 
                 echo '<td>';
 
+                echo '<input class="taskCheckbox" type="checkbox"';
+                echo '       name="checkbox-'.$taskName.'"/>'; 
+
                 if ($status != "Pending" && $status != "Running") {
-                  echo '[<a href="taskEditor.php?taskName='.$taskName.'">edit</a>]';
+                  echo '<a class="noIcon"';
+                  echo '   href="taskEditor.php?taskName='.$taskName.'">';
+                  echo ' <img src="icons/edit.png" width="16" height="16"';
+                  echo 'alt="edit task" title="edit task"/></a>';
                 }
 
                 if ($status == "Pending") {
@@ -197,7 +206,29 @@
         }
       ?>
 
-      <p><a href="taskEditor.php">Create a new task</a></p>
+      <p>
+      <?
+          if ($line != "TASK LIST EMPTY") {
+            echo '<form name="multipleTasks" action="commandHandler.php"';
+            echo '      method="post">';
+            echo '<a href="javascript:removeMultipleTasks();">
+                     Remove selected tasks</a> - ';
+            echo '<a href="javascript:runMultipleTasks();">
+                     Run selected tasks</a> - ';
+            echo '<a href="javascript:stopMultipleTasks();">
+                     Stop selected tasks</a> - ';
+            echo '<input name="command" id="multipleTasksCommand"';
+            echo '       type="text" class="hiddenField" readonly="readonly"';
+            echo '<input name="taskList" id="multipleTasksList"';
+            echo '       type="text" readonly="readonly"';
+            echo       ' value="" class="hiddenField"/>';
+            echo '</form>';
+            echo '<a href="javascript:taskCheckboxes(true);">Check all tasks</a> - ';
+            echo '<a href="javascript:taskCheckboxes(false);">Uncheck all tasks</a> - ';
+          }
+      ?>
+      <a class="noIcon" href="taskEditor.php">Create a new task</a>
+      </p>
 
     </div>
   </body>

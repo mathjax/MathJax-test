@@ -29,8 +29,8 @@
  *  
  */
 
-if (!isset($_POST['command']) || !isset($_POST['taskName'])) {
-
+if (!isset($_POST['command']) ||
+    !(isset($_POST['taskName']) || isset($_POST['taskList']))) {
   header('Location: taskViewer.php');
   exit;
 }
@@ -96,6 +96,33 @@ function truncateString($aValue, $aMaxLength)
 }
 
 /**
+ *  @fn createTask($aTaskName,
+ *                 $aConfigFile,
+ *                 $aOutputDirectory,
+ *                 $aTaskSchedule,
+ *                 $aHost,
+ *                 $aPort,
+ *                 $aMathJaxPath,
+ *                 $aMathJaxTestPath,
+ *                 $aTimeOut,
+ *                 $aUseWebDriver,
+ *                 $aFullScreenMode,
+ *                 $aAloneOnHost,
+ *                 $aFormatOutput,
+ *                 $aCompressOutput,
+ *                 $aOperatingSystem,
+ *                 $aBrowser,
+ *                 $aBrowserMode,
+ *                 $aBrowserPath,
+ *                 $aFont,
+ *                 $aNativeMathML,
+ *                 $aRunSlowTests,
+ *                 $aRunSkipTests,
+ *                 $aListOfTests,
+ *                 $aStartID)
+ *
+ *  @brief Send a request to the task handler to create a task and print the
+ *         result.
  */
 function createTask($aTaskName,
                     $aConfigFile,
@@ -154,6 +181,40 @@ function createTask($aTaskName,
     echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
   }
 }
+
+/**
+ *  @fn executeCommand($aCommand, $aTaskName)
+ *  @brief execute a simple command
+ */
+function executeCommand($aCommand, $aTaskName)
+{
+  global $TASK_HANDLER_HOST, $TASK_HANDLER_PORT, $ERROR_CONNECTION_TASK_HANDLER;  
+  $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
+  if ($file) {
+    fwrite($file, "TASKEDITOR ".$aCommand." ".$aTaskName."\n");
+    echo '<p>'.trim(fgets($file)).'</p>';
+    fclose($file);
+  } else {
+    echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
+  }
+}
+
+/**
+ *  @fn executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
+ *  @brief execute a simple command with parameter
+ */
+function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
+{
+  global $TASK_HANDLER_HOST, $TASK_HANDLER_PORT, $ERROR_CONNECTION_TASK_HANDLER;  
+  $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
+  if ($file) {
+    fwrite($file, "TASKEDITOR ".$aCommand." ".$taskName." ".$aParameter."\n");
+    echo '<p>'.trim(fgets($file)).'</p>';
+    fclose($file);
+  } else {
+    echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
+  }
+}
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -180,7 +241,9 @@ function createTask($aTaskName,
       <h1>Task Editor</h1>
 
      <?php
-        $taskName = truncateString($_POST['taskName'], 50);
+        if (isset($_POST['taskName'])) {
+          $taskName = truncateString($_POST['taskName'], 50);
+        }
 
         if ($_POST['command'] == 'EDIT') {
 
@@ -331,25 +394,23 @@ function createTask($aTaskName,
                    $_POST['command'] == 'RUN' ||
                    $_POST['command'] == 'RESTART' ||
                    $_POST['command'] == 'STOP') {
-          $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
-          if ($file) {
-             fwrite($file, "TASKEDITOR ".$_POST['command']." ".$taskName."\n");
-             echo trim(fgets($file));
-             fclose($file);
-          } else {
-            echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
+          executeCommand($_POST['command'], $taskName);
+        } else if ($_POST['command'] == "MULTIPLE_REMOVE" ||
+                   $_POST['command'] == "MULTIPLE_RESTART" ||
+                   $_POST['command'] == "MULTIPLE_STOP") {
+          $command = substr($_POST['command'], strlen("MULTIPLE_"));
+          $taskList = explode(",", $_POST['taskList']);
+          for ($i = 0; $i < count($taskList); $i++) {
+            executeCommand($command, $taskList[$i]);
           }
-        } else if ($_POST['command'] == 'CLONE' || $_POST['command'] == 'RENAME') {
+        } else if ($_POST['command'] == 'CLONE' ||
+                   $_POST['command'] == 'RENAME') {
           if (isset($_POST['newName'])) {
-            $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
-            if ($file) {
-               fwrite($file, "TASKEDITOR ".$_POST['command']." ".$taskName." ".$_POST['newName']."\n");
-               echo trim(fgets($file));
-               fclose($file);
-            } else {
-              echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
-            }
+            executeCommandWithParameter($_POST['command'],
+                                        $taskName, $_POST['newName']);
           }
+        } else {
+              echo '<p>Invalid request.</p>';
         }
         ?>
 
