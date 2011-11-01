@@ -1,3 +1,3 @@
 load m10.html
 load m100.html
-load m1000.html
+slow load m1000.html

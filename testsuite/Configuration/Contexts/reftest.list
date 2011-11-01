@@ -1,6 +1,6 @@
 fails-if(Chrome||Konqueror||Safari) != issue24.html issue24-ref.html
-== xhtml-1.xhtml basic-ref.html
-== xhtml-2.html basic-ref.html
+skip-if(Chrome) == xhtml-1.xhtml basic-ref.html
+skip-if(Chrome) == xhtml-2.html basic-ref.html
 == namespace-1.html basic-ref.html
 fails-if(Konqueror) == namespace-2.html basic-ref.html
 skip-if(Chrome) == math-location-1.html math-location-ref.html

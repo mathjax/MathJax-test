@@ -1,4 +1,4 @@
-== mo1.html mo1-ref.html
+fails == mo1.html mo1-ref.html
 == mo2.html mo2-ref.html
 == mo3.html mo3-ref.html
 == mo4.html mo4-ref.html
@@ -9,9 +9,9 @@
 == moAaccent9.html moAaccent9-ref.html
 != moAaccent10a.html moAaccent10a-ref.html
 == moAaccent10b.html moAaccent10b-ref.html
-== moAform11.html moAform11-ref.html
+fails == moAform11.html moAform11-ref.html
 == moAlargeop12.html moAlargeop12-ref.html
-== moAlrspace13.html moAlrspace13-ref.html
+fails == moAlrspace13.html moAlrspace13-ref.html
 != moAminmax14a.html moAminmax14-ref.html
 != moAminmax14b.html moAminmax14-ref.html
 == moAminmax14c.html moAminmax14-ref.html

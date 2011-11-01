@@ -106,7 +106,7 @@
           <p>
             <label>outputDirectory:
             <input id="outputDirectory" name="outputDirectory" type="text"
-                   pattern="([a-z]|[A-Z]|[0-9])*" maxlength="20"
+                   pattern="([a-z]|[A-Z]|[0-9]|\-){1,40}" maxlength="40"
                    value=""/>
             </label>
           </p>

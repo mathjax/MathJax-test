@@ -97,7 +97,7 @@ class seleniumMathJax(object):
         @param aOperatingSystem Value to assign to @ref mOperatingSystem
         @param aBrowser Value to assign to @ref mBrowser
         @param aBrowserMode Value to assign to @ref mBrowserMode
-        @param aBrowserPath Path to the browser executable, or "auto".
+        @param aBrowserPath Path to the browser executable, or "default".
         @param aFont Value to assign to @ref mFont
         @param aNativeMathML Value to assign to @ref mNativeMathML
         @param aTimeOut Value to assign to @ref mTimeOut
@@ -170,7 +170,7 @@ class seleniumMathJax(object):
             else:
                 raise NameError("Unknown Platform")
 
-            if aBrowserPath != "auto":
+            if aBrowserPath != "default":
                 # XXXfred TODO: custom path for the browser. Does not seem
                 # available yet with remote Webdriver.
                 pass
@@ -188,7 +188,7 @@ class seleniumMathJax(object):
                 startCommand = "*firefox"
             elif (aOperatingSystem == "Windows" or
                   aOperatingSystem == "Mac") and aBrowser == "Safari":
-                startCommand = "*safariproxy"
+                startCommand = "*safari"
             elif aBrowser == "Chrome":
                 startCommand = "*googlechrome"
             elif aBrowser == "Opera":
@@ -200,7 +200,7 @@ class seleniumMathJax(object):
             else:
                 startCommand = "*custom"
                 
-            if aBrowserPath == "auto":
+            if aBrowserPath == "default":
                 if startCommand == "*custom":
                     raise NameError("Unknown Platform")
         
