@@ -74,7 +74,7 @@ class seleniumMathJax(object):
                  aBrowserMode,
                  aBrowserPath,
                  aFont,
-                 aNativeMathML,
+                 aOutputJax,
                  aTimeOut,
                  aFullScreenMode):
         """
@@ -85,7 +85,7 @@ class seleniumMathJax(object):
                      aBrowserMode,
                      aBrowserPath, 
                      aFont,
-                     aNativeMathML,
+                     aOutputJax,
                      aTimeOut,
                      aFullScreenMode)
 
@@ -99,7 +99,7 @@ class seleniumMathJax(object):
         @param aBrowserMode Value to assign to @ref mBrowserMode
         @param aBrowserPath Path to the browser executable, or "default".
         @param aFont Value to assign to @ref mFont
-        @param aNativeMathML Value to assign to @ref mNativeMathML
+        @param aOutputJax Value to assign to @ref mOutputJax
         @param aTimeOut Value to assign to @ref mTimeOut
         @param aFullScreenMode Value to assign to @ref mFullScreenMode
 
@@ -121,9 +121,8 @@ class seleniumMathJax(object):
         Browser mode for Internet Explorer
         @property mFont
         font to use: STIX, TeX, ImageTeX
-        @property mNativeMathML
-        whether the tests should use MathJax or the native MathML support of
-        the browser
+        @property mOutputJax
+        output Jax to use: HTML-CSS, SVG, NativeMML
         @property mTimeOut
         time allowed before aborting a test
         @property mFullScreenMode
@@ -143,7 +142,7 @@ class seleniumMathJax(object):
         self.mBrowser = aBrowser
         self.mBrowserMode = aBrowserMode
         self.mFont = aFont
-        self.mNativeMathML = aNativeMathML
+        self.mOutputJax = aOutputJax
         self.mTimeOut = aTimeOut
         self.mFullScreenMode = aFullScreenMode
 
@@ -231,8 +230,8 @@ class seleniumMathJax(object):
         framework options override those specified in the reftest manifest,
         in the URI of the test pages. If you want your test page to use a
         different configuration, do it in a preMathJax() function. Also,
-        note that @ref initTreeReftests sets @ref gNativeMathML to true, so
-        the query string nativeMathML is ignored for tree reftests.
+        note that @ref initTreeReftests sets @ref gOutputJax to NativeMML, so
+        the query string outputJax is ignored for tree reftests.
         @exception Exception The javascript error that happened in the page.
         """
 
@@ -241,8 +240,7 @@ class seleniumMathJax(object):
         query = a.query
         query += "&errorHandler=true"
         query += "&font=" + self.mFont
-        if self.mNativeMathML:
-            query += "&nativeMathML=true"
+        query += "&outputJax=" + self.mOutputJax
         query += "&mathJaxPath=" + self.mMathJaxPath
         newURI = urlparse.urlunparse((a.scheme,
                                       a.netloc,
@@ -330,7 +328,7 @@ class seleniumMathJax(object):
             # Only open the blank page...
             self.open("blank.html")
             if (self.mBrowser == "MSIE" and
-                not(self.mBrowserMode == "StandardMode")):
+                not(self.mBrowserMode == "default")):
                 # For MSIE, we choose the document mode
                 # XXXfred TODO!
                 pass
@@ -386,7 +384,7 @@ class seleniumMathJax(object):
                     time.sleep(3)
 
             if (self.mBrowser == "MSIE" and
-                not(self.mBrowserMode == "StandardMode")):
+                not(self.mBrowserMode == "default")):
                 # For MSIE, we choose the document mode
 
                 #  opening developer tools

@@ -38,7 +38,7 @@ this configuration.
 
 The grammar is defined by the expressions p_*. In BNF notation, it is:
 
-closedTerm := OPERATINGSYSTEM | BROWSER | BROWSERMODE | FONT | NATIVEMATHML |
+closedTerm := OPERATINGSYSTEM | BROWSER | BROWSERMODE | FONT | OUTPUTJAX |
               LEFTPARENTHESIS expr RIGHTPARENTHESIS
 
 expr1 := closedTerm | NOT expr1
@@ -102,7 +102,7 @@ tokens = (
    "BROWSER",
    "BROWSERMODE",
    "FONT",
-   "NATIVEMATHML"
+   "OUTPUTJAX"
 )
 
 t_ignore = ""
@@ -148,10 +148,10 @@ def t_FONT(t):
     t.value = (gSelenium == None or t.value == gSelenium.mFont)
     return t
 
-## Native MathML
-def t_NATIVEMATHML(t):
-    r"nativeMathML"
-    t.value = (gSelenium == None or gSelenium.mNativeMathML)
+## Output Jax
+def t_OUTPUTJAX(t):
+    r"OUTPUT_JAX_LIST"
+    t.value = (gSelenium == None or gSelenium.mOutputJax)
     return t
 
 lexer = lex.lex()
@@ -174,7 +174,7 @@ def p_closedTerm_token(p):
                   | BROWSER
                   | BROWSERMODE
                   | FONT
-                  | NATIVEMATHML'''
+                  | OUTPUTJAX'''
     p[0] = p[1]
 
 def p_closeTerm_parenthesis(p):

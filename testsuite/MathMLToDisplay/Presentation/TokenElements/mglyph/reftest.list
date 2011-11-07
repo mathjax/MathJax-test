@@ -5,5 +5,5 @@
 == mglyph_valignbottom.html mglyph_valignbottom-ref.html
 == mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
 == mglyph_valigntop.html mglyph_valigntop-ref.html
-require(!nativeMathML) script rec-mglyph1.html
+require(!NativeMML) script rec-mglyph1.html
 == rec-mglyph2.html rec-mglyph2-ref.html

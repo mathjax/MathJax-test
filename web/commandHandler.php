@@ -115,7 +115,7 @@ function truncateString($aValue, $aMaxLength)
  *                 $aBrowserMode,
  *                 $aBrowserPath,
  *                 $aFont,
- *                 $aNativeMathML,
+ *                 $aOutputJax,
  *                 $aRunSlowTests,
  *                 $aRunSkipTests,
  *                 $aListOfTests,
@@ -143,7 +143,7 @@ function createTask($aTaskName,
                     $aBrowserMode,
                     $aBrowserPath,
                     $aFont,
-                    $aNativeMathML,
+                    $aOutputJax,
                     $aRunSlowTests,
                     $aRunSkipTests,
                     $aListOfTests,
@@ -169,7 +169,7 @@ function createTask($aTaskName,
                   "browserMode=".$aBrowserMode."\n".
                   "browserPath=".$aBrowserPath."\n".
                   "font=".$aFont."\n".
-                  "nativeMathML=".$aNativeMathML."\n".
+                  "outputJax=".$aOutputJax."\n".
                   "runSlowTests=".$aRunSlowTests."\n".
                   "runSkipTests=".$aRunSkipTests."\n".
                   "listOfTests=".$aListOfTests."\n".
@@ -300,14 +300,14 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
             $browserMode = selectToString($_POST['browserMode'],
                                           $BROWSER_MODE_LIST);
           } else {
-            $browserMode = "StandardMode";
+            $browserMode = "default";
           }
   
           $browserPath = "default"; // $_POST['default']
    
           $font = selectToString($_POST['font'], $FONT_LIST);
    
-          $nativeMathML = boolToString(isset($_POST['nativeMathML']));
+          $aOutputJax = selectToString($_POST['outputJax'], $OUTPUT_JAX_LIST);
           $runSlowTests = boolToString(isset($_POST['runSlowTests']));
           $runSkipTests = boolToString(isset($_POST['runSkipTests']));
           $listOfTests = $_POST['listOfTests'];
@@ -355,7 +355,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                          $browserMode,
                          $browserPath,
                          $font,
-                         $nativeMathML,
+                         $aOutputJax,
                          $runSlowTests,
                          $runSkipTests,
                          $listOfTests,
@@ -382,7 +382,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                              $browserMode,
                              $browserPath,
                              $font,
-                             $nativeMathML,
+                             $aOutputJax,
                              $runSlowTests,
                              $runSkipTests,
                              $listOfTests,

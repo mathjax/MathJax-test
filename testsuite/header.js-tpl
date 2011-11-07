@@ -37,8 +37,8 @@
  * @var String gMathJaxQueryString
  * Query string associated to the MathJax.js script. Default is "config=default"
  *
- * @var Boolean gNativeMathML
- * Whether the test page uses native MathML.
+ * @var Boolean gOutputJax
+ * output jax used by the test page (HTML-CSS, SVG, NativeMML).
  *
  * @var String  gFont
  * font used by the test page (STIX, TeX, ImageTex).
@@ -54,7 +54,7 @@
  */
 var gMathJaxPath = "DEFAULT_MATHJAX_PATH";
 var gMathJaxQueryString = "config=default";
-var gNativeMathML = false;
+var gOutputJax = "HTML-CSS";
 var gFont = "STIX";
 var gConfigObject;
 var gQueryString = {};
@@ -77,7 +77,7 @@ function getCurrentPath()
   *
   * - mathJaxPath
   * - font
-  * - nativeMathML
+  * - outputJax
   *
   * @note If a parameter is repeated several times, only the last value is
   * taken into account.
@@ -98,8 +98,8 @@ function parseQueryString()
         if (parts[0] == "font") {
             gFont = parts[1];
         }
-        if (parts[0] == "nativeMathML") {
-            gNativeMathML = (parts[1] == "true");
+        if (parts[0] == "outputJax") {
+            gOutputJax = parts[1];
         }
         if (parts[0] == "errorHandler") {
             gErrorHandler = (parts[1] == "true");
@@ -161,7 +161,7 @@ function getQueryInteger(aParamName, aDefaultValue)
 
 /**
   *  Return a default mathjax config object to initialize @ref gConfigObject
-  *  The value of @ref gNativeMathML and @ref gFont are taken into account.
+  *  The value of @ref gOutputJax and @ref gFont are taken into account.
   *
   *  @treturn Object the config object
   */
@@ -172,8 +172,7 @@ function defaultConfigObject()
 
       extensions: ["tex2jax.js",  "mml2jax.js"],
 
-      jax: ["input/TeX", "input/MathML",
-            (gNativeMathML ? "output/NativeMML" : "output/HTML-CSS")],
+      jax: ["input/TeX", "input/MathML", "output/" + gOutputJax],
 
       "HTML-CSS": {
           availableFonts: [(gFont == "ImageTeX" ? "" : gFont)],

@@ -116,6 +116,8 @@ BROWSER_MODE_LIST = parseStringArray(configParser.get("testing_instance",
                                                       "BROWSER_MODE_LIST"))
 FONT_LIST = parseStringArray(configParser.get("testing_instance",
                                               "FONT_LIST"))
+OUTPUT_JAX_LIST = parseStringArray(configParser.get("testing_instance",
+                                                    "OUTPUT_JAX_LIST"))
 CONDITION_PARSER = configParser.get("generated_files", "CONDITION_PARSER")
 CONFIG_PY = configParser.get("generated_files", "CONFIG_PY")
 CONFIG_PHP = configParser.get("generated_files", "CONFIG_PHP")
@@ -149,6 +151,7 @@ content = content.replace("BROWSER_LIST", createLexExpression(BROWSER_LIST))
 content = content.replace("BROWSER_MODE_LIST",
                           createLexExpression(BROWSER_MODE_LIST))
 content = content.replace("FONT_LIST", createLexExpression(FONT_LIST))
+content = content.replace("OUTPUT_JAX_LIST", createLexExpression(OUTPUT_JAX_LIST))
 f_out.write(content)
 f_out.close()
 f_in.close()
@@ -197,6 +200,7 @@ declarePhpStringArray(f_out, "BROWSER_LIST", BROWSER_LIST)
 declarePhpStringArray(f_out, "OS_LIST", OS_LIST)
 declarePhpStringArray(f_out, "BROWSER_MODE_LIST", BROWSER_MODE_LIST)
 declarePhpStringArray(f_out, "FONT_LIST", FONT_LIST)
+declarePhpStringArray(f_out, "OUTPUT_JAX_LIST", OUTPUT_JAX_LIST)
 
 declarePhpString(f_out, "ERROR_CONNECTION_TASK_HANDLER",
                  ERROR_CONNECTION_TASK_HANDLER)

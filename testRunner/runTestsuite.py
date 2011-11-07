@@ -225,16 +225,15 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
     aSuite.printInfo("Starting Testing Instance ; " + startTime.isoformat())
     interrupted = False
     try:
-        aSuite.printInfo("host =" + str(aSelenium.mHost))
-        aSuite.printInfo("port =" + str(aSelenium.mPort))
+        aSuite.printInfo("host = " + str(aSelenium.mHost))
+        aSuite.printInfo("port = " + str(aSelenium.mPort))
         aSuite.printInfo("mathJaxPath = " + aSelenium.mMathJaxPath)
         aSuite.printInfo("mathJaxTestPath = " + aSelenium.mMathJaxTestPath)
         aSuite.printInfo("operatingSystem = " + aSelenium.mOperatingSystem)
         aSuite.printInfo("browser = " + aSelenium.mBrowser)
         aSuite.printInfo("browserMode = " + aSelenium.mBrowserMode)
         aSuite.printInfo("font = " + aSelenium.mFont)
-        aSuite.printInfo("nativeMathML = " +
-                         boolToString(aSelenium.mNativeMathML))
+        aSuite.printInfo("outputJax = " + aSelenium.mOutputJax)
         aSuite.printInfo("runSlowTests = " +
                          boolToString(aSuite.mRunSlowTests))
         sys.stdout.flush()
@@ -384,7 +383,7 @@ def main(aArgs, aTransmitToTaskHandler):
         browserModeList = config.get(section, "browserMode").split()
         browserPath = config.get(section, "browserPath")
         fontList = config.get(section, "font").split()
-        nativeMathML = config.getboolean(section, "nativeMathML")
+        outputJaxList = config.get(section, "outputJax").split()
     
         # testsuite section
         section = "testsuite"
@@ -402,47 +401,57 @@ def main(aArgs, aTransmitToTaskHandler):
         # and browser modes.
         if clearBrowsersData:
             fontList = ["STIX"]
-            browserModeList = ["StandardMode"]
-
-        i = 0
+            browserModeList = ["default"]
+            outputJaxList = ["HTML-CSS"]
 
         for browser in browserList:
 
+            if (browser == "default"):
+                browser = BROWSER_LIST[0]
+
             for font in fontList:
 
-                # browserModeList is only relevant for MSIE
-                if not(browser == "MSIE"):
-                    browserModeList2 = ["StandardMode"]
-                else:
-                    browserModeList2 = browserModeList
-               
-                for browserMode in browserModeList2:
+                if (font == "default"):
+                    font = FONT_LIST[0]
 
-                    # Create a Selenium instance
-                    selenium = \
-                        seleniumMathJax.seleniumMathJax(useWebDriver,
-                                                        host,
-                                                        port,
-                                                        mathJaxPath,
-                                                        mathJaxTestPath,
-                                                        operatingSystem,
-                                                        browser,
-                                                        browserMode,
-                                                        browserPath,
-                                                        font,
-                                                        nativeMathML,
-                                                        timeOut,
-                                                        fullScreenMode)
-                        
-                    if (clearBrowsersData):
-                        removeTemporaryData(selenium)
+                for outputJax in outputJaxList:
+
+                    if (outputJax == "default"):
+                        font = OUTPUT_JAX_LIST[0]
+
+                    # browserModeList is only relevant for MSIE
+                    if not(browser == "MSIE"):
+                        browserModeList2 = ["default"]
                     else:
-                        if aTransmitToTaskHandler:
-                            taskHandler = [TASK_HANDLER_HOST,
-                                           TASK_HANDLER_PORT,
-                                           str(os.getpid())]
+                        browserModeList2 = browserModeList
+               
+                    for browserMode in browserModeList2:
+                            
+                        # Create a Selenium instance
+                        selenium = \
+                            seleniumMathJax.seleniumMathJax(useWebDriver,
+                                                            host,
+                                                            port,
+                                                            mathJaxPath,
+                                                            mathJaxTestPath,
+                                                            operatingSystem,
+                                                            browser,
+                                                            browserMode,
+                                                            browserPath,
+                                                            font,
+                                                            outputJax,
+                                                            timeOut,
+                                                            fullScreenMode)
+                            
+                        if (clearBrowsersData):
+                            removeTemporaryData(selenium)
                         else:
-                            taskHandler = None
+                            if aTransmitToTaskHandler:
+                                taskHandler = [TASK_HANDLER_HOST,
+                                               TASK_HANDLER_PORT,
+                                               str(os.getpid())]
+                            else:
+                                taskHandler = None
                         # Create the test suite
                         suite = reftest.reftestSuite(taskHandler,
                                                      runSlowTests,
@@ -451,10 +460,8 @@ def main(aArgs, aTransmitToTaskHandler):
                                                      startID)
                         runTestingInstance(directory, selenium, suite,
                                            formatOutput, compressOutput)
-
-                    i = i + 1
-
-                # end browserMode
+                    # end browserMode
+                #end outputJax
             # end for font
         # end browser
 

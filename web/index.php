@@ -64,7 +64,7 @@
         <li><a href="taskViewer.php">Task viewer</a></li>
         <li><a href="taskEditor.php">Task editor</a></li>
         <li><a href="results/">Reftest results</a></li>
-        <li><a href="testsuiteNotes.xhtml">Testsuite notes</a></li>
+        <li><a href="testsuiteNotes.html">Testsuite notes</a></li>
         <li><a href="selectReftests.xhtml">Reftest selector</a></li>
         <li><a href="reftest-analyzer.xhtml">Reftest analyser</a></li>
       </ul>

@@ -294,8 +294,10 @@
             </label>
           </p>
           <p>
-            <label>nativeMathML:
-              <input id="nativeMathML" name="nativeMathML" type="checkbox"/>
+            <label>outputJax:
+              <select id="outputJax" name="outputJax">
+              <?php generateOptionList($OUTPUT_JAX_LIST); ?>
+              </select>
             </label>
           </p>
         </fieldset>

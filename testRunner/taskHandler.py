@@ -765,7 +765,7 @@ class task:
         s += self.serializeParameter("browserMode")
         s += self.serializeParameter("browserPath")
         s += self.serializeParameter("font")
-        s += self.serializeParameter("nativeMathML")
+        s += self.serializeParameter("outputJax")
         s += "</table></p>"
 
         s += "<h2>Testsuite Configuration</h2>"
@@ -820,7 +820,7 @@ class task:
         fp.write("browserMode = " + p["browserMode"] + "\n")
         fp.write("browserPath = " + p["browserPath"] + "\n")
         fp.write("font = " + p["font"] + "\n")
-        fp.write("nativeMathML = " + boolToString(p["nativeMathML"]) + "\n")
+        fp.write("outputJax = " + p["outputJax"] + "\n")
         fp.write("\n")
 
         fp.write("[testsuite]\n")
@@ -890,7 +890,6 @@ option values"
             parameterName == "aloneOnHost" or
             parameterName == "formatOutput" or
             parameterName == "compressOutput" or
-            parameterName == "nativeMathML" or
             parameterName == "runSlowTests" or
             parameterName == "runSkipTests"):
             self.mParameters[parameterName] = (parameterValue == "true")
@@ -912,6 +911,7 @@ option values"
               parameterName == "browserMode" or
               parameterName == "browserPath" or
               parameterName == "font" or
+              parameterName == "outputJax" or
               parameterName == "listOfTests" or
               parameterName == "startID"):
             if (parameterValue == "default"):
@@ -919,6 +919,8 @@ option values"
                     parameterValue = DEFAULT_MATHJAX_PATH
                 elif (parameterName == "mathJaxTestPath"):
                     parameterValue = DEFAULT_MATHJAX_TEST_PATH
+                elif (parameterValue == "outputJax"):
+                    parameterValue = OUTPUT_JAX_LIST[0]
                 else: # parameterName == "host"
                     # This is dealt later, when the operating system is known
                     pass
