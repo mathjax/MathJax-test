@@ -148,6 +148,9 @@ my $unparsedContent;
 ## @var String parsedContent
 #  @brief the formatted HTML output for the test currently read
 my $parsedContent;
+## @var String queryString
+## @brief query string to use in test pages
+my $queryString = "";
 
 while (<$gReftestOutput>) {
     next unless /^REFTEST/;
@@ -167,7 +170,11 @@ while (<$gReftestOutput>) {
                 if ($2 eq $testTypes[$i][0]) {
                     $testTypes[$i][3]++;
                     $unparsedContent;
-                    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),\1\2: <a href="$gTestsuiteURI\3">\3</a>\4,;
+                    my $queryString2 = $queryString;
+                    if (index($3, "?") == -1) {
+                        $queryString2 = "?".$queryString2;
+                    }
+                    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),\1\2: <a href="$gTestsuiteURI\3$queryString2">\3</a>\4,;
                     $parsedContent = "<div class=\"$testTypes[$i][1]\">" . $_;
                     last;
                 }
@@ -178,6 +185,14 @@ while (<$gReftestOutput>) {
                 $unparsedContent = "";
                 $state = 4;
             }
+        } elsif (/REFTEST INFO \| ([^=]*) = (.*)/) {
+            # Parse queryString
+            if (($1 eq "mathJaxPath") ||
+                ($1 eq "font") ||
+                ($1 eq "outputJax")) {
+                $queryString .= ("&".$1."=".$2);
+            }
+            print "$unparsedContent\n";
         } else {
             print "$unparsedContent\n";
         }

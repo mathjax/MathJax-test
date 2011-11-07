@@ -211,12 +211,16 @@
           <p>
             <label>mathJaxPath:
               <input id="mathJaxPath" name="mathJaxPath" type="text" size="50"
+                     pattern="(.)+\/" onchange="updateUnpackedBoxFromMathJaxPath()"
                      value="<?php echo $DEFAULT_MATHJAX_PATH;?>"/>
             </label>
+            unpacked:
+            <input id="unpacked" type="checkbox" onchange="updateMathJaxPathFromUnpackedBox()"/>
           </p>
           <p>
             <label>mathJaxTestPath:
               <input id="mathJaxTestPath" name="mathJaxTestPath" type="text" size="50"
+                     pattern="(.)+\/"
                      value="<?php echo $DEFAULT_MATHJAX_TEST_PATH;?>"/>
             </label>
           </p>

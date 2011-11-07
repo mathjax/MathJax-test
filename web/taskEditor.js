@@ -316,6 +316,37 @@ function updateFieldsFromTaskSingleMultiple()
 }
 
 /**
+ * Update the unpacked box according to the mathjax path
+ */
+function updateUnpackedBoxFromMathJaxPath()
+{
+    var mathJaxPath = document.getElementById("mathJaxPath");
+    document.getElementById("unpacked").checked =
+        mathJaxPath.value.match(/^(.)*\/unpacked\/$/);
+}
+
+/**
+ * Add/Remove the "unpacked/" suffix
+ */
+function updateMathJaxPathFromUnpackedBox()
+{
+    var mathJaxPath = document.getElementById("mathJaxPath");
+    var unpacked = document.getElementById("unpacked").checked;
+    if (unpacked) {
+        if (!mathJaxPath.value.match(/^(.)*\/unpacked\/$/)) {
+            mathJaxPath.value += "unpacked/";
+        }
+    } else {
+        if (mathJaxPath.value.match(/^(.)*\/unpacked\/$/)) {
+            var l = String("unpacked/").length;
+            mathJaxPath.value = mathJaxPath.value.substr(mathJaxPath.value,
+                                                         mathJaxPath.value.
+                                                         length - l);
+        }
+    }
+}
+
+/**
  * Initialize the field visibilities and values.
  */
 function init()
@@ -330,4 +361,5 @@ function init()
     updateFieldValueFrom("taskName", "outputDirectory");
     updateSelectIndex("host_select", "operatingSystem", HOST_LIST_OS);
     updateFieldsFromTaskSingleMultiple();
+    updateUnpackedBoxFromMathJaxPath();
 }
