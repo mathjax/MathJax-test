@@ -87,13 +87,14 @@ def resultsExist(aName):
             os.path.exists(aName + ".txt.gz") or
             os.path.exists(aName + ".html.gz"))
 
-def getOutputFileName(aDirectory, aSelenium, aDoNotOverwrite):
+def getOutputFileName(aDirectory, aSelenium, aSuite, aDoNotOverwrite):
     """
     @fn getOutputFileName(aDirectory, aSelenium, aDoNotOverwrite)
     @brief build a file name for the output
 
     @param aDirectory directory where the test output will be stored
     @param aSelenium @ref seleniumMathJax::seleniumMathJax object
+    @param aSuite
     @param aDoNotOverwrite whether the name should be changed to prevent
            overwriting the result files.
 
@@ -102,20 +103,23 @@ def getOutputFileName(aDirectory, aSelenium, aDoNotOverwrite):
     by a "-number" to prevent overwriting files.
     """
 
-    name = aDirectory + \
+    name = \
         aSelenium.mOperatingSystem + "_" + \
         aSelenium.mBrowser + "_" + \
         aSelenium.mBrowserMode + "_" + \
         aSelenium.mFont
 
-    if aDoNotOverwrite and resultsExist(name):
+    if aDoNotOverwrite and resultsExist(aDirectory + name):
         i = 1
-        while (resultsExist(name + "-" + str(i)) and
+        while (resultsExist(aDirectory + name + "-" + str(i)) and
                i < MAX_TEST_RESULTS_WITH_SAME_NAME):
             i = i + 1
         name += "-" + str(i)
 
-    return name
+    if (aSuite.mTaskHandler != None):
+        sendOutputFileName(name);
+
+    return aDirectory + name
 
 def gzipFile(aFile):
     """
@@ -204,10 +208,10 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
 
     # Create the output file. Do not overwrite the file name if we are not
     # recovering a previous testing instance
-    output = getOutputFileName(aDirectory, aSelenium,
+    output = getOutputFileName(aDirectory, aSelenium, aSuite,
                                aSuite.mRunningTestID == "")
-    outputTxt = output + ".txt"
-    outputHTML= output + ".html"
+    outputTxt  = output + ".txt"
+    outputHTML = output + ".html"
 
     if aSuite.mRunningTestID == "":
         # Create a new text file
@@ -465,6 +469,23 @@ def main(aArgs, aTransmitToTaskHandler):
             # end for font
         # end browser
 
+def sendOutputFileName(aName):
+    """
+    @fn sendOutputFileName(aName)
+    @brief send the output file name to the task handler
+    """
+
+    global TASK_HANDLER_HOST
+    global TASK_HANDLER_PORT
+
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((TASK_HANDLER_HOST, TASK_HANDLER_PORT))
+        s = "TASK OUTPUTFILENAME " + str(os.getpid()) + " " + aName + "\n"
+        sock.send(s)
+    except socket.error:
+        print >> sys.stderr, "Could not send output file name to the task handler"
+
 def announceDeath(aDeath, aExceptionMessage = None):
     """
     @fn announceDeath(aDeath, aExceptionMessage = None)
@@ -490,7 +511,6 @@ def announceDeath(aDeath, aExceptionMessage = None):
         sock.send(s)
     except socket.error:
         print >> sys.stderr, "Could not announce death to the task handler"
-        return
 
 if __name__ == "__main__":
     # Parse command line arguments

@@ -393,7 +393,8 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
         } else if ($_POST['command'] == 'REMOVE' ||
                    $_POST['command'] == 'RUN' ||
                    $_POST['command'] == 'RESTART' ||
-                   $_POST['command'] == 'STOP') {
+                   $_POST['command'] == 'STOP' ||
+                   $_POST['command'] == 'FORMAT') {
           executeCommand($_POST['command'], $taskName);
         } else if ($_POST['command'] == "MULTIPLE_REMOVE" ||
                    $_POST['command'] == "MULTIPLE_RESTART" ||

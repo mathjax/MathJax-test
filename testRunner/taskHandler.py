@@ -40,7 +40,7 @@ The server handling the task list.
 Path to the taskList directory
 """
 
-from config import PYTHON
+from config import PYTHON, PERL, MATHJAX_WEB_URI
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import HOST_LIST, HOST_LIST_OS, OS_LIST, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH 
@@ -153,18 +153,19 @@ class requestHandler(SocketServer.StreamRequestHandler):
                 return "'" + aTaskName + \
                     "' is running and can not be edited!" + "'\n"
             msg = "updated"
-            if t.mSchedule != None:
+            if t.mSchedule:
                 # remove the task from the scheduler
                 gServer.removeScheduledTask(t)
 
             t.mStatus = "Inactive"
             t.mProgress = "-"
             t.mOutputDirectory = aOutputDirectory
+            t.mOutputFileName = None
             t.mExceptionMessage = None
             t.mSchedule = aSchedule
         else:
             # create a new task
-            t = task(aTaskName, "Inactive", aOutputDirectory, aSchedule)
+            t = task(aTaskName, "Inactive", aOutputDirectory, None, aSchedule)
             msg = "added to the task list"
 
         # read the configuration parameters of the task:
@@ -183,7 +184,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         t.generateConfigFile()
 
-        if t.mSchedule != None:
+        if t.mSchedule:
             # add the task to the scheduler
             gServer.addScheduledTask(t)
 
@@ -210,13 +211,13 @@ class requestHandler(SocketServer.StreamRequestHandler):
         t = gServer.mTasks[aOldName]
         gServer.mTasks[aNewName] = t
         t.removeConfigFile()
-        if t.mSchedule != None:
+        if t.mSchedule:
             gServer.removeScheduledTask(t)
         del gServer.mTasks[aOldName]
 
         t.mName = aNewName
         t.generateConfigFile()
-        if t.mSchedule != None:
+        if t.mSchedule:
             gServer.addScheduledTask(t)
 
         return "'" + aOldName + "' renamed into '" + aNewName + "'!"
@@ -249,7 +250,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         t.generateConfigFile()
 
-        if t.mSchedule != None:
+        if t.mSchedule:
             # add the task to the scheduler
             gServer.addScheduledTask(t)
 
@@ -272,7 +273,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         t = gServer.mTasks[aTaskName]
         if (not t.isRunning()):
-            if t.mSchedule != None:
+            if t.mSchedule:
                 # remove the task from the scheduler
                 gServer.removeScheduledTask(t)
 
@@ -305,6 +306,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         if (aRestart):
             t.mParameters["startID"] = ""
+            t.mOutputFileName = None
 
         h = t.host()
         if h == None:
@@ -350,6 +352,38 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         return "'" + aTaskName + "' is not running!\n"
 
+    def formatTask(self, aTaskName):
+        """
+        @fn formatTask(self, aTaskName)
+        @brief format the text output into of a task
+        @return a message indicating whether the operation succeeded
+        """
+
+        global gServer
+
+        if aTaskName not in gServer.mTasks.keys():
+            return "'" + aTaskName + "' was not found in the task list!"
+
+        t = gServer.mTasks[aTaskName]
+
+        output = MATHJAX_WEB_PATH + "results/"
+        output += t.mOutputDirectory + t.mOutputFileName
+        outputTxt  = output + ".txt"
+        outputHTML = output + ".html"
+
+        if (os.path.exists(outputTxt)):
+            pipe = subprocess.Popen([PERL, "clean-reftest-output.pl",
+                                     outputTxt,
+                                     t.mParameters["mathJaxTestPath"],
+                                     MATHJAX_WEB_URI],
+                                    stdout=subprocess.PIPE)
+            fp = file(outputHTML, "w")
+            print >> fp, pipe.stdout.read()
+            fp.close()
+            return "Output of '" + aTaskName + "' formatted!\n"
+
+        return "Could not format '" + aTaskName + "'!\n"
+
     def handle(self):
         """
         @fn handle(self)
@@ -393,6 +427,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
             - "TASKEDITOR RUN taskName": @ref runTask with aRestart = False
             - "TASKEDITOR RESTART taskName": @ref runTask with aRestart = True
             - "TASKEDITOR STOP taskName": @ref stopTask
+            - "TASKEDITOR FORMAT taskName": @ref formatTask
 
         - other requests are ignored.
         """
@@ -438,6 +473,8 @@ class requestHandler(SocketServer.StreamRequestHandler):
                             t.mStatus = "Killed"
                             t.mExceptionMessage = self.readExceptionMessage()
                         gServer.runNextTasksFromPendingQueue(t.host())
+                    elif (command == "OUTPUTFILENAME"):
+                        t.mOutputFileName = items[3]
                         
             elif (client == "TASKEDITOR"):
                 command = items[1]
@@ -473,6 +510,8 @@ class requestHandler(SocketServer.StreamRequestHandler):
                     self.wfile.write(self.runTask(taskName, True))
                 elif command == "STOP":
                     self.wfile.write(self.stopTask(taskName))
+                elif command == "FORMAT":
+                    self.wfile.write(self.formatTask(taskName))
         else:
             print "Received request by unknown host " + self.client_address[0]
 
@@ -482,13 +521,15 @@ class task:
     @brief A class representing items in the task list.
     """
 
-    def __init__(self, aName, aStatus, aOutputDirectory, aSchedule):
+    def __init__(self, aName, aStatus, aOutputDirectory, aOutputFileName,
+                 aSchedule):
         """
         @fn __init__(self, aName, aStatus, aOutputDirectory, aSchedule)
 
         @param aName            Value to assign to @ref mName
         @param aStatus          Value to assign to @ref mStatus
         @param aOutputDirectory Value to assign to @ref mOutputDirectory
+        @param aOutputFileName  Value to assign to @ref mOutputFileName
         @param aSchedule        Value to assign to @ref mSchedule
 
         @property mName
@@ -538,6 +579,7 @@ class task:
         self.mParameters["aloneOnHost"] = True
         self.mPopen = None
         self.mOutputDirectory = aOutputDirectory
+        self.mOutputFileName = aOutputFileName
         self.mExceptionMessage = None
         self.mSchedule = aSchedule
 
@@ -630,7 +672,12 @@ class task:
         s += self.mStatus + " ";
         s += self.mProgress + " "
         s += self.mOutputDirectory + " "
-        if (self.mSchedule != None):
+        if self.mOutputFileName:
+            s += self.mOutputFileName
+        else:
+            s += "None"
+        s += " "
+        if self.mSchedule:
             s += self.mSchedule
         else:
             s += "None"
@@ -722,8 +769,9 @@ class task:
 
         s += "<tr><th>Result directory</th><td>"
 
-        if (os.path.exists(MATHJAX_WEB_PATH + "results/" +
-                           self.mOutputDirectory)):
+        if (self.mOutputDirectory and
+            os.path.exists(MATHJAX_WEB_PATH + "results/" +
+            self.mOutputDirectory)):
             s += "<a href=\"results/" + self.mOutputDirectory + "\""
             s += " id=\"outputDirectory\">"
             s += self.mOutputDirectory + "</a>"
@@ -734,10 +782,35 @@ class task:
 
         s += "</td></tr>"
 
-        if (self.mSchedule != None):
+        if self.mOutputFileName:
+            s += "<tr><th>Output file</th><td>"
+            outputFile = MATHJAX_WEB_PATH + "results/" + self.mOutputDirectory
+            outputFile += self.mOutputFileName
+            if (os.path.exists(outputFile + ".html.gz")):
+                ext = ".html.gz"
+            elif (os.path.exists(outputFile + ".html")):
+                ext = ".html"
+            elif (os.path.exists(outputFile + ".txt.gz")):
+                ext = ".txt.gz"
+            elif (os.path.exists(outputFile + ".txt")):
+                ext = ".txt"
+            else:
+                ext = None
+            
+            if ext:
+                s += "<a href=\"results/" + self.mOutputDirectory
+                s += self.mOutputFileName + ext + "\">"
+                s += self.mOutputFileName
+                s += "</a>"
+            else:
+                s += self.mOutputFileName
+
+            s += "</td></tr>"
+
+        if (self.mSchedule):
             s += self.serializeSchedule(self.mSchedule)
 
-        if (self.mExceptionMessage != None):
+        if (self.mExceptionMessage):
             s += "<tr style=\"color: red;\">"
             s += "<th id='exceptionError'>Exception Error</th>"
             s += "<td>" + cgi.escape(self.mExceptionMessage) + "</td></tr>"
@@ -1129,7 +1202,7 @@ class taskHandler:
 
         and continue with one line per task, each one of the form
 
-        "Task Name	Host Status Progress outputDirectory"
+        "Task Name	Host Status Progress outputDirectory outputFileName"
         """
         if (len(self.mTasks) == 0):
             return "TASK LIST EMPTY\n"
@@ -1157,9 +1230,11 @@ class taskHandler:
                         status = "Inactive"
                     else:
                         status = items[2]
+                    if (items[6] == "None"):
+                        items[6] = None
                     if (items[5] == "None"):
                         items[5] = None
-                    t = task(items[0], status, items[4], items[5])
+                    t = task(items[0], status, items[4], items[5], items[6])
                     t.mProgress = items[3]
                     # host = items[1] is already saved in the config file.
                     t.readParametersFromConfigFile(t.getConfigPath())
@@ -1192,7 +1267,7 @@ class taskHandler:
         """
         aTask.mStatus = "Pending"
         h = aTask.host()
-        if h != None:
+        if h:
             if h in self.mPendingTasksFromHost.keys():
                 q = self.mPendingTasksFromHost[h]
                 q.append(aTask)
@@ -1244,7 +1319,7 @@ class taskHandler:
         @brief add aTask to the list of running tasks on aTask.host()
         """
         h = aTask.host()
-        if h != None:
+        if h:
             if h not in self.mRunningTasksFromHost.keys():
                 self.mRunningTasksFromHost[h] = [aTask]
             else:
@@ -1256,7 +1331,7 @@ class taskHandler:
         @brief remove aTask from the list of running tasks on aTask.host()
         """
         h = aTask.host()
-        if h != None:
+        if h:
             l = self.mRunningTasksFromHost[h]
             l.remove(aTask)
             if (len(l) == 0):

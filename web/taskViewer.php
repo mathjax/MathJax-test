@@ -67,6 +67,19 @@
   echo '</form>';
   if ($aNewName) { echo '] '; }
   }
+
+  /**
+   *
+   *
+   */
+  function outputLogo($File, $type)
+  {
+  if (file_exists($File)) {
+    echo ' <a href="'.$File.'"><img ';
+    echo 'src="icons/'.$type.'-output.png"';
+    echo 'alt="'.$type.'output" title="'.$type.' output"/></a>';
+  }
+  }
 ?>
 
 <!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
@@ -114,19 +127,20 @@
             echo '<th>Host</th>';
             echo '<th>Status</th>';
             echo '<th>Progress</th>';
-            echo '<th>Result directory</th>';
+            echo '<th>Results</th>';
             echo '<th>Actions</th>';
             echo '</tr>';
             while(!feof($file)) {
               $line = trim(fgets($file));
-              $argument = explode(" ", $line, 6);
-              if (count($argument) == 6) {
+              $argument = explode(" ", $line, 7);
+              if (count($argument) == 7) {
                 $taskName = $argument[0];
                 $host = $argument[1];
                 $status = $argument[2];
                 $progress = $argument[3];
-                $results = $argument[4];
-                $schedule = $argument[5];
+                $resultDir = $argument[4];
+                $resultFileName = $argument[5];
+                $schedule = $argument[6];
 
                 echo '<tr>';
                 echo '<td><a href="taskInfo.php?taskName='.$taskName.'">';
@@ -149,10 +163,30 @@
   
                 echo '<td>'.$progress.'</td>';
                 echo '<td>';
-                if (file_exists("results/".$results)) {
-                  echo '<a href="results/'.$results.'">'.$results.'</a>';
+                $resultDir2 = "results/".$resultDir;
+                if (file_exists($resultDir2)) {
+                  echo '<a href="'.$resultDir2.'">'.$resultDir.'</a> ';
+                  $textOutput = $resultDir2.$resultFileName.".txt";
+                  $formattedOutput = $resultDir2.$resultFileName.".html";
+
+                  if (file_exists($textOutput)) {
+                    commandButton($taskName, "FORMAT");
+                  }
+
+                  if ($status != "Running") {
+                    // We choose the compressed versions if they exist
+                    if (file_exists($textOutput.".gz")) {
+                      $textOutput = $textOutput.".gz";
+                    }
+                    if (file_exists($formattedOutput.".gz")) {
+                      $formattedOutput = $formattedOutput.".gz";
+                    }
+                  }
+
+                  outputLogo($textOutput, "text");
+                  outputLogo($formattedOutput, "formatted");
                 } else {
-                  echo $results;
+                  echo $resultDir;
                 }
                 echo '</td>';
 
@@ -200,36 +234,34 @@
             }
             echo '</table>';
             fclose($file);
+
+            if ($line != "TASK LIST EMPTY") {
+              echo '<p>';
+              echo '<form name="multipleTasks" action="commandHandler.php"';
+              echo '      method="post">';
+              echo '<a href="javascript:removeMultipleTasks();">
+                   Remove selected tasks</a> - ';
+              echo '<a href="javascript:runMultipleTasks();">
+                   Run selected tasks</a> - ';
+              echo '<a href="javascript:stopMultipleTasks();">
+                   Stop selected tasks</a> - ';
+              echo '<input name="command" id="multipleTasksCommand"';
+              echo '       type="text" class="hiddenField" readonly="readonly"';
+              echo '<input name="taskList" id="multipleTasksList"';
+              echo '       type="text" readonly="readonly"';
+              echo       ' value="" class="hiddenField"/>';
+              echo '</form>';
+              echo '<a href="javascript:taskCheckboxes(true);">Check all tasks</a> - ';
+              echo '<a href="javascript:taskCheckboxes(false);">Uncheck all tasks</a>';
+              echo '</p>';
+            }
           }
         } else {
             echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
         }
       ?>
 
-      <p>
-      <?
-          if ($line != "TASK LIST EMPTY") {
-            echo '<form name="multipleTasks" action="commandHandler.php"';
-            echo '      method="post">';
-            echo '<a href="javascript:removeMultipleTasks();">
-                     Remove selected tasks</a> - ';
-            echo '<a href="javascript:runMultipleTasks();">
-                     Run selected tasks</a> - ';
-            echo '<a href="javascript:stopMultipleTasks();">
-                     Stop selected tasks</a> - ';
-            echo '<input name="command" id="multipleTasksCommand"';
-            echo '       type="text" class="hiddenField" readonly="readonly"';
-            echo '<input name="taskList" id="multipleTasksList"';
-            echo '       type="text" readonly="readonly"';
-            echo       ' value="" class="hiddenField"/>';
-            echo '</form>';
-            echo '<a href="javascript:taskCheckboxes(true);">Check all tasks</a> - ';
-            echo '<a href="javascript:taskCheckboxes(false);">Uncheck all tasks</a> - ';
-          }
-      ?>
-      <a class="noIcon" href="taskEditor.php">Create a new task</a>
-      </p>
-
+       <p><a class="noIcon" href="taskEditor.php">Create a new task</a></p>
     </div>
   </body>
 </html>
