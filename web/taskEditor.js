@@ -151,10 +151,13 @@ function updateFieldsFromTaskName()
 {
     var request = new XMLHttpRequest();
     var taskName = document.getElementById("taskName").value;
-    request.open('GET', 'taskInfo.php?taskName=' + taskName, true);
+    updateTaskExists(taskName, false);
+
+    if (taskName != "") {
+        request.open('GET', 'taskInfo.php?taskName=' + taskName, true);
+    }
 
     request.onreadystatechange = function (aEvent) {
-        updateTaskExists(taskName, false);
         if (request.readyState == 4) {
             if (request.status == 200) {
                 var tree = request.responseXML;

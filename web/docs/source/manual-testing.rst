@@ -56,8 +56,9 @@ The best thing to do is to create a ``testsuite/`` directory where you put
 the scripts above as well as the Web pages and resources of the test suite,
 respecting its file hierarchy. One way to do that is to download the
 `MathJax-test GitHub repository <https://github.com/mathjax/MathJax-test/>`_.
-If you plan to run automated tests on your machine, you can do a complete
-configuration of MathJax-test [ADDREF]. Otherwise, you simply have to do this:
+If you plan to run automated tests on your machine, you can do a
+:ref:`complete installation of MathJax-test <installation>`. Otherwise,
+you simply have to do this:
 
 - keep only the ``testsuite/`` directory
 - In ``header-tpl.js``, set ``gMathJaxPath`` to the location of a MathJax
@@ -81,10 +82,14 @@ URI:
 - **font**. One of the value ``STIX``, ``TeX``, ``ImageTeX`` indicating the
   font used by MathJax to render the mathematics. Default is ``STIX``.
 
-- **nativeMathML**. This indicates whether the browser's renderer should be used
-  to display mathematics. This is either "false" or "true". Note that in some
-  cases, tree reftests force the use of MathML output, so this parameter is
-  ignored. In the other cases, the default value is "false".
+- **outputJax**. One of the value ``HTML-CSS``, ``SVG``, ``NativeMML``
+  indicating which output jax should be used to render mathematics. Note that
+  tree reftests force the use of MathML output, so this parameter is
+  ignored in that case. In the other cases, the default value is ``HTML-CSS``.
+
+- **errorHandler**. A boolean that indicates whether javascript errors should
+  be caught by an handler. Default is ``false``. This parameter is used during
+  the execution of tests and can be ignored when doing manual testing.
 
 Some examples:
 
@@ -94,7 +99,7 @@ Some examples:
 - ``mytest.html?mathJaxPath=/path-to-mathjax/MathJax/unpacked/`` to use the
   unpacked version of MathJax, which is useful for debugging.
 
-- ``mytest.html?nativeMathML=false`` to test the MathML support of your browser
+- ``mytest.html?outputJax=NativeMML`` to test the MathML support of your browser
   instead of MathJax's one.
 
 - ``mytest.html?mathJaxPath=/mypath/&font=TeX`` for using a custom MathJax

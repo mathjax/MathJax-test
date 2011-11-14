@@ -208,7 +208,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
   global $TASK_HANDLER_HOST, $TASK_HANDLER_PORT, $ERROR_CONNECTION_TASK_HANDLER;  
   $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
   if ($file) {
-    fwrite($file, "TASKEDITOR ".$aCommand." ".$taskName." ".$aParameter."\n");
+    fwrite($file, "TASKEDITOR ".$aCommand." ".$aTaskName." ".$aParameter."\n");
     echo '<p>'.trim(fgets($file)).'</p>';
     fclose($file);
   } else {

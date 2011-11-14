@@ -59,7 +59,7 @@
   if ($aNewName) {
     echo '<input name="newName" type="text" value="" size="8" ';
     echo         'required="required" ';
-    echo         'pattern="([a-z]|[A-Z]|[0-9]){1,20}"/>';
+    echo         'pattern="([a-z]|[A-Z]|[0-9]|\-){1,40}"/>';
   }
   echo '<input type="submit" value="" class="submitField"';
   echo       ' style="background-image: url(icons/'.$c.'.png)" ';

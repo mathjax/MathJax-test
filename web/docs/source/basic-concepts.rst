@@ -30,16 +30,17 @@ to integrate the testcase in the :ref:`test-suite`. Some additional work is
 necessary to convert the testcase into the :ref:`unit-test` format used in our
 automated testing framework.
 
-In order to manage the QA workflow, three tags are available in the tracker:
+Ideally, an automated test should be written for all issues. However, it may
+not always be possible to do so or at least not in a simple or efficient way.
+
+In order to manage the QA workflow, four tags are available in the tracker:
 
 1) **QA - Testcase Wanted**: a reduced testcase for the issue is expected.
 2) **QA - UnitTest Wanted**: a reduced testcase is available but we want to
    convert it into an automated test.
 3) **QA - In Testsuite**: an automated test is written and integrated in the
    testsuite.
-
-Ideally, all issues should reach the third status. However, it may not always be
-possible to write a unit test.
+4) **QA - Do Not Write Automated Test**: this issue won't be tested automatically
 
 .. _unit-test:
 
@@ -126,7 +127,7 @@ Testing Instance
 Even if it is possible to
 :ref:`determine the test success manually<determining-success-manually>`,
 the test suite is supposed to run in an automated way. A **testing instance**
-is such an execution of the testsuite. Such a testing instance is controlled by
+is such an execution of the testsuite. A testing instance is controlled by
 a machine called the **test runner** and the test pages are loaded on a
 **test machine**. These machines may be the same.
 
@@ -166,13 +167,11 @@ status given in the reftest manifest:
 - **KNOWN-FAIL(EXPECTED-RANDOM)**: the test failed but a random result was
   announced.
 
-UNEXPECTED-FAIL and UNEXPECTED-PASS are worth considering, as they may indicate
-bugs or fixes.
-
 In addition, the formatted HTML output provides the number of tests run. The
 proportion of tests in each of the above categories are represented by a
-diagram. It is also possible to quickly browse the errors (UNEXPECTED-FAIL or
-UNEXPECTED-PASS) with the Previous and Next error buttons.
+diagram. It is also possible to quickly browse test results of a given status.
+In particular, UNEXPECTED-FAIL and UNEXPECTED-PASS are worth considering, as
+they may indicate bugs or fixes.
 
 Each test result in the formatted output is marked with a specific color
 according to which category it belongs. A link to the test page is provided.

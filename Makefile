@@ -24,9 +24,17 @@
 
 include custom.cfg
 
-upgradeSelenium:
-	@ echo 'Upgrading Selenium python driver...'
-	@ pip install --upgrade selenium
+help:
+	@echo ''
+	@echo 'The following commands are available:'
+	@echo '  make help'
+	@echo '  make config'
+	@echo '  make doc'
+	@echo '  make upgradeSelenium'
+	@echo '  make updateMathJaxBranches'
+	@echo '  make clearTaskList'
+	@echo '  make runServer'
+	@echo ''
 
 config:
 	@ echo 'Generate $(CONDITION_PARSER), $(CONFIG_PY), $(CONFIG_PHP) and $(CONFIG_JS)...'
@@ -86,17 +94,21 @@ doc:
 	@ echo 'Build html documentation...'
 	@ cd web/docs ; make html > /dev/null
 
-runServer:
-	@ echo 'Running the task handler...'
-	@ cd testRunner/ ; python taskHandler.py
-
-clearTaskList:
-	@ echo 'Clearing task list...'
-	rm -f testRunner/taskList.txt
-	rm -f testRunner/config/taskList/*.cfg
+upgradeSelenium:
+	@ echo 'Upgrading Selenium python driver...'
+	@ $(PIP) install --upgrade selenium
 
 updateMathJaxBranches:
 	@ echo 'Updating dpvc branches...'
 	@ rm -rf mathjax/dpvc ; cd mathjax; ./getMathJaxBranches.sh dpvc
 	@ echo 'Updating mathjax branches...'
 	@ rm -rf mathjax/mathjax ; cd mathjax; ./getMathJaxBranches.sh mathjax
+
+clearTaskList:
+	@ echo 'Clearing task list...'
+	rm -f testRunner/taskList.txt
+	rm -f testRunner/config/taskList/*.cfg
+
+runServer:
+	@ echo 'Running the task handler...'
+	@ cd testRunner/ ; python taskHandler.py

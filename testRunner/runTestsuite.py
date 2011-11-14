@@ -89,12 +89,12 @@ def resultsExist(aName):
 
 def getOutputFileName(aDirectory, aSelenium, aSuite, aDoNotOverwrite):
     """
-    @fn getOutputFileName(aDirectory, aSelenium, aDoNotOverwrite)
+    @fn getOutputFileName(aDirectory, aSelenium, aSuite, aDoNotOverwrite)
     @brief build a file name for the output
 
     @param aDirectory directory where the test output will be stored
     @param aSelenium @ref seleniumMathJax::seleniumMathJax object
-    @param aSuite
+    @param aSuite @ref reftest::reftestSuite object
     @param aDoNotOverwrite whether the name should be changed to prevent
            overwriting the result files.
 

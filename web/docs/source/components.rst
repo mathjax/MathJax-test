@@ -141,17 +141,16 @@ list:
   
   - ``browser``: Firefox, Safari, Chrome, Opera, MSIE, Konqueror, HTMLUnit, iPhone, Android
   
-  - ``browserMode``: Internet Explorer mode among StandardMode, Quirks, IE7, IE8
-    and IE9.
+  - ``browserMode``: Internet Explorer mode among Quirks, IE7, IE8 and IE9.
   
   - ``browserPath``: auto or path to the browser executable on the test machine.
     This option is ignored if several browsers are specified (see below).
   
   - ``font``: STIX, TeX or ImageTeX
   
-  - ``nativeMathML``: for unit tests which do not specify the MathML engine,
-    this option forces the use of the browser's native MathML. Use this option
-    to test MathPlayer.
+  - ``outputJax``: HTML-CSS, SVG or NativeMML. For unit tests which do not
+    specify the MathML engine, this option forces a specific output jax to
+    render mathematics.
   
 - Test Suite configuration options
 
@@ -166,15 +165,19 @@ list:
     testing instance was interrupted. In that case, the text ouput contain a
     startID that we can use to recover the testing instance. 
   
-``browser``, ``browserMode`` and ``font`` may be a list of elements separated by
-white spaces. In that case, testing instances are executed for all the possible
-combinations of browser, font and browserMode. Also note that browserMode are
-ignored for other browsers that Internet Explorer.
+``browser``, ``browserMode``, ``font`` and ``outputJax`` may be a list of
+elements separated by white spaces. In that case, testing instances are
+executed for all the possible combinations of browser, font, outputJax and
+browserMode. Also note that browserMode are ignored for other browsers that
+Internet Explorer.
 
 The rationale for this feature, as well as the one for multiple configuration
 files, is to provide a convenient way to run several instances on an operating
 system in one go. This is mainly useful when you work in command line but you
 may ignore them if you use the :ref:`task controller <task-controller>` instead.
+
+Most non boolean options, one can indicate to use a default value, which depends
+on your framework configuration. See ``default.cfg`` for an example.
 
 .. _task-controller:
 

@@ -284,9 +284,9 @@ print <<EOM
         <h1 style="font-family: 'Trebuchet MS', sans-serif; font-weight: normal;
                    color: #20435c; background-color: #f2f2f2;">
             Reftest Output</h1>
-        <input type="button" onclick="previousError()" value="Previous Error"/>
+        <input type="button" onclick="previousError()" value="Previous"/>
         <input type="button" onclick="topOfPage()" value="Top"/>
-        <input type="button" onclick="nextError()" value="Next Error"/>
+        <input type="button" onclick="nextError()" value="Next"/>
         <div>
 EOM
 ;

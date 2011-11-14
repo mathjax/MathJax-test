@@ -32,7 +32,7 @@ QA Documentation
 
     Testing Framework Components <components>
     Quality Assurance tools <qa-tools>
-
+    Installation <installation>
 
 Reference Pages
 ===============

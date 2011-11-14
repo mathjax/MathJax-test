@@ -524,7 +524,8 @@ class task:
     def __init__(self, aName, aStatus, aOutputDirectory, aOutputFileName,
                  aSchedule):
         """
-        @fn __init__(self, aName, aStatus, aOutputDirectory, aSchedule)
+        @fn __init__(self, aName, aStatus, aOutputDirectory,  aOutputFileName,
+                     aSchedule)
 
         @param aName            Value to assign to @ref mName
         @param aStatus          Value to assign to @ref mStatus
@@ -544,6 +545,9 @@ class task:
 
         @property mOutputDirectory
         Directory where the results of the task are stored.
+
+        @property mOutputFileName
+        Name to use for output files.
 
         @property mProgress
         Either "-" or a fraction "numberOfTestsExecuted/totalNumberOfTests".
@@ -934,10 +938,11 @@ class task:
     def setParameter(self, aParameterName, aParameterValue,
                      aOverwrite = True):
         """
-        @fn setParameter(self, aParameterName, aParameterValue)
+        @fn setParameter(self, aParameterName, aParameterValue, aOverwrite)
         @param aParameterName name of the parameter
         @param aParameterValue value of the parameter
-        @param aOverwrite
+        @param aOverwrite Whether we overwrite the operator when it has a
+        default value. Default value is True.        
         @see ../html/components.html\#test-runner-config
         @note multiple option values and unknown parameters are rejected
         """

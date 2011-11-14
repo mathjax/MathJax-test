@@ -36,3 +36,4 @@
 2) edit custom.cfg to parameter the testing framework
 3) make config
 4) make doc
+5) make runServer
