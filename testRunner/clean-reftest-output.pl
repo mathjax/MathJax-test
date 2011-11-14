@@ -133,9 +133,9 @@ EOM
 # HTML body
 
 print <<EOM
-<body onload="topOfPage()">
-<div style="position: absolute; left: 0; top: 250px;
-            font-family: monospace; white-space: pre;">
+<body onload="init()">
+<div id="report" style="position: absolute; left: 0; top: 250px;
+                        font-family: monospace; white-space: pre;">
 EOM
 ;
 
@@ -287,6 +287,19 @@ print <<EOM
         <input type="button" onclick="previousError()" value="Previous Error"/>
         <input type="button" onclick="topOfPage()" value="Top"/>
         <input type="button" onclick="nextError()" value="Next Error"/>
+        <div>
+EOM
+;
+
+for(my $i = 0; $i <= $#testTypes ; $i++) {
+print <<EOM
+<input type="checkbox" id="checkbox$i" onchange="initListOfErrors()"/>
+$testTypes[$i][0]<br/>
+EOM
+}
+
+print <<EOM
+        </div>
       </div>
 
       <div>
@@ -356,54 +369,89 @@ EOM
 ################################################################################
 # Javascript
 
-
-## @var Integer Nerrors
-#  @brief Number of errors found
-#  
-#  This counts the UNEXPECTED-FAIL and UNEXPECTED-PASS results.
-#
-my $Nerrors = $testTypes[1][3] + $testTypes[2][3];
-
 print <<EOM
   <script type="text/javascript">
-    var error;
+  function getEl(aId) { return document.getElementById(aId); }
+
+  var error, listOfErrors;
+  var errorClasses = [
+EOM
+;  
+
+for(my $i = 0; $i <= $#testTypes ; $i++) {
+print <<EOM
+    "$testTypes[$i][1]",
+EOM
+;  
+}
+
+print <<EOM
+    ];
+    function init()
+    {
+        // By default, verify UNEXPECTED-FAIL and UNEXPECTED-PASS
+        getEl("checkbox1").checked = true;
+        getEl("checkbox2").checked = true;
+        initListOfErrors();
+    }
+
+    function initListOfErrors()
+    {
+        var selector = "";
+        for (var i = 0; i < errorClasses.length; i++) {
+            if (getEl("checkbox" + i).checked) {
+                selector += "div." + errorClasses[i] + ", ";
+            }
+        }
+
+        selector = selector.substr(0, selector.length - 2);
+
+        if (selector != "") {
+            listOfErrors = getEl("report").querySelectorAll(selector);
+        } else {
+            listOfErrors = null;
+        }
+        topOfPage();
+    }
+
     function scrollToError()
-     {
-      var obj;
-      if (error < $testTypes[1][3]) {
-        obj = document.\
-        getElementsByClassName("$testTypes[1][1]")[error];
-      } else {
-        obj = document.\
-        getElementsByClassName("$testTypes[2][1]")[error - $testTypes[1][3]];
-      }
-      window.scrollTo(0, obj.offsetTop);
+    {
+        window.scrollTo(0, listOfErrors[error].offsetTop);
     }
 
     function nextError()
     {
-      error++;
-      if (error == $Nerrors) {
-        error = 0;
-      }
-      scrollToError();
+        if (!listOfErrors) { return; }
+
+        error++;
+        if (error == listOfErrors.length) {
+            error = 0;
+        }
+        scrollToError();
     }
 
     function previousError()
     {
-      if (error == -1) {
-        // case topOfPage
-        error = 0;
-      }
+        if (!listOfErrors) { return; }
 
-      error--;
-      if (error == -1) {
-        error += $Nerrors;
-      }
-      scrollToError();
+        if (error == -1) {
+            // case topOfPage
+                error = 0;
+        }
+
+        error--;
+        if (error == -1) {
+            error += listOfErrors.length;
+        }
+        scrollToError();
     }
 
-    function topOfPage() { error = -1; window.scrollTo(0, 0); }
+    function topOfPage()
+    {
+        if (!listOfErrors) { return; }
+        error = -1;
+        window.scrollTo(0, 0);
+    }
   </script>
 
 </body>
