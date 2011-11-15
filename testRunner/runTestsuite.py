@@ -40,7 +40,7 @@ MATHJAX_TESTSUITE_PATH = "../testsuite/"
 
 from config import PERL
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
-from config import MATHJAX_WEB_URI
+from config import MATHJAX_TEST_URI
 
 from config import HOST_LIST, OS_LIST, HOST_LIST_OS, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH
@@ -281,7 +281,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
             print "Formatting the text ouput...",
             pipe = subprocess.Popen([PERL, "clean-reftest-output.pl",
                                      outputTxt, aSelenium.mMathJaxTestPath,
-                                     MATHJAX_WEB_URI],
+                                     MATHJAX_TEST_URI + "web/"],
                                     stdout=subprocess.PIPE)
             fp = file(outputHTML, "w")
             print >> fp, pipe.stdout.read()

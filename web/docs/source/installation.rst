@@ -64,11 +64,6 @@ and edit the following sections of the new file with your favorite text editor:
   account can be created in the standard way with the ``htpasswd``
   program.
 
-- [other]
-
-  Make MATHJAX_WEB_URI point to
-  ``http://path-to-mathjax-test/MathJax-test/web/``.
-
 Then use
 
 .. code-block:: bash
@@ -130,7 +125,8 @@ download and update all the development branches of the project in one go with:
 
 The MathJax installations will then be available in
 ``http://path-to-mathjax-test/MathJax-test/mathjax/`` and can be used when
-running testing instances.
+running testing instances. If you run ``make config`` again, the branches will
+be available in the task editor.
 
 You may also want to look at ``mathjax/getMathJaxBranches.sh`` or 
 ``web/docs/Makefile`` to get more specific commands to maintain the MathJax

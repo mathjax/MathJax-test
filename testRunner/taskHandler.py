@@ -40,7 +40,7 @@ The server handling the task list.
 Path to the taskList directory
 """
 
-from config import PYTHON, PERL, MATHJAX_WEB_URI
+from config import PYTHON, PERL, MATHJAX_TEST_URI
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import HOST_LIST, HOST_LIST_OS, OS_LIST, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH 
@@ -375,7 +375,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
             pipe = subprocess.Popen([PERL, "clean-reftest-output.pl",
                                      outputTxt,
                                      t.mParameters["mathJaxTestPath"],
-                                     MATHJAX_WEB_URI],
+                                     MATHJAX_TEST_URI + "web/"],
                                     stdout=subprocess.PIPE)
             fp = file(outputHTML, "w")
             print >> fp, pipe.stdout.read()

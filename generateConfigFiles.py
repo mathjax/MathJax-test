@@ -66,6 +66,9 @@ def declarePhpStringArray(aStream, aName, aValue):
             aStream.write(",'" + aValue[i] + "'")
     aStream.write(");\n")
 
+def declareJsString(aStream, aName, aValue):
+    print >>aStream, "var " + aName + " = '" + aValue + "';"
+
 def declareJsIntegerArray(aStream, aName, aValue):
     aStream.write("var " + aName + " = [")
     if (len(aValue) > 0):
@@ -128,7 +131,7 @@ WARNING_GENERATED_FILE = configParser.get("messages",
 ERROR_CONNECTION_TASK_HANDLER = \
     configParser.get("messages", "ERROR_CONNECTION_TASK_HANDLER")
 
-MATHJAX_WEB_URI = configParser.get("other", "MATHJAX_WEB_URI")
+MATHJAX_TEST_URI = configParser.get("other", "MATHJAX_TEST_URI")
 MONTH_LIST = parseStringArray(configParser.get("other", "MONTH_LIST"))
 WEEKDAY_LIST = parseStringArray(configParser.get("other", "WEEKDAY_LIST"))
 TESTSUITE_TOPDIR_LIST = \
@@ -174,7 +177,7 @@ declarePythonString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
                     DEFAULT_MATHJAX_TEST_PATH)
 declarePythonInteger(f_out, "DEFAULT_TIMEOUT", DEFAULT_TIMEOUT)
 
-declarePythonString(f_out, "MATHJAX_WEB_URI", MATHJAX_WEB_URI)
+declarePythonString(f_out, "MATHJAX_TEST_URI", MATHJAX_TEST_URI)
 declarePythonStringArray(f_out, "MONTH_LIST", MONTH_LIST)
 declarePythonStringArray(f_out, "WEEKDAY_LIST", WEEKDAY_LIST)
 
@@ -216,5 +219,6 @@ f_out.close()
 # Create web/config.js
 f_out = open(CONFIG_JS, "w")
 print >>f_out, "/* " + WARNING_GENERATED_FILE + " */"
+declareJsString(f_out, "MATHJAX_TEST_URI", MATHJAX_TEST_URI)
 declareJsIntegerArray(f_out, "HOST_LIST_OS", HOST_LIST_OS)
 f_out.close()

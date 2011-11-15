@@ -58,6 +58,21 @@ config:
 	@ echo 'Generate $(WEB_REFTEST_LIST)...'
 	@ cd testRunner/; $(PYTHON) runTestsuite.py -p > /dev/null
 
+	@ echo 'Generate $(WEB_BRANCH_LIST)...'
+	@ echo '// $(WARNING_GENERATED_FILE)' > $(WEB_BRANCH_LIST)
+	@ echo '<?php' >> $(WEB_BRANCH_LIST)
+	@ echo '$$BRANCH_LIST = array(' >> $(WEB_BRANCH_LIST)
+	@ for USER in `ls mathjax/ | egrep -v *.sh`; \
+	  do \
+	  for BRANCH in `ls mathjax/$$USER/`; \
+	    do \
+            echo \'$$USER/$$BRANCH/\',  >> $(WEB_BRANCH_LIST); \
+	    done; \
+	  done
+	@ $(SED) -i '$$s/,//' $(WEB_BRANCH_LIST)
+	@ echo ');' >> $(WEB_BRANCH_LIST)
+	@ echo '?>' >> $(WEB_BRANCH_LIST)
+
 	@ echo 'Generate $(DOXYGEN_CONFIG)...'
 	@ $(DOXYGEN) -s -g $(DOXYGEN_CONFIG) > /dev/null
 	@ $(SED) -i '1i\

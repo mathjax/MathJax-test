@@ -350,6 +350,17 @@ function updateMathJaxPathFromUnpackedBox()
 }
 
 /**
+  * Update the mathjax path from a given branch
+  */
+function updateMathJaxPathFromBranch()
+{
+    var mathJaxPath = document.getElementById("mathJaxPath");
+    var branchSelect = document.getElementById("branchSelect");
+    mathJaxPath.value = MATHJAX_TEST_URI + branchSelect.value;
+    updateMathJaxPathFromUnpackedBox();
+}
+
+/**
  * Initialize the field visibilities and values.
  */
 function init()

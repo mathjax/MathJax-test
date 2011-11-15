@@ -31,6 +31,7 @@
 
   echo '<?xml version="1.0" encoding="UTF-8"?>';
   include('config.php');
+  include('branchList.php');
 
   if (isset($_GET['taskName'])) {
     $taskName = $_GET['taskName'];
@@ -216,6 +217,10 @@
             </label>
             unpacked:
             <input id="unpacked" type="checkbox" onchange="updateMathJaxPathFromUnpackedBox()"/>
+            (or choose among known branches:
+            <select id="branchSelect" onchange="updateMathJaxPathFromBranch()">
+              <?php generateOptionList($BRANCH_LIST); ?>
+            </select>)
           </p>
           <p>
             <label>mathJaxTestPath:

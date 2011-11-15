@@ -11,6 +11,7 @@ testRunner/parsetab.py
 testRunner/taskList.txt
 testsuite/header.js
 web/.htaccess
+web/branchList.php
 web/config.js
 web/config.php
 web/docs/doxygen.cfg
