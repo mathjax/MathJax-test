@@ -1,8 +1,8 @@
 .. _installation:
 
-##############################
-Testing Framework Installation
-##############################
+##############################################
+Testing Framework Installation and Maintenance
+##############################################
 
 This section provides instructions to install and keep up-to-date the testing
 framework. They should help to do a local installation as well as to maintain
@@ -11,7 +11,7 @@ the public machines used by the project.
 Note: the main component is already installed on ``dessci.webfactional.com``.
 It uses a custom Python environment which can be enable with ``workon testing``.
 Use the ``screen`` tool to keep the server running when your ssh connection
-is closed.
+is closed. Public test machines are not available yet, though.
 
 .. _basic-install:
 
@@ -38,7 +38,7 @@ configuration is available in the file ``default.cfg``. Copy this file into
 
 .. code-block:: bash
 
-   cp default.cfg custom.cfg
+   cp -n default.cfg custom.cfg
 
 and edit the following sections of the new file with your favorite text editor:
 
@@ -126,7 +126,7 @@ download and update all the development branches of the project in one go with:
 The MathJax installations will then be available in
 ``http://path-to-mathjax-test/MathJax-test/mathjax/`` and can be used when
 running testing instances. If you run ``make config`` again, the branches will
-be available in the task editor.
+be listed in the known branches of the task editor.
 
 You may also want to look at ``mathjax/getMathJaxBranches.sh`` or 
 ``web/docs/Makefile`` to get more specific commands to maintain the MathJax
@@ -144,14 +144,14 @@ the testsuite.
 
 Test results are stored in
 ``http://path-to-mathjax-test/MathJax-test/web/results/``. You can freely
-organize this directory according to your needs. In particular, you may want
+organize this directory to fit your needs. In particular, you may want
 to regularly remove obsolete test outputs and keep a copy of important ones in 
 dedicated directories.
 
 .. _test-machines-install:
 
-Installation of test machines
-=============================
+Installation and maintenance of test machines
+=============================================
 
 A test machine is a given operating system which contains a selenium a browser
 and other related programs to make the whole thing work. See the section about
@@ -186,3 +186,10 @@ After that, you can directly choose a host among a list of known hosts.
 Conversely, if you choose a template in fast configuration, the testing
 framework will try to find a host corresponding to the requested operating
 system.
+
+The test machines should be kept up-to-date, essentially by upgrading the latest
+versions of software components (browsers, fonts, plugins, selenium server etc).
+Also, to test MathJax updates one often has to clear cache and cookies.
+Unfortunately, no interface is available yet to perform all these tasks. One
+has to do it manually.
+

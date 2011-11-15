@@ -246,7 +246,7 @@
               echo '<a href="javascript:stopMultipleTasks();">
                    Stop selected tasks</a> - ';
               echo '<input name="command" id="multipleTasksCommand"';
-              echo '       type="text" class="hiddenField" readonly="readonly"';
+              echo '       type="text" class="hiddenField" readonly="readonly"/>';
               echo '<input name="taskList" id="multipleTasksList"';
               echo '       type="text" readonly="readonly"';
               echo       ' value="" class="hiddenField"/>';

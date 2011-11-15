@@ -30,11 +30,10 @@ doxygen:
 	rm -rf doxygen/
 	$(DOXYGEN) doxygen.cfg
 
-diagrams:
-	mkdir -p html
+html:
+	rm -rf html/
+	mkdir html
 	$(DOT) -Tsvg source/testing-framework.dot > html/testing-framework.svg
-
-html: source diagrams
 	$(SPHINXBUILD) -b html source html
 
-.PHONY: doxygen
+.PHONY: doxygen html

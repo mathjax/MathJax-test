@@ -18,8 +18,9 @@ together with the relevant Javascript files.
 
 In order to execute testing instances on the test machines, a
 :ref:`test runner <test-runner>` python script is used. Although this program
-can directly be called using the command line, there is a more general
-:ref:`task controller <task-controller>` to handle several testing instances.
+can directly be called :ref:`using the command line <command-test-runner>`,
+there is a more general :ref:`task controller <task-controller>` to handle
+several testing instances and which is preferable to use.
 
 .. _web-servers:
 
@@ -71,41 +72,8 @@ description of the requirements.
 Test Runner
 ===========
 
-The test runner is located in the ``MathJax-tests/testRunner/`` directory. It is
-made of a set of several Python scripts as well as configuration files in the
-``MathJax-tests/testRunner/config/`` directory.
-
-Once you have correctly set up the :ref:`Web servers <web-servers>` and at least
-one :ref:`test machine <test-machine>`, you can execute a testing instance with
-the following command:
-
-.. code-block:: sh
-
-   python runTestsuite.py
-
-In that case, the configuration default.cfg will be used. That may not really
-correspond to your set up, so be sure that the options are set correctly. You
-may specify a custom configuration file with the -c option. Actually, the
-option value can even be a list of comma-separated configuration files to run
-several testing instances sequentially. For example
-
-.. code-block:: sh
-
-   python runTestsuite.py -c windows.cfg,linux.cfg
-
-By default, the :ref:`output files <test-results>` are created in a directory
-whose name is of the form ``MathJax-test/web/results/YEAR-MONTH-DAY/TIME/``. It
-is possible to use the -o option to specify an alternative subdirectory inside
-``MathJax-test/web/results/``. For instance
-
-.. code-block:: sh
-
-   python runTestsuite.py -o next-release/MSIE/
-
-to store all the output files in the
-``MathJax-test/web/results/next-release/MSIE/`` directory.
-
-The test runner may me configured with many options. Here is the exhaustive
+The test runner is the program which allows to launch test instances on
+test machines. It may me configured with many options. Here is the exhaustive
 list:
 
 .. _test-runner-config:
@@ -116,7 +84,10 @@ list:
     machine.
   
   - ``mathJaxPath``: the absolute uri to a ``MathJax/`` installation. This
-    allows to test different versions of MathJax.
+    allows to test different versions of MathJax. When trying to debug
+    javascript errors, you may want to point to the ``unpacked/`` version of
+    MathJax, which may be less efficient but provide more accurate error
+    messages.
   
   - ``mathJaxTestPath``: the absolute uri to a ``MathJax-test/testsuite/``
     directory containing the test pages.
@@ -177,7 +148,8 @@ system in one go. This is mainly useful when you work in command line but you
 may ignore them if you use the :ref:`task controller <task-controller>` instead.
 
 Most non boolean options, one can indicate to use a default value, which depends
-on your framework configuration. See ``default.cfg`` for an example.
+on your framework configuration. See the file
+``testRunner/config/default.cfg`` for an example.
 
 .. _task-controller:
 
@@ -200,7 +172,7 @@ information on the task, to edit, schedule and run tasks etc It directly sends
 the instructions to the task handler. Actions can be made throughout the command
 line with the help of the ``taskViewer.py``,  ``hostInfo.py`` and
 ``taskEditor.py`` Python scripts. A web interface is also available. See the
-section :ref:`QA tools <qa-tools>`. 
+section :ref:`QA tools <qa-web-interface>`. 
 
 A **Task Scheduler** can memorize tasks to run regularly at a specified date and
 time. It is based on the `cron <http://en.wikipedia.org/wiki/Cron>`_ tool and

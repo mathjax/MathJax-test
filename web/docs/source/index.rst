@@ -31,8 +31,10 @@ QA Documentation
     :maxdepth: 2
 
     Testing Framework Components <components>
-    Quality Assurance tools <qa-tools>
-    Installation <installation>
+    Testing Framework Installation and Maintenance <installation>
+    QA Web Interface <qa-web-interface>
+    QA Command Line Interface <qa-command-line>
+
 
 Reference Pages
 ===============

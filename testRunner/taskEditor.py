@@ -40,6 +40,8 @@ import os
 import socket
 import sys
 
+# TODO: CLONE, RENAME
+
 def usage():
     """
     @fn usage()
@@ -50,7 +52,7 @@ def usage():
     print
     print "python taskEditor.py command taskName"
     print
-    print "where command is REMOVE, RUN, RESTART or STOP and taskName"
+    print "where command is REMOVE, RUN, RESTART, STOP or FORMAT and taskName"
     print "corresponds to an element in the task list, or"
     print
     print "python taskEditor.py EDIT taskName configFile [outputDirectory\
@@ -67,7 +69,7 @@ if __name__ == "__main__":
     
     command = sys.argv[1]
 
-    if (command not in ["EDIT", "REMOVE", "RUN", "RESTART", "STOP"]):
+    if (command not in ["EDIT", "REMOVE", "RUN", "RESTART", "STOP", "FORMAT"]):
         usage()
 
     if ((command != "EDIT" and l != 3) or
@@ -113,7 +115,9 @@ if __name__ == "__main__":
         ((command == "RUN" or command == "RESTART") and
          response == ("Run signal sent to '" + taskName + "'.")) or
         (command == "STOP" and
-         response == ("Stop signal sent to '" + taskName + "'."))):
+         response == ("Stop signal sent to '" + taskName + "'.")) or
+        (command == "FORMAT" and
+         response == ("Output of '" + taskName + "' formatted!"))):
         exitCode = 0
     else:
         exitCode = 1

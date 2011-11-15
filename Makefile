@@ -59,8 +59,8 @@ config:
 	@ cd testRunner/; $(PYTHON) runTestsuite.py -p > /dev/null
 
 	@ echo 'Generate $(WEB_BRANCH_LIST)...'
-	@ echo '// $(WARNING_GENERATED_FILE)' > $(WEB_BRANCH_LIST)
-	@ echo '<?php' >> $(WEB_BRANCH_LIST)
+	@ echo '<?php' > $(WEB_BRANCH_LIST)
+	@ echo '/* $(WARNING_GENERATED_FILE) */' >> $(WEB_BRANCH_LIST)
 	@ echo '$$BRANCH_LIST = array(' >> $(WEB_BRANCH_LIST)
 	@ for USER in `ls mathjax/ | egrep -v *.sh`; \
 	  do \

@@ -167,6 +167,9 @@ status given in the reftest manifest:
 - **KNOWN-FAIL(EXPECTED-RANDOM)**: the test failed but a random result was
   announced.
 
+.. image:: images/reftest-output.png
+   :alt: Reftest output
+
 In addition, the formatted HTML output provides the number of tests run. The
 proportion of tests in each of the above categories are represented by a
 diagram. It is also possible to quickly browse test results of a given status.
@@ -177,5 +180,5 @@ Each test result in the formatted output is marked with a specific color
 according to which category it belongs. A link to the test page is provided.
 For failing tree/visual reftests, a link to the content (source or screenshot)
 is also given as well as a link to a diff. Visual reftest's diff are analysed
-using `Mozilla's reftest analyser </MathJax-test/web/reftest-analyzer.xhtml>`_.
+using the :ref:`Mozilla's reftest analyser <reftest-analyser>`.
 Detailed results are also provided for script reftest.
