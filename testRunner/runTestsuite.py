@@ -421,7 +421,7 @@ def main(aArgs, aTransmitToTaskHandler):
                 for outputJax in outputJaxList:
 
                     if (outputJax == "default"):
-                        font = OUTPUT_JAX_LIST[0]
+                        outputJax = OUTPUT_JAX_LIST[0]
 
                     # browserModeList is only relevant for MSIE
                     if not(browser == "MSIE"):
