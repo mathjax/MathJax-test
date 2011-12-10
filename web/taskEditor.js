@@ -356,7 +356,7 @@ function updateMathJaxPathFromBranch()
 {
     var mathJaxPath = document.getElementById("mathJaxPath");
     var branchSelect = document.getElementById("branchSelect");
-    mathJaxPath.value = MATHJAX_TEST_URI + branchSelect.value;
+    mathJaxPath.value = MATHJAX_TEST_URI + "mathjax/" + branchSelect.value;
     updateMathJaxPathFromUnpackedBox();
 }
 

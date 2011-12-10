@@ -44,7 +44,7 @@ from config import MATHJAX_TEST_URI
 
 from config import HOST_LIST, OS_LIST, HOST_LIST_OS, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH
-from config import DEFAULT_TIMEOUT
+from config import DEFAULT_TIMEOUT, OUTPUT_JAX_LIST
 
 from datetime import datetime, timedelta
 import ConfigParser
