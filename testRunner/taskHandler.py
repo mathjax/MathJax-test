@@ -390,8 +390,8 @@ class requestHandler(SocketServer.StreamRequestHandler):
         @brief Handle a client request
 
         For security reasons, this function only accept request from clients on
-        localhost (127.0.0.1). It reads a line from the socket and sends a
-        response:
+        on the same host as the server. It reads a line from the socket and
+        sends a response:
 
         - If the request is "TASKVIEWER", it sends the result of
         @ref taskHandler::getTaskList
@@ -434,8 +434,8 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         global gServer
 
-        if (self.client_address[0] == "127.0.0.1"):
-            # Only accept request from localhost
+        if (self.client_address[0] == self.server.server_address[0]):
+            # Only accept request from the same host as the server
             request = self.rfile.readline().strip()
             print request
             items = request.split()
