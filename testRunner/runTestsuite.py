@@ -74,6 +74,31 @@ def boolToString(aBoolean):
         return "true"
     return "false"
 
+def getBooleanOption(aConfig, aSection, aOption):
+    """
+    @fn getBooleanOption(aConfig, aSection, aOption)
+    @brief Retrieve a boolean option from a config file
+    @param aConfig config object
+    @param aSection section in the config object
+    @param aOption boolean option in this section
+
+    @return the boolean option or a default value.
+    """
+    if aConfig.has_option(aSection, aOption):
+        return config.getboolean(aSection, aOption)
+    else:
+        # Default value. This should match the initialization done in
+        # __init__ of class task in taskHandler.py
+        if (aOption == "fullScreenMode" or
+            aOption == "formatOutput" or
+            aOption == "compressOutput"):
+            return True
+        else:
+            # "useWebDriver"
+            # "runSlowTests"
+            # "runSkipTests"
+            return False
+
 def resultsExist(aName):
     """
     @fn resultsExist(aName)
@@ -373,10 +398,10 @@ def main(aArgs, aTransmitToTaskHandler):
         if (timeOut == -1):
             timeOut = DEFAULT_TIMEOUT
         timeOut = timeOut * 1000 # convert in ms
-        useWebDriver = config.getboolean(section, "useWebDriver")
-        fullScreenMode = config.getboolean(section, "fullScreenMode")
-        formatOutput = config.getboolean(section, "formatOutput")
-        compressOutput = config.getboolean(section, "compressOutput")
+        useWebDriver = getBooleanOption(config, section, "useWebDriver")
+        fullScreenMode = getBooleanOption(config, section, "fullScreenMode")
+        formatOutput = getBooleanOption(config, section, "formatOutput")
+        compressOutput = getBooleanOption(config, section, "compressOutput")
 
         # platform section
         section = "platform"
@@ -391,8 +416,8 @@ def main(aArgs, aTransmitToTaskHandler):
     
         # testsuite section
         section = "testsuite"
-        runSlowTests = config.getboolean(section, "runSlowTests")
-        runSkipTests = config.getboolean(section, "runSkipTests")
+        runSlowTests = getBooleanOption(config, section, "runSlowTests")
+        runSkipTests = getBooleanOption(config, section, "runSkipTests")
         listOfTests = config.get(section, "listOfTests")
         startID = config.get(section, "startID")
        

@@ -581,6 +581,16 @@ class task:
         self.mParameters = {}
         self.mParameters["host"] = HOST_LIST[0]
         self.mParameters["aloneOnHost"] = True
+
+        # Default values for boolean parameters. This should match
+        # getBooleanOption in runTestsuite.py
+        self.mParameters["fullScreenMode"] = True
+        self.mParameters["formatOutput"] = True
+        self.mParameters["compressOutput"] = True
+        self.mParameters["useWebDriver"] = False
+        self.mParameters["runSlowTests"] = False
+        self.mParameters["runSkipTests"] = False
+
         self.mPopen = None
         self.mOutputDirectory = aOutputDirectory
         self.mOutputFileName = aOutputFileName
