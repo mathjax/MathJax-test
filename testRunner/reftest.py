@@ -32,6 +32,7 @@ reports the results.
 """
 
 from PIL import Image, ImageChops
+import cgi
 import conditionParser
 import difflib
 import seleniumMathJax
@@ -634,14 +635,14 @@ class reftest(unittest.TestCase):
         except WebDriverException as data:
             # exception raised by WebDriver
             (success, msg) = self.determineSuccess(None, False)
-            msg += data.msg
+            msg += cgi.escape(data.msg)
             print msg
             self.mTestSuite.testComplete(self)
             self.fail()
         except Exception as data:
             # other exception
             (success, msg) = self.determineSuccess(None, False)
-            msg += repr(data)
+            msg += cgi.escape(repr(data))
             print msg
             self.mTestSuite.testComplete(self)
             self.fail()

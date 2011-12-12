@@ -32,7 +32,7 @@ the MathJax testing framework.
 """
 
 from PIL import Image, ImageChops
-from datetime import datetime, timedelta
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver, selenium
 import StringIO
 import base64
@@ -253,19 +253,11 @@ class seleniumMathJax(object):
         if self.mWebDriver:
             self.mWebDriver.get(self.mMathJaxTestPath + newURI)
 
-            # XXXfred Find a better solution to replace wait_for_condition?
-            startTime = datetime.utcnow()
-            delta = 0
-            while(True):
-                if (self.mWebDriver.
-                    execute_script("return document.documentElement.\
-                                    className != 'reftest-wait'")):
-                    break
-                time.sleep(0.1)
-                deltaTime = datetime.utcnow() - startTime
-                delta = deltaTime.seconds * 1000 + deltaTime.microseconds / 1000
-                if delta > self.mTimeOut:
-                    raise Exception, "timeout"
+            # wait_for_condition no longer exists in Selenium 2. Use an explicit
+            # wait method. We wait for the insertion of an element with id
+            # "webdriver_test_complete".
+            WebDriverWait(self.mWebDriver, self.mTimeOut / 1000).\
+                until(lambda x: x.find_element_by_id("webdriver_test_complete"))
 
             if (self.mWebDriver.execute_script(\
                     "return document.documentElement.className ==\
@@ -541,7 +533,7 @@ class seleniumMathJax(object):
         """
 
         # XXXfred If aImage is smaller than self.mReftestSize, the rest of the
-        # image is filled with black. Try to use white instead.
+        # image is filled with black. We should maybe try to use white instead.
         stringIO = StringIO.StringIO()
         box = (0, 0, self.mReftestSize[0], self.mReftestSize[1])
         image = aImage.crop(box)

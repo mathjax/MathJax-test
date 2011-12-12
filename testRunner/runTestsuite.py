@@ -85,7 +85,7 @@ def getBooleanOption(aConfig, aSection, aOption):
     @return the boolean option or a default value.
     """
     if aConfig.has_option(aSection, aOption):
-        return config.getboolean(aSection, aOption)
+        return aConfig.getboolean(aSection, aOption)
     else:
         # Default value. This should match the initialization done in
         # __init__ of class task in taskHandler.py
@@ -242,8 +242,18 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         # Create a new text file
         fp = file(outputTxt, "w")
     else:
-        # A startID is used to recover a test interrupted. Open in "appening"
-        # mode to concatenate the outputs.
+        # A startID is used to recover a test interrupted.
+
+        # First delete the lines between the startID and the ==Interruption== 
+        # marker. This will clear outputs for tests after the startID and keep
+        # the info about the fact that the instance was interrupted.
+        regExp = aSuite.mRunningTestID
+        regExp = regExp.replace("/", "\\/")
+        regExp = "/" + regExp + "/,"
+        regExp += "/==Interruption==/d"
+        subprocess.call(["sed", "-i", regExp, outputTxt])
+
+        # Now open in "appening" mode to concatenate the outputs.
         fp = file(outputTxt, "a")
 
     stdout = sys.stdout
@@ -285,6 +295,9 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         aSuite.printInfo("Testing Instance Finished ; " +
                          endTime.isoformat())
     else:
+        # this marker is used to clean outputs when the test is recovered
+        print "==Interruption=="
+
         aSuite.printInfo("Testing Instance Interrupted ; " +
                          endTime.isoformat())
         aSuite.printInfo("To recover use parameter")
