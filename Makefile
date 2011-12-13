@@ -24,17 +24,22 @@
 
 include custom.cfg
 
+VERSION=$(SELENIUM_SERVER_VERSION)
+
 help:
 	@echo ''
 	@echo 'The following commands are available:'
 	@echo '  make help'
 	@echo '  make config'
 	@echo '  make doc'
-	@echo '  make upgradeSelenium'
+	@echo '  make updateSeleniumDriver'
+	@echo '  make downloadSeleniumServer VERSION=$(SELENIUM_SERVER_VERSION)'
 	@echo '  make updateMathJaxBranches'
 	@echo '  make clearTaskList'
-	@echo '  make runServer'
-	@echo ''
+	@echo '  make runTaskHandler'
+	@echo '  make runSeleniumServer'
+	@echo '  make runSeleniumHub'
+	@echo '  make runSeleniumNodes OS=[your operating system]'
 
 config:
 	@ echo 'Generate $(CONDITION_PARSER), $(CONFIG_PY), $(CONFIG_PHP) and $(CONFIG_JS)...'
@@ -109,9 +114,14 @@ doc:
 	@ echo 'Build html documentation...'
 	@ cd web/docs ; make html > /dev/null
 
-upgradeSelenium:
-	@ echo 'Upgrading Selenium python driver...'
+updateSeleniumDriver:
+	@ echo 'Updating Selenium python driver...'
 	@ $(PIP) install --upgrade selenium
+
+downloadSeleniumServer:
+	@ echo 'Downloading the selenium server...'
+	@ $(WGET) http://selenium.googlecode.com/files/selenium-server-standalone-$(VERSION).jar
+	@ mv selenium-server-standalone-$(VERSION).jar $(SELENIUM_SERVER)
 
 updateMathJaxBranches:
 	@ echo 'Updating dpvc branches...'
@@ -124,6 +134,18 @@ clearTaskList:
 	rm -f testRunner/taskList.txt
 	rm -f testRunner/config/taskList/*.cfg
 
-runServer:
+runTaskHandler:
 	@ echo 'Running the task handler...'
 	@ cd testRunner/ ; python taskHandler.py
+
+runSeleniumServer:
+	@ echo 'Running selenium server (default mode)...'
+	@ cd testRunner/; $(JAVA) -jar seleniumServer.jar
+
+runSeleniumHub:
+	@ echo 'Running selenium server (Hub mode)...'
+	@ cd testRunner/; $(JAVA) -jar seleniumServer.jar -role hub
+
+runSeleniumNodes:
+	@ echo 'Running selenium servers (Node mode)...'
+	@ echo 'Not implemented yet!'

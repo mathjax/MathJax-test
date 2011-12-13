@@ -8,6 +8,7 @@ testRunner/config.py
 testRunner/config/taskList/
 testRunner/parser.out
 testRunner/parsetab.py
+testRunner/seleniumServer.jar
 testRunner/taskList.txt
 testsuite/header.js
 web/.htaccess

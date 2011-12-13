@@ -198,7 +198,7 @@ class seleniumMathJax(object):
                 startCommand = "*firefox"
             elif (aOperatingSystem == "Windows" or
                   aOperatingSystem == "Mac") and aBrowser == "Safari":
-                startCommand = "*safari"
+                startCommand = "*safariproxy"
             elif aBrowser == "Chrome":
                 startCommand = "*googlechrome"
             elif aBrowser == "Opera":
@@ -217,6 +217,7 @@ class seleniumMathJax(object):
                 if startCommand == "*custom":
                     raise NameError("Selenium 1: OS/browser not available ")
       
+                # XXXfred: support for Konqueror is broken
                 if aOperatingSystem == "Linux" and aBrowser == "Konqueror":
                     startCommand = startCommand + " /usr/bin/konqueror" 
             else:

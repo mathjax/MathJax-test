@@ -51,7 +51,7 @@ and edit the following sections of the new file with your favorite text editor:
 
   The same holds for Python libraries. It is however recommended to use
   the Python's ``pip`` utilitary to install them, so that you can regularly use
-  the ``make upgradeSelenium`` command to upgrade the Selenium python driver
+  the ``make updateSelenium`` command to upgrade the Selenium python driver
   library.
 
   The installation of custom doxygen filters may be slightly less convenient
@@ -81,7 +81,7 @@ Finally start the task handler server with
 
 .. code-block:: bash
 
-   make runServer
+   make runTaskHandler
 
 Now, open the directory ``http://path-to-mathjax-test/MathJax-test/web/`` in
 your browser to access the QA interface. You should now be able to view and
@@ -100,7 +100,7 @@ or configuration changes. Then you can run the server again with
 
 .. code-block:: bash
 
-   make runServer
+   make runTaskHandler
 
 The task list is saved when the server is closed and should be restored when you
 start it again. However, if you see error messages saying that a configuration
@@ -114,7 +114,7 @@ To upgrade the Selenium python driver library, use
 
 .. code-block:: bash
 
-   make upgradeSelenium
+   make updateSelenium
 
 The basic installation does not come with any MathJax installation. You can
 download and update all the development branches of the project in one go with:

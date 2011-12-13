@@ -295,7 +295,7 @@
           </span></p>
           <p id="browserVersion_">
             <label>browserVersion:
-              <input id="browserPath" name="browserPath" type="text"
+              <input id="browserVersion" name="browserVersion" type="text"
                      value="default"
                      readonly="readonly"/>
             </label>
