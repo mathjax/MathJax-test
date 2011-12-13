@@ -38,8 +38,8 @@ this configuration.
 
 The grammar is defined by the expressions p_*. In BNF notation, it is:
 
-closedTerm := OPERATINGSYSTEM | BROWSER | BROWSERMODE | FONT | OUTPUTJAX |
-              LEFTPARENTHESIS expr RIGHTPARENTHESIS
+closedTerm := OPERATINGSYSTEM | BROWSER | BROWSERVERSION | BROWSERMODE |
+              FONT | OUTPUTJAX | LEFTPARENTHESIS expr RIGHTPARENTHESIS
 
 expr1 := closedTerm | NOT expr1
 
@@ -100,6 +100,7 @@ tokens = (
    'RIGHTPARENTHESIS',
    "OPERATINGSYSTEM",
    "BROWSER",
+   "BROWSERVERSION",
    "BROWSERMODE",
    "FONT",
    "OUTPUTJAX"
@@ -134,6 +135,12 @@ def t_OPERATINGSYSTEM(t):
 def t_BROWSER(t):
     r"BROWSER_LIST"
     t.value = (gSelenium == None or t.value == gSelenium.mBrowser)
+    return t
+
+## Browser version
+def t_BROWSERVERSION(t):
+    r"BROWSER_VERSION_REGEXP"
+    t.value = (gSelenium == None or t.value == gSelenium.mBrowserVersion)
     return t
 
 ## Browser mode
@@ -172,6 +179,7 @@ def p_error(p):
 def p_closedTerm_token(p):
     '''closedTerm : OPERATINGSYSTEM
                   | BROWSER
+                  | BROWSERVERSION
                   | BROWSERMODE
                   | FONT
                   | OUTPUTJAX'''

@@ -115,6 +115,9 @@ BROWSER_LIST = parseStringArray(configParser.get("testing_instance",
 OS_LIST = parseStringArray(configParser.get("testing_instance",
                                             "OS_LIST"))
 
+BROWSER_VERSION_REGEXP = configParser.get("testing_instance",
+                                             "BROWSER_VERSION_REGEXP")
+
 BROWSER_MODE_LIST = parseStringArray(configParser.get("testing_instance",
                                                       "BROWSER_MODE_LIST"))
 FONT_LIST = parseStringArray(configParser.get("testing_instance",
@@ -151,6 +154,7 @@ print >>f_out, "# " + WARNING_GENERATED_FILE
 content = f_in.read()
 content = content.replace("OS_LIST", createLexExpression(OS_LIST))
 content = content.replace("BROWSER_LIST", createLexExpression(BROWSER_LIST))
+content = content.replace("BROWSER_VERSION_REGEXP", BROWSER_VERSION_REGEXP)
 content = content.replace("BROWSER_MODE_LIST",
                           createLexExpression(BROWSER_MODE_LIST))
 content = content.replace("FONT_LIST", createLexExpression(FONT_LIST))

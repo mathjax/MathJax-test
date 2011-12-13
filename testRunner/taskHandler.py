@@ -849,6 +849,7 @@ class task:
         s += "<p><table>"
         s += self.serializeParameter("operatingSystem")
         s += self.serializeParameter("browser")
+        s += self.serializeParameter("browserVersion")
         s += self.serializeParameter("browserMode")
         s += self.serializeParameter("browserPath")
         s += self.serializeParameter("font")
@@ -904,6 +905,7 @@ class task:
         fp.write("[platform]\n")
         fp.write("operatingSystem = " + p["operatingSystem"] + "\n")
         fp.write("browser = " + p["browser"] + "\n")
+        fp.write("browserVersion = " + p["browserVersion"] + "\n")
         fp.write("browserMode = " + p["browserMode"] + "\n")
         fp.write("browserPath = " + p["browserPath"] + "\n")
         fp.write("font = " + p["font"] + "\n")
@@ -993,9 +995,9 @@ option values"
         elif (parameterName == "host" or
               parameterName == "mathJaxPath" or
               parameterName == "mathJaxTestPath" or
-              parameterName == "mathJaxTestPath" or
               parameterName == "operatingSystem" or
               parameterName == "browser" or
+              parameterName == "browserVersion" or
               parameterName == "browserMode" or
               parameterName == "browserPath" or
               parameterName == "font" or
@@ -1007,10 +1009,19 @@ option values"
                     parameterValue = DEFAULT_MATHJAX_PATH
                 elif (parameterName == "mathJaxTestPath"):
                     parameterValue = DEFAULT_MATHJAX_TEST_PATH
+                elif (parameterName == "operatingSystem"):
+                    parameterValue = OS_LIST[0]
+                elif (parameterName == "browser"):
+                    parameterValue = BROWSER_LIST[0]
+                elif (parameterName == "font"):
+                    parameterValue = FONT_LIST[0]
                 elif (parameterValue == "outputJax"):
                     parameterValue = OUTPUT_JAX_LIST[0]
-                else: # parameterName == "host"
-                    # This is dealt later, when the operating system is known
+                else:
+                    # host: handled later, when the operating system is known
+                    # browserVersion, browserPath, listeOfTests, startID
+                    #   It is safe to keep the "default" value here, the test
+                    #   runner will take care of them.
                     pass
             self.mParameters[parameterName] = parameterValue
         else:

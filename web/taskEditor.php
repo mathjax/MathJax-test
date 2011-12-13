@@ -240,8 +240,12 @@
               <input id="useWebDriver" name="useWebDriver" type="checkbox"
                      onchange="updateFieldVisibility('useWebDriver',
                                                      'fullScreenMode_', false);
-                              updateFieldVisibility('useWebDriver',
-                                                    'aloneOnHost_', true);"/>
+                               updateFieldVisibility('useWebDriver',
+                                                     'aloneOnHost_', true);
+                               updateFieldVisibility('useWebDriver',
+                                                     'browserPath_', false);
+                               updateFieldVisibility('useWebDriver',
+                                                     'browserVersion_', true);"/>
             </label>
           <span id="fullScreenMode_">
             <label>fullScreenMode:
@@ -288,7 +292,15 @@
               <?php generateOptionList($BROWSER_MODE_LIST); ?>
               </select>
             </label>
-          </span></p><p>
+          </span></p>
+          <p id="browserVersion_">
+            <label>browserVersion:
+              <input id="browserPath" name="browserPath" type="text"
+                     value="default"
+                     readonly="readonly"/>
+            </label>
+          </p>
+          <p id="browserPath_">
             <label>browserPath:
               <input id="browserPath" name="browserPath" type="text"
                      value="default"
@@ -326,16 +338,16 @@
           <p>
             <label>listOfTests:
               <input style="visibility: hidden; position: absolute;" id="listOfTests"
-                     name="listOfTests" type="text" value="all"
-                     pattern="(all|([0-2]+))"/>
+                     name="listOfTests" type="text" value="default"
+                     pattern="(default|([0-2]+))"/>
             </label>
             <a href="javascript:openReftestSelector();">Reftest Selector</a>
           </p>
           <p>
             <label>startID:
-              <input id="startID" name="startID" type="text" value="" size="50"
-                     pattern="([a-z]|[A-Z]|[0-9]|_|-|\.|/)+" />
-            </label> (optional, used for test recovery)
+              <input id="startID" name="startID" type="text" value="default"
+                     size="50" pattern="(default|([a-z]|[A-Z]|[0-9]|_|-|\.|/)+)" />
+            </label> (used for test recovery)
           </p>
         </fieldset>
 

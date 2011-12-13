@@ -166,6 +166,7 @@ function createTask($aTaskName,
                   "compressOutput=".$aCompressOutput."\n".
                   "operatingSystem=".$aOperatingSystem."\n".
                   "browser=".$aBrowser."\n".
+                  "browserVersion=".$aBrowserVersion."\n".
                   "browserMode=".$aBrowserMode."\n".
                   "browserPath=".$aBrowserPath."\n".
                   "font=".$aFont."\n".
@@ -295,15 +296,21 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                                             $OS_LIST);
   
           $browser = selectToString($_POST['browser'], $BROWSER_LIST);
-  
+
           if ($browser == "MSIE") {
             $browserMode = selectToString($_POST['browserMode'],
                                           $BROWSER_MODE_LIST);
           } else {
             $browserMode = "default";
           }
-  
-          $browserPath = "default"; // $_POST['default']
+
+          if ($useWebDriver == 'true') {
+            $browserVersion = truncateString($_POST['browserVersion'], 20);
+            $browserPath = "default";
+          } else {
+            $browserVersion = "default";
+            $browserPath = truncateString($_POST['browserPath'], 100);
+          }
    
           $font = selectToString($_POST['font'], $FONT_LIST);
    

@@ -71,6 +71,7 @@ class seleniumMathJax(object):
                  aHost, aPort, aMathJaxPath, aMathJaxTestPath,
                  aOperatingSystem,
                  aBrowser,
+                 aBrowserVersion,
                  aBrowserMode,
                  aBrowserPath,
                  aFont,
@@ -82,6 +83,7 @@ class seleniumMathJax(object):
                      aHost, aPort, aMathJaxPath, aMathJaxTestPath,
                      aOperatingSystem,
                      aBrowser,
+                     aBrowserVersion,
                      aBrowserMode,
                      aBrowserPath, 
                      aFont,
@@ -96,6 +98,7 @@ class seleniumMathJax(object):
         @param aMathJaxTestPath Value to assign to @ref mMathJaxTestPath
         @param aOperatingSystem Value to assign to @ref mOperatingSystem
         @param aBrowser Value to assign to @ref mBrowser
+        @param aBrowserVersion Value to assign to @ref mBrowserVersion
         @param aBrowserMode Value to assign to @ref mBrowserMode
         @param aBrowserPath Path to the browser executable, or "default".
         @param aFont Value to assign to @ref mFont
@@ -117,6 +120,8 @@ class seleniumMathJax(object):
         Operating system of the test machine
         @property mBrowser
         Name of the browser to run
+        @property mBrowserVersion
+        Version of the browser to run
         @property mBrowserMode
         Browser mode for Internet Explorer
         @property mFont
@@ -140,6 +145,7 @@ class seleniumMathJax(object):
         self.mMathJaxTestPath = aMathJaxTestPath
         self.mOperatingSystem = aOperatingSystem
         self.mBrowser = aBrowser
+        self.mBrowserVersion = aBrowserVersion
         self.mBrowserMode = aBrowserMode
         self.mFont = aFont
         self.mOutputJax = aOutputJax
@@ -151,32 +157,37 @@ class seleniumMathJax(object):
 
         if (aUseWebDriver):
             if aBrowser == "Firefox":
-                desireCapabilities = webdriver.DesiredCapabilities.FIREFOX
+                desiredCapabilities = webdriver.DesiredCapabilities.FIREFOX
             elif aBrowser == "Chrome":
-                desireCapabilities = webdriver.DesiredCapabilities.CHROME
+                desiredCapabilities = webdriver.DesiredCapabilities.CHROME
             elif aOperatingSystem == "Windows" and aBrowser == "MSIE":
-                desireCapabilities = \
+                desiredCapabilities = \
                     webdriver.DesiredCapabilities.INTERNETEXPLORER
             elif aBrowser == "Opera":
-                desireCapabilities = webdriver.DesiredCapabilities.OPERA
+                desiredCapabilities = webdriver.DesiredCapabilities.OPERA
             elif aBrowser == "HTMLUnit":
-                desireCapabilities = \
+                desiredCapabilities = \
                     webdriver.DesiredCapabilities.HTMLUNITWITHJS
             elif aOperatingSystem == "Mac" and aBrowser == "iPhone":
-                desireCapabilities = webdriver.DesiredCapabilities.IPHONE
+                desiredCapabilities = webdriver.DesiredCapabilities.IPHONE
             elif aOperatingSystem == "Linux" and aBrowser == "Android":
-                desireCapabilities = webdriver.DesiredCapabilities.ANDROID
+                desiredCapabilities = webdriver.DesiredCapabilities.ANDROID
             else:
-                raise NameError("Unknown Platform")
+                raise NameError("Webdriver: OS/browser not available")
+
+            desiredCapabilities["platform"] = aOperatingSystem.upper()
+
+            if aBrowserVersion == "default":
+                desiredCapabilities["version"] = ""
+            else:
+                desiredCapabilities["version"] = aBrowserVersion
 
             if aBrowserPath != "default":
-                # XXXfred TODO: custom path for the browser. Does not seem
-                # available yet with remote Webdriver.
-                pass
+                raise NameError("Webdriver: browserPath is not supported")
 
             self.mWebDriver = webdriver.Remote("http://" + aHost + ":" +
                                                str(aPort) + "/wd/hub",
-                                               desireCapabilities)
+                                               desiredCapabilities)
             self.mWebDriver.implicitly_wait(aTimeOut / 1000)
             self.mWebDriver.set_script_timeout(aTimeOut / 1000)
             self.mSelenium = None
@@ -199,15 +210,18 @@ class seleniumMathJax(object):
             else:
                 startCommand = "*custom"
                 
+            if aBrowserVersion != "default":
+                raise NameError("Selenium 1: browserVersion is not supported")
+
             if aBrowserPath == "default":
                 if startCommand == "*custom":
-                    raise NameError("Unknown Platform")
-        
+                    raise NameError("Selenium 1: OS/browser not available ")
+      
                 if aOperatingSystem == "Linux" and aBrowser == "Konqueror":
                     startCommand = startCommand + " /usr/bin/konqueror" 
             else:
                 startCommand = startCommand + " " + aBrowserPath
-                
+              
             self.mSelenium = selenium(aHost, aPort, startCommand,
                                       aMathJaxTestPath)
 

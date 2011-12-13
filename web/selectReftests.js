@@ -225,7 +225,7 @@ function generate()
     var result = generateListOfTests(document.getElementById("root"));
     if (result.all) {
         // all tests
-        document.getElementById("listOfTests").value = "all";
+        document.getElementById("listOfTests").value = "default";
     } else if(result.none) {
         // no tests
         alert("You must select at least one test!");
@@ -298,7 +298,7 @@ function read()
     var listOfTests = document.getElementById("listOfTests").value;
     var root = document.getElementById("root");
 
-    if (listOfTests == "all") {
+    if (listOfTests == "default") {
         // check all the checkboxes
         var list = root.getElementsByTagName("input");
         for (var i = 0; i < list.length; i++) {
