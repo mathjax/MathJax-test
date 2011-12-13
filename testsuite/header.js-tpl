@@ -258,6 +258,12 @@ function finalizeTest()
         } else {
             finalizeReftests();
         }
+
+	      // add an element to indicate to webdriver that the test is complete
+	      // (this is necessary to use Selenium 2's explicit waits)
+	      div = document.createElement("div");
+	      div.setAttribute("id", "webdriver_test_complete")
+	      document.body.appendChild(div);
     });
 }
 
