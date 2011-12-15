@@ -42,7 +42,8 @@ Path to the taskList directory
 
 from config import PYTHON, PERL, MATHJAX_TEST_URI
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
-from config import HOST_LIST, HOST_LIST_OS, OS_LIST, DEFAULT_SELENIUM_PORT
+from config import HOST_LIST, HOST_LIST_OS, OS_LIST, BROWSER_LIST
+from config import FONT_LIST, OUTPUT_JAX_LIST, DEFAULT_SELENIUM_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH 
 from config import DEFAULT_TIMEOUT
 from config import MONTH_LIST, WEEKDAY_LIST
