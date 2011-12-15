@@ -121,7 +121,7 @@ updateSeleniumDriver:
 downloadSeleniumServer:
 	@ echo 'Downloading the selenium server...'
 	@ $(WGET) http://selenium.googlecode.com/files/selenium-server-standalone-$(VERSION).jar
-	@ mv selenium-server-standalone-$(VERSION).jar $(SELENIUM_SERVER)
+	@ mv -f selenium-server-standalone-$(VERSION).jar testRunner/seleniumServer.jar
 
 updateMathJaxBranches:
 	@ echo 'Updating dpvc branches...'
