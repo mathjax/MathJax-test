@@ -91,6 +91,7 @@ configParser.optionxform = str # to preserve the case of parameter name
 configParser.readfp(open("custom.cfg.tmp"))
 PYTHON = configParser.get("bin", "PYTHON")
 PERL = configParser.get("bin", "PERL")
+SED = configParser.get("bin", "SED")
 QA_USER_NAME = configParser.get("qa", "QA_USER_NAME")
 QA_PASSWORD_FILE = configParser.get("qa", "QA_PASSWORD_FILE")
 TASK_HANDLER_HOST = configParser.get("task_handler", "TASK_HANDLER_HOST")
@@ -169,6 +170,7 @@ print >>f_out, "# " + WARNING_GENERATED_FILE
 
 declarePythonString(f_out, "PYTHON", PYTHON)
 declarePythonString(f_out, "PERL", PERL)
+declarePythonString(f_out, "SED", SED)
 declarePythonString(f_out, "TASK_HANDLER_HOST", TASK_HANDLER_HOST)
 declarePythonInteger(f_out, "TASK_HANDLER_PORT", TASK_HANDLER_PORT)
 

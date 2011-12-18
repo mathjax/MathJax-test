@@ -38,7 +38,7 @@ MAX_TEST_RESULTS_WITH_SAME_NAME = 100
 MATHJAX_WEB_PATH = "../web/"
 MATHJAX_TESTSUITE_PATH = "../testsuite/"
 
-from config import PERL
+from config import PERL, SED
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import MATHJAX_TEST_URI
 
@@ -251,7 +251,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         regExp = regExp.replace("/", "\\/")
         regExp = "/" + regExp + "/,"
         regExp += "/==Interruption==/d"
-        subprocess.call(["sed", "-i", regExp, outputTxt])
+        subprocess.call([SED, "-i", regExp, outputTxt])
 
         # Now open in "appening" mode to concatenate the outputs.
         fp = file(outputTxt, "a")
