@@ -132,9 +132,10 @@ updateMathJaxBranches:
 	  done
 
 clearMathJaxBranches:
+	@ echo 'Clearing MathJax branches...'
 	@ for USER in $(MATHJAX_GIT_USERS); \
 	  do \
-	  echo "Updating `echo $$USER` branches..."; \
+	  echo "Clearing `echo $$USER` branches..."; \
 	  rm -rf mathjax/$$USER; \
 	  done
 
