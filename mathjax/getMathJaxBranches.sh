@@ -23,6 +23,9 @@
 #
 # ***** END LICENSE BLOCK *****
 
+# XXXfred Should import this variable from custom.cfg
+SED=sed
+GIT=git
 
 # Determine the GitHub user to get branches from.
 if [ $# -eq 0 ]
@@ -47,33 +50,41 @@ cd $USER
 if [ -d master ]
 then
     cd master
-    git pull
+    $GIT pull
 else
-    git clone https://github.com/$USER/MathJax.git master
+    $GIT clone https://github.com/$USER/MathJax.git master
     cd master
 fi
 
-# Remove some directories, to save disk space
-rm -rf docs/
-rm -rf fonts/
-rm -rf test/
-
 # Get the list of branches, excluding "master"
-BRANCHES=`git branch -r | sed 's/  origin\///' | grep -v "master"`
+BRANCHES=`$GIT branch -r | $SED 's/  origin\///' | grep -v "master"`
 cd ..
 
 # Create/Update directories for each branch
-for branch in $BRANCHES
+for BRANCH in $BRANCHES
 do
-    if [ ! -d $branch ]
+    if [ ! -d $BRANCH ]
     then
-	      cp -r master/ $branch
+        # Create a new branch
+	      cp -r master/ $BRANCH
+
+        cd $BRANCH
+
+        # To save space, we remove the directory for image font and create a
+        # symbolic link to the directory in the master branch.
+        cd fonts/HTML-CSS/TeX/
+        rm -rf png/
+        ln -s ../../../../master/fonts/HTML-CSS/TeX/png/ png
+        cd ../../..
+
+        # Do not track this file any more
+        echo 'fonts/HTML-CSS/TeX/png' >> .gitignore
+        
+        cd ..
     fi
-    cd $branch
-    git pull origin $branch
-    # Remove some directories, to save disk space
-    rm -rf docs/
-    rm -rf fonts/
-    rm -rf test/
+
+    cd $BRANCH
+    $GIT pull origin $BRANCH
     cd ..
+
 done

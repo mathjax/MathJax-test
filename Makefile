@@ -35,6 +35,7 @@ help:
 	@echo '  make updateSeleniumDriver'
 	@echo '  make downloadSeleniumServer VERSION=$(SELENIUM_SERVER_VERSION)'
 	@echo '  make updateMathJaxBranches'
+	@echo '  make clearMathJaxBranches'
 	@echo '  make clearTaskList'
 	@echo '  make runTaskHandler'
 	@echo '  make runSeleniumServer'
@@ -67,7 +68,7 @@ config:
 	@ echo '<?php' > $(WEB_BRANCH_LIST)
 	@ echo '/* $(WARNING_GENERATED_FILE) */' >> $(WEB_BRANCH_LIST)
 	@ echo '$$BRANCH_LIST = array(' >> $(WEB_BRANCH_LIST)
-	@ for USER in `ls mathjax/ | egrep -v *.sh`; \
+	@ for USER in $(MATHJAX_GIT_USERS); \
 	  do \
 	  for BRANCH in `ls mathjax/$$USER/`; \
 	    do \
@@ -124,10 +125,18 @@ downloadSeleniumServer:
 	@ mv -f selenium-server-standalone-$(VERSION).jar testRunner/seleniumServer.jar
 
 updateMathJaxBranches:
-	@ echo 'Updating dpvc branches...'
-	@ rm -rf mathjax/dpvc ; cd mathjax; ./getMathJaxBranches.sh dpvc
-	@ echo 'Updating mathjax branches...'
-	@ rm -rf mathjax/mathjax ; cd mathjax; ./getMathJaxBranches.sh mathjax
+	@ for USER in $(MATHJAX_GIT_USERS); \
+	  do \
+	  echo "Updating `echo $$USER` branches..."; \
+	  cd mathjax; ./getMathJaxBranches.sh $$USER; cd ..; \
+	  done
+
+clearMathJaxBranches:
+	@ for USER in $(MATHJAX_GIT_USERS); \
+	  do \
+	  echo "Updating `echo $$USER` branches..."; \
+	  rm -rf mathjax/$$USER; \
+	  done
 
 clearTaskList:
 	@ echo 'Clearing task list...'
