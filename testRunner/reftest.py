@@ -31,8 +31,10 @@ This module implements various types of reftests, controls the executions and
 reports the results.
 """
 
+MATHJAX_TESTSUITE_PATH = "../testsuite/"
+
 from PIL import Image, ImageChops
-import cgi
+import os, cgi
 import conditionParser
 import difflib
 import seleniumMathJax
@@ -66,8 +68,21 @@ EXPECTED_RANDOM = 2
 EXPECTED_DEATH = 3
 EXPECTED_IRRELEVANT = 4
 
-class reftestSuite(unittest.TestSuite):
+def verifyPageExistence(aTestDir, aTestPage):
+    """
+    @fn verifyPageExistence(aTestDir, aTestPage)
+    Verify that a page in the test suite exists and display a warning if it
+    does not.
+    """
+    path = aTestPage
+    i = path.find("?")
+    if (i >= 0):
+        path = path[:i]
+    path = aTestDir + path
+    if (not os.path.exists(MATHJAX_TESTSUITE_PATH + path)):
+        print >> sys.stderr, "warning: " + path + " does not exist!"
 
+class reftestSuite(unittest.TestSuite):
     """
     @class reftest::reftestSuite
     @brief A class inheriting from Python's TestSuite, augmented with reftest
@@ -382,6 +397,11 @@ fails/random")
                 if state == 6:
                     if aSelenium == None:
                         print ",\"" + testURI + "\"",
+                        verifyPageExistence(testDirectory,
+                                            testURI)
+                        if testURIRef:
+                            verifyPageExistence(testDirectory,
+                                                testURIRef)
                     else:
                         if (index == -1 or self.mListOfTests[index] == "1"):
                             self.addTest(testClass(self,

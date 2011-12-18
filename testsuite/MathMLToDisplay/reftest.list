@@ -8,7 +8,7 @@ include TortureTests/reftest.list
 
 fails != issue147a.html issue147b.html
 fails != issue147a.html issue147c.html
-fails != issue147b.html issue147d.html
+fails != issue147b.html issue147c.html
 fails-if(Opera) != issue155.html issue155-ref.html
 == mathml-negativespace.html mathml-negativespace-ref.html 
 == nobr-1.html nobr-1-ref.html
