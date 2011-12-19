@@ -97,6 +97,11 @@ QA_PASSWORD_FILE = configParser.get("qa", "QA_PASSWORD_FILE")
 TASK_HANDLER_HOST = configParser.get("task_handler", "TASK_HANDLER_HOST")
 TASK_HANDLER_PORT = configParser.getint("task_handler", "TASK_HANDLER_PORT")
 
+SELENIUM_SERVER_HOST = configParser.get("selenium_server",
+                                        "SELENIUM_SERVER_HOST")
+SELENIUM_SERVER_PORT = configParser.get("selenium_server",
+                                        "SELENIUM_SERVER_PORT")
+
 DEFAULT_TASK_NAME = configParser.get("testing_instance", "DEFAULT_TASK_NAME")
 HOST_LIST = parseStringArray(configParser.get("testing_instance",
                                               "HOST_LIST"))
@@ -200,6 +205,9 @@ print >>f_out, "/* " + WARNING_GENERATED_FILE + " */"
 
 declarePhpString(f_out, "TASK_HANDLER_HOST", TASK_HANDLER_HOST)
 declarePhpInteger(f_out, "TASK_HANDLER_PORT", TASK_HANDLER_PORT)
+
+declarePhpString(f_out, "SELENIUM_SERVER_HOST", SELENIUM_SERVER_HOST)
+declarePhpString(f_out, "SELENIUM_SERVER_PORT", SELENIUM_SERVER_PORT)
 
 declarePhpString(f_out, "DEFAULT_TASK_NAME", DEFAULT_TASK_NAME)
 declarePhpStringArray(f_out, "HOST_LIST", HOST_LIST)

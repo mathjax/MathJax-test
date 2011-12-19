@@ -40,7 +40,7 @@ help:
 	@echo '  make runTaskHandler'
 	@echo '  make runSeleniumServer'
 	@echo '  make runSeleniumHub'
-	@echo '  make runSeleniumNodes OS=[your operating system]'
+	@echo '  make runSeleniumNode'
 
 config:
 	@ echo 'Generate $(CONDITION_PARSER), $(CONFIG_PY), $(CONFIG_PHP) and $(CONFIG_JS)...'
@@ -150,12 +150,12 @@ runTaskHandler:
 
 runSeleniumServer:
 	@ echo 'Running selenium server (default mode)...'
-	@ cd testRunner/; $(JAVA) -jar seleniumServer.jar
+	@ cd testRunner/; $(JAVA) -jar seleniumServer.jar -port $(SELENIUM_SERVER_PORT)
 
 runSeleniumHub:
 	@ echo 'Running selenium server (Hub mode)...'
-	@ cd testRunner/; $(JAVA) -jar seleniumServer.jar -role hub
+	@ cd testRunner/; $(JAVA) -jar seleniumServer.jar -role hub -port $(SELENIUM_SERVER_PORT)
 
-runSeleniumNodes:
-	@ echo 'Running selenium servers (Node mode)...'
-	@ echo 'Not implemented yet!'
+runSeleniumNode:
+	@ echo 'Running selenium server (Node mode)...'
+	cd testRunner/; $(JAVA) -jar seleniumServer.jar -role node -host $(SELENIUM_SERVER_NODE_HOST) -port $(SELENIUM_SERVER_NODE_PORT) -hubHost $(SELENIUM_SERVER_HOST) -hubPort $(SELENIUM_SERVER_PORT) `for opt in $(SELENIUM_SERVER_NODE_OPTIONS); do echo "-browser $$opt"; done;` -nodeTimeout $(SELENIUM_SERVER_NODE_TIMEOUT)
