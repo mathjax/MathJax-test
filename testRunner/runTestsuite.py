@@ -268,13 +268,19 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         aSuite.printInfo("port = " + str(aSelenium.mPort))
         aSuite.printInfo("mathJaxPath = " + aSelenium.mMathJaxPath)
         aSuite.printInfo("mathJaxTestPath = " + aSelenium.mMathJaxTestPath)
+        aSuite.printInfo("useWebDriver = " +
+                         boolToString(aSelenium.mWebDriver != None))
         aSuite.printInfo("operatingSystem = " + aSelenium.mOperatingSystem)
         aSuite.printInfo("browser = " + aSelenium.mBrowser)
+        aSuite.printInfo("browserVersion = " + aSelenium.mBrowserVersion)
         aSuite.printInfo("browserMode = " + aSelenium.mBrowserMode)
         aSuite.printInfo("font = " + aSelenium.mFont)
         aSuite.printInfo("outputJax = " + aSelenium.mOutputJax)
         aSuite.printInfo("runSlowTests = " +
                          boolToString(aSuite.mRunSlowTests))
+        aSuite.printInfo("runSkipTests = " +
+                         boolToString(aSuite.mRunSkipTests))
+        aSuite.printInfo("listOfTests = " + aSuite.mListOfTests)
         sys.stdout.flush()
         aSelenium.start()
         aSelenium.pre()
