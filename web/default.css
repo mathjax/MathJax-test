@@ -22,7 +22,7 @@
    *
    * ***** END LICENSE BLOCK ***** */
 
-@import url('docs/html/_static/default.css');
+@import url('sphinx-css/default.css');
 
 a[href^="taskEditor.php"]:not(.noIcon) {
     padding-right: 20px;
