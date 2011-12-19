@@ -403,6 +403,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
         - If the request is "HOSTINFO host", it sends the the result of
         @ref taskHandler::getHostInfo for the corresponding host.
 
+        - If the request is "SAVETASKLIST", it saves the task list and returns
+        a message.
+
         - If the request is "TASK UPDATE pid status progress", where pid the PID
         of the process of a running task, it updates the members of the given
         task accordingly. If status is "Interrupted", progress is actually the
@@ -449,6 +452,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
             elif (client == "HOSTINFO"):
                 host = items[1]
                 self.wfile.write(gServer.getHostInfo(host))
+            elif (client == "SAVETASKLIST"):
+                gServer.saveTaskList()
+                self.wfile.write("Task list saved!")
             elif (client == "TASK"):
                 command = items[1]
                 pid = items[2]
