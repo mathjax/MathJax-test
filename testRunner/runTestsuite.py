@@ -97,6 +97,7 @@ def getBooleanOption(aConfig, aSection, aOption):
             # "useWebDriver"
             # "runSlowTests"
             # "runSkipTests"
+            # "useGrid"
             return False
 
 def resultsExist(aName):
@@ -403,6 +404,7 @@ def main(aArgs, aTransmitToTaskHandler):
 
         # framework section
         section = "framework"
+        useGrid = getBooleanOption(config, section, "useGrid")
         host = config.get(section, "host")
         port = config.getint(section, "port")
         if (port == -1):
@@ -484,6 +486,7 @@ def main(aArgs, aTransmitToTaskHandler):
                             # Create a Selenium instance
                             selenium = \
                                 seleniumMathJax.seleniumMathJax(useWebDriver,
+                                                                useGrid,
                                                                 host,
                                                                 port,
                                                                 mathJaxPath,

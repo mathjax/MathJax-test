@@ -158,4 +158,4 @@ runSeleniumHub:
 
 runSeleniumNode:
 	@ echo 'Running selenium server (Node mode)...'
-	cd testRunner/; $(JAVA) -jar seleniumServer.jar -role node -host $(SELENIUM_SERVER_NODE_HOST) -port $(SELENIUM_SERVER_NODE_PORT) -hubHost $(SELENIUM_SERVER_HOST) -hubPort $(SELENIUM_SERVER_PORT) `for opt in $(SELENIUM_SERVER_NODE_OPTIONS); do echo "-browser $$opt"; done;` -nodeTimeout $(SELENIUM_SERVER_NODE_TIMEOUT)
+	cd testRunner/; $(JAVA) -jar seleniumServer.jar -role node -port $(SELENIUM_SERVER_NODE_PORT) -hubHost $(SELENIUM_SERVER_HUB_HOST) -hubPort $(SELENIUM_SERVER_PORT) `for opt in $(SELENIUM_SERVER_NODE_OPTIONS); do echo "-browser $$opt"; done;` -nodeTimeout $(SELENIUM_SERVER_NODE_TIMEOUT)

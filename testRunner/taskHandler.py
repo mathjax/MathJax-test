@@ -591,6 +591,7 @@ class task:
 
         # Default values for boolean parameters. This should match
         # getBooleanOption in runTestsuite.py
+        self.mParameters["useGrid"] = False
         self.mParameters["fullScreenMode"] = True
         self.mParameters["formatOutput"] = True
         self.mParameters["compressOutput"] = True
@@ -840,6 +841,7 @@ class task:
 
         s += "<h2>Framework Configuration</h2>"
         s += "<p><table>"
+        s += self.serializeParameter("useGrid")
         s += self.serializeParameter("host")
         s += self.serializeParameter("port")
         s += self.serializeParameter("mathJaxPath")
@@ -897,6 +899,7 @@ class task:
         fp = file(self.getConfigPath(), "w")
 
         fp.write("[framework]\n")        
+        fp.write("useGrid = " + boolToString(p["useGrid"]) + "\n")
         fp.write("host = " + p["host"] + "\n")
         fp.write("port = " + str(p["port"]) + "\n")
         fp.write("mathJaxPath = " + p["mathJaxPath"] + "\n")
@@ -982,7 +985,8 @@ option values"
             # this function, then we don't overwrite
             return
 
-        if (parameterName == "useWebDriver" or
+        if (parameterName == "useGrid" or
+            parameterName == "useWebDriver" or
             parameterName == "fullScreenMode" or
             parameterName == "aloneOnHost" or
             parameterName == "formatOutput" or

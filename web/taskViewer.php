@@ -263,7 +263,7 @@
 
        <ul>
          <li><a class="noIcon" href="taskEditor.php">Task Editor</a></li>
-         <? echo '<li><a href="http://'.$SELENIUM_SERVER_HOST.':'.$SELENIUM_SERVER_PORT.'/grid/console">Grid Hub Console</a></li>'; ?>
+         <? echo '<li><a href="http://'.$SELENIUM_SERVER_HUB_HOST.':'.$SELENIUM_SERVER_PORT.'/grid/console">Grid Hub Console</a></li>'; ?>
        </ul>
     </div>
   </body>

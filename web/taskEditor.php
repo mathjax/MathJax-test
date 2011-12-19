@@ -188,6 +188,14 @@
         <fieldset>
           <legend>Framework:</legend>
           <p>
+            <label>use Grid:
+              <input id="useGrid" name="useGrid" type="checkbox"
+                     onchange="updateFieldVisibility('useGrid',
+                                                     'seleniumServer',
+                                                      false)"></input>
+            </label>
+          </p>
+          <p id="seleniumServer">
             <label>host:
               <input id="host" name="host" type="text" required="required"
                      pattern="([a-z]|[A-Z]|[0-9]|-|\.)+"
@@ -202,8 +210,7 @@
               <?php generateOptionList($HOST_LIST); ?>
             </select>)
 
-          </p>
-          <p>
+            ; 
             <label>port:
               <input id="port" name="port" type="text"
                      value="<?php echo $DEFAULT_SELENIUM_PORT;?>"/>
@@ -236,7 +243,7 @@
             </label>
           </p>
           <p>
-            <label>use WebDriver (Selenium 2, experimental):
+            <label>use WebDriver:
               <input id="useWebDriver" name="useWebDriver" type="checkbox"
                      onchange="updateFieldVisibility('useWebDriver',
                                                      'fullScreenMode_', false);

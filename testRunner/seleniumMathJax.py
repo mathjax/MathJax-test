@@ -31,6 +31,8 @@ This module implements a selenium object augmented with features specific to
 the MathJax testing framework.
 """
 
+from config import SELENIUM_SERVER_HUB_HOST, SELENIUM_SERVER_PORT
+
 from PIL import Image, ImageChops
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver, selenium
@@ -67,7 +69,7 @@ class seleniumMathJax(object):
     @brief a selenium object with MathJax testing framework features
     """
 
-    def __init__(self, aUseWebDriver,
+    def __init__(self, aUseWebDriver, aUseGrid,
                  aHost, aPort, aMathJaxPath, aMathJaxTestPath,
                  aOperatingSystem,
                  aBrowser,
@@ -79,7 +81,7 @@ class seleniumMathJax(object):
                  aTimeOut,
                  aFullScreenMode):
         """
-        @fn __init__(self, aUseWebDriver,
+        @fn __init__(self, aUseWebDriver, aUseGrid,
                      aHost, aPort, aMathJaxPath, aMathJaxTestPath,
                      aOperatingSystem,
                      aBrowser,
@@ -92,6 +94,9 @@ class seleniumMathJax(object):
                      aFullScreenMode)
 
         @param aUseWebDriver Whether to use Selenium 2 (Webdriver)
+        @param aUseGrid Whether we use grid. In that case, requests are not
+        sent directly to the Selenium server on the host machine, but to
+        the Selenium Hub.
         @param aHost Value to assign to @ref mHost
         @param aPort Value to assign to @ref mPort
         @param aMathJaxPath Value to assign to @ref mMathJaxPath
@@ -155,7 +160,14 @@ class seleniumMathJax(object):
         self.mCanvas = None
         self.mReftestSize = (800, 1000)
 
-        if (aUseWebDriver):
+        if (aUseGrid):
+            host = SELENIUM_SERVER_HUB_HOST
+            port = SELENIUM_SERVER_PORT
+        else:
+            host = aHost
+            port = aPort
+
+        if (aUseGrid or aUseWebDriver):
             if aBrowser == "Firefox":
                 desiredCapabilities = webdriver.DesiredCapabilities.FIREFOX
             elif aBrowser == "Chrome":
@@ -185,8 +197,8 @@ class seleniumMathJax(object):
             if aBrowserPath != "default":
                 raise NameError("Webdriver: browserPath is not supported")
 
-            self.mWebDriver = webdriver.Remote("http://" + aHost + ":" +
-                                               str(aPort) + "/wd/hub",
+            self.mWebDriver = webdriver.Remote("http://" + host + ":" +
+                                               str(port) + "/wd/hub",
                                                desiredCapabilities)
             self.mWebDriver.implicitly_wait(aTimeOut / 1000)
             self.mWebDriver.set_script_timeout(aTimeOut / 1000)
@@ -223,7 +235,7 @@ class seleniumMathJax(object):
             else:
                 startCommand = startCommand + " " + aBrowserPath
               
-            self.mSelenium = selenium(aHost, aPort, startCommand,
+            self.mSelenium = selenium(host, port, startCommand,
                                       aMathJaxTestPath)
 
     def open(self, aURI, aWaitTime = 0.5):

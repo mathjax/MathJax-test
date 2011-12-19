@@ -100,6 +100,7 @@ function truncateString($aValue, $aMaxLength)
  *                 $aConfigFile,
  *                 $aOutputDirectory,
  *                 $aTaskSchedule,
+ *                 $aUseGrid,
  *                 $aHost,
  *                 $aPort,
  *                 $aMathJaxPath,
@@ -129,6 +130,7 @@ function createTask($aTaskName,
                     $aConfigFile,
                     $aOutputDirectory,
                     $aTaskSchedule,
+                    $aUseGrid,
                     $aHost,
                     $aPort,
                     $aMathJaxPath,
@@ -156,6 +158,7 @@ function createTask($aTaskName,
   if ($file) {
     fwrite($file, "TASKEDITOR EDIT ".$aTaskName." ".$aConfigFile." ".
                   $aOutputDirectory." ".$aTaskSchedule."\n".
+                  "useGrid=".$aUseGrid."\n".
                   "host=".$aHost."\n".
                   "port=".strval($aPort)."\n".
                   "mathJaxPath=".$aMathJaxPath."\n".
@@ -250,8 +253,10 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
 
         if ($_POST['command'] == 'EDIT') {
 
+          $useGrid = boolToString(isset($_POST['useGrid']));
+
           if ($_POST['taskSingleMultiple'] == 'single' &&
-              isset($_POST['host'])) {
+            isset($_POST['host'])) {
             $host = truncateString($_POST['host'], 255);
           } else {
             $host = "default";
@@ -349,6 +354,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                          "None",
                          $outputDirectory,
                          $taskSchedule,
+                         $useGrid,
                          $host,
                          $port,
                          $mathJaxPath,
@@ -377,6 +383,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                              "config/templates/".$TEMPLATE_CONFIG_LIST[$i].".cfg",
                              $outputDirectory,
                              $taskSchedule,
+                             $useGrid,
                              $host,
                              $port,
                              $mathJaxPath,
