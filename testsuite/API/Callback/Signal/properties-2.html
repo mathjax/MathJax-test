@@ -27,16 +27,17 @@
       
       signal = MathJax.Callback.Signal("mySignal");
       signal.Interest(cb1);
-      r1 = (signal.listeners.length == 1 && signal.listeners[0] == cb1);
+      r1 = (signal.listeners.hooks.length == 1 &&
+            signal.listeners.hooks[0] == cb1);
       signal.Interest(cb2);
-      r2 = (signal.listeners.length == 2 &&
-            signal.listeners[0] == cb1 &&
-            signal.listeners[1] == cb2);
+      r2 = (signal.listeners.hooks.length == 2 &&
+            signal.listeners.hooks[0] == cb1 &&
+            signal.listeners.hooks[1] == cb2);
       signal.Interest(cb3);
-      r3 = (signal.listeners.length == 3 &&
-            signal.listeners[0] == cb1 &&
-            signal.listeners[1] == cb2 &&
-            signal.listeners[2] == cb3);
+      r3 = (signal.listeners.hooks.length == 3 &&
+            signal.listeners.hooks[0] == cb1 &&
+            signal.listeners.hooks[1] == cb2 &&
+            signal.listeners.hooks[2] == cb3);
 
       return [
       newScriptReftestResult("listeners after cb1 is registered", r1),

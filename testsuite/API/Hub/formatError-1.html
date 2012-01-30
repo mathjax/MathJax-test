@@ -20,7 +20,9 @@
       function postMathJax()
       {
       var error = new Error("my error");
-      MathJax.Hub.formatError(document.getElementById("script"), error);
+      var script = document.getElementById("script");
+      script.MathJax = {};
+      MathJax.Hub.formatError(script, error);
       }
     </script>
 

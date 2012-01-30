@@ -17,7 +17,7 @@
       var signal = MathJax.Callback.Signal("mySignal");
       var r1 = (signal.name == "mySignal");
       var r2 = signal.posted.length == 0;
-      var r3 = signal.listeners.length == 0;
+      var r3 = signal.listeners.hooks.length == 0;
 
       return [
       newScriptReftestResult("name", r1),

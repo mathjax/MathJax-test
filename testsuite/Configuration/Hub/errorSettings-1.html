@@ -19,9 +19,9 @@
       
       function xMathJaxConfig()
       {
-        MathJax.Hub.formatError(
-          document.getElementById("myscript"),
-          new Error());
+      var script = document.getElementById("myscript");
+      script.MathJax = {};
+      MathJax.Hub.formatError(script, new Error());
       }
     </script>
   </head>

@@ -158,7 +158,7 @@ def t_FONT(t):
 ## Output Jax
 def t_OUTPUTJAX(t):
     r"OUTPUT_JAX_LIST"
-    t.value = (gSelenium == None or gSelenium.mOutputJax)
+    t.value = (gSelenium == None or t.value == gSelenium.mOutputJax)
     return t
 
 lexer = lex.lex()

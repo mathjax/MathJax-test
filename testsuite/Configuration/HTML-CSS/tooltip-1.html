@@ -41,10 +41,10 @@
 
       function postMathJax()
       {
-      // This finalizeReftests is supposed to be called at delayFinalize i.e.
+      // This finalizeTest is supposed to be called at delayFinalize i.e.
       // before the standard one (which will be after delayFinalize + 100) 
       if (delayFinalize > 0) {
-        setTimeout("finalizeReftests()", delayFinalize);
+        setTimeout("finalizeTest()", delayFinalize);
       }
       MathJax.Hub.Queue(tooltipOver,
                         ["Delay", MathJax.Callback, delayPost + 5],
