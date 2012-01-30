@@ -77,14 +77,18 @@ do
         ln -s ../../../../master/fonts/HTML-CSS/TeX/png/ png
         cd ../../..
 
-        # Do not track this file any more
-        echo 'fonts/HTML-CSS/TeX/png' >> .gitignore
-        
         cd ..
     fi
 
     cd $BRANCH
+
     $GIT pull origin $BRANCH
+    if [ ! -d $BRANCH ]
+    then
+        # Do not track this file any more
+        echo 'fonts/HTML-CSS/TeX/png' >> .gitignore
+    fi
+
     cd ..
 
 done
