@@ -15,7 +15,11 @@
 
     <!-- Note: MathJax uses the linethickness for the spacing above/below the
          horizontal "fraction bar". Hence the total height is 3 * 10 = 30px -->
-    <div style="position: absolute; left: 20; top: 20; width: 200px; height: 30px;
+
+    <!-- Starting from V2.0, MathJax adds 1px space above and below its output.
+         So we use height = 30 + 2 = 32px -->
+
+    <div style="position: absolute; left: 20px; top: 20px; width: 200px; height: 32px;
                 background: red;"></div>
 
   </body>

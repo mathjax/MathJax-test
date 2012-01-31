@@ -12,11 +12,9 @@
 
   <body>
     <!-- mpadded: voffset/lspace (positive and negative values) -->
-    <div style="position: absolute; left: 0; top: 0;
-                width: 300px; height: 300px; background: green;">
-    </div>
-
-    <div style="position: absolute; left: 75px; top: 75px;
+    <!-- Starting from V2.0, MathJax adds 1px space above and below its output.
+         So we shift this div 1px below -->
+    <div style="position: absolute; left: 75px; top: 76px;
                 width: 150px; height: 150px; background: red;">
     </div>
   </body>
