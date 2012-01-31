@@ -238,4 +238,5 @@ function finalizeTreeReftests()
     document.body.appendChild(textarea);
 
     document.documentElement.className = "";
+    addWebdriverTestCompleteMarker();
 }

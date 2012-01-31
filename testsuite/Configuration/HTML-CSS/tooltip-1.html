@@ -44,7 +44,7 @@
       // This finalizeTest is supposed to be called at delayFinalize i.e.
       // before the standard one (which will be after delayFinalize + 100) 
       if (delayFinalize > 0) {
-        setTimeout("finalizeTest()", delayFinalize);
+        setTimeout("finalizeReftests()", delayFinalize);
       }
       MathJax.Hub.Queue(tooltipOver,
                         ["Delay", MathJax.Callback, delayPost + 5],

@@ -258,7 +258,6 @@ function finalizeTest()
         } else {
             finalizeReftests();
         }
-        addWebdriverTestCompleteMarker();
     });
 }
 
@@ -281,6 +280,7 @@ function addWebdriverTestCompleteMarker()
 function finalizeReftests()
 {
     document.documentElement.className = "";    
+    addWebdriverTestCompleteMarker();
 }
 
 /**

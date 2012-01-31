@@ -98,4 +98,6 @@ function finalizeScriptReftests()
         document.documentElement.className = "reftest-failure";
         document.title += " (failure)";
     }
+
+    addWebdriverTestCompleteMarker();
 }
