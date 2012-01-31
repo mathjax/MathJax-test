@@ -19,3 +19,4 @@ fails == scriptlevel-movablelimits-1.html scriptlevel-movablelimits-1-ref.html
 == unit-2a.html unit-2-ref.html
 == unit-2b.html unit-2-ref.html
 fails tree== unit-3.html unit-3-ref.html
+fails-if(TeX) == issue162.html issue162-ref.html
