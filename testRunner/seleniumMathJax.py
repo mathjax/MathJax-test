@@ -351,6 +351,10 @@ class seleniumMathJax(object):
                 # For MSIE, we choose the document mode
                 # XXXfred TODO!
                 pass
+            if (self.mBrowser == "Opera"):
+                # Screenshots taken by OperaDriver have random noise at the
+                # bottom. Hence we reduce the dimension of the canvas.
+                self.mCanvas = 0, 0, 800, 600
         else:
             # Open the blank page and maximize it
             self.open("blank.html", 3)
