@@ -11,7 +11,7 @@
       function preMathJax()
       {
       gConfigObject.extensions.push("FontWarnings.js");
-      gConfigObject.FontWarnings = { removeAfter: 1000,
+      gConfigObject.FontWarnings = { removeAfter: 2000,
                                      fadeoutSteps: 1,
                                      fadeoutTime: 0 }
       }
@@ -21,7 +21,7 @@
       MathJax.HTML.Cookie.Set("fontWarn", { warned: false });
       MathJax.Hub.Queue(
       ["Post", MathJax.Hub.Startup.signal, "HTML-CSS Jax - Web-Font"],
-      ["Delay", MathJax.Callback, 1700],
+      ["Delay", MathJax.Callback, 3000],
       ["Set", MathJax.HTML.Cookie, "fontWarn", { warned: false }]
       );
       }

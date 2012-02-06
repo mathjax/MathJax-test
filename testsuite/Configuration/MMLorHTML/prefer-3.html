@@ -13,7 +13,7 @@
       gMathJaxQueryString = "config=MMLorHTML";
       gConfigObject.jax = ["input/TeX", "input/MathML"];
       // default
-      // prefer: { MSIE: "MML", Firefox: "MML", Opera: "HTML", other: "HTML" }
+      // prefer: { MSIE: "MML", Firefox: "HTML", Opera: "HTML", other: "HTML" }
       }
 
       function getTestCases()
@@ -21,7 +21,7 @@
       var browser = MathJax.Hub.Browser;
       var result;
 
-      if (browser == "MSIE" || browser == "Firefox") {
+      if (browser == "MSIE") {
         result = (document.getElementsByTagName("math").length == 1);
       } else {
         result = (document.getElementById("MathJax-Span-1") != null);

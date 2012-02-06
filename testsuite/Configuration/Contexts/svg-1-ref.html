@@ -13,7 +13,11 @@
 
 <body>
 
-  <div style="width: 100px; height: 100px; background:green;"></div>
+  <!-- Starting from V2.0, MathJax adds 1px space above and below its output.
+       So we shift this div one pixel lower -->
+  <div style="position: absolute; left: 10px; top: 11px;">
+    <div style="width: 100px; height: 100px; background:green;"></div>
+  </div>
 
 </body>
 </html>

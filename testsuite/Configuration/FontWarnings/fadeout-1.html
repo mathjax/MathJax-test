@@ -13,15 +13,15 @@
       gConfigObject.extensions.push("FontWarnings.js");
       gConfigObject.FontWarnings = { removeAfter: 1,
                                      fadeoutSteps: 10,
-                                     fadeoutTime: 10000 }
+                                     fadeoutTime: 20000 }
       // time  opacity
       // 0     90%
-      // 1000  80%
-      // 2000  70%
-      // 3000  60%
-      // 4000  50%
+      // 2000  80%
+      // 4000  70%
+      // 6000  60%
+      // 8000  50%
       // ...
-      // 10000 0%
+      // 20000 0%
       }
 
       function postMathJax()
@@ -29,7 +29,7 @@
       MathJax.HTML.Cookie.Set("fontWarn", { warned: false });
       MathJax.Hub.Queue(
       ["Post", MathJax.Hub.Startup.signal, "HTML-CSS Jax - Web-Font"],
-      ["Delay", MathJax.Callback, 2200],
+      ["Delay", MathJax.Callback, 3000],
       ["Set", MathJax.HTML.Cookie, "fontWarn", { warned: false }]
       );
       }

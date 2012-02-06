@@ -14,41 +14,52 @@
       -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
+      function searchElementWithText(aElement, aText)
+      {
+      // XXXfred This test does not work for MSIE < 9, which does not support
+      // getElementsByClassName().
+
+      var list = document.body.getElementsByClassName(aElement);
+      for (var i = 0; i < list.length; i++) {
+        var el = list[i];
+        while (el.firstChild) {
+          el = el.firstChild;
+        }
+        if (el.wholeText == aText) {
+          return true;
+        }
+      }
+
+      return false;
+      }
+
       function findGlyph(aCharacter, aAltText)
       {
-      // XXXfred This won't work with MSIE
-
       if (aCharacter) {
-      var list = document.body.getElementsByClassName("mglyph");
-      for (var i = 0; i < list.length; i++) {
-                          if (list[i].innerHTML == aCharacter) {
-                          return true;
-                          }
-                          }
-                          }
+        if (searchElementWithText("mglyph", aCharacter)) {
+          return true;
+        }
+      }
 
-                          list = document.body.getElementsByClassName("mtext");
-                          for (var i = 0; i < list.length; i++) {
-                                              if (list[i].innerHTML == aAltText) {
-                                              return true;
-                                              }
-                                              }
+      if (searchElementWithText("mtext", aAltText)) {
+        return true;
+      }
 
-                                              return false;
-                                              }
-
-                                              function getTestCases()
-                                              {
-                                              return [
-                                              newScriptReftestResult("mglyph(font-family=my-braid-font)",
-                                              findGlyph(null, "23braid")),
-                                              newScriptReftestResult("mglyph(font-family=Curlz MT)",
-                                              findGlyph("A", "script 'A'")),
-                                              newScriptReftestResult("mglyph(font-family=Arial)",
-                                              findGlyph("a", "lowercase 'a'"))
-                                              ];
-                                              }
-                                              </script>
+      return false;
+      }
+  
+      function getTestCases()
+      {
+        return [
+          newScriptReftestResult("mglyph(font-family=my-braid-font)",
+                                 findGlyph(null, "23braid")),
+          newScriptReftestResult("mglyph(font-family=Curlz MT)",
+                                 findGlyph("A", "script 'A'")),
+          newScriptReftestResult("mglyph(font-family=Arial)",
+                                 findGlyph("a", "lowercase 'a'"))
+        ];
+      }
+    </script>
     <script type="text/javascript" src="../../../../header.js"></script>
     <script type="text/javascript" src="../../../../scriptTests.js"></script>
   </head>

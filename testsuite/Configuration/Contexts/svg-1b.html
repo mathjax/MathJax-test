@@ -12,20 +12,25 @@
 
   <body>
 
-    <!-- MathML inside XHTML inside SVG -->
-    <svg width="100px" height="100px">
-      <switch>
-        <foreignObject requiredExtensions="http://www.w3.org/1999/xhtml"
-                       width="100" height="100">
-          <div>
-            <math>
-              <mspace width="100px" height="100px" mathbackground="green"></mspace>
-            </math>
-          </div>
-        </foreignObject>
-        <rect x="0" y="0" width="100px" height="100px" fill="red"/>
-      </switch>
-    </svg>
+    <!-- Starting from V2.0, MathJax adds 1px space above and below its output.
+         So height becomes 102px instead of 100px -->
+    <div style="position: absolute; left: 10px; top: 10px;">
+      <!-- MathML inside XHTML inside SVG -->
+      <svg width="100px" height="102px">
+        <switch>
+          <foreignObject requiredExtensions="http://www.w3.org/1999/xhtml"
+                         width="100px" height="102px">
+            <div>
+              <math>
+                <mspace width="100px" height="100px"
+                        mathbackground="green"></mspace>
+              </math>
+            </div>
+          </foreignObject>
+          <rect x="0" y="0" width="100px" height="100px" fill="red"/>
+        </switch>
+      </svg>
+    </div>
 
   </body>
 </html>

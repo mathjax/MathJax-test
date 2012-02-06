@@ -11,14 +11,14 @@
       function preMathJax()
       {
       gConfigObject.extensions.push("FontWarnings.js");
-      gConfigObject.FontWarnings = { removeAfter: 10000,
+      gConfigObject.FontWarnings = { removeAfter: 20000,
                                      fadeoutSteps: 1,
                                      fadeoutTime: 0 }
       }
 
       function f()
       {
-      var opacity = 0.7;
+      var opacity = 0.8;
       var warning = document.getElementById("MathJax_FontWarning");
       warning.style.visibility = "visible";
       warning.style.opacity = opacity;
