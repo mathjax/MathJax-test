@@ -10,14 +10,19 @@
     <script type="text/javascript">
       function preMathJax()
       {
-      gConfigObject.jax = ["input/MathML", "output/HTML-CSS"];
       gConfigObject.extensions.push("MathZoom.js");
       gConfigObject.menuSettings = { zoom: "Click" };
       }
 
       function postMathJax()
       {
-      var math = document.getElementsByClassName("MathJax")[0];
+      if (gOutputJax == "HTML-CSS") {
+        math = document.getElementsByClassName("MathJax")[0];
+      } else if (gOutputJax == "SVG") {
+        math = document.getElementsByClassName("MathJax_SVG")[0];
+      } else {
+        throw "zoom-1 works for HTML-CSS and SVG outputs only.";
+      }
       MathJax.Extension.MathZoom.Click(null, math);
       }
     </script>
@@ -38,8 +43,6 @@
         <mphantom><mrow><mi>x</mi><mo>+</mo><mi>y</mi></mrow></mphantom>
       </math>
     </div>
-
-    <div 
 
   </body>
 </html>

@@ -14,14 +14,21 @@
       {
       zoomConfig = getQueryString("zoomConfig");
       zoomTrigger = getQueryString("zoomTrigger");
-      gConfigObject.jax = ["input/MathML", "output/HTML-CSS"];
       gConfigObject.extensions.push("MathZoom.js");
       gConfigObject.menuSettings = { zoom: zoomConfig };
       }
 
       function postMathJax()
       {
-      var math = document.getElementsByClassName("MathJax")[0];
+      var math;
+      if (gOutputJax == "HTML-CSS") {
+        math = document.getElementsByClassName("MathJax")[0];
+      } else if (gOutputJax == "SVG") {
+        math = document.getElementsByClassName("MathJax_SVG")[0];
+      } else {
+        throw "zoom-1 works for HTML-CSS and SVG outputs only.";
+      }
+
       switch(zoomTrigger) {
         case "Click":
           MathJax.Extension.MathZoom.Click(null, math);

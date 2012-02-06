@@ -198,7 +198,8 @@ function startMathJax()
 
     var sheet = document.createElement("style");
     sheet.innerHTML =
-	      "rect { /* Disable antialiasing */ shape-rendering: crispEdges; }";
+      // Disable antialiasing for SVG rects
+      "rect { shape-rendering: crispEdges; }";
     document.body.appendChild(sheet);
 
     if (window.initTreeReftests) {
