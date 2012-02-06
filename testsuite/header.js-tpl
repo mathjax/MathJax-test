@@ -196,6 +196,11 @@ function startMathJax()
     document.body.style.border = document.body.style.margin = "0px";
     document.body.style.overflow = "hidden";
 
+    var sheet = document.createElement("style");
+    sheet.innerHTML =
+	      "rect { /* Disable antialiasing */ shape-rendering: crispEdges; }";
+    document.body.appendChild(sheet);
+
     if (window.initTreeReftests) {
         initTreeReftests();
     }
