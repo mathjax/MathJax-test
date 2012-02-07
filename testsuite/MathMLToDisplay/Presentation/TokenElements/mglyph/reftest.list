@@ -1,9 +1,9 @@
-== mglyph3.html mglyph3-ref.html
-== mglyph_aspect_gif.html mglyph_aspect_gif-ref.html
-== mglyph_aspect.html mglyph_aspect-ref.html
-== mglyph_stretched.html mglyph_stretched-ref.html
-== mglyph_valignbottom.html mglyph_valignbottom-ref.html
-== mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
-== mglyph_valigntop.html mglyph_valigntop-ref.html
+fails-if(SVG) == mglyph3.html mglyph3-ref.html
+fails-if(SVG) == mglyph_aspect_gif.html mglyph_aspect_gif-ref.html
+fails-if(SVG) == mglyph_aspect.html mglyph_aspect-ref.html
+fails-if(SVG) == mglyph_stretched.html mglyph_stretched-ref.html
+fails-if(SVG) == mglyph_valignbottom.html mglyph_valignbottom-ref.html
+fails-if(SVG) == mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
+fails-if(SVG) == mglyph_valigntop.html mglyph_valigntop-ref.html
 require(HTML-CSS) script rec-mglyph1.html
 == rec-mglyph2.html rec-mglyph2-ref.html

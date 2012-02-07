@@ -5,7 +5,7 @@ skip-if(MSIE) != horizontal.html?op=00AF horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=02C6 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=02C7 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=02C9 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=02CD horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=02CD horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=02DC horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=02F7 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=0302 horizontal-ref.html
@@ -23,12 +23,12 @@ fails skip-if(MSIE) != horizontal.html?op=21A2 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21A3 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=21A4 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=21A6 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21A9 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21AA horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21A9 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21AA horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21AB horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21AC horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21AD horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21B4 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21B4 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21B9 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=21BC horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=21BD horizontal-ref.html
@@ -38,8 +38,8 @@ fails skip-if(MSIE) != horizontal.html?op=21C4 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21C6 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21C7 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21C9 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21CB horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21CC horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21CB horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21CC horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=21D0 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=21D2 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=21D4 horizontal-ref.html
@@ -47,18 +47,18 @@ skip-if(MSIE) != horizontal.html?op=21DA horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=21DB horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21DC horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21DD horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21E0 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21E2 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21E4 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21E5 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21E0 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21E2 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21E4 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21E5 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21E6 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21E8 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21EC horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21F0 horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=21F6 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21FD horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21FE horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=21FF horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21FD horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21FE horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=21FF horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=23B4 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=23B5 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=23DC horizontal-ref.html
@@ -85,10 +85,10 @@ fails skip-if(MSIE) != horizontal.html?op=290F horizontal-ref.html
 fails skip-if(MSIE) != horizontal.html?op=2910 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=294E horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=2950 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=2952 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=2953 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=2956 horizontal-ref.html
-skip-if(MSIE) != horizontal.html?op=2957 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=2952 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=2953 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=2956 horizontal-ref.html
+fails-if(TeX) skip-if(MSIE) != horizontal.html?op=2957 horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=295A horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=295B horizontal-ref.html
 skip-if(MSIE) != horizontal.html?op=295E horizontal-ref.html
@@ -115,17 +115,17 @@ skip-if(MSIE) != vertical.html?op=2193 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=2195 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2196 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2197 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=219F vertical-ref.html
-skip-if(MSIE) != vertical.html?op=21A1 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=219F vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=21A1 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21A5 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21A7 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=21A8 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=21A8 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=21AF vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21B0 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21B1 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=21B2 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=21B3 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=21B5 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=21B2 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=21B3 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=21B5 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21BE vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21BF vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21C2 vertical-ref.html
@@ -136,8 +136,8 @@ fails skip-if(MSIE) != vertical.html?op=21CA vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21D1 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21D3 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=21D5 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=21E1 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=21E3 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=21E1 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=21E3 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=21E7 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=21E9 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=21EA vertical-ref.html
@@ -156,35 +156,35 @@ skip-if(MSIE) != vertical.html?op=230A vertical-ref.html
 skip-if(MSIE) != vertical.html?op=230B vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2772 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2773 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=27E6 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=27E7 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=27E6 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=27E7 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=27E8 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=27E9 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=27EA vertical-ref.html
-skip-if(MSIE) != vertical.html?op=27EB vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=27EA vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=27EB vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=27EC vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=27ED vertical-ref.html
 skip-if(MSIE) != vertical.html?op=27EE vertical-ref.html
 skip-if(MSIE) != vertical.html?op=27EF vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=27F0 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=27F1 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=290A vertical-ref.html
-skip-if(MSIE) != vertical.html?op=290B vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2912 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2913 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=290A vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=290B vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2912 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2913 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=294F vertical-ref.html
 skip-if(MSIE) != vertical.html?op=2951 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2954 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2955 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2958 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2959 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2954 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2955 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2958 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2959 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=295C vertical-ref.html
 skip-if(MSIE) != vertical.html?op=295D vertical-ref.html
 skip-if(MSIE) != vertical.html?op=2960 vertical-ref.html
 skip-if(MSIE) != vertical.html?op=2961 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=296E vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=296F vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2980 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2980 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2983 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2984 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2985 vertical-ref.html
@@ -205,7 +205,7 @@ fails skip-if(MSIE) != vertical.html?op=2993 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2994 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2995 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=2996 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2997 vertical-ref.html
-skip-if(MSIE) != vertical.html?op=2998 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2997 vertical-ref.html
+fails-if(TeX) skip-if(MSIE) != vertical.html?op=2998 vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=29FC vertical-ref.html
 fails skip-if(MSIE) != vertical.html?op=29FD vertical-ref.html

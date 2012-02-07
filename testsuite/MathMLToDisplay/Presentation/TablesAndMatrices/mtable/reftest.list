@@ -20,7 +20,7 @@
 == columnwidth-2.html columnwidth-2-ref.html
 == displaystyle-1.html displaystyle-1-ref.html
 == equalcolumns-1.html equalcolumns-1-ref.html
-fails == equalrows-1.html equalrows-1-ref.html
+== equalrows-1.html equalrows-1-ref.html
 == frame-1a.html frame-1-ref.html
 != frame-1b.html frame-1-ref.html
 != frame-1c.html frame-1-ref.html
@@ -41,7 +41,7 @@ fails == equalrows-1.html equalrows-1-ref.html
 == mtable-2-5.html mtable-2-5-ref.html
 == mtable-3.html mtable-3-ref.html
 == mtable-align-negative-rownumber.html mtable-align-negative-rownumber-ref.html
-fails == rowalign-1.html rowalign-1-ref.html
+== rowalign-1.html rowalign-1-ref.html
 == rowalign-2.html rowalign-2-ref.html
 fails == rowalign-3.html rowalign-3-ref.html
 fails == rowalign-4.html rowalign-4-ref.html
@@ -51,7 +51,7 @@ fails == rowalign-4.html rowalign-4-ref.html
 == rowlines-2a.html rowlines-2-ref.html
 == rowlines-2b.html rowlines-2-ref.html
 != rowlines-3-1.html rowlines-3-1-ref.html
-== rowlines-3-2.html rowlines-3-2-ref.html
+fails-if(SVG) == rowlines-3-2.html rowlines-3-2-ref.html
 # XXXfred it seems that rowspacing can not be set under a minimum value.
 == rowspacing-1.html rowspacing-1-ref.html
 == width-1.html width-1-ref.html

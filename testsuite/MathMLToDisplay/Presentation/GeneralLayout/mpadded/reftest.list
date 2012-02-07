@@ -5,7 +5,7 @@ include mozilla/reftest.list
 == mpadded-1.html mpadded-1-ref.html
 fails == mpadded-2a.html mpadded-2-ref.html
 fails == mpadded-2b.html mpadded-2-ref.html
-fails == mpadded-3.html mpadded-3-ref.html
+== mpadded-3.html mpadded-3-ref.html
 == mpadded-4.html mpadded-4-ref.html
 == mpadded-5.html mpadded-5-ref.html
 == mpadded-6a.html mpadded-6-ref.html

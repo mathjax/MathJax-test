@@ -1,8 +1,8 @@
 script Clear-1.html?delay=300
 script Clear-1.html?delay=900
-fails script File-1.html
-fails script File-2.html
-fails script filterText-1.html
-fails script Set-1.html
+script File-1.html
+script File-2.html
+script filterText-1.html
+script Set-1.html
 script Log-1.html
 script variables-1.html

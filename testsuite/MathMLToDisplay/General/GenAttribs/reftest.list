@@ -1,12 +1,12 @@
 == attribQuote1.html attribQuote1-ref.html
 == class1.html class1-ref.html
 == class2.html class2-ref.html
-== href1.html href1-ref.html
-== href2.html href2-ref.html
-== href3.html href3-ref.html
+fails-if(SVG) == href1.html href1-ref.html
+fails-if(SVG) == href2.html href2-ref.html
+fails-if(SVG) == href3.html href3-ref.html
 == id1.html id1-ref.html
-!= link-1.html link-ref.html
-!= link-2.html link-ref.html
+fails-if(SVG) != link-1.html link-ref.html
+fails-if(SVG) != link-2.html link-ref.html
 == style1.html style1-ref.html
 == style2.html style2-ref.html
 != style-1.html style-1-ref.html
