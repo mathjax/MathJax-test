@@ -1,8 +1,7 @@
 == mpadded-1.html mpadded-1-ref.html
 == mpadded-2.html mpadded-2-ref.html
 == mpadded-3.html mpadded-3-ref.html
-# lspace should not be used as a pseudounit
-fails == mpadded-4.html mpadded-4-ref.html
+== mpadded-4.html mpadded-4-ref.html
 == mpadded-5.html mpadded-5-ref.html
 == mpadded-1-2.html mpadded-1-2-ref.html
 == mpadded-6.html mpadded-6-ref.html
