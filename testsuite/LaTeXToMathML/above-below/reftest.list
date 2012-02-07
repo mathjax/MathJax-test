@@ -1,3 +1,5 @@
+# XXXfred
+# accents-1: avoid combining mark? use one character for multiple dots?
 fails tree== accents-1.html accents-1-ref.html
 tree== accents-2.html accents-2-ref.html
 tree== buildrel-1.html buildrel-1-ref.html
@@ -11,5 +13,5 @@ tree== underbrace-1.html underbrace-1-ref.html
 tree== underset-1.html underset-1-ref.html
 
 # XXXfred not supported
-# tree== overbracket-1.html overbracket-1-ref.html
-# tree== underbracket-1.html underbracket-1-ref.html
+# fails tree== overbracket-1.html overbracket-1-ref.html
+# fails tree== underbracket-1.html underbracket-1-ref.html

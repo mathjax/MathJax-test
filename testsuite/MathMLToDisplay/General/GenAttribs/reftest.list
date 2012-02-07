@@ -9,8 +9,8 @@
 != link-2.html link-ref.html
 == style1.html style1-ref.html
 == style2.html style2-ref.html
-fails != style-1.html style-1-ref.html
-fails != style-2.html style-2-ref.html
+!= style-1.html style-1-ref.html
+!= style-2.html style-2-ref.html
 == xmllang1.html xmllang1-ref.html
 == xref1.html xref1-ref.html
 

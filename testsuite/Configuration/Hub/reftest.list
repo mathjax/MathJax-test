@@ -5,7 +5,7 @@ include styleSheets/reftest.list
 
 script delayStartupUntil-1.html
 == errorSettings-1.html errorSettings-1-ref.html
-fails script issue163.html
+script issue163.html
 script messageStyle-1.html
 script messageStyle-2.html
 slow-if(Opera) script messageStyle-3.html?messageStyle=none

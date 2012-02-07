@@ -1,4 +1,4 @@
-fails != cursive.html serif.html
-fails != fantasy.html serif.html
-fails != monospace.html serif.html
-fails != sans-serif.html serif.html
+!= cursive.html serif.html
+!= fantasy.html serif.html
+!= monospace.html serif.html
+!= sans-serif.html serif.html

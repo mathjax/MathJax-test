@@ -1,1 +1,1 @@
-fails skip-if(MSIE) == styles-1.html styles-1-ref.html
+skip-if(MSIE) == styles-1.html styles-1-ref.html
