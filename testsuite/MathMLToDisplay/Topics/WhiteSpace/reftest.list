@@ -3,8 +3,8 @@
 == whBgeneral1.html whBgeneral1-ref.html
 == white1.html white1-ref.html
 fails == white2.html white2-ref.html
-fails == white3.html white3-ref.html
-fails == white4.html white4-ref.html
+fails-if(!(HTML-CSS&&TeX)) == white3.html white3-ref.html
+fails-if(!(HTML-CSS&&TeX)) == white4.html white4-ref.html
 fails == white5.html white5-ref.html
 fails == white6.html white6-ref.html
 fails == white7.html white7-ref.html

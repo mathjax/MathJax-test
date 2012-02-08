@@ -1,6 +1,6 @@
 include mtextFontInherit/reftest.list
 
-skip-if(Safari) != undefinedFamily-1.html undefinedFamily-1-ref.html
+require(TeX) skip-if(Safari) != undefinedFamily-1.html undefinedFamily-1-ref.html
 != undefinedFamily-2.html undefinedFamily-2-ref.html
 random == scale-1.html scale-1-ref.html
 fails == minScaleAdjust-1.html minScaleAdjust-1-ref.html

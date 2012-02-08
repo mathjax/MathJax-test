@@ -11,10 +11,9 @@
       function preMathJax()
       {
       // We assume here that
-      //  - MathJax fonts do not contain &#x2147;
-      //  - STIXGeneral and STIXNonUnicode render this character differently
-      gConfigObject["HTML-CSS"].availableFonts = ["TeX"];
-      gConfigObject["HTML-CSS"].undefinedFamily = "STIXNonUnicode";
+      //  - MathJax fonts do not contain &#x222F;
+      //  - STIXIntegralsD and STIXGeneral render this character differently
+      gConfigObject["HTML-CSS"].undefinedFamily = "STIXIntegralsD";
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
@@ -25,7 +24,7 @@
     <!-- See issue 19
          https://github.com/mathjax/MathJax/issues/19 -->
     <math>
-      <mtext>&#x2147;</mtext>
+      <mtext>&#x222F;</mtext>
     </math>
 
   </body>

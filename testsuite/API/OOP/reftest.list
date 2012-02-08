@@ -3,4 +3,4 @@ script basic-1.html
 script static-1.html
 script super-1.html
 script super-2.html
-fails script super-3.html
+script super-3.html
