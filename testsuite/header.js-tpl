@@ -181,6 +181,12 @@ function defaultConfigObject()
       },
 
       "SVG" : {
+          styles: {
+              // Disable antialiasing for SVG rects
+              rect: {
+                  "shape-rendering": "crispEdges"
+              }
+          }
           // XXXfred
           // TODO: take into account gFont when the SVG output JaX supports
           // more fonts.
@@ -201,12 +207,6 @@ function startMathJax()
     // remove border, margin and scrollbars
     document.body.style.border = document.body.style.margin = "0px";
     document.body.style.overflow = "hidden";
-
-    var sheet = document.createElement("style");
-    sheet.innerHTML =
-      // Disable antialiasing for SVG rects
-      "rect { shape-rendering: crispEdges; }";
-    document.body.appendChild(sheet);
 
     if (window.initTreeReftests) {
         initTreeReftests();
