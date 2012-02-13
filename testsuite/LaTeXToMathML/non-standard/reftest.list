@@ -1,6 +1,7 @@
 tree== class-1.html class-1-ref.html
 tree== cssId-1.html cssId-1-ref.html
 tree== href-1.html href-1-ref.html
+tree== href-2.html href-2-ref.html
 tree== require-1.html require-1-ref.html
 tree== Rule-1.html Rule-1-ref.html
 tree== style-1.html style-1-ref.html
