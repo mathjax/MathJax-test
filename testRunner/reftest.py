@@ -58,6 +58,9 @@ The test is expected to pass or fail randomly.
 @var EXPECTED_DEATH
 The test is marked skip and is expected to cause a crash, hang etc.
 
+@var EXPECTED_FUZZY
+The test is expected to have small pixel differences.
+
 @var EXPECTED_IRRELEVANT
 The test is marked with a require field which is not fullfilled by the current
 configuration.
@@ -66,7 +69,8 @@ EXPECTED_PASS = 0
 EXPECTED_FAIL  = 1
 EXPECTED_RANDOM = 2
 EXPECTED_DEATH = 3
-EXPECTED_IRRELEVANT = 4
+EXPECTED_FUZZY = 4
+EXPECTED_IRRELEVANT = 5
 
 def verifyPageExistence(aTestDir, aTestPage):
     """
@@ -271,6 +275,14 @@ class reftestSuite(unittest.TestSuite):
                             # 7 = len("slow-if")
                             if conditionParser.parse(aSelenium, word[7:]):
                                 testSlow = True
+                            continue
+                        elif word == "fuzzy":
+                            testExpectedStatus = EXPECTED_FUZZY
+                            continue
+                        elif word.startswith("fuzzy-if"):
+                            # 8 = len("fuzzy-if")
+                            if conditionParser.parse(aSelenium, word[8:]):
+                                testExpectedStatus = EXPECTED_FUZZY
                             continue
                         else:
                             # The following failure types are not supported:
@@ -771,6 +783,12 @@ class treeReftest(reftest):
             print msg
             self.fail()
 
+def isSmallPixelValue(aPixelValue):
+    if aPixelValue <= 15:
+        return 0
+    else:
+        return 1
+
 class visualReftest(reftest):
 
     """
@@ -796,7 +814,10 @@ class visualReftest(reftest):
                                                            self.mSelenium)
 
         # Compare image and imageRef
-        box = ImageChops.difference(image, imageRef).getbbox()
+        diff = ImageChops.difference(image, imageRef)
+        if self.mExpectedStatus == EXPECTED_FUZZY:
+            diff = Image.eval(diff, isSmallPixelValue)
+        box = diff.getbbox()
         isEqual = (box == None or (box[0] == box[2] and box[1] == box[3]))
         (success, msg) = self.determineSuccess(self.mType, isEqual)
 
