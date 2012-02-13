@@ -125,15 +125,16 @@ def getOutputFileName(aDirectory, aSelenium, aSuite, aDoNotOverwrite):
            overwriting the result files.
 
     @return Concatenation of aDirectory, the operating system, the browser,
-    the browser mode and the font, separated by underscores. Sometimes followed
-    by a "-number" to prevent overwriting files.
+    the browser mode, the font and the output Jax, separated by underscores.
+    Sometimes followed by a "-number" to prevent overwriting files.
     """
 
     name = \
         aSelenium.mOperatingSystem + "_" + \
         aSelenium.mBrowser + "_" + \
         aSelenium.mBrowserMode + "_" + \
-        aSelenium.mFont
+        aSelenium.mFont + "_" + \
+        aSelenium.mOutputJax
 
     if aDoNotOverwrite and resultsExist(aDirectory + name):
         i = 1

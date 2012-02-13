@@ -63,12 +63,16 @@ cd ..
 # Create/Update directories for each branch
 for BRANCH in $BRANCHES
 do
+    echo "=== $USER/$BRANCH ==="
+
     if [ ! -d $BRANCH ]
     then
-        # Create a new branch
+        # Create a new directory for this branch
 	      cp -r master/ $BRANCH
 
+        # Pull this branch
         cd $BRANCH
+        $GIT pull origin $BRANCH || { cd .. ; rm -rf $BRANCH; continue; }
 
         # To save space, we remove the directory for image font and create a
         # symbolic link to the directory in the master branch.
@@ -77,18 +81,15 @@ do
         ln -s ../../../../master/fonts/HTML-CSS/TeX/png/ png
         cd ../../..
 
-        cd ..
-    fi
-
-    cd $BRANCH
-
-    $GIT pull origin $BRANCH
-    if [ ! -d $BRANCH ]
-    then
-        # Do not track this file any more
-        echo 'fonts/HTML-CSS/TeX/png' >> .gitignore
+        # Do not track image fonts.
+        echo "fonts/HTML-CSS/TeX/png" >> .gitignore
+        git add .gitignore
+        git commit -m "Do not track image fonts."
+    else
+        # Update the branch
+        cd $BRANCH
+        $GIT pull origin $BRANCH || { cd .. ; rm -rf $BRANCH; continue; }
     fi
 
     cd ..
-
 done
