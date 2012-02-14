@@ -10,23 +10,27 @@
     <script type="text/javascript" src="../../header.js"></script>
 
     <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
+      gConfigObject["SVG"].linebreaks = { automatic: true };
+      }
+
       function postMathJax() 
       {
-      document.getElementById("div").style.fontSize = "24pt" 
+      document.getElementById("div").style.width = "50px";
       MathJax.Hub.Queue(["Reprocess", MathJax.Hub]);
       }
     </script>
 
   </head>
 
-  <body style="font-size: 12pt;">
+  <body>
 
-    <!-- It is assumed that MathJax converts these absolute dimensions into 
-         relative ones. When the font-size is updated, the square becomes
-         twice larger, so we need to reprocess the math -->
-    <div id="div">
+    <div id="div" style="width: 30px;">
       <math>
-        <mspace width="100px" height="100px" mathbackground="blue"></mspace>
+        <mspace width="20px" height="20px" mathbackground="blue"></mspace>
+        <mspace width="20px" height="20px" mathbackground="blue"></mspace>
       </math>
     </div>
 

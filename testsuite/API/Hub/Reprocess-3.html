@@ -11,6 +11,11 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
+      gConfigObject["SVG"].linebreaks = { automatic: true };
+      }
     
       var r1 = false, r2 = false, r3 = false, r4 = false, r5 = false,
           r6 = false, r7 = false, r8 = false;
@@ -18,78 +23,75 @@
       function f()
       {
         r1 = true;
-        var mspace1 = document.getElementById("mspace1");
-        r6 = (mspace1.offsetWidth == 100);
+        r6 = (document.getElementById("div1").offsetHeight > 30);
       }
 
       function g()
       {
         r2 = true;
-        var mspace2 = document.getElementById("mspace2");
-        r7 = (mspace2.offsetWidth == 100);
+        r7 = (document.getElementById("div2").offsetHeight < 30);
       }
 
       function postMathJax() 
       {
-      var math = MathJax.Hub.getAllJax("div")[0];
-      document.body.style.fontSize = "24pt";
-      var mspace1 = document.getElementById("mspace1");
-      var mspace2 = document.getElementById("mspace2");
-      var mspace3 = document.getElementById("mspace3");
-      r3 = (mspace1.offsetWidth == 200);
-      r4 = (mspace2.offsetWidth == 200);
-      r5 = (mspace3.offsetWidth == 200);
+      var div1 = document.getElementById("div1");
+      var div2 = document.getElementById("div2");
+      var div3 = document.getElementById("div3");
+      div1.style.width = "30px";
+      div2.style.width = "50px";
+      div3.style.width = "30px";
+
+      r3 = (div1.offsetHeight < 30);
+      r4 = (div2.offsetHeight > 30);
+      r5 = (div3.offsetHeight < 30);
       MathJax.Hub.Queue(["Reprocess", MathJax.Hub, "div1", f]);
       MathJax.Hub.Queue(["Reprocess", MathJax.Hub, "div2", g]);
       }
 
       function getTestCases()
       {
-      var mspace3 = document.getElementById("mspace3");
-      r8 = (mspace3.offsetWidth == 200);
+      r8 = (document.getElementById("div3").offsetHeight < 30);
 
       return [
         newScriptReftestResult("Callback f called", r1),
         newScriptReftestResult("Callback g called", r2),
-        newScriptReftestResult("mspace1, before reprocess", r3),
-        newScriptReftestResult("mspace2, before reprocess", r4),
-        newScriptReftestResult("mspace3, before reprocess", r5),
-        newScriptReftestResult("mspace1, after reprocess", r6),
-        newScriptReftestResult("mspace2, after reprocess", r7),
-        newScriptReftestResult("mspace3, at the end", r8)
+        newScriptReftestResult("div1, before reprocess", r3),
+        newScriptReftestResult("div2, before reprocess", r4),
+        newScriptReftestResult("div3, before reprocess", r5),
+        newScriptReftestResult("div1, after reprocess", r6),
+        newScriptReftestResult("div2, after reprocess", r7),
+        newScriptReftestResult("div3, at the end", r8)
       ];
       }
     </script>
 
   </head>
 
-  <body style="font-size: 12pt;">
+  <body>
 
-    <!-- It is assumed that MathJax converts this absolute dimensions into 
-         relative ones. When the font-size is updated, the square becomes
-         twice wider, so we need to reprocess the math -->
-    <div id="div1" style="position: absolute; top: 0px;">
+    <div id="div1" style="width: 50px; position: absolute; top: 0px;">
       <math>
-        <mspace id="mspace1" width="100px" height="10px" mathbackground="blue">
+        <mspace width="20px" height="20px" mathbackground="blue"></mspace>
+        <mspace width="20px" height="20px" mathbackground="blue"></mspace>
         </mspace>
       </math>
     </div>
 
-    <div id="div2" style="position: absolute; top: 30px;">
+    <div id="div2" style="width: 30px; position: absolute; top: 60px;">
       <math>
-        <mspace id="mspace2" width="100px" height="10px" mathbackground="red">
-        </mspace>
+        <mspace width="20px" height="20px" mathbackground="red"></mspace>
+        <mspace width="20px" height="20px" mathbackground="red"></mspace>
       </math>
     </div>
 
-    <div id="div3" style="position: absolute; top: 60px;">
+    <div id="div3" style="width: 50px; position: absolute; top: 120px;">
       <math>
-        <mspace id="mspace3" width="100px" height="10px" mathbackground="green">
-        </mspace>
+        <mspace width="20px" height="20px" mathbackground="green"></mspace>
+        <mspace width="20px" height="20px" mathbackground="green"></mspace>
       </math>
     </div>
 
-    <div style="height: 100px"></div>
+    <div style="height: 150px"></div>
 
   </body>
 </html>

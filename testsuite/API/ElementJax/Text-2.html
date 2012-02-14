@@ -16,18 +16,16 @@
 
       function f()
       {
-        r1 = true;
-        var mspace = document.getElementById("mspace");
-        r3 = (mspace.offsetWidth == 200);
+      r1 = true;
+      r3 = (document.getElementById("div").offsetWidth > 150);
       }
 
       function postMathJax() 
       {
-      var newMath = "<math><mspace id=\"mspace\" width=\"200px\" height=\"10px\" mathbackground=\"blue\"></mspace></math>";
+      r2 = (document.getElementById("div").offsetWidth < 150);
 
       var math = MathJax.Hub.getAllJax("div")[0];
-      var mspace = document.getElementById("mspace");
-      r2 = (mspace.offsetWidth == 100);
+      var newMath = "<math><mspace width=\"200px\" height=\"10px\" mathbackground=\"red\"></mspace></math>";
       MathJax.Hub.Queue(["Text", math, newMath, f]);
       }
 
@@ -35,10 +33,10 @@
       {
       return [
       newScriptReftestResult("Text(nexMath, f): Callback is called", r1),
-      newScriptReftestResult("Before change: mspace.offsetWidth == 100",
+      newScriptReftestResult("Before change: div width < 150",
                              r2),
-      newScriptReftestResult(
-      "After change and reprocess: mspace.offsetWidth == 200", r3)
+      newScriptReftestResult("After change and reprocess: div width > 150",
+                             r3)
       ];
       }
     </script>
@@ -47,9 +45,9 @@
 
   <body>
 
-    <div id="div">
+    <div id="div" style="display: inline-block;">
       <math>
-        <mspace id="mspace" width="100px" height="10px" mathbackground="blue"></mspace>
+        <mspace width="100px" height="10px" mathbackground="blue"></mspace>
       </math>
     </div>    
 

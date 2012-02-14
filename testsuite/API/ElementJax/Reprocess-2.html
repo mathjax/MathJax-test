@@ -11,24 +11,27 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      var r1 = false, r2 = false, r3 = false, r4 = false, r5 = false;
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
+      gConfigObject["SVG"].linebreaks = { automatic: true };
+      }
+
+      var r1 = false, r2 = false, r3 = false;
       
       function f()
       {
-        r1 = true;
-        var mspace = document.getElementById("mspace");
-        r4 = (mspace.offsetHeight == 100);
-        r5 = (mspace.offsetWidth == 100);
+      r1 = true;
+      r3 = (document.getElementById("div").offsetHeight > 30);
       }
 
       function postMathJax() 
       {
-      var math = MathJax.Hub.getAllJax("div")[0];
-      document.getElementById("div").style.fontSize = "24pt";
-      var mspace = document.getElementById("mspace");
-      r2 = (mspace.offsetHeight == 200);
-      r3 = (mspace.offsetWidth == 200);
+      var div = document.getElementById("div");
+      div.style.width = "30px";
+      r2 = (div.offsetHeight < 30);
 
+      var math = MathJax.Hub.getAllJax("div")[0];
       MathJax.Hub.Queue(["Reprocess", math, f]);
       }
 
@@ -36,26 +39,20 @@
       {
       return [
       newScriptReftestResult("Reprocess(f): Callback is called", r1),
-      newScriptReftestResult("After style change: mspace.offsetHeight == 200",
-                             r2),
-      newScriptReftestResult("After style change: mspace.offsetWidth == 200",
-                             r3),
-      newScriptReftestResult("After reprocess: mspace.offsetHeight == 100", r4),
-      newScriptReftestResult("After reprocess:  mspace.offsetWidth == 100", r5)
+      newScriptReftestResult("After style change: div height > 30", r2),
+      newScriptReftestResult("After reprocess: div height < 30", r3)
       ];
       }
     </script>
 
   </head>
 
-  <body style="font-size: 12pt;">
+  <body>
 
-    <!-- It is assumed that MathJax converts this absolute dimensions into 
-         relative ones. When the font-size is updated, the square becomes
-         twice larger, so we need to reprocess the math -->
-    <div id="div">
+    <div id="div" style="width: 50px;">
       <math>
-        <mspace id="mspace" width="100px" height="100px" mathbackground="blue"></mspace>
+        <mspace width="20px" height="20px" mathbackground="blue"></mspace>
+        <mspace width="20px" height="20px" mathbackground="blue"></mspace>
       </math>
     </div>
 
