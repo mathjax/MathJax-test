@@ -18,18 +18,29 @@
 
   <body>
 
-    <div style="z-index: 0;">
+    <div style="position: absolute; left: 0; top: 0; width: 600px;">
       <math display="block"> 
         <mspace height="100px" width="100px" mathbackground="yellow"></mspace>
       </math> 
     </div>
+
+    <!-- black borders to ignore possible size error of the square -->
+    <div style="position: absolute; left: 0; top: 0; width: 600px;">
+      <div style="float: right;">
+        <div style="position: relative; left: +3px;
+                    width: 106px; height: 100px;">
+          <div style="width: 98px; height: 100px;
+                      border-left: 4px solid black;
+                      border-right: 4px solid black;"></div>
+        </div>
+      </div>
+    </div>
     
     <!-- horizontal black bands to ignore a possible vertical shift -->
-    <div style="position: absolute; background: black; z-index: 1;
+    <div style="position: absolute; background: black;
                 left: 0; top: 0; height: 40px; width: 100%;"></div>
     
-    <div style="position: absolute; background: black; z-index: 1;
+    <div style="position: absolute; background: black;
                 left: 0; top: 90px; height: 40px; width: 100%;"></div>
-
   </body>
 </html>

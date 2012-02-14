@@ -12,14 +12,28 @@
 
   <body>
 
-    <div style="margin-left: auto; margin-right: auto;
-                width: 100px; height: 100px; background: yellow; "></div>
-    
+    <div style="position: absolute; left: 0; top: 0; width: 600px;">
+      <div style="margin-left: auto; margin-right: auto;
+                  width: 100px; height: 100px; background: yellow; "></div>
+    </div>
+
+    <!-- black borders to ignore possible size error of the square -->
+    <div style="position: absolute; left: 0; top: 0; width: 600px;">
+      <div style="margin-left: auto; margin-right: auto;
+                  width: 100px; height: 100px;">
+        <div style="position: relative; left: -3px;">
+          <div style="width: 98px; height: 100px;
+                      border-left: 4px solid black;
+                      border-right: 4px solid black;"></div>
+          </div>
+      </div>
+    </div>
+      
     <!-- horizontal black bands to ignore a possible vertical shift -->
-    <div style="position: absolute; background: black; z-index: 1;
+    <div style="position: absolute; background: black;
                 left: 0; top: 0; height: 40px; width: 100%;"></div>
     
-    <div style="position: absolute; background: black; z-index: 1;
+    <div style="position: absolute; background: black;
                 left: 0; top: 90px; height: 40px; width: 100%;"></div>
 
   </body>
