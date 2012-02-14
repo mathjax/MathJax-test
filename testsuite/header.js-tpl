@@ -198,7 +198,7 @@ function defaultConfigObject()
           message:
           [
               [ "script", { type: "text/javascript" },
-                [ "  throw '[Math Processing Error]'; } " ]
+                [ "throw '[Math Processing Error]';" ]
               ]
           ]
       };
