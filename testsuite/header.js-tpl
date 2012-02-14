@@ -167,21 +167,12 @@ function getQueryInteger(aParamName, aDefaultValue)
   */
 function defaultConfigObject()
 {
-  return {
+  var config = {
       messageStyle: "none",
 
       extensions: ["tex2jax.js",  "mml2jax.js"],
-
+      
       jax: ["input/TeX", "input/MathML", "output/" + gOutputJax],
-
-      errorSettings: {
-          message:
-          [
-              [ "script", { type: "text/javascript" },
-                [ " if (gErrorHandler) { throw '[Math Processing Error]'; } " ]
-              ]
-          ]
-      },
 
       "HTML-CSS": {
           availableFonts: [(gFont == "ImageTeX" ? "" : gFont)],
@@ -200,7 +191,19 @@ function defaultConfigObject()
           // TODO: take into account gFont when the SVG output Jax supports
           // more fonts.
       }
+  };
+
+  if (gErrorHandler) {
+      config.errorSettings = {
+          message:
+          [
+              [ "script", { type: "text/javascript" },
+                [ "  throw '[Math Processing Error]'; } " ]
+              ]
+          ]
+      };
   }
+  return config;
 }
 
 /**

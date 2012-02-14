@@ -12,9 +12,15 @@
     <script type="text/javascript" src="../../treeReftests.js"></script>
 
     <script type="text/javascript">
+      function preMathJax()
+      {
+      // Do not raise an error when a Math Processing Error happens.
+      gConfigObject.errorSettings = {};
+      }
+
       function getReftestElements()
       {
-        return ["root"];
+      return ["root"];
       }
 
       function postMathJax()
