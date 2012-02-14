@@ -6,6 +6,11 @@
     <title>zoom box</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
+
+    <!-- This test verifies zoom box size with NativeMML output.
+         See issue 88
+         https://github.com/mathjax/MathJax/issues/88 -->
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
     <script type="text/javascript">
@@ -13,10 +18,6 @@
       {
       gConfigObject.jax = ["input/TeX", "output/NativeMML"];
       gConfigObject.extensions.push("MathZoom.js");
-
-      // If the zoom box is large enough, it should render the same
-      // with or without scroll bars.
-      gConfigObject.MathZoom = { styles: { "#MathJax_Zoom": { overflow : "none" } } };
       }
 
       function postMathJax()
@@ -24,15 +25,15 @@
       var jax = MathJax.Hub.getAllJax()[0];
       var math = document.getElementById(jax.inputID+"-Frame").firstChild;
       MathJax.Extension.MathZoom.Zoom(null, math);
+
+      // If the zoom box is large enough, it should render the same with or
+      // without scroll bars.
+      document.getElementById("MathJax_Zoom").style.overflow = "none";
       }
     </script>
   </head>
 
   <body>
-
-    <!--
-        See issue 88
-        https://github.com/mathjax/MathJax/issues/88 -->
     <div>
       $$
       \prod_{x\in\mathbb{X}} f(x) := \sum_{x\in\mathbb{X}} \mathbb{P}[x]\cdot
