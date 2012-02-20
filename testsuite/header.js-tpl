@@ -291,9 +291,9 @@ function finalizeTest()
   */
 function addWebdriverTestCompleteMarker()
 {
-    var div = document.createElement("div");
-    div.setAttribute("id", "webdriver_test_complete")
-    document.body.appendChild(div);
+    var WebDriverDiv = document.createElement("div");
+    WebDriverDiv.setAttribute("id", "webdriver_test_complete");
+    document.body.appendChild(WebDriverDiv);
 }
 
 /**
