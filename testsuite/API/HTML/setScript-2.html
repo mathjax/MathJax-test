@@ -9,19 +9,40 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <script type="text/javascript">
-      function getReftestElements()
+      var myvalue = false;
+      var myscript = "myvalue = true;";
+      var r1 = false, r2 = false, r3 = false, r4 = false;
+
+      function isScriptSet()
       {
-        return ["script"];
+      var v = document.getElementById("script").innerHTML;
+
+      // remove new line at the beginning for IE document mode < 9
+      v = v.replace(/^[\f|\n|\r]+/g, '');
+
+      return (v == myscript);
+      }
+
+      function getTestCases()
+      {
+      r3 = isScriptSet();
+      r4 = myvalue;
+      return [
+      newScriptReftestResult("myvalue at the beginning", r1),
+      newScriptReftestResult("script before MathJax.HTML.setScript", r2),
+      newScriptReftestResult("script after MathJax.HTML.setScript", r3),
+      newScriptReftestResult("myvalue at the end", r4)];
       }
 
       function xMathJaxConfig()
       {
-      var script = document.getElementById("script");
-      MathJax.HTML.setScript(script, "var myscript = 1;");
+      r1 = !myvalue;
+      r2 = !isScriptSet();
+      MathJax.HTML.setScript(document.getElementById("script"), myscript);
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
 
   </head>
 

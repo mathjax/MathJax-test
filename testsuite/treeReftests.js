@@ -130,7 +130,7 @@ function serialize2(aNode)
         break;
 
     default:
-        throw "serialization error";
+        throw new Error("serialization error");
         break;
     }
 
@@ -177,7 +177,7 @@ function getMathJaxSourceMathML(aNode)
         }
     }
 
-    throw "MathJax_MathML not found.";
+    throw new Error("MathJax_MathML not found");
 }
 
 /**
@@ -226,7 +226,7 @@ function finalizeTreeReftests()
         if (node) {
             src = getMathJaxSourceMathML(node);
         } else {
-            throw "reftest-element not found";
+            throw new Error("reftest-element not found");
         }
     }
     

@@ -25,7 +25,7 @@ tree== functions-1.html functions-1-ref.html
 tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
 == issue139.html issue139-ref.html
-!= issue145.html issue145-ref.html
+require(TeX) != issue145.html issue145-ref.html
 tree== LaTeX-1.html LaTeX-1-ref.html
 tree== limits-1.html limits-1-ref.html
 # XXXfred

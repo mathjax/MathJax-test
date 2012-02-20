@@ -185,7 +185,7 @@ class seleniumMathJax(object):
             elif aOperatingSystem == "Linux" and aBrowser == "Android":
                 desiredCapabilities = webdriver.DesiredCapabilities.ANDROID
             else:
-                raise NameError("Webdriver: OS/browser not available")
+                raise Exception("Webdriver: OS/browser not available")
 
             desiredCapabilities["platform"] = aOperatingSystem.upper()
 
@@ -195,7 +195,7 @@ class seleniumMathJax(object):
                 desiredCapabilities["version"] = aBrowserVersion
 
             if aBrowserPath != "default":
-                raise NameError("Webdriver: browserPath is not supported")
+                raise Exception("Webdriver: browserPath is not supported")
 
             self.mWebDriver = webdriver.Remote("http://" + host + ":" +
                                                str(port) + "/wd/hub",
@@ -223,11 +223,11 @@ class seleniumMathJax(object):
                 startCommand = "*custom"
                 
             if aBrowserVersion != "default":
-                raise NameError("Selenium 1: browserVersion is not supported")
+                raise Exception("Selenium 1: browserVersion is not supported")
 
             if aBrowserPath == "default":
                 if startCommand == "*custom":
-                    raise NameError("Selenium 1: OS/browser not available ")
+                    raise Exception("Selenium 1: OS/browser not available ")
       
                 # XXXfred: support for Konqueror is broken
                 if aOperatingSystem == "Linux" and aBrowser == "Konqueror":
@@ -520,7 +520,7 @@ class seleniumMathJax(object):
         @note Selenium can not be used to clear the browser data, so this
         is not implemented at the moment.
         """
-        raise NameError("clearBrowserData: not implemented")
+        raise Exception("clearBrowserData: not implemented")
 
     def takeScreenshot(self, aWaitTime = 0.5):
         """

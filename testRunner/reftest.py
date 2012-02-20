@@ -231,6 +231,9 @@ class reftestSuite(unittest.TestSuite):
                 testExpectedStatus = 0
                 testSlow = False
 
+                errorMsg = ("invalid line in " + aRoot + aManifestFile +
+                            ": " + line + "\n")
+
                 for word in line.split():
                     
                     if word[0] == '#':
@@ -238,62 +241,65 @@ class reftestSuite(unittest.TestSuite):
                         break
 
                     if state == 0:
-                        # 2. <failure-type>
-                        if word == "fails":
-                            testExpectedStatus = EXPECTED_FAIL
-                            continue
-                        elif word.startswith("fails-if"):
-                            # 8 = len("fails-if")
-                            if conditionParser.parse(aSelenium, word[8:]):
+                        try:
+                            # 2. <failure-type>
+                            if word == "fails":
                                 testExpectedStatus = EXPECTED_FAIL
-                            continue
-                        elif word == "random":
-                            testExpectedStatus = EXPECTED_RANDOM
-                            continue
-                        elif word.startswith("random-if"):
-                            # 9 = len("random-if")
-                            if conditionParser.parse(aSelenium, word[9:]):
+                                continue
+                            elif word.startswith("fails-if"):
+                                # 8 = len("fails-if")
+                                if conditionParser.parse(aSelenium, word[8:]):
+                                    testExpectedStatus = EXPECTED_FAIL
+                                continue
+                            elif word == "random":
                                 testExpectedStatus = EXPECTED_RANDOM
-                            continue
-                        elif word.startswith("require"):
-                            # 7 = len("require")
-                            if not conditionParser.parse(aSelenium, word[7:]):
-                                testExpectedStatus = EXPECTED_IRRELEVANT
-                            continue
-                        elif word == "skip":
-                            testExpectedStatus = EXPECTED_DEATH
-                            continue
-                        elif word.startswith("skip-if"):
-                            # 7 = len("skip-if")
-                            if conditionParser.parse(aSelenium, word[7:]):
+                                continue
+                            elif word.startswith("random-if"):
+                                # 9 = len("random-if")
+                                if conditionParser.parse(aSelenium, word[9:]):
+                                    testExpectedStatus = EXPECTED_RANDOM
+                                continue
+                            elif word.startswith("require"):
+                                # 7 = len("require")
+                                if not conditionParser.parse(aSelenium, word[7:]):
+                                    testExpectedStatus = EXPECTED_IRRELEVANT
+                                continue
+                            elif word == "skip":
                                 testExpectedStatus = EXPECTED_DEATH
-                            continue
-                        elif word == "slow":
-                            testSlow = True
-                            continue
-                        elif word.startswith("slow-if"):
-                            # 7 = len("slow-if")
-                            if conditionParser.parse(aSelenium, word[7:]):
+                                continue
+                            elif word.startswith("skip-if"):
+                                # 7 = len("skip-if")
+                                if conditionParser.parse(aSelenium, word[7:]):
+                                    testExpectedStatus = EXPECTED_DEATH
+                                continue
+                            elif word == "slow":
                                 testSlow = True
-                            continue
-                        elif word == "fuzzy":
-                            testExpectedStatus = EXPECTED_FUZZY
-                            continue
-                        elif word.startswith("fuzzy-if"):
-                            # 8 = len("fuzzy-if")
-                            if conditionParser.parse(aSelenium, word[8:]):
+                                continue
+                            elif word.startswith("slow-if"):
+                                # 7 = len("slow-if")
+                                if conditionParser.parse(aSelenium, word[7:]):
+                                    testSlow = True
+                                continue
+                            elif word == "fuzzy":
                                 testExpectedStatus = EXPECTED_FUZZY
-                            continue
-                        else:
-                            # The following failure types are not supported:
-                            #   needs-focus
-                            #   asserts
-                            #   asserts
-                            #   silentfail
-                            #   silentfail-if
-                            testExpectedStatus = max(testExpectedStatus,
-                                                     aInheritedStatus)
-                            state = 1
+                                continue
+                            elif word.startswith("fuzzy-if"):
+                                # 8 = len("fuzzy-if")
+                                if conditionParser.parse(aSelenium, word[8:]):
+                                    testExpectedStatus = EXPECTED_FUZZY
+                                continue
+                            else:
+                                # The following failure types are not supported:
+                                #   needs-focus
+                                #   asserts
+                                #   asserts
+                                #   silentfail
+                                #   silentfail-if
+                                testExpectedStatus = max(testExpectedStatus,
+                                                         aInheritedStatus)
+                                state = 1
+                        except Exception as data:
+                            raise Exception(errorMsg + str(repr(data)))
 
                     if state == 1 and word == "include":
                         # 1. include
@@ -337,14 +343,16 @@ class reftestSuite(unittest.TestSuite):
                                     # none of the tests in the subdirectory
                                     index = index + 1
                                 else:
-                                    raise NameError("invalid listOfTests")
+                                    raise Exception(errorMsg +
+                                                    "invalid listOfTests")
                         break
 
                     if state == 1:
                         # 2. [<http>]
                         state = 3
                         if word.startswith("HTTP"):
-                            raise NameError("http syntax not supported")
+                            raise Exception(errorMsg +
+                                            "http syntax not supported")
 
                     if state == 3:
                         # 2. <type>
@@ -383,7 +391,8 @@ class reftestSuite(unittest.TestSuite):
                         if testClass == loadReftest:
                             if (testExpectedStatus == EXPECTED_FAIL or
                                 testExpectedStatus == EXPECTED_RANDOM):
-                                raise NameError("loadtest can't be marked as \
+                                raise Exception(errorMsg +
+                                                "loadtest can't be marked as \
 fails/random")
                             state = 6
                         elif testClass == scriptReftest:
@@ -402,7 +411,7 @@ fails/random")
                         state = 6
                         continue
 
-                    raise NameError("reftest syntax not supported")
+                    raise Exception(errorMsg + "reftest syntax not supported");
 
                 # end for word
 
@@ -433,7 +442,7 @@ fails/random")
                             index = index + 1
                             continue
                         else:
-                            raise NameError("invalid listOfTests")
+                            raise Exception("invalid listOfTests")
             # end for line
 
         # end with open

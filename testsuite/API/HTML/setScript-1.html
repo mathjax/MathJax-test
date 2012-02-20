@@ -9,19 +9,36 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <script type="text/javascript">
-      function getReftestElements()
+      var myscript = " var my_text_surrounded_by_spaces = 1; ";
+      var r1 = false, r2 = false;
+
+      function isScriptSet()
       {
-        return ["script"];
+      var v = document.getElementById("script").innerHTML;
+
+      // remove new line at the beginning for IE document mode < 9
+      v = v.replace(/^[\f|\n|\r]+/g, '');
+
+      return (v == myscript);
+      }
+
+      function getTestCases()
+      {
+      r2 = isScriptSet();
+      return [
+      newScriptReftestResult("script before MathJax.HTML.setScript", r1),
+      newScriptReftestResult("script after MathJax.HTML.setScript", r2)];
       }
 
       function xMathJaxConfig()
       {
+      r1 = !isScriptSet();
       var script = document.getElementById("script");
-      MathJax.HTML.setScript(script, " var my_text_surrounded_by_spaces = 1; ");
+      MathJax.HTML.setScript(script, myscript);
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
 
   </head>
 

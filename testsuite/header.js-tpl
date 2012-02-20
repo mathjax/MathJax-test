@@ -198,7 +198,7 @@ function defaultConfigObject()
           message:
           [
               [ "script", { type: "text/javascript" },
-                [ "throw '[Math Processing Error]';" ]
+                [ "throw new Error('[Math Processing Error]');" ]
               ]
           ]
       };
@@ -291,7 +291,7 @@ function finalizeTest()
   */
 function addWebdriverTestCompleteMarker()
 {
-    div = document.createElement("div");
+    var div = document.createElement("div");
     div.setAttribute("id", "webdriver_test_complete")
     document.body.appendChild(div);
 }

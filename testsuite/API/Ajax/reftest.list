@@ -5,7 +5,7 @@ script LoadHook-1.html
 script loadTimeout-1.html
 script properties-1.html
 script Load-1.html
-script Load-2.html
+skip-if(Quirks||IE7||IE8) script Load-2.html
 == Styles-1.html Styles-1-ref.html
 script Styles-2.html
 script variables-1.html

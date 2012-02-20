@@ -4,6 +4,6 @@ random == mspace2.html mspace2-ref.html
 fails == mspace-2a.html mspace-2-ref.html
 fails == mspace-2b.html mspace-2-ref.html
 == mspace-3.html mspace-3-ref.html
+load mspace-4.html
 load mspaceAbreak3.html
 == mspacestruts2.html mspacestruts2-ref.html
-

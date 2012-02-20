@@ -6,4 +6,4 @@ fails-if(SVG) == mglyph_valignbottom.html mglyph_valignbottom-ref.html
 fails-if(SVG) == mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
 fails-if(SVG) == mglyph_valigntop.html mglyph_valigntop-ref.html
 require(HTML-CSS) script rec-mglyph1.html
-== rec-mglyph2.html rec-mglyph2-ref.html
+fails-if(MSIE) == rec-mglyph2.html rec-mglyph2-ref.html

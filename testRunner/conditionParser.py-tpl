@@ -117,7 +117,7 @@ def t_error(t):
 
     @exception "conditionParser::t_error, syntax error"
     """
-    raise NameError("conditionParser::t_error, syntax error")
+    raise Exception("conditionParser::t_error, syntax error")
 
 t_NOT = r"\!"
 t_AND = r"\&\&"
@@ -174,7 +174,7 @@ def p_error(p):
 
     @exception "conditionParser::p_error, syntax error"
     """
-    raise NameError("conditionParser::p_error, syntax error")
+    raise Exception("conditionParser::p_error, syntax error")
 
 def p_closedTerm_token(p):
     '''closedTerm : OPERATINGSYSTEM

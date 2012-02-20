@@ -1,0 +1,37 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Test mspace</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+	       License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+    <!-- Test that particular attribute values do not raise errors -->
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <!-- Negative width -->
+      <mspace width="-50px" height="20px" depth="20px"
+              mathbackground="red"></mspace>
+
+      <!-- Negative height -->
+      <mspace width="20px" height="-10px" depth="20px"
+              mathbackground="blue"></mspace>
+
+      <!-- Negative depth -->
+      <mspace width="20px" height="20px" depth="-10px"
+              mathbackground="green"></mspace>
+
+      <!-- Negative "height + depth" -->
+      <mspace width="20px" height="20px" depth="-30px"
+              mathbackground="yellow"></mspace>
+
+      <mspace width="20px" height="-30px" depth="20px"
+              mathbackground="orange"></mspace>
+    </math>
+  </body>
+</html>
