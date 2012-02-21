@@ -1,1 +1,1 @@
-fails-if(Chrome) skip-if(Konqueror||MSIE) != math-menu-1.html math-menu-1-ref.html
+fails-if(Chrome) skip-if(Konqueror) != math-menu-1.html math-menu-1-ref.html

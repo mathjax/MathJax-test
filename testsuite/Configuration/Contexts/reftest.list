@@ -6,5 +6,5 @@ fails-if(MSIE||Konqueror) == namespace-2.html basic-ref.html
 skip-if(Chrome) == math-location-1.html math-location-ref.html
 == math-location-2.html math-location-ref.html
 # XXXfred These too tests require support for foreignObject in SVG.
-fails-if(Opera||MSIE) == svg-1a.html svg-1-ref.html
-fails-if(Opera||MSIE) == svg-1b.html svg-1-ref.html
+fails-if(Opera) == svg-1a.html svg-1-ref.html
+fails-if(Opera) == svg-1b.html svg-1-ref.html
