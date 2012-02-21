@@ -682,6 +682,10 @@ class reftest(unittest.TestCase):
             self.fail()
         except Exception as data:
             # other exception
+            # XXXfred This may prevent exceptions to be reported when
+            # runTestsuite.py is called without transmitToTaskHandler (i.e.
+            # when we run it directly with the command line). However, we also
+            # want to report these exceptions when the task handler is used...
             (success, msg) = self.determineSuccess(None, False)
             msg += cgi.escape(repr(data))
             print msg

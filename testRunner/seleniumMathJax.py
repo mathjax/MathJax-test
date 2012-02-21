@@ -33,7 +33,7 @@ the MathJax testing framework.
 
 from config import SELENIUM_SERVER_HUB_HOST, SELENIUM_SERVER_PORT
 
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageDraw
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver, selenium
 import StringIO
@@ -139,7 +139,7 @@ class seleniumMathJax(object):
         whether the browser should be put in full screen mode, when possible
         @property mCanvas
         A 4-tuple defining the left, upper, right, and lower pixel coordinate
-        of the browser canvas i.e the area to capture for screenshot.
+        of the area to capture. Assumed to be of size at most mReftestSize.
         @property mReftestSize
         The dimension of reftest images. It is set to 800x1000 px, to follow
         the size of screenshots used by Mozilla
@@ -354,7 +354,7 @@ class seleniumMathJax(object):
             if (self.mBrowser == "Opera"):
                 # Screenshots taken by OperaDriver have random noise at the
                 # bottom. Hence we reduce the dimension of the canvas.
-                self.mCanvas = 0, 0, 800, 600
+                self.mCanvas = 0, 0, self.mReftestSize[0], 600
         else:
             # Open the blank page and maximize it
             self.open("blank.html", 3)
@@ -462,7 +462,7 @@ class seleniumMathJax(object):
                     min(box[2], box[0] + self.mReftestSize[0]), \
                     min(box[3], box[1] + self.mReftestSize[1])
             else:
-                # We failed to determine the bounding box...
+                # We failed to determine the bounding box: use mReftestSize
                 self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
 
     def post(self):
@@ -537,6 +537,7 @@ class seleniumMathJax(object):
         @see http://www.pythonware.com/library/pil/handbook/
         """
 
+        # Get the base64-encoded image from Selenium
         if self.mWebDriver:
             data = self.mWebDriver.get_screenshot_as_base64()
         else:
@@ -548,9 +549,46 @@ class seleniumMathJax(object):
         image = Image.open(StringIO.StringIO(base64.b64decode(data)))
         image = image.convert("RGB")
 
-        if self.mCanvas != None:
-            image = image.crop(self.mCanvas)
+        if (self.mCanvas == None):
+            # (self.mSelenium != None)
+            # This is used in function "pre" for Selenium 1, to determine
+            # the browser canvas. In that case, we return the whole screenshot.
+            return image
 
+        # Only keep the rectangular region given by mCanvas
+        image = image.crop(self.mCanvas)
+
+        # The Internet Explorer Driver sends screenshots with black background
+        # at the bottom. So only keep the "bounding box".
+        if (self.mWebDriver and self.mBrowser == "MSIE"):
+            box = image.getbbox()
+            if box:
+                image = image.crop(box)
+
+        # Verify if the image has the size mReftestSize
+        size = image.size
+        if (size[0] == self.mReftestSize[0] and
+            size[1] == self.mReftestSize[1]):
+            return image
+
+        # Otherwise, fill the rest of the image with white...
+        image = image.crop((0, 0, self.mReftestSize[0], self.mReftestSize[1]))
+        draw = ImageDraw.Draw(image)
+        white = (255, 255, 255)
+
+        # Draw a white rectangle on the right hand side
+        if (size[0] < self.mReftestSize[0]):
+            draw.rectangle((size[0], 0,
+                            self.mReftestSize[0], self.mReftestSize[1]),
+                           fill=white)
+
+        # Draw a white rectangle a the bottom                            
+        if (size[1] < self.mReftestSize[1]):
+            draw.rectangle((0, size[1],
+                            size[0], self.mReftestSize[1]),
+                           fill=white)
+        del draw
+        
         return image
 
     def encodeImageToBase64(self, aImage):
@@ -562,13 +600,8 @@ class seleniumMathJax(object):
         @return a string with the Base64 format of the image, openable in a
         browser.
         """
-
-        # XXXfred If aImage is smaller than self.mReftestSize, the rest of the
-        # image is filled with black. We should maybe try to use white instead.
         stringIO = StringIO.StringIO()
-        box = (0, 0, self.mReftestSize[0], self.mReftestSize[1])
-        image = aImage.crop(box)
-        image.save(stringIO, "PNG")
+        aImage.save(stringIO, "PNG")
         return "data:image/png;base64," + base64.b64encode(stringIO.getvalue())
 
     def encodeSourceToBase64(self, aSource):
