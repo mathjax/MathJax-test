@@ -202,7 +202,8 @@ class seleniumMathJax(object):
                                                desiredCapabilities)
             self.mWebDriver.implicitly_wait(aTimeOut / 1000)
             self.mWebDriver.set_script_timeout(aTimeOut / 1000)
-            self.mSelenium = None
+            self.mSelenium = selenium(host, port, '*webdriver',
+                                      aMathJaxTestPath)
             self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
         else:
             self.mWebDriver = None
@@ -313,8 +314,53 @@ class seleniumMathJax(object):
         @fn start(self)
         @brief start Selenium
         """
-        if (self.mSelenium):
-            self.mSelenium.start(self)
+        if self.mWebDriver:
+            self.mSelenium.start(driver=self.mWebDriver)
+        else:
+            self.mSelenium.start()
+
+    def chooseInternetExplorerDocumentMode(self):
+        """
+        @fn chooseInternetExplorerDocumentMode(self)
+        @brief function to choose the internet explorer mode
+        """
+        #  open developer tools
+        self.mSelenium.key_down_native(VK_F12)
+        time.sleep(3)
+
+        if self.mBrowserMode == "Quirks":
+            self.mSelenium.key_down_native(VK_ALT)
+            time.sleep(.1)
+            self.mSelenium.key_press_native(VK_Q)
+            time.sleep(.1)
+            self.mSelenium.key_up_native(VK_ALT)
+            time.sleep(.1)
+        elif self.mBrowserMode == "IE7":
+            self.mSelenium.key_down_native(VK_ALT)
+            time.sleep(.1)
+            self.mSelenium.key_press_native(VK_7)
+            time.sleep(.1)
+            self.mSelenium.key_up_native(VK_ALT)
+            time.sleep(.1)
+        elif self.mBrowserMode == "IE8":
+            self.mSelenium.key_down_native(VK_ALT)
+            time.sleep(.1)
+            self.mSelenium.key_press_native(VK_8)
+            time.sleep(.1)
+            self.mSelenium.key_up_native(VK_ALT)
+            time.sleep(.1)
+        elif self.mBrowserMode == "IE9":
+            self.mSelenium.key_down_native(VK_ALT)
+            time.sleep(.1)
+            self.mSelenium.key_press_native(VK_9)
+            time.sleep(.1)
+            self.mSelenium.key_up_native(VK_ALT)
+            time.sleep(.1)
+            time.sleep(3)
+
+        # close developer tools
+        self.mSelenium.key_down_native(123) # F12
+        time.sleep(3)
 
     def pre(self):
         """
@@ -346,11 +392,17 @@ class seleniumMathJax(object):
         if self.mWebDriver:
             # Only open the blank page...
             self.open("blank.html")
+
             if (self.mBrowser == "MSIE" and
                 not(self.mBrowserMode == "default")):
                 # For MSIE, we choose the document mode
-                # XXXfred TODO!
+                # XXXfred Currently, opening the IE developer toolbar
+                # makes the execution fails with a "Modal Dialog Present"
+                # assertion. That seems to be issue 3360:
+                # http://code.google.com/p/selenium/issues/detail?id=3360
+                # self.chooseInternetExplorerDocumentMode()
                 pass
+
             if (self.mBrowser == "Opera"):
                 # Screenshots taken by OperaDriver have random noise at the
                 # bottom. Hence we reduce the dimension of the canvas.
@@ -408,45 +460,7 @@ class seleniumMathJax(object):
 
             if (self.mBrowser == "MSIE" and
                 not(self.mBrowserMode == "default")):
-                # For MSIE, we choose the document mode
-
-                #  opening developer tools
-                self.mSelenium.key_down_native(VK_F12)
-                time.sleep(3)
-
-                if self.mBrowserMode == "Quirks":
-                    self.mSelenium.key_down_native(VK_ALT)
-                    time.sleep(.1)
-                    self.mSelenium.key_press_native(VK_Q)
-                    time.sleep(.1)
-                    self.mSelenium.key_up_native(VK_ALT)
-                    time.sleep(.1)
-                elif self.mBrowserMode == "IE7":
-                    self.mSelenium.key_down_native(VK_ALT)
-                    time.sleep(.1)
-                    self.mSelenium.key_press_native(VK_7)
-                    time.sleep(.1)
-                    self.mSelenium.key_up_native(VK_ALT)
-                    time.sleep(.1)
-                elif self.mBrowserMode == "IE8":
-                    self.mSelenium.key_down_native(VK_ALT)
-                    time.sleep(.1)
-                    self.mSelenium.key_press_native(VK_8)
-                    time.sleep(.1)
-                    self.mSelenium.key_up_native(VK_ALT)
-                    time.sleep(.1)
-                elif self.mBrowserMode == "IE9":
-                    self.mSelenium.key_down_native(VK_ALT)
-                    time.sleep(.1)
-                    self.mSelenium.key_press_native(VK_9)
-                    time.sleep(.1)
-                    self.mSelenium.key_up_native(VK_ALT)
-                    time.sleep(.1)
-                    time.sleep(3)
-
-                # closing developer tools
-                self.mSelenium.key_down_native(123) # F12
-                time.sleep(3)
+                self.chooseInternetExplorerDocumentMode()
 
             # Determine the canvas
             image1 = self.takeScreenshot(1.0)
@@ -466,7 +480,7 @@ class seleniumMathJax(object):
                 self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
 
     def post(self):
-        if self.mSelenium:
+        if (not self.mWebDriver):
             if self.mFullScreenMode and \
                     (self.mBrowser == "Firefox" or
                      self.mBrowser == "Chrome" or
@@ -542,15 +556,12 @@ class seleniumMathJax(object):
             data = self.mWebDriver.get_screenshot_as_base64()
         else:
             data = self.mSelenium.capture_screenshot_to_string()
-
-        if self.mSelenium:
             time.sleep(aWaitTime)
 
         image = Image.open(StringIO.StringIO(base64.b64decode(data)))
         image = image.convert("RGB")
 
         if (self.mCanvas == None):
-            # (self.mSelenium != None)
             # This is used in function "pre" for Selenium 1, to determine
             # the browser canvas. In that case, we return the whole screenshot.
             return image
