@@ -265,7 +265,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
           if (isset($_POST['port'])) {
             $port = intval($_POST['port']);
           } else {
-            $port = $DEFAULT_SELENIUM_PORT;
+            $port = $SELENIUM_SERVER_PORT;
           }
 
           if (isset($_POST['mathJaxPath'])) {

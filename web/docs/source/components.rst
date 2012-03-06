@@ -64,7 +64,7 @@ want to run tests on your local machine, a tip is to use virtual test machines.
 Note for Selenium 2 (Webdriver):
 The test machine may require intallation of other programs than simply the
 Selenium server. See
-`Selenium And Platform Support <https://sites.google.com/site/mathjaxproject/design-documents/testing/selenium-and-platform-support>`_ for a more precise
+`Selenium And Platform Support <https://sites.google.com/site/mathjaxproject/design-documents/testing/platforms-supported>`_ for a more precise
 description of the requirements.
 
 .. _test-runner:

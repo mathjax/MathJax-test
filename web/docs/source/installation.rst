@@ -25,6 +25,7 @@ the :ref:`Task controller <task-controller>` and the
 ``MathJax-test/`` directory mentioned below should be accessible from your
 server's root directory (via a symbolic link for example).
 
+
 A copy of ``MathJax-test/`` can be downloaded with the command
 
 .. code-block:: bash
@@ -193,3 +194,48 @@ Also, to test MathJax updates one often has to clear cache and cookies.
 Unfortunately, no interface is available yet to perform all these tasks. One
 has to do it manually.
 
+.. _grid
+
+Executing Selenium servers
+==========================
+
+The traditionnal configuration is to execute a selenium server on each
+:ref:`test machine <test-machine>`, with a command like:
+
+.. code-block:: bash
+
+  java -jar name-of-the-selenium-server.jar
+
+If you have the code for the testing framework installed on the test machine, the
+following command will do the same:
+
+.. code-block:: bash
+
+  make runSeleniumServer
+
+Except that you can also modify the server properties in your config file:
+
+.. code-block:: bash
+
+  SELENIUM_SERVER_HOST
+  SELENIUM_SERVER_PORT
+
+An alternative approach is Selenium 2's new
+`Grid feature <http://code.google.com/p/selenium/wiki/Grid2>`_. Please read
+the Selenium documentation for details. You can execute the servers with
+
+.. code-block:: bash
+
+  make runSeleniumHub # command to execute on the task controller
+  make runSeleniumNode # command to execute on the test machines
+
+Where the first command is for the Hub on :ref:`task controller <task-controller>`
+and the second command is for the :ref:`test machine <test-machine>`. The
+configuration options to consider are:
+
+.. code-block:: bash
+
+  SELENIUM_SERVER_HUB_HOST
+  SELENIUM_SERVER_HUB_PORT
+  SELENIUM_SERVER_NODE_OPTIONS
+  SELENIUM_SERVER_NODE_TIMEOUT

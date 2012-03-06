@@ -31,7 +31,7 @@ This module implements a selenium object augmented with features specific to
 the MathJax testing framework.
 """
 
-from config import SELENIUM_SERVER_HUB_HOST, SELENIUM_SERVER_PORT
+from config import SELENIUM_SERVER_HUB_HOST, SELENIUM_SERVER_HUB_PORT
 
 from PIL import Image, ImageChops, ImageDraw
 from selenium.webdriver.support.ui import WebDriverWait
@@ -162,7 +162,7 @@ class seleniumMathJax(object):
 
         if (aUseGrid):
             host = SELENIUM_SERVER_HUB_HOST
-            port = SELENIUM_SERVER_PORT
+            port = SELENIUM_SERVER_HUB_PORT
         else:
             host = aHost
             port = aPort

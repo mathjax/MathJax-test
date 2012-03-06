@@ -213,7 +213,7 @@
             ; 
             <label>port:
               <input id="port" name="port" type="text"
-                     value="<?php echo $DEFAULT_SELENIUM_PORT;?>"/>
+                     value="<?php echo $SELENIUM_SERVER_PORT;?>"/>
             </label>
           </p>
           <p>

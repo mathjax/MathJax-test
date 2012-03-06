@@ -42,7 +42,7 @@ from config import PERL, SED
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import MATHJAX_TEST_URI
 
-from config import HOST_LIST, OS_LIST, HOST_LIST_OS, DEFAULT_SELENIUM_PORT
+from config import HOST_LIST, OS_LIST, HOST_LIST_OS, SELENIUM_SERVER_PORT
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH
 from config import DEFAULT_TIMEOUT, OUTPUT_JAX_LIST
 
@@ -409,7 +409,7 @@ def main(aArgs, aTransmitToTaskHandler):
         host = config.get(section, "host")
         port = config.getint(section, "port")
         if (port == -1):
-            port = DEFAULT_SELENIUM_PORT
+            port = SELENIUM_SERVER_PORT
         mathJaxPath = config.get(section, "mathJaxPath")
         if (mathJaxPath == "default"):
             mathJaxPath = DEFAULT_MATHJAX_PATH

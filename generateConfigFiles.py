@@ -97,18 +97,18 @@ QA_PASSWORD_FILE = configParser.get("qa", "QA_PASSWORD_FILE")
 TASK_HANDLER_HOST = configParser.get("task_handler", "TASK_HANDLER_HOST")
 TASK_HANDLER_PORT = configParser.getint("task_handler", "TASK_HANDLER_PORT")
 
-SELENIUM_SERVER_HUB_HOST = configParser.get("selenium_server",
-                                        "SELENIUM_SERVER_HUB_HOST")
 SELENIUM_SERVER_PORT = configParser.get("selenium_server",
                                         "SELENIUM_SERVER_PORT")
+SELENIUM_SERVER_HUB_HOST = configParser.get("selenium_server",
+                                            "SELENIUM_SERVER_HUB_HOST")
+SELENIUM_SERVER_HUB_PORT = configParser.get("selenium_server",
+                                            "SELENIUM_SERVER_HUB_PORT")
 
 DEFAULT_TASK_NAME = configParser.get("testing_instance", "DEFAULT_TASK_NAME")
 HOST_LIST = parseStringArray(configParser.get("testing_instance",
                                               "HOST_LIST"))
 HOST_LIST_OS_ = parseStringArray(configParser.get("testing_instance",
                                                  "HOST_LIST_OS"))
-DEFAULT_SELENIUM_PORT = configParser.getint("testing_instance",
-                                            "DEFAULT_SELENIUM_PORT")
 DEFAULT_MATHJAX_PATH = configParser.get("testing_instance",
                                         "DEFAULT_MATHJAX_PATH")
 DEFAULT_MATHJAX_TEST_PATH = configParser.get("testing_instance",
@@ -179,8 +179,10 @@ declarePythonString(f_out, "SED", SED)
 declarePythonString(f_out, "TASK_HANDLER_HOST", TASK_HANDLER_HOST)
 declarePythonInteger(f_out, "TASK_HANDLER_PORT", TASK_HANDLER_PORT)
 
-declarePythonString(f_out, "SELENIUM_SERVER_HUB_HOST", SELENIUM_SERVER_HUB_HOST)
 declarePythonInteger(f_out, "SELENIUM_SERVER_PORT", SELENIUM_SERVER_PORT)
+declarePythonString(f_out, "SELENIUM_SERVER_HUB_HOST", SELENIUM_SERVER_HUB_HOST)
+declarePythonInteger(f_out, "SELENIUM_SERVER_HUB_PORT",
+                     SELENIUM_SERVER_HUB_PORT)
 
 declarePythonStringArray(f_out, "HOST_LIST", HOST_LIST)
 declarePythonStringArray(f_out, "OS_LIST", OS_LIST)
@@ -188,7 +190,6 @@ declarePythonIntegerArray(f_out, "HOST_LIST_OS", HOST_LIST_OS)
 declarePythonStringArray(f_out, "BROWSER_LIST", OS_LIST)
 declarePythonStringArray(f_out, "FONT_LIST", FONT_LIST)
 declarePythonStringArray(f_out, "OUTPUT_JAX_LIST", OUTPUT_JAX_LIST)
-declarePythonInteger(f_out, "DEFAULT_SELENIUM_PORT", DEFAULT_SELENIUM_PORT)
 declarePythonString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
 declarePythonString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
                     DEFAULT_MATHJAX_TEST_PATH)
@@ -209,12 +210,12 @@ print >>f_out, "/* " + WARNING_GENERATED_FILE + " */"
 declarePhpString(f_out, "TASK_HANDLER_HOST", TASK_HANDLER_HOST)
 declarePhpInteger(f_out, "TASK_HANDLER_PORT", TASK_HANDLER_PORT)
 
-declarePhpString(f_out, "SELENIUM_SERVER_HUB_HOST", SELENIUM_SERVER_HUB_HOST)
 declarePhpInteger(f_out, "SELENIUM_SERVER_PORT", SELENIUM_SERVER_PORT)
+declarePhpString(f_out, "SELENIUM_SERVER_HUB_HOST", SELENIUM_SERVER_HUB_HOST)
+declarePhpInteger(f_out, "SELENIUM_SERVER_HUB_PORT", SELENIUM_SERVER_HUB_PORT)
 
 declarePhpString(f_out, "DEFAULT_TASK_NAME", DEFAULT_TASK_NAME)
 declarePhpStringArray(f_out, "HOST_LIST", HOST_LIST)
-declarePhpInteger(f_out, "DEFAULT_SELENIUM_PORT", DEFAULT_SELENIUM_PORT)
 declarePhpString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
 declarePhpString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
                  DEFAULT_MATHJAX_TEST_PATH)
