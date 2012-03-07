@@ -11,7 +11,9 @@ Allow from all
 Allow from all
 </Files>
 
-# Pages allowing to edit the task list have restricted access
+# [Secure Access Begin]
+# This section is removed if any of QA_PASSWORD_FILE or QA_USER_NAME is not
+# provided in the config file. Otherwise they are replaced accordingly.
 <Files ~ "^(commandHandler\.php|taskEditor\.php)$">
 AuthUserFile QA_PASSWORD_FILE
 AuthGroupFile /dev/null
@@ -19,3 +21,4 @@ AuthName "Secured Access to MathJax Testing Tools"
 AuthType Basic
 Require User QA_USER_NAME
 </Files>
+# [Secure Access End]

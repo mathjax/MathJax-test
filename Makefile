@@ -52,9 +52,13 @@ config:
 	@ cp $(WEB_HTACCESS)-tpl $(WEB_HTACCESS)
 	@ $(SED) -i '1i\
 # $(WARNING_GENERATED_FILE)' $(WEB_HTACCESS)
-	@ $(SED) -i 's|QA_USER_NAME|$(QA_USER_NAME)|' $(WEB_HTACCESS)
-	@ $(SED) -i 's|QA_PASSWORD_FILE|$(QA_PASSWORD_FILE)|' $(WEB_HTACCESS)
-
+	@ if [ -n "$(QA_USER_NAME)" -a -n "$(QA_PASSWORD_FILE)" ] ;\
+	  then\
+            $(SED) -i 's|QA_USER_NAME|$(QA_USER_NAME)|' $(WEB_HTACCESS);\
+            $(SED) -i 's|QA_PASSWORD_FILE|$(QA_PASSWORD_FILE)|' $(WEB_HTACCESS);\
+	  else \
+            $(SED) -i '/Secure Access Begin/,/Secure Access End/d' $(WEB_HTACCESS);\
+	  fi
 	@ echo 'Generate $(TESTSUITE_HEADER)'
 	@ cp $(TESTSUITE_HEADER)-tpl $(TESTSUITE_HEADER)
 	@ $(SED) -i '1i\
