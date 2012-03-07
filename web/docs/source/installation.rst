@@ -8,86 +8,106 @@ This section provides instructions to install and keep up-to-date the testing
 framework. They should help to do a local installation as well as to maintain
 the public machines used by the project.
 
-Note: the main component is already installed on ``dessci.webfactional.com``.
-It uses a custom Python environment which can be enable with ``workon testing``.
-Use the ``screen`` tool to keep the server running when your ssh connection
-is closed. Public test machines are not available yet, though.
-
 .. _basic-install:
 
 Basic installation
 ==================
 
-You need to have a central machine on which you will install
-the :ref:`Task controller <task-controller>` and the
-:ref:`Web servers <web-servers>`. You must set up an
-`Apache <http://www.apache.org/>`_ web server on this machine. The
-``MathJax-test/`` directory mentioned below should be accessible from your
-server's root directory (via a symbolic link for example).
+First, please have a look at the :ref:`framework overview <overview>` to
+understand what you are going to do. The basic installation consists in
+configuring the central machine that controls the framework. In this section,
+we will only use the :ref:`test runner <test-runner>`. To avoid the installation
+of a local Apache server, we also rely on the public MathJax Web server.
+Finally, the central machine will itself be used as a test machine.
 
+It is recommended to use an UNIX environment with the standard programs. On
+Windows, you might want to use
+`Cygwin <http://www.cygwin.com/>`_ which emulates a UNIX-like environment and
+download software tools from that system. In that case, after having installed all
+the programs you might need to use the
+`Rebaseall <http://cygwin.wikia.com/wiki/Rebaseall>`_ command. On Mac OS, you can
+download the programs from the `MacPorts <http://www.macports.org/>`_ repository. 
 
-A copy of ``MathJax-test/`` can be downloaded with the command
+Start by installing git and get a copy of ``MathJax-test/`` with the command:
 
 .. code-block:: bash
 
    git clone https://github.com/mathjax/MathJax-test
 
-You can then move into ``MathJax-test/`` where you find an ``INSTALL`` file,
-which contains basic instructions on how to configure the framework. The default
-configuration is available in the file ``default.cfg``. Copy this file into
-``custom.cfg``:
+You can then move into ``MathJax-test/`` where the default configuration is
+available in the file ``default.cfg``. Copy this file into a custom
+configuration file ``custom.cfg``:
 
 .. code-block:: bash
 
    cp -n default.cfg custom.cfg
 
-and edit the following sections of the new file with your favorite text editor:
+Then install various other standard programs: python (2.6 or greater), perl
+(5.1 or greater), pip, sed (use the GNU version gsed on MacOS), wget and java.
+If necessary, update the [bin] section accordingly and/or modify your PATH
+variable so that the testing framework will be able to find them.
 
-- [bin]
-  
-  This section contains various paths to dependencies. They are listed in the
-  ``INSTALL`` file. Some programs such as python or perl are
-  quite standard and may easily be installed on your system if they are not
-  already.
+Install various libraries using the package manager of your system or
+Python's pip. For example
 
-  The same holds for Python libraries. It is however recommended to use
-  the Python's ``pip`` utilitary to install them, so that you can regularly use
-  the ``make updateSelenium`` command to upgrade the Selenium python driver
-  library.
+.. code-block:: bash
 
-  The installation of custom doxygen filters may be slightly less convenient
-  but you only need them if you wish to generate the code documentation.
+  sudo pip install pil ply python-crontab selenium
 
-- [qa]
+will install `Python Imaging Library <http://www.pythonware.com/products/pil/>`_,
+`Python Lex-Yacc <http://www.dabeaz.com/ply/>`_ and 
+`Python Crontab <http://pypi.python.org/pypi/python-crontab/>`_ and
+`Selenium Python Driver <http://pypi.python.org/pypi/selenium/>`_. For the
+Selenium Python Driver, installing from pil is the best option if you want to
+get the latest version of the library and be able to to upgrade it later with the
+``make updateSelenium``.
 
-  You should fill in this section with a user name and a password file, which
-  will be used to provide secured access to the QA interface. Such an
-  account can be created in the standard way with the ``htpasswd``
-  program.
+(TODO: verify other dependencies on Python and Perl's libraries)
 
-Then use
+Once all the dependencies are satisfied, you should be able to configure the
+framework with the command
 
 .. code-block:: bash
 
    make config
 
-to generate the configuration files. You may also want to generate the
-documentation with the command
+We are now going to describe one of the simplest test machine configuration.
+We assume that you have the latest version of Firefox installed. Download the
+Selenium server with the command
 
 .. code-block:: bash
 
-   make doc
+  make downloadSeleniumServer
 
-Finally start the task handler server with
+and then execute it with
 
 .. code-block:: bash
 
-   make runTaskHandler
+  make runSeleniumServer
 
-Now, open the directory ``http://path-to-mathjax-test/MathJax-test/web/`` in
-your browser to access the QA interface. You should now be able to view and
-edit tasks. However, to run them you need to set up
-:ref:`test machines <test-machines-install>`.
+Now open a new terminal and move into the ``MathJax-test/testRunner`` directory.
+Copy ``testRunner/default.cfg`` with
+
+.. code-block:: bash
+
+  cp config/default.cfg config/custom.cfg
+
+and open this new file ``config/custom.cfg`` in a text editor. Modify ``host``
+to be your local host (generally 127.0.0.1 or localhost), ``operatingSystem``
+to match your system configuration (Windows, Mac or Linux), ``browser`` to
+Firefox, ``font`` to TeX and ``outputJax`` to SVG. Finally, run the test with
+
+.. code-block:: bash
+
+  python runTestsuite.py -c config/custom.cfg
+
+If you want to interrupt the script properly, press Ctrl + C in the terminal
+where you typed the command above.
+
+You will now be able to find in ``MathJax-test/web/results/`` the results of
+the testing instance.
+
+TODO: rewrite sections below
 
 .. _advanced-install:
 
@@ -96,8 +116,8 @@ Advanced configuration and maintenance
 
 Once the :ref:`basic installation <basic-install>` is made, you can stop
 the server at any time with a SIGINT command, typically with CTRL+C. This will
-allow to modify the testing framework safely, for example to do a ``git pull``
-or configuration changes. Then you can run the server again with
+allow you to modify the testing framework safely, for example to do a
+``git pull`` or configuration changes. Then you can run the server again with
 
 .. code-block:: bash
 

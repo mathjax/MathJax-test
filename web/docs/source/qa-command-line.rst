@@ -11,7 +11,7 @@ some situations. For example it is used for task scheduling: cron executes the
 python scripts to send request to the task handler.
 
 Note: the tools described on this page are available in the
-``MathJax-tests/testRunner/`` directory.
+``MathJax-test/testRunner/`` directory.
 
 .. _command-test-runner:
 
@@ -96,6 +96,14 @@ list in the same way as its :ref:`graphical counterpart <task-viewer>`:
 
 Note that this output is saved in a file ``taskList.txt`` when the server is
 stopped.
+
+To select some specific tasks, you can use usual UNIX commands:
+
+.. code-block:: sh
+
+   python taskViewer.py | grep firefox
+   experimentalTask-firefox-linux fred-VirtualBox.local Running 17/1258 2011-11-15/experimentalTask/ Linux_Firefox_default_STIX-1 None
+   experimentalTask-firefox-windows 192.168.0.13 Killed - 2011-11-15/experimentalTask/ None None
 
 To get more precise description or perform actions, you can use
 the :ref:`host info <command-host-info>` and

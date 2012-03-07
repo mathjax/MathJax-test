@@ -6,6 +6,8 @@ Testing Framework Components
 
 This section gives an overview of the different testing framework components.
 
+.. _overview:
+
 Overview
 ========
 
@@ -63,8 +65,8 @@ want to run tests on your local machine, a tip is to use virtual test machines.
 
 Note for Selenium 2 (Webdriver):
 The test machine may require intallation of other programs than simply the
-Selenium server. See
-`Selenium And Platform Support <https://sites.google.com/site/mathjaxproject/design-documents/testing/platforms-supported>`_ for a more precise
+Selenium server. See the page
+`platforms supported <https://sites.google.com/site/mathjaxproject/design-documents/testing/platforms-supported>`_ for a more precise
 description of the requirements.
 
 .. _test-runner:
@@ -112,6 +114,8 @@ list:
   
   - ``browser``: Firefox, Safari, Chrome, Opera, MSIE, Konqueror, HTMLUnit, iPhone, Android
   
+  - ``browserVersion``: browser version.
+
   - ``browserMode``: Internet Explorer mode among Quirks, IE7, IE8 and IE9.
   
   - ``browserPath``: auto or path to the browser executable on the test machine.
@@ -136,19 +140,16 @@ list:
     testing instance was interrupted. In that case, the text ouput contain a
     startID that we can use to recover the testing instance. 
   
-``browser``, ``browserMode``, ``font`` and ``outputJax`` may be a list of
-elements separated by white spaces. In that case, testing instances are
-executed for all the possible combinations of browser, font, outputJax and
-browserMode. Also note that browserMode are ignored for other browsers that
-Internet Explorer.
+``browser``, ``browserVersion``, ``browserMode``, ``font`` and ``outputJax`` may
+be a list of elements separated by white spaces. In that case, testing instances are
+executed for all the possible combinations of browser, browserVersion,  font,
+outputJax and browserMode The rationale for this feature is to provide a
+convenient way to run several instances on an operating system in one go. This
+is mainly useful when you work in command line but you may ignore them if you
+use the :ref:`task controller <task-controller>` instead.
 
-The rationale for this feature, as well as the one for multiple configuration
-files, is to provide a convenient way to run several instances on an operating
-system in one go. This is mainly useful when you work in command line but you
-may ignore them if you use the :ref:`task controller <task-controller>` instead.
-
-Most non boolean options, one can indicate to use a default value, which depends
-on your framework configuration. See the file
+For most non boolean options, one can indicate to use a default value which
+depends on your framework configuration. See the file
 ``testRunner/config/default.cfg`` for an example.
 
 .. _task-controller:

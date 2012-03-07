@@ -33,7 +33,7 @@ compare your test page against a reference. One idea is to use an image as a
 reference. However even in simple cases, the rendering of a page depends on too
 many parameters such as operating system and browser, default text size,
 type of fonts used, default zoom factor etc. A better approach borrowed from
-Mozilla is to use a Web page for both the test and reference page.
+Mozilla is to use a Web page for both the test and reference pages.
 
 For example, suppose we want to check that ``<mstyle/>`` supports the
 attributes of the ``<mfenced/>`` element. Then the test page
@@ -334,7 +334,7 @@ it before MathJax starts. Other global objects may help writing test, such as
 ``gMathJaxPath`` and ``gMathJaxQueryString`` which describes the URI of the
 MathJax.js script.
 
-You also can add actions before/after MathJax starts by defining the
+You can also add actions before/after MathJax starts by defining the
 following functions in your test page:
 
 .. code-block:: javascript

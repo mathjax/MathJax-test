@@ -43,6 +43,7 @@ from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import MATHJAX_TEST_URI
 
 from config import HOST_LIST, OS_LIST, HOST_LIST_OS, SELENIUM_SERVER_PORT
+from config import BROWSER_LIST, FONT_LIST
 from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH
 from config import DEFAULT_TIMEOUT, OUTPUT_JAX_LIST
 
@@ -407,6 +408,7 @@ def main(aArgs, aTransmitToTaskHandler):
         section = "framework"
         useGrid = getBooleanOption(config, section, "useGrid")
         host = config.get(section, "host")
+        # host == "default" is handled below
         port = config.getint(section, "port")
         if (port == -1):
             port = SELENIUM_SERVER_PORT
@@ -428,6 +430,8 @@ def main(aArgs, aTransmitToTaskHandler):
         # platform section
         section = "platform"
         operatingSystem = config.get(section, "operatingSystem")
+        if (operatingSystem == "default"):
+            operatingSystem = OS_LIST[0]
         if (host == "default"):
             host = HOST_LIST[HOST_LIST_OS.index(OS_LIST.index(operatingSystem))]
         browserList = config.get(section, "browser").split()
@@ -483,7 +487,7 @@ def main(aArgs, aTransmitToTaskHandler):
                             browserModeList2 = browserModeList
                
                         for browserMode in browserModeList2:
-                            
+                           
                             # Create a Selenium instance
                             selenium = \
                                 seleniumMathJax.seleniumMathJax(useWebDriver,

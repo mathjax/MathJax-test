@@ -40,7 +40,8 @@ In order to manage the QA workflow, four tags are available in the tracker:
    convert it into an automated test.
 3) **QA - In Testsuite**: an automated test is written and integrated in the
    testsuite.
-4) **QA - Do Not Write Automated Test**: this issue won't be tested automatically
+4) **QA - Do Not Write Automated Test**: this issue won't be tested
+   automatically because it is hard to write a test for it in our framework.
 
 .. _unit-test:
 
@@ -56,12 +57,12 @@ way:
 - **tree reftest**: two pages are loaded, DOM subtrees are serialized and the
   corresponding output strings compared.
 
-- **load test**: the unit test is made of a single Web page. The test is passed
+- **load test**: the unit test is made of a single Web page. The test passes
   if no crashes, hangs etc happen. Such a test is also often called
   **crashtest**.
 
 - **script test**: the unit test is made of a single Web page, in which a
-  sequence of Javascript tests is executed. The unit test is passed if each
+  sequence of Javascript tests is executed. The unit test passes if each
   individual Javascript test is successful.
 
 The name reftest comes from the fact that we perform a comparison between a
@@ -117,7 +118,7 @@ that the third fails on Linux.
    skip-if(MSIE) load crashtest.html
    fails-if(Linux) tree== tree.html tree-ref.html
 
-For a detailed description of the manifest syntax, see :ref:`reftest-manifest`
+For a detailed description of the manifest syntax, see :ref:`reftest-manifest`.
 
 .. _testing-instance:
 

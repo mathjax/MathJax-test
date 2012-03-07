@@ -14,10 +14,8 @@ Task Viewer
 
 The **Task Viewer** is the main control interface of the QA Web interface. It
 contains a  table of task, basic information and actions to perform on them.
-
-Note that the task viewer page is not reloaded automatically. To get the last
-status one has to refresh the page, for example using the green button at the
-top of the page.
+Note that the task viewer page is not refreshed automatically because that
+could prevent the user to do an action.
 
 At the bottom of the page, you have a link to the 
 :ref:`task editor <task-editor>` to create new tasks. You will also find
@@ -29,26 +27,26 @@ page.
 .. image:: images/task-viewer.png
    :alt: Task Viewer
 
-The Status can take various values. ``Inactive`` means that the task
+The **Status** can take various values. ``Inactive`` means that the task
 has been created but no actions have been performed on it yet. When one asks a
-start to start, it may wait for another task to complete on the test machine and
-thus is ``Pending``. Otherwise, the task becomes in the state ``Running``. Its
-execution can be stopped in various way: ``Killed`` if an error occured,
-``Interrupted`` if the someone stopped the task and ``Complete`` if it
-all the tests have been executed. While the task is running, the Progress is
-updated: it is first set to Init and then to the number of tests executed over
-the number of tests to execute for this task.
+task to start, the task may wait for another task to complete on the test
+machine and thus is ``Pending``. Otherwise, the task becomes in the state
+``Running``. Its execution can be stopped in various way: ``Killed`` if an error
+occured, ``Interrupted`` if the someone stopped the task and ``Complete`` if it
+all the tests have been executed. While the task is running, the **Progress** is
+updated: it is first set to ``Init`` and then to the number of tests executed
+over the number of tests to execute for this task.
 
-If you click on the task or host name, you can get more detailed
+If you click on the **task** or **host** name, you can get more detailed
 information :ref:`on the task <task-info>` or :ref:`on the host <host-info>`.
-The results column contains link to the result directory as well as to
+The **Results** column contains link to the result directory as well as to
 :ref:`text and formatted outputs <test-results>`
 if they have been created. When a task is running, the
 results are written in the text output and only formatted when the task is
 complete. It may be useful to format the intermediate result, so a button is
 available to do so.
 
-Finally, the Actions column contains field to clone or rename tasks. Depending
+Finally, the **Actions** column contains field to clone or rename tasks. Depending
 on the status of the task it also contains buttons to edit, run, restart, stop,
 interrupt or remove a task. The difference between run and restart is that the
 former tries to recover an interrupted task whereas the latter reinitializes it.

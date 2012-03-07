@@ -187,7 +187,7 @@ declarePythonInteger(f_out, "SELENIUM_SERVER_HUB_PORT",
 declarePythonStringArray(f_out, "HOST_LIST", HOST_LIST)
 declarePythonStringArray(f_out, "OS_LIST", OS_LIST)
 declarePythonIntegerArray(f_out, "HOST_LIST_OS", HOST_LIST_OS)
-declarePythonStringArray(f_out, "BROWSER_LIST", OS_LIST)
+declarePythonStringArray(f_out, "BROWSER_LIST", BROWSER_LIST)
 declarePythonStringArray(f_out, "FONT_LIST", FONT_LIST)
 declarePythonStringArray(f_out, "OUTPUT_JAX_LIST", OUTPUT_JAX_LIST)
 declarePythonString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
