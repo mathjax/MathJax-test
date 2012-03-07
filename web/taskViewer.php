@@ -107,11 +107,7 @@
     </div>  
 
     <div class="body">
-      <h1>Task Viewer
-        <a href="javascript:location.reload();">
-          <img src="icons/reload.png" width="24" height="24" alt="reload page"/>
-        </a>
-      </h1>
+      <h1>Task Viewer</h1>
 
       <?php
         $file = fsockopen($TASK_HANDLER_HOST, $TASK_HANDLER_PORT);
@@ -120,7 +116,23 @@
           $line = trim(fgets($file));
           if ($line == "TASK LIST EMPTY") {
             echo "<p>The task list is empty.</p>";
+            fclose($file);
           } else {
+            // Get the task list
+            $taskList = array();
+            while(!feof($file)) {
+              $line = trim(fgets($file));
+              $argument = explode(" ", $line, 7);
+              if (count($argument) == 7) {
+                $taskName = array_shift($argument);
+                $taskList[$taskName] = $argument;
+              }
+            }
+            fclose($file);
+
+            // Sort the table by task name
+            ksort($taskList);
+
             echo '<table id="taskList">';
             echo '<tr>';
             echo '<th>Task Name</th>';
@@ -130,17 +142,14 @@
             echo '<th>Results</th>';
             echo '<th>Actions</th>';
             echo '</tr>';
-            while(!feof($file)) {
-              $line = trim(fgets($file));
-              $argument = explode(" ", $line, 7);
-              if (count($argument) == 7) {
-                $taskName = $argument[0];
-                $host = $argument[1];
-                $status = $argument[2];
-                $progress = $argument[3];
-                $resultDir = $argument[4];
-                $resultFileName = $argument[5];
-                $schedule = $argument[6];
+
+            foreach ($taskList as $taskName => $taskProperties) {
+                $host = $taskProperties[0];
+                $status = $taskProperties[1];
+                $progress = $taskProperties[2];
+                $resultDir = $taskProperties[3];
+                $resultFileName = $taskProperties[4];
+                $schedule = $taskProperties[5];
 
                 echo '<tr>';
                 echo '<td><a href="taskInfo.php?taskName='.$taskName.'">';
@@ -224,46 +233,42 @@
                   commandButton($taskName, "REMOVE");
                 }
 
-                commandButton($taskName, "CLONE", True);
-                commandButton($taskName, "RENAME", True);
-
-                echo '</td>';
-
-                echo '</tr>';
-              }
+              commandButton($taskName, "CLONE", True);
+              commandButton($taskName, "RENAME", True);
+              echo '</td>';
+              echo '</tr>';
             }
             echo '</table>';
-            fclose($file);
 
-            if ($line != "TASK LIST EMPTY") {
-              echo '<p>';
-              echo '<form name="multipleTasks" action="commandHandler.php"';
-              echo '      method="post">';
-              echo '<a href="javascript:removeMultipleTasks();">
-                   Remove selected tasks</a> - ';
-              echo '<a href="javascript:runMultipleTasks();">
-                   Run selected tasks</a> - ';
-              echo '<a href="javascript:stopMultipleTasks();">
-                   Stop selected tasks</a> - ';
-              echo '<input name="command" id="multipleTasksCommand"';
-              echo '       type="text" class="hiddenField" readonly="readonly"/>';
-              echo '<input name="taskList" id="multipleTasksList"';
-              echo '       type="text" readonly="readonly"';
-              echo       ' value="" class="hiddenField"/>';
-              echo '</form>';
-              echo '<a href="javascript:taskCheckboxes(true);">Check all tasks</a> - ';
-              echo '<a href="javascript:taskCheckboxes(false);">Uncheck all tasks</a>';
-              echo '</p>';
-            }
+            echo '<p>';
+            echo '<form name="multipleTasks" action="commandHandler.php"';
+            echo '      method="post">';
+            echo '<a href="javascript:removeMultipleTasks();">
+                 Remove selected tasks</a> - ';
+            echo '<a href="javascript:runMultipleTasks();">
+                 Run selected tasks</a> - ';
+            echo '<a href="javascript:stopMultipleTasks();">
+                  Stop selected tasks</a> - ';
+            echo '<input name="command" id="multipleTasksCommand"';
+            echo '       type="text" class="hiddenField" readonly="readonly"/>';
+            echo '<input name="taskList" id="multipleTasksList"';
+            echo '       type="text" readonly="readonly"';
+            echo       ' value="" class="hiddenField"/>';
+            echo '</form>';
+            echo '<a href="javascript:taskCheckboxes(true);">Check all tasks</a> - ';
+            echo '<a href="javascript:taskCheckboxes(false);">Uncheck all tasks</a>';
+            echo '</p>';
           }
         } else {
-            echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
+          echo '<p>'.$ERROR_CONNECTION_TASK_HANDLER.'</p>';
         }
       ?>
 
        <ul>
          <li><a class="noIcon" href="taskEditor.php">Task Editor</a></li>
-         <? echo '<li><a href="http://'.$SELENIUM_SERVER_HUB_HOST.':'.$SELENIUM_SERVER_HUB_PORT.'/grid/console">Grid Hub Console</a></li>'; ?>
+         <?php
+            echo '<li><a href="http://'.$SELENIUM_SERVER_HUB_HOST.':'.$SELENIUM_SERVER_HUB_PORT.'/grid/console">Grid Hub Console</a></li>';
+         ?>
        </ul>
     </div>
   </body>
