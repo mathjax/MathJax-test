@@ -42,6 +42,22 @@ help:
 	@echo '  make runSeleniumHub'
 	@echo '  make runSeleniumNode'
 
+generateBranchList:
+	@ echo 'Generate $(WEB_BRANCH_LIST)...'
+	@ echo '<?php' > $(WEB_BRANCH_LIST)
+	@ echo '/* $(WARNING_GENERATED_FILE) */' >> $(WEB_BRANCH_LIST)
+	@ echo '$$BRANCH_LIST = array(' >> $(WEB_BRANCH_LIST)
+	@ for USER in $(MATHJAX_GIT_USERS); \
+	  do \
+	  for BRANCH in `ls mathjax/$$USER/`; \
+	    do \
+            echo \'$$USER/$$BRANCH/\',  >> $(WEB_BRANCH_LIST); \
+	    done; \
+	  done
+	@ $(SED) -i '$$s/,//' $(WEB_BRANCH_LIST)
+	@ echo ');' >> $(WEB_BRANCH_LIST)
+	@ echo '?>' >> $(WEB_BRANCH_LIST)
+
 config:
 	@ echo 'Generate $(CONDITION_PARSER), $(CONFIG_PY), $(CONFIG_PHP) and $(CONFIG_JS)...'
 	@ $(SED) 's|###||' <custom.cfg >custom.cfg.tmp
@@ -67,21 +83,6 @@ config:
 
 	@ echo 'Generate $(WEB_REFTEST_LIST)...'
 	@ cd testRunner/; $(PYTHON) runTestsuite.py -p > /dev/null
-
-	@ echo 'Generate $(WEB_BRANCH_LIST)...'
-	@ echo '<?php' > $(WEB_BRANCH_LIST)
-	@ echo '/* $(WARNING_GENERATED_FILE) */' >> $(WEB_BRANCH_LIST)
-	@ echo '$$BRANCH_LIST = array(' >> $(WEB_BRANCH_LIST)
-	@ for USER in $(MATHJAX_GIT_USERS); \
-	  do \
-	  for BRANCH in `ls mathjax/$$USER/`; \
-	    do \
-            echo \'$$USER/$$BRANCH/\',  >> $(WEB_BRANCH_LIST); \
-	    done; \
-	  done
-	@ $(SED) -i '$$s/,//' $(WEB_BRANCH_LIST)
-	@ echo ');' >> $(WEB_BRANCH_LIST)
-	@ echo '?>' >> $(WEB_BRANCH_LIST)
 
 	@ echo 'Generate $(DOXYGEN_CONFIG)...'
 	@ $(DOXYGEN) -s -g $(DOXYGEN_CONFIG) > /dev/null
@@ -112,6 +113,8 @@ HTML_OUTPUT = doxygen/' $(DOXYGEN_CONFIG)
 	@ $(SED) -i '/GENERATE_LATEX / c\
 GENERATE_LATEX = NO' $(DOXYGEN_CONFIG)
 
+	@ make generateBranchList
+
 doc:
 	@ echo 'Build doxygen documentation...'
 	@ cd web/docs ; make doxygen > /dev/null
@@ -134,6 +137,7 @@ updateMathJaxBranches:
 	  echo "Updating `echo $$USER` branches..."; \
 	  cd mathjax; ./getMathJaxBranches.sh $$USER; cd ..; \
 	  done
+	@ make generateBranchList
 
 clearMathJaxBranches:
 	@ echo 'Clearing MathJax branches...'

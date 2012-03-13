@@ -44,16 +44,30 @@ test a MathJax installation on any Web server, indicated by the **mathJaxPath**
 Test Machine
 ============
 
-A test machine is a given operating system with a basic set up. Typically, we
-want a graphical interface, browsers, fonts, plugins etc. A **Selenium server**
-must also be running on this machine, to ensure communication between the test
-runner and the browser. It is simply a 
-`Java executable <http://code.google.com/p/selenium/downloads/detail?name=selenium-server-standalone-2.0.0.jar&can=2&q=>`_, which can be started using the
-command
+A **test machine** is a given operating system with a basic set up. Typically,
+we want a graphical interface, browsers, fonts, plugins etc. It can be the local
+machine on which the testing framework is installed, virtual machines on the
+same host or even other remote hosts.
+
+`Typical configurations <https://sites.google.com/site/mathjaxproject/design-documents/testing/platforms-supported>`_ for test machine include:
+
+  - Operating System: Linux, MacOS, Windows.
+  - Browser: `Chrome <https://www.google.com/chrome/index.html>`_, `Firefox <http://www.mozilla.org/firefox/>`_, `Internet Explorer <http://windows.microsoft.com/en-us/internet-explorer/products/ie/home>`_, `Opera <http://www.opera.com/>`_, `Safari <http://www.apple.com/safari/>`_.
+  - `Fonts <https://developer.mozilla.org/@api/deki/files/6182/=MathML-fonts.zip>`_: STIX and MathJax fonts .
+  - Plugin: `MathPlayer <http://www.dessci.com/en/products/mathplayer/>`_
+
+A **Selenium server** must be running on this machine, to ensure communication
+between the test runner and the browser. It is the
+``selenium-server-standalone-*.jar`` java executable that you can find on
+`code.google.com <http://code.google.com/p/selenium/downloads/list>`_ or is
+``testRunner/seleniumServer.jar`` if you have already done the
+:ref:`basic installation <basic-install>`. It can be executed with the command
 
 .. code-block:: sh
 
    java -jar name-of-the-selenium-server.jar
+
+or by :ref:`other alternative ways <executing-selenium-servers>` .
 
 Note for Selenium 1: 
 because some unit tests need to take screenshots of test pages, one
@@ -64,10 +78,10 @@ system graphical interface to do other work while the tests are running. If you
 want to run tests on your local machine, a tip is to use virtual test machines.
 
 Note for Selenium 2 (Webdriver):
-The test machine may require intallation of other programs than simply the
+The test machine may require installation of other programs than simply the
 Selenium server. See the page
-`platforms supported <https://sites.google.com/site/mathjaxproject/design-documents/testing/platforms-supported>`_ for a more precise
-description of the requirements.
+`platforms supported <https://sites.google.com/site/mathjaxproject/design-documents/testing/platforms-supported>`_
+for a more precise description of the requirements specific to each browser.
 
 .. _test-runner:
 
