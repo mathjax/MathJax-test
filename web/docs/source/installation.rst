@@ -17,16 +17,17 @@ First, please have a look at the :ref:`framework overview <overview>` to
 understand what you are going to do. The basic installation consists in
 configuring the central machine that controls the framework. In this section,
 we will only use the :ref:`test runner <test-runner>`. To avoid the installation
-of a local Apache server, we also rely on the public MathJax Web server.
+of a local Apache server, we will also rely on the public MathJax Web server.
 Finally, the central machine will itself be used as a test machine.
 
-It is recommended to use an UNIX environment with standard programs installed. On
-Windows, you might want to use
+It is recommended to use an UNIX environment with standard programs installed.
+On Windows, you might want to use
 `Cygwin <http://www.cygwin.com/>`_ which emulates a UNIX-like environment and
-download software tools from that system. In that case, after having installed all
-the programs you might need to use the
-`Rebaseall <http://cygwin.wikia.com/wiki/Rebaseall>`_ command. On Mac OS, you can
-download the programs from the `MacPorts <http://www.macports.org/>`_ repository. 
+download software tools from that system. In that case, after having installed
+all the programs you might need to use the
+`Rebaseall <http://cygwin.wikia.com/wiki/Rebaseall>`_ command. On Mac OS, you
+can download the programs from the `MacPorts <http://www.macports.org/>`_
+repository. 
 
 Start by installing git and get a copy of ``MathJax-test/`` with the command:
 
@@ -45,8 +46,9 @@ configuration file ``custom.cfg``:
 Then install other standard programs: python (2.6 or greater), perl
 (5.1 or greater), pip, sed (be sure to use the GNU version, gsed on MacOS),
 wget, java (to run Selenium servers), cron (for task scheduling). If
-necessary, update the [bin] section of ``custom.cfg`` accordingly and/or modify
-your PATH variable so that the testing framework will be able to find them.
+necessary, update the ``[bin]`` section of ``custom.cfg`` accordingly and/or
+modify your ``PATH`` environment variable so that the testing framework will be
+able to find them.
 
 Install Python libraries using the package manager of your system or Python's
 pip. For example
@@ -55,12 +57,13 @@ pip. For example
 
   sudo pip install pil ply python-crontab selenium
 
-will install `Python Imaging Library <http://www.pythonware.com/products/pil/>`_,
-`Python Lex-Yacc <http://www.dabeaz.com/ply/>`_ and 
+will install
+`Python Imaging Library <http://www.pythonware.com/products/pil/>`_,
+`Python Lex-Yacc <http://www.dabeaz.com/ply/>`_ ,
 `Python Crontab <http://pypi.python.org/pypi/python-crontab/>`_ and
 `Selenium Python Driver <http://pypi.python.org/pypi/selenium/>`_. For the
 Selenium Python Driver, installing from pil is the best option if you want to
-get the latest version of the library and be able to to upgrade it later with the
+get the latest version of the library and be able to upgrade it later with
 ``make updateSelenium``.
 
 Once all the dependencies are satisfied, you should be able to configure the
@@ -93,9 +96,9 @@ Windows system) open a command line and type
 
   java -jar /path/to/the/selenium/server/runSeleniumServer.jar
 
-Once the server started via one the method above, open a new terminal and move
-into the ``MathJax-test/testRunner`` directory. Copy the default configuration
-with
+Once you have started the server via one the method above, open a new terminal
+and move into the ``MathJax-test/testRunner`` directory. Copy the default
+configuration with
 
 .. code-block:: bash
 
@@ -121,7 +124,7 @@ Advanced Configuration
 ======================
 
 As a general rule of thumb, you can do more advanced configuration by editing
-the ``custom.cfg`` and update the configuration with
+the ``custom.cfg`` and updating the configuration with
 
 .. code-block:: bash
 
@@ -149,7 +152,8 @@ already use the command line :ref:`task viewer <command-task-viewer>` and
 The task list is saved in ``testRunner/taskList.txt`` when the server is
 stopped and should be restored when you start it again. However, if you see
 error messages saying that a configuration file can not be found, you can try to
-remove the erroneous line or empty the task list with the command:
+remove the erroneous line in  ``testRunner/taskList.txt`` or empty the task
+list with the command:
 
 .. code-block:: bash
 
@@ -158,8 +162,8 @@ remove the erroneous line or empty the task list with the command:
 Test Machines
 -------------
 
-You can now install several :ref:`test machines <test-machine>`. Install the
-different components of each :ref:`test machine <test-machine>` as indicated.
+You can now install the different components of each
+:ref:`test machine as indicated here<test-machine>`.
 
 It is recommended to edit the HOST_LIST and HOST_LIST_OS options of
 ``custom.cfg`` to describe the testing machines available, so that the testing
@@ -176,7 +180,7 @@ respective IP adresses 192.168.0.11 and 192.168.0.12.
 
 Before running any task on a test machine, be sure that the
 :ref:`the Selenium server is running <executing-selenium-servers>` on that
-test machine. Also, verify that the IP adresses or host name is correct. You
+test machine. Also, verify that the IP adresses or host name are correct. You
 may also have to configure your firewall to accept requests from the central
 machines.
 
@@ -202,7 +206,7 @@ download all the development branches of the project in one go with the command
 
 These branches are stored in the ``mathjax/`` subdirectory.
 
-Finally, you need do a standard installation of Apache and PHP and map the
+Finally, you need to do a standard installation of Apache and PHP and map the
 ``MathJax-test/`` to some location. On Windows, the EasyPHP tool can help to do
 that quickly.
 
@@ -211,8 +215,8 @@ restrict access to some directories or serve the test results as gzipped files.
 It is possible that you need to add some ``AllowOverride`` directives in your
 Apache configuration in order to make the htaccess rules effective.
 
-If you want, you can also set the ``MATHJAX_TEST_URI`` to your local installaion
-(e.g. ``http://localhost/MathJax-test/``).
+If you want, you can also set the ``MATHJAX_TEST_URI`` to your local
+installation (e.g. ``http://localhost/MathJax-test/``).
 
 QA Web Interface
 ----------------
@@ -235,7 +239,7 @@ running.
 
 If you install the interface on a public Web server, you certainly want to
 restrict access to the task editor. To do that you just have to fill in the
-``[qa]`` section of configuration file.
+``[qa]`` section of the configuration file.
 
 Documentation
 -------------
@@ -248,7 +252,7 @@ For the doxygen documentation, you need some
 filters for `Python <http://pypi.python.org/pypi/doxypy/>`_,
 `Perl <http://www.bigsister.ch/doxygenfilter/>`_,
 `Javascript <http://svn.berlios.de/wsvn/jsunit/trunk/jsunit/util/js2doxy.pl>`_.
-If needed, modify the ``[bin]`` section to refer to the programs and filters.
+If needed, modify the ``[bin]`` section to point to the programs and filters.
 
 Finally, generate the documentation with the command:
 
@@ -264,7 +268,7 @@ Maintenance of Machines
 Task Controller
 ---------------
 
-The central machine should be updated regularly to get the latest version of
+The central machine should be updated regularly to keep the latest version of
 the testing framework. We have already seen a couple of handy commands for that
 purpose:
 
@@ -276,7 +280,7 @@ purpose:
   make updateSeleniumDriver   # update the selenium driver
   make updateMathJaxBranches  # update the MathJax branches
 
-Note that the make config command is important. For example it should be run
+Note that the ``make config`` command is important. For example it should be run
 again each time you add or remove tests in the testsuite.
 
 Test results are stored in
@@ -306,8 +310,8 @@ In the traditionnal configuration you execute a selenium server on each
 
   java -jar name-of-the-selenium-server.jar
 
-If you have the code for the testing framework installed on the test machine, the
-following command will do the same:
+If you have the code for the testing framework installed on the test machine,
+the following command will do the same:
 
 .. code-block:: bash
 
