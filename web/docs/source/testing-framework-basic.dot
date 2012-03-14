@@ -1,0 +1,25 @@
+graph "MathJax Testing Framework" {
+  rankdir=LR;
+  size="10,10"
+
+  subgraph "clusterWebServer" {
+    label = "MathJax Public Web Server"
+    TestPages [shape="ellipse" label="Test pages"]         
+    MathJaxScripts [shape="ellipse" label="MathJax Scripts"]
+    MathJaxTestHeaders [shape="ellipse" label="MathJax-test Headers"]
+    TestPages -- MathJaxScripts
+    TestPages -- MathJaxTestHeaders
+  }
+
+  subgraph "clusterLocalMachine" {
+    label = "Local Machine"
+
+    TestRunner [shape="box" label="Test Runner"]
+    SeleniumServer [shape="ellipse" label="Selenium Server"]
+    Browser [shape="box" label="Browser"]
+    TestRunner -- SeleniumServer
+    SeleniumServer -- Browser
+  }
+
+  Browser -- TestPages
+}

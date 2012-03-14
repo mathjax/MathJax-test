@@ -18,13 +18,17 @@ understand what you are going to do. The basic installation consists in
 configuring the central machine that controls the framework. In this section,
 we will only use the :ref:`test runner <test-runner>`. To avoid the installation
 of a local Apache server, we will also rely on the public MathJax Web server.
-Finally, the central machine will itself be used as a test machine.
+Finally, the central machine will itself be used as a test machine. Hence, we
+get the following structure:
+
+.. image:: testing-framework-basic.svg
 
 It is recommended to use an UNIX environment with standard programs installed.
-On Windows, you might want to use
+On Windows, it is recommended to use
 `Cygwin <http://www.cygwin.com/>`_ which emulates a UNIX-like environment and
-download software tools from that system. In that case, after having installed
-all the programs you might need to use the
+to download software tools from its package manager and to execute the command
+line commands below from the Cygwin environment.
+After having installed all the programs you might need to use the
 `Rebaseall <http://cygwin.wikia.com/wiki/Rebaseall>`_ command. On Mac OS, you
 can download the programs from the `MacPorts <http://www.macports.org/>`_
 repository. 
@@ -43,12 +47,12 @@ configuration file ``custom.cfg``:
 
    cp -n default.cfg custom.cfg
 
-Then install other standard programs: python (2.6 or greater), perl
-(5.1 or greater), pip, sed (be sure to use the GNU version, gsed on MacOS),
-wget, java (to run Selenium servers), cron (for task scheduling). If
-necessary, update the ``[bin]`` section of ``custom.cfg`` accordingly and/or
-modify your ``PATH`` environment variable so that the testing framework will be
-able to find them.
+Then install other standard programs: Python (2.6 or greater), Perl
+(5.1 or greater), pip (to install Python libraries), sed (be sure to use the
+GNU version, gsed on MacOS), wget (for automatic downloading), java (to run
+Selenium servers), cron (for task scheduling). If necessary, update the
+``[bin]`` section of ``custom.cfg`` accordingly and/or modify your ``PATH``
+environment variable so that the testing framework will be able to find them.
 
 Install Python libraries using the package manager of your system or Python's
 pip. For example
@@ -89,16 +93,17 @@ Normally, you can start the Selenium server with the command
   make runSeleniumServer
 
 However, on Windows it may be preferable to execute the server outside the
-Cygwin environnement. To do that (assuming that you have java installed on your
-Windows system) open a command line and type
+Cygwin environnement. Indeed, it appears that otherwise the server can not
+communicate with the browsers. Assuming that you have java installed on your
+Windows system, open a command line (``cmd`` in the start menu) and type
 
 .. code-block:: bash
 
   java -jar /path/to/the/selenium/server/runSeleniumServer.jar
 
-Once you have started the server via one the method above, open a new terminal
-and move into the ``MathJax-test/testRunner`` directory. Copy the default
-configuration with
+Once you have started the server via one of the method above, open a new
+terminal and move into the ``MathJax-test/testRunner`` directory. Copy the
+default configuration with
 
 .. code-block:: bash
 
@@ -106,10 +111,17 @@ configuration with
 
 and open this new file ``config/custom.cfg`` in a text editor. Modify ``host``
 to be your local host (generally 127.0.0.1 or localhost), ``operatingSystem``
-to match your system configuration (Windows, Mac or Linux), ``browser`` to
-Firefox, ``font`` to TeX and ``outputJax`` to SVG. Finally, run the tests with
-the command below. If you want to interrupt the script properly, press CTRL+C
-in the terminal where you typed that command.
+to match your system configuration (Windows, Mac or Linux), set ``browser`` to
+Firefox, ``font`` to TeX and ``outputJax`` to SVG.
+
+By default, the results will be gzipped text and html files. You may want to
+set ``formatOutput`` or ``compressOutput`` to change this behavior. Also, the
+whole test suite will be executed. You can use the
+`reftest selector <http://devel.mathjax.org/testing/web/selectReftests.xhtml>`_
+to choose only a subset and get the corresponding ``listOfTests`` string.
+
+Finally, run the tests with the command below. If you want to interrupt the
+script properly, press CTRL+C in the terminal where you typed that command.
 
 .. code-block:: bash
 
@@ -167,7 +179,7 @@ You can now install the different components of each
 
 It is recommended to edit the HOST_LIST and HOST_LIST_OS options of
 ``custom.cfg`` to describe the testing machines available, so that the testing
-framework could do helpful guesses or suggestions. For instance,
+framework can do helpful guesses or suggestions. For instance,
 
 .. code-block:: bash
 
@@ -180,14 +192,14 @@ respective IP adresses 192.168.0.11 and 192.168.0.12.
 
 Before running any task on a test machine, be sure that the
 :ref:`the Selenium server is running <executing-selenium-servers>` on that
-test machine. Also, verify that the IP adresses or host name are correct. You
+test machine. Also, verify that the IP adresses or host names are correct. You
 may also have to configure your firewall to accept requests from the central
 machines.
 
 Local Web Server
 ----------------
 
-By default, the testing framework uses the the public
+By default, the testing framework uses the public
 :ref:`Web server <web-servers>` of the MathJax project for both the testsuite
 and the MathJax scripts. However, it is sometimes useful to have a local copy
 of these pages.
@@ -215,7 +227,7 @@ restrict access to some directories or serve the test results as gzipped files.
 It is possible that you need to add some ``AllowOverride`` directives in your
 Apache configuration in order to make the htaccess rules effective.
 
-If you want, you can also set the ``MATHJAX_TEST_URI`` to your local
+If you want, you can also set ``MATHJAX_TEST_URI`` to your local
 installation (e.g. ``http://localhost/MathJax-test/``).
 
 QA Web Interface
@@ -281,7 +293,8 @@ purpose:
   make updateMathJaxBranches  # update the MathJax branches
 
 Note that the ``make config`` command is important. For example it should be run
-again each time you add or remove tests in the testsuite.
+again each time you add or remove tests in the testsuite, or do a ``git pull``
+command.
 
 Test results are stored in
 ``http://path-to-mathjax-test/MathJax-test/web/results/``. You can freely
