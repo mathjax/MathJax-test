@@ -1,12 +1,27 @@
 random include Variants/reftest.list
 
+# @note1
+#
+# Many browsers do not convert correctly entity names.
+#
+# Opera: &amp;lang; and &amp;rang; are not mapped to the right unicode characters. Bug report ID is DSK-343994 (not publicly available).
+#
+# Safari/Chrome: &amp;notinE; and &amp;notindot; are not supported. See bug 62187. See also bug 43949. Not tested with Konqueror yet.
+#
+# Internet Explorer: Entity definitions for characters are not up-to-date. See feedback 674766. This issue was resolved in Internet Explorer 10 on Windows 8 Developer Preview released on 9/13/2011.
+#
+# ref Webkit bug 62187 https://bugs.webkit.org/show_bug.cgi?id=62187
+# ref Webkit bug 43949 https://bugs.webkit.org/show_bug.cgi?id=43949#c39
+# ref feedback 674766 MSIE https://connect.microsoft.com/IE/feedback/details/674766/
+#
+
 # The XML whitespaces &NewLine; and &Tab; are not included in the following
 # tests:
-fails-if(MSIE) tree== entities-1.html entities-1-ref.html
-fails-if(MSIE||Konqueror) tree== entities-2.html entities-2-ref.html
-fails-if(MSIE||Konqueror||Safari) tree== entities-3.html entities-3-ref.html
-fails-if(MSIE||Konqueror||Chrome||Safari) tree== entities-4.html entities-4-ref.html
-fails-if(MSIE||Konqueror) tree== entities-5.html entities-5-ref.html
+annotate(note1) fails-if(MSIE) tree== entities-1.html entities-1-ref.html
+annotate(note1) fails-if(MSIE||Konqueror) tree== entities-2.html entities-2-ref.html
+annotate(note1) fails-if(MSIE||Konqueror||Safari) tree== entities-3.html entities-3-ref.html
+annotate(note1) fails-if(MSIE||Konqueror||Chrome||Safari) tree== entities-4.html entities-4-ref.html
+annotate(note1) fails-if(MSIE||Konqueror) tree== entities-5.html entities-5-ref.html
 
 require(TeX||ImageTeX) == greek-1.html greek-1-ref.html
 require(TeX||ImageTeX) == greek-2.html greek-2-ref.html

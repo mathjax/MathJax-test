@@ -199,6 +199,7 @@ declarePythonString(f_out, "MATHJAX_TEST_URI", MATHJAX_TEST_URI)
 declarePythonStringArray(f_out, "MONTH_LIST", MONTH_LIST)
 declarePythonStringArray(f_out, "WEEKDAY_LIST", WEEKDAY_LIST)
 declarePythonStringArray(f_out, "OUTPUT_JAX_LIST", OUTPUT_JAX_LIST)
+declarePythonString(f_out, "WARNING_GENERATED_FILE", WARNING_GENERATED_FILE)
 
 f_out.close()
 

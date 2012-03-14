@@ -88,7 +88,7 @@ from ply import lex
 from ply import yacc
 import seleniumMathJax
 
-gSelenium = None
+gSelenium = ""
 
 ################################################################################
 
@@ -128,37 +128,37 @@ t_RIGHTPARENTHESIS = r"\)"
 ## Operating system
 def t_OPERATINGSYSTEM(t):
     r"OS_LIST"
-    t.value = (gSelenium == None or t.value == gSelenium.mOperatingSystem)
+    t.value = (str(gSelenium) == str or t.value == gSelenium.mOperatingSystem)
     return t
 
 ## Browser
 def t_BROWSER(t):
     r"BROWSER_LIST"
-    t.value = (gSelenium == None or t.value == gSelenium.mBrowser)
+    t.value = (type(gSelenium) == str or t.value == gSelenium.mBrowser)
     return t
 
 ## Browser version
 def t_BROWSERVERSION(t):
     r"BROWSER_VERSION_REGEXP"
-    t.value = (gSelenium == None or t.value == gSelenium.mBrowserVersion)
+    t.value = (type(gSelenium) == str or t.value == gSelenium.mBrowserVersion)
     return t
 
 ## Browser mode
 def t_BROWSERMODE(t):
     r"BROWSER_MODE_LIST"
-    t.value = (gSelenium == None or t.value == gSelenium.mBrowserMode)
+    t.value = (type(gSelenium) == str or t.value == gSelenium.mBrowserMode)
     return t
 
 ## Font
 def t_FONT(t):
     r"FONT_LIST"
-    t.value = (gSelenium == None or t.value == gSelenium.mFont)
+    t.value = (type(gSelenium) == str or t.value == gSelenium.mFont)
     return t
 
 ## Output Jax
 def t_OUTPUTJAX(t):
     r"OUTPUT_JAX_LIST"
-    t.value = (gSelenium == None or t.value == gSelenium.mOutputJax)
+    t.value = (type(gSelenium) == str or t.value == gSelenium.mOutputJax)
     return t
 
 lexer = lex.lex()
@@ -241,4 +241,4 @@ def parse(aSelenium, aCondition):
     global gSelenium
     gSelenium = aSelenium
     result = parser.parse(aCondition)
-    return (result or gSelenium == None)
+    return (result or type(gSelenium) == str)

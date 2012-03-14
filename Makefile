@@ -84,6 +84,9 @@ config:
 	@ echo 'Generate $(WEB_REFTEST_LIST)...'
 	@ cd testRunner/; $(PYTHON) runTestsuite.py -p > /dev/null
 
+	@ echo 'Generate $(WEB_TESTSUITE_NOTES)...'
+	@ cd testRunner/; $(PYTHON) runTestsuite.py -n > /dev/null
+
 	@ echo 'Generate $(DOXYGEN_CONFIG)...'
 	@ $(DOXYGEN) -s -g $(DOXYGEN_CONFIG) > /dev/null
 	@ $(SED) -i '1i\

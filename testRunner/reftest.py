@@ -31,6 +31,7 @@ This module implements various types of reftests, controls the executions and
 reports the results.
 """
 
+from config import MATHJAX_TEST_URI
 MATHJAX_TESTSUITE_PATH = "../testsuite/"
 
 from PIL import Image, ImageChops
@@ -198,7 +199,7 @@ class reftestSuite(unittest.TestSuite):
         @see   http://mxr.mozilla.org/mozilla-central/source/layout/tools/reftest/README.txt
 
         @param aSelenium @ref seleniumMathJax object that will be used for
-        the test suite.
+        the test suite, or a string "printReftestList"/"printNotes".
         @param aRoot root of the MathJax-test directory
         @param aManifestFile manifest file to parse
         @param aIndex index of the manifest file inside the @ref mListOfTests
@@ -221,6 +222,9 @@ class reftestSuite(unittest.TestSuite):
 
         with open(aRoot + aManifestFile) as f:
 
+            state2 = 0
+            annotationPrefix = testDirectory.replace('/', '_')
+
             for line in f:
 
                 state = 0
@@ -234,6 +238,49 @@ class reftestSuite(unittest.TestSuite):
                 errorMsg = ("invalid line in " + aRoot + aManifestFile +
                             ": " + line + "\n")
 
+                if aSelenium == "printNotes":
+                    if state2 == 0:
+                        # read an annotation
+                        if line.startswith("# @"):
+                            annotationID = line.split()[1][1:]
+                            print '<div id="' + \
+                                annotationPrefix + \
+                                annotationID + '">'
+                            print '<a href="' + MATHJAX_TEST_URI + \
+                                'testsuite/' + aManifestFile + '">' + \
+                                aManifestFile + ' [' + \
+                                annotationID + ']</a>'
+                            print '<p>'
+                            state2 = 2
+                            continue
+                    else: 
+                        if line.startswith("# ref "):
+                            words = line.split()
+                            l = len(words)
+                            if (l < 4):
+                                raise Exception(errorMsg + "invalid #ref ")
+                            print '<a href="' + words[l-1] + '">'
+                            for i in range(2, l-1):
+                                print words[i]
+                            print '</a><br/>'
+                            continue
+                        if line.startswith("#"):
+                            words = line.split()
+                            if (state2 == 1 and
+                                len(words) == 1 and words[0] == "#"):
+                                print '</p><p>'
+                                state2 = 2
+                                continue
+                            else:
+                                if len(words) > 1:
+                                    print line[1:].rstrip().lstrip()
+                                    state2 = 1
+                                continue
+                        else:
+                            print '</p>'
+                            print '</div>'
+                            state2 = 0
+
                 for word in line.split():
                     
                     if word[0] == '#':
@@ -242,6 +289,10 @@ class reftestSuite(unittest.TestSuite):
 
                     if state == 0:
                         try:
+                            # link to an annotation
+                            if word.startswith("annotate"):
+                                continue
+
                             # 2. <failure-type>
                             if word == "fails":
                                 testExpectedStatus = EXPECTED_FAIL
@@ -309,12 +360,16 @@ class reftestSuite(unittest.TestSuite):
                     if state == 2:
                         # 1. <relative_path>
                         reftestList = testDirectory + word
-                        if aSelenium == None:
+                        if type(aSelenium) == str:
+                          if aSelenium == "printList":
                             print ",[\"" + \
                                 self.getDirectoryFromManifestFile(word) + "\"",
                             self.addReftests(aSelenium, aRoot, reftestList, -1,
                                              testExpectedStatus)
                             print "]",
+                          elif aSelenium == "printNotes":
+                              self.addReftests(aSelenium, aRoot, reftestList,
+                                               -1, testExpectedStatus)
                         else:
                             if index == -1:
                                 self.addReftests(aSelenium,
@@ -398,7 +453,8 @@ fails/random")
                         elif testClass == scriptReftest:
                             state = 6
                         elif testClass == visualReftest:
-                            if aSelenium and aSelenium.mBrowser == "HTMLUnit":
+                            if (type(aSelenium) != str and
+                                aSelenium.mBrowser == "HTMLUnit"):
                                 testExpectedStatus = EXPECTED_IRRELEVANT
                             state = 5
                         else:
@@ -416,13 +472,14 @@ fails/random")
                 # end for word
 
                 if state == 6:
-                    if aSelenium == None:
-                        print ",\"" + testURI + "\"",
-                        verifyPageExistence(testDirectory,
-                                            testURI)
-                        if testURIRef:
+                    if type(aSelenium) == str:
+                        if aSelenium == "printList":
+                            print ",\"" + testURI + "\"",
                             verifyPageExistence(testDirectory,
-                                                testURIRef)
+                                                testURI)
+                            if testURIRef:
+                                verifyPageExistence(testDirectory,
+                                                    testURIRef)
                     else:
                         if (index == -1 or self.mListOfTests[index] == "1"):
                             self.addTest(testClass(self,
