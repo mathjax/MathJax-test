@@ -12,12 +12,33 @@
 
   <body>
 
-    <div>
+    <div style="position: absolute;">
       <!-- numalign: left -->
       <math xmlns="http://www.w3.org/1998/Math/MathML">
         <mfrac linethickness="0">
-          <mrow><mtext>□■□</mtext><mphantom><mtext>■□■□</mtext></mphantom></mrow>
-          <mtext>□■□■□■□</mtext>
+          <mpadded width="100px" lspace="0px">
+            <mspace width="50px" height="20px" mathbackground="red"></mspace>
+          </mpadded>
+          <mspace width="100px" height="20px" mathbackground="red"></mspace>
+        </mfrac>
+      </math>
+    </div>
+
+    <!-- grey bars to ignore rounding issues -->
+    <div style="position: absolute;">
+      <math>
+        <mfrac linethickness="0">
+          <mpadded width="100px" lspace="-2px">
+            <mspace width="4px" height="20px" mathbackground="grey"></mspace>
+            <mspace width="46px" height="20px"></mspace>
+            <mspace width="4px" height="20px" mathbackground="grey"></mspace>
+            <mspace width="50px" height="20px"></mspace>
+          </mpadded>
+          <mpadded width="100px" lspace="-2px">
+            <mspace width="4px" height="20px" mathbackground="grey"></mspace>
+            <mspace width="96px" height="20px"></mspace>
+            <mspace width="4px" height="20px" mathbackground="grey"></mspace>
+          </mpadded>
         </mfrac>
       </math>
     </div>
