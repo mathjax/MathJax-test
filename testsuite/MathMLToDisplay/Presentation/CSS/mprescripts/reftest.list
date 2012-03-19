@@ -1,16 +1,24 @@
-== mprescripts-01.html mprescripts-01-ref.html
-== mprescripts-02.html mprescripts-02-ref.html
-== mprescripts-03.html mprescripts-03-ref.html
-== mprescripts-04.html mprescripts-04-ref.html
-== mprescripts-05.html mprescripts-05-ref.html
-== mprescripts-06.html mprescripts-06-ref.html
-== mprescripts-07.html mprescripts-07-ref.html
-== mprescripts-08.html mprescripts-08-ref.html
-== mprescripts-09.html mprescripts-09-ref.html
-== mprescripts-10.html mprescripts-10-ref.html
-== mprescripts-11.html mprescripts-11-ref.html
-== mprescripts-12.html mprescripts-12-ref.html
-== mprescripts-13.html mprescripts-13-ref.html
-== mprescripts-14.html mprescripts-14-ref.html
-== mprescripts-15.html mprescripts-15-ref.html
-== mprescripts-16.html mprescripts-16-ref.html
+# @note1
+#
+# <p>The author of these tests says "Right hand side of equation should look
+# like mirrored copy of left hand side". To convert these tests into reftest,
+# the experimental CSS "transform" property has been used. However, the tests
+# and references do not seem to match exactly.</p>
+#
+
+annotate(@note1) == mprescripts-01.html mprescripts-01-ref.html
+annotate(@note1) == mprescripts-02.html mprescripts-02-ref.html
+annotate(@note1) == mprescripts-03.html mprescripts-03-ref.html
+annotate(@note1) == mprescripts-04.html mprescripts-04-ref.html
+annotate(@note1) == mprescripts-05.html mprescripts-05-ref.html
+annotate(@note1) == mprescripts-06.html mprescripts-06-ref.html
+annotate(@note1) == mprescripts-07.html mprescripts-07-ref.html
+annotate(@note1) == mprescripts-08.html mprescripts-08-ref.html
+annotate(@note1) == mprescripts-09.html mprescripts-09-ref.html
+annotate(@note1) == mprescripts-10.html mprescripts-10-ref.html
+annotate(@note1) == mprescripts-11.html mprescripts-11-ref.html
+annotate(@note1) == mprescripts-12.html mprescripts-12-ref.html
+annotate(@note1) == mprescripts-13.html mprescripts-13-ref.html
+annotate(@note1) == mprescripts-14.html mprescripts-14-ref.html
+annotate(@note1) == mprescripts-15.html mprescripts-15-ref.html
+annotate(@note1) == mprescripts-16.html mprescripts-16-ref.html

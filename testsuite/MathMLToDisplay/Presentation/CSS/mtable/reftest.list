@@ -1,15 +1,23 @@
-== mtable-01.html mtable-01-ref.html
-== mtable-03.html mtable-03-ref.html
-== mtable-04.html mtable-04-ref.html
-== mtable-05.html mtable-05-ref.html
-== mtable-06.html mtable-06-ref.html
-== mtable-07.html mtable-07-ref.html
-== mtable-08.html mtable-08-ref.html
-== mtable-09.html mtable-09-ref.html
-== mtable-10.html mtable-10-ref.html
-== mtable-11.html mtable-11-ref.html
-== mtable-12.html mtable-12-ref.html
-== mtable-13.html mtable-13-ref.html
-== mtable-14.html mtable-14-ref.html
-== mtable-15.html mtable-15-ref.html
-== mtable-16.html mtable-16-ref.html
+# @note1
+#
+# <p>The author of these tests says "Right hand side of equation should look
+# like mirrored copy of left hand side". To convert these tests into reftest,
+# the experimental CSS "transform" property has been used. However, the tests
+# and references do not seem to match exactly.</p>
+#
+
+annotate(@note1) == mtable-01.html mtable-01-ref.html
+annotate(@note1) == mtable-03.html mtable-03-ref.html
+annotate(@note1) == mtable-04.html mtable-04-ref.html
+annotate(@note1) == mtable-05.html mtable-05-ref.html
+annotate(@note1) == mtable-06.html mtable-06-ref.html
+annotate(@note1) == mtable-07.html mtable-07-ref.html
+annotate(@note1) == mtable-08.html mtable-08-ref.html
+annotate(@note1) == mtable-09.html mtable-09-ref.html
+annotate(@note1) == mtable-10.html mtable-10-ref.html
+annotate(@note1) == mtable-11.html mtable-11-ref.html
+annotate(@note1) == mtable-12.html mtable-12-ref.html
+annotate(@note1) == mtable-13.html mtable-13-ref.html
+annotate(@note1) == mtable-14.html mtable-14-ref.html
+annotate(@note1) == mtable-15.html mtable-15-ref.html
+annotate(@note1) == mtable-16.html mtable-16-ref.html

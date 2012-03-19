@@ -234,6 +234,7 @@ class reftestSuite(unittest.TestSuite):
                 testURIRef = None         
                 testExpectedStatus = 0
                 testSlow = False
+                testAnnotation = None
 
                 errorMsg = ("invalid line in " + aRoot + aManifestFile +
                             ": " + line + "\n")
@@ -246,38 +247,19 @@ class reftestSuite(unittest.TestSuite):
                             print '<div id="' + \
                                 annotationPrefix + \
                                 annotationID + '">'
-                            print '<a href="' + MATHJAX_TEST_URI + \
+                            print '<h2><a href="' + MATHJAX_TEST_URI + \
                                 'testsuite/' + aManifestFile + '">' + \
                                 aManifestFile + ' [' + \
-                                annotationID + ']</a>'
-                            print '<p>'
-                            state2 = 2
+                                annotationID + ']</a></h2>'
+                            state2 = 1
                             continue
                     else: 
-                        if line.startswith("# ref "):
-                            words = line.split()
-                            l = len(words)
-                            if (l < 4):
-                                raise Exception(errorMsg + "invalid #ref ")
-                            print '<a href="' + words[l-1] + '">'
-                            for i in range(2, l-1):
-                                print words[i]
-                            print '</a><br/>'
-                            continue
                         if line.startswith("#"):
                             words = line.split()
-                            if (state2 == 1 and
-                                len(words) == 1 and words[0] == "#"):
-                                print '</p><p>'
-                                state2 = 2
-                                continue
-                            else:
-                                if len(words) > 1:
-                                    print line[1:].rstrip().lstrip()
-                                    state2 = 1
-                                continue
+                            if len(words) > 1:
+                                print line[1:].rstrip().lstrip()
+                            continue
                         else:
-                            print '</p>'
                             print '</div>'
                             state2 = 0
 
@@ -291,6 +273,8 @@ class reftestSuite(unittest.TestSuite):
                         try:
                             # link to an annotation
                             if word.startswith("annotate"):
+                                # 8 = len(annotate)
+                                testAnnotation = word[8:]
                                 continue
 
                             # 2. <failure-type>
@@ -489,7 +473,8 @@ fails/random")
                                                    testURI,
                                                    testURIRef,
                                                    testExpectedStatus,
-                                                   testSlow))
+                                                   testSlow,
+                                                   testAnnotation))
                             self.mNumberOfTests = self.mNumberOfTests + 1
 
                         if (index == -1):
@@ -576,7 +561,7 @@ class reftest(unittest.TestCase):
     def __init__(self,
                  aTestSuite,
                  aSelenium, aType, aReftestDirectory, aURI, aURIRef,
-                 aExpectedStatus, aSlow):
+                 aExpectedStatus, aSlow, aTestAnnotation):
         """
         @fn __init__(self,
                      aTestSuite,
@@ -591,6 +576,7 @@ class reftest(unittest.TestCase):
         test is not a comparison.
         @param aExpectedStatus Value to assign to @ref mExpectedStatus
         @param aSlow Value to assign to @ref mSlow
+        @param aTestAnnotation Value to assign to @ref mTestAnnotation
 
         @property mTestSuite
         The @ref reftestSuite running the tests
@@ -611,6 +597,9 @@ class reftest(unittest.TestCase):
         etc
         @property mSlow
         whether this test is marked slow
+        @property mTestAnnotation
+        A string containing references of the form @id to point to the
+        testsuite note page.
         """
         unittest.TestCase.__init__(self)
         self.mTestSuite = aTestSuite
@@ -626,6 +615,7 @@ class reftest(unittest.TestCase):
         self.mID = self.mURI
         self.mExpectedStatus = aExpectedStatus
         self.mSlow = aSlow
+        self.mTestAnnotation = aTestAnnotation
 
     def id(self):
         """
@@ -655,20 +645,23 @@ class reftest(unittest.TestCase):
         if self.mExpectedStatus == EXPECTED_IRRELEVANT:
             msg = "REFTEST INFO | " + self.mID
             msg += " is irrelevant for this configuration\n"
-            # self.skipTest(msg)
             print msg
             return True
 
         if ((not self.mTestSuite.mRunSkipTests) and
             self.mExpectedStatus == EXPECTED_DEATH):
-            msg = "\nREFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)\n"
-            # self.skipTest(msg)
+            msg = "\nREFTEST TEST-KNOWN-FAIL | " + self.mID + " | (SKIP)"
+            if (self.mTestAnnotation):
+                msg += " " + self.mTestAnnotation
+            msg += "\n"
             print msg
             return True
 
         if  ((not self.mTestSuite.mRunSlowTests) and self.mSlow):
-            msg = "\nREFTEST INFO | " + self.mID + " | (SLOW)\n"
-            # self.skipTest(msg)
+            msg = "\nREFTEST INFO | " + self.mID + " | (SLOW)"
+            if (self.mTestAnnotation):
+                msg += " " + self.mTestAnnotation
+            msg += "\n"
             print msg
             return True
 
@@ -712,6 +705,9 @@ class reftest(unittest.TestCase):
                 msg = "TEST-UNEXPECTED-FAIL"
 
         msg = "\nREFTEST " + msg + " | " + self.mID + " | "
+
+        if (self.mTestAnnotation):
+            msg += self.mTestAnnotation + " "
 
         return success, msg
 

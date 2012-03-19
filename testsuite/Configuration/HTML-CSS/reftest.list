@@ -2,14 +2,15 @@ include mtextFontInherit/reftest.list
 
 # @note1 
 #
-# This test is not correct. 
+# <p>This test is not correct. See this
+# <a href="http://groups.google.com/group/mathjax-dev/msg/f6ed494448bf18de">
+# thread on the MathJax-Dev Group</a> for details and suggestions.</p>
 #
-# ref See MathJax-Dev Group http://groups.google.com/group/mathjax-dev/msg/f6ed494448bf18de
 
 require(TeX) skip-if(Opera||Safari) != undefinedFamily-1.html undefinedFamily-1-ref.html
 != undefinedFamily-2.html undefinedFamily-2-ref.html
 random == scale-1.html scale-1-ref.html
-annotate(note1) fails == minScaleAdjust-1.html minScaleAdjust-1-ref.html
+annotate(@note1) fails == minScaleAdjust-1.html minScaleAdjust-1-ref.html
 
 # before the tooltip is displayed
 == tooltip-1.html?delayPost=2000&delayFinalize=1000 tooltip-1-ref.html?show=false

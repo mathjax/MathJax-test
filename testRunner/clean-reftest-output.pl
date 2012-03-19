@@ -169,13 +169,28 @@ while (<$gReftestOutput>) {
             for(my $i = 0; $i <= $#testTypes ; $i++) {
                 if ($2 eq $testTypes[$i][0]) {
                     $testTypes[$i][3]++;
-                    $unparsedContent;
+                    my $testID = $3;
+                    my $testInfo = $4;
+
                     my $queryString2 = $queryString;
-                    if (index($3, "?") == -1) {
+                    if (index($testID, "?") == -1) {
                         $queryString2 = "?".$queryString2;
                     }
-                    s,(TEST-)([^\|]*) \| ([^\|]*) \|(.*),\1\2: <a href="$gTestsuiteURI\3$queryString2">\3</a>\4,;
-                    $parsedContent = "<div class=\"$testTypes[$i][1]\">" . $_;
+
+                    $parsedContent = "<div class=\"$testTypes[$i][1]\">";
+                    $parsedContent .= $1.$2.": ";
+                    $parsedContent .= "<a href=\"".$gTestsuiteURI.$testID;
+                    $parsedContent .= $queryString2."\">".$testID."</a>";
+                    
+                    # convert references @ to link
+                    my $testNote = $gWebURI."testsuiteNotes.html#";
+                    $_ = $testID;
+                    s,\/([^\/]*)\.html$,_,;
+                    s,\/,_,g;
+                    $testNote .= $_;
+                    $_ = $testInfo;
+                    s,@(\w*),<a href=\"$testNote\1\">\1</a>,g;
+                    $parsedContent .= $_;
                     last;
                 }
             }
