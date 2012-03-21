@@ -1,3 +1,12 @@
+#
+# @note
+#
+# <p>These two tests are taken from the W3C MathML testsuite, and were already
+# more or less "reftests". They use &lt;mspace linebreak="newline"/&gt;'s and
+# &lt;mphantom/&gt;'s. The author seems to expect that these elements won't
+# have effect on the rendering.
+#
+
 fuzzy-if(Opera&&SVG&&TeX) == mfrac-01.html mfrac-01-ref.html
 == mfrac-02.html mfrac-02-ref.html
 fuzzy == mfrac-03.html mfrac-03-ref.html
@@ -8,5 +17,5 @@ fuzzy-if(Opera&&SVG&&TeX) fuzzy == mfrac-07.html mfrac-07-ref.html
 fuzzy == mfrac-08.html mfrac-08-ref.html
 fuzzy == mfrac-09.html mfrac-09-ref.html
 fuzzy == mfrac-10.html mfrac-10-ref.html
-skip == mfrac-11.html mfrac-11-ref.html
-skip == mfrac-12.html mfrac-12-ref.html
+annotate(@note) skip == mfrac-11.html mfrac-11-ref.html
+annotate(@note) skip == mfrac-12.html mfrac-12-ref.html

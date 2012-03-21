@@ -1,2 +1,12 @@
+#
+# @note
+#
+# <p>This test compares the rendering of mrow/munder/mover and the corresponding
+# constructs with munderover and empty scripts (mspaces of size 0). This may
+# not really be considered a bug in MathJax, though. See this
+# <a href="http://groups.google.com/group/mathjax-dev/msg/050c1a64b7a588c3">
+# message on the MathJax-Dev Group</a>.</p>
+#
+
 != munderover-1.html munderover-1-ref.html
-fails == munderover-empty-scripts.html munderover-empty-scripts-ref.html
+annotate(@note) fails == munderover-empty-scripts.html munderover-empty-scripts-ref.html

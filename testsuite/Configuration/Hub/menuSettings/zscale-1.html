@@ -11,7 +11,7 @@
       function preMathJax()
       {
       gConfigObject.extensions.push("MathZoom.js");
-      gConfigObject.menuSettings = { zoom: "Click", zscale: "500%" };
+      gConfigObject.menuSettings = { zoom: "Click", zscale: "400%" };
       }
 
       function postMathJax()
@@ -32,16 +32,25 @@
 
   <body>
 
-    <!-- zscale = 500% -->
-    <div style="font-size: 100%; position: absolute; left: 0; top: 0;">
-      <math><mrow><mi>x</mi><mo>+</mo><mi>y</mi></mrow></math>
-    </div>
+    <div style="font-size: 12pt;">
+      <!-- zscale = 400% -->
+      <div style="font-size: 100%; position: absolute; left: 0px; top: 0px;">
+        <math>
+          <mpadded width="200px" height="200px">
+            <mspace width="2em" height="2em" mathbackground="red"></mspace>
+          </mpadded>
+        </math>
+      </div>
 
-    <div style="font-size: 500%;
-                position: absolute; left: 0; top: 0; background: red;">
-      <math>
-        <mphantom><mrow><mi>x</mi><mo>+</mo><mi>y</mi></mrow></mphantom>
-      </math>
+      <!-- grey rectangle to hide the unzoomed red rectangle -->
+      <div style="font-size: 500%;
+                  position: absolute; left: 0px; top: 0px; background: grey;">
+        <math>
+          <mphantom>
+            <mspace width="2em" height="2em" mathbackground="red"></mspace>
+          </mphantom>
+        </math>
+      </div>
     </div>
 
   </body>

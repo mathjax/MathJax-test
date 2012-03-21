@@ -1,12 +1,22 @@
+#
+# @note
+#
+# <p>These tests are taken from the W3C MathML testsuite. To convert them in
+# reftest, they compare the combination of mathvariant on a mi (for example
+# double struck A) and the direct use of a unicode point for this styled
+# character (for example U+1D538). It turns out that this is not perfect, the
+# result depending on fonts installed, how browsers pick the glyph etc.</p>
+#
+
 == mi1.html mi1-ref.html
 == mi2.html mi2-ref.html
 == mi3.html mi3-ref.html
 == mi4.html mi4-ref.html
-fails == miAtoken5.html miAtoken5-ref.html
-random == miequivalents11.html miequivalents11-ref.html
+== miAtoken5.html miAtoken5-ref.html
+annotate(@note) random == miequivalents11.html miequivalents11-ref.html
 == mifontstyle12.html mifontstyle12-ref.html
-random == mimathvariant13.html mimathvariant13-ref.html
-random == mimathvariant14.html mimathvariant14-ref.html
+annotate(@note) random == mimathvariant13.html mimathvariant13-ref.html
+annotate(@note) random == mimathvariant14.html mimathvariant14-ref.html
 == mi-mathvariant-1.html mi-mathvariant-1-ref.html
 fails-if(!TeX) == mi-mathvariant-2.html mi-mathvariant-2-ref.html
 == miScolorname6.html miScolorname6-ref.html

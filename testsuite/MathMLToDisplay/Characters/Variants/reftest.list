@@ -1,15 +1,24 @@
-== double-struck.html double-struck-ref.html
-== fraktur-bold.html fraktur-bold-ref.html
-== fraktur.html fraktur-ref.html
-== monospace.html monospace-ref.html
-== sans-serif-bold-italic.html sans-serif-bold-italic-ref.html
-== sans-serif-bold.html sans-serif-bold-ref.html
-== sans-serif-italic.html sans-serif-italic-ref.html
-== sans-serif.html sans-serif-ref.html
-== script-bold.html script-bold-ref.html
-== script.html script-ref.html
-== serif-bold-italic.html serif-bold-italic-ref.html
-== serif-bold.html serif-bold-ref.html
-== serif-italic.html serif-italic-ref.html
-== serif.html serif-ref.html
+#
+# @note
+#
+# <p>These tests are taken from the W3C MathML testsuite. To convert them in
+# reftest, they compare the combination of mathvariant on a mi (for example
+# double struck A) and the direct use of a unicode point for this styled
+# character (for example U+1D538). It turns out that this is not perfect, the
+# result depending on fonts installed, how browsers pick the glyph etc.</p>
+#
 
+annotate(@note) == double-struck.html double-struck-ref.html
+annotate(@note) == fraktur-bold.html fraktur-bold-ref.html
+annotate(@note) == fraktur.html fraktur-ref.html
+annotate(@note) == monospace.html monospace-ref.html
+annotate(@note) == sans-serif-bold-italic.html sans-serif-bold-italic-ref.html
+annotate(@note) == sans-serif-bold.html sans-serif-bold-ref.html
+annotate(@note) == sans-serif-italic.html sans-serif-italic-ref.html
+annotate(@note) == sans-serif.html sans-serif-ref.html
+annotate(@note) == script-bold.html script-bold-ref.html
+annotate(@note) == script.html script-ref.html
+annotate(@note) == serif-bold-italic.html serif-bold-italic-ref.html
+annotate(@note) == serif-bold.html serif-bold-ref.html
+annotate(@note) == serif-italic.html serif-italic-ref.html
+annotate(@note) == serif.html serif-ref.html

@@ -240,8 +240,17 @@ class reftestSuite(unittest.TestSuite):
                             ": " + line + "\n")
 
                 if aSelenium == "printNotes":
+                    if state2 == 1:
+                        if line.startswith("#") and not line.startswith("# @"):
+                            words = line.split()
+                            if len(words) > 1:
+                                print line[1:].rstrip().lstrip()
+                            continue
+                        else:
+                            print '</div>'
+                            state2 = 0
+
                     if state2 == 0:
-                        # read an annotation
                         if line.startswith("# @"):
                             annotationID = line.split()[1][1:]
                             print '<div id="' + \
@@ -253,15 +262,6 @@ class reftestSuite(unittest.TestSuite):
                                 annotationID + ']</a></h2>'
                             state2 = 1
                             continue
-                    else: 
-                        if line.startswith("#"):
-                            words = line.split()
-                            if len(words) > 1:
-                                print line[1:].rstrip().lstrip()
-                            continue
-                        else:
-                            print '</div>'
-                            state2 = 0
 
                 for word in line.split():
                     

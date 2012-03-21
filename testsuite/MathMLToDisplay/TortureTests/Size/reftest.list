@@ -1,3 +1,9 @@
-load m10.html
-load m100.html
-slow load m1000.html
+#
+# @note
+#
+# <p>These are TortureTests pages from the MathML test suite. MathJax seems
+# to take too much time to display them, so they are marked "slow".</p>
+#
+annotate(@note) slow load m10.html
+annotate(@note) slow load m100.html
+annotate(@note) slow load m1000.html

@@ -1,4 +1,10 @@
-slow-if(Opera) load complex1.html
-slow-if(Opera) load complex2.html
-slow load complex3.html
+#
+# @note
+#
+# <p>These are TortureTests pages from the MathML test suite. MathJax seems
+# to take too much time to display them, so they are marked "slow".</p>
+#
+annotate(@note) slow load complex1.html
+annotate(@note) slow load complex2.html
+annotate(@note) slow load complex3.html
 load simplePres.html

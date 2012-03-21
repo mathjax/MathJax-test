@@ -1,4 +1,4 @@
-# @note1
+# @note
 #
 # <p>The author of these tests says "Right hand side of equation should look
 # like mirrored copy of left hand side". To convert these tests into reftest,
@@ -6,18 +6,18 @@
 # and references do not seem to match exactly.</p>
 #
 
-annotate(@note1) == mtable-01.html mtable-01-ref.html
-annotate(@note1) == mtable-03.html mtable-03-ref.html
-annotate(@note1) == mtable-04.html mtable-04-ref.html
-annotate(@note1) == mtable-05.html mtable-05-ref.html
-annotate(@note1) == mtable-06.html mtable-06-ref.html
-annotate(@note1) == mtable-07.html mtable-07-ref.html
-annotate(@note1) == mtable-08.html mtable-08-ref.html
-annotate(@note1) == mtable-09.html mtable-09-ref.html
-annotate(@note1) == mtable-10.html mtable-10-ref.html
-annotate(@note1) == mtable-11.html mtable-11-ref.html
-annotate(@note1) == mtable-12.html mtable-12-ref.html
-annotate(@note1) == mtable-13.html mtable-13-ref.html
-annotate(@note1) == mtable-14.html mtable-14-ref.html
-annotate(@note1) == mtable-15.html mtable-15-ref.html
-annotate(@note1) == mtable-16.html mtable-16-ref.html
+annotate(@note) == mtable-01.html mtable-01-ref.html
+annotate(@note) == mtable-03.html mtable-03-ref.html
+annotate(@note) == mtable-04.html mtable-04-ref.html
+annotate(@note) == mtable-05.html mtable-05-ref.html
+annotate(@note) == mtable-06.html mtable-06-ref.html
+annotate(@note) == mtable-07.html mtable-07-ref.html
+annotate(@note) == mtable-08.html mtable-08-ref.html
+annotate(@note) == mtable-09.html mtable-09-ref.html
+annotate(@note) == mtable-10.html mtable-10-ref.html
+annotate(@note) == mtable-11.html mtable-11-ref.html
+annotate(@note) == mtable-12.html mtable-12-ref.html
+annotate(@note) == mtable-13.html mtable-13-ref.html
+annotate(@note) == mtable-14.html mtable-14-ref.html
+annotate(@note) == mtable-15.html mtable-15-ref.html
+annotate(@note) == mtable-16.html mtable-16-ref.html

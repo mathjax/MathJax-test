@@ -1,10 +1,18 @@
 include mozilla/reftest.list
 
+#
+# @note1
+#
+# <p>See
+# <a href="http://groups.google.com/group/mathjax-dev/msg/f6ed494448bf18de">
+# this message on the MathJax-Dev Group</a> for details and suggestions.</p>
+# 
+
 == mpadded1.html mpadded1-ref.html
 == mpadded7.html mpadded7-ref.html
 == mpadded-1.html mpadded-1-ref.html
-fails == mpadded-2a.html mpadded-2-ref.html
-fails == mpadded-2b.html mpadded-2-ref.html
+annotate(@note1) fails == mpadded-2a.html mpadded-2-ref.html
+annotate(@note1) fails == mpadded-2b.html mpadded-2-ref.html
 == mpadded-3.html mpadded-3-ref.html
 == mpadded-4.html mpadded-4-ref.html
 == mpadded-5.html mpadded-5-ref.html

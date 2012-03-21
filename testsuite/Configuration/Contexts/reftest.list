@@ -1,10 +1,21 @@
-fails-if(Chrome||Konqueror||Safari) != issue24.html issue24-ref.html
-fails-if(Quirks||IE7||IE8) skip-if(Chrome) == xhtml-1.xhtml basic-ref.html
-fails-if(Quirks||IE7||IE8) skip-if(Chrome) == xhtml-2.html basic-ref.html
-fails-if(MSIE) == namespace-1.html basic-ref.html
-fails-if(MSIE||Konqueror) == namespace-2.html basic-ref.html
-skip-if(Chrome) == math-location-1.html math-location-ref.html
+#
+# @note1
+#
+# <p>These tests verify various usages of MathML in a XML context. Some
+# browsers render the XML page slightly differently from the HTML5 case.</p>
+#
+# @note2
+#
+# <p>These two tests require support for the <foreignObject> in SVG. This
+# object is not supported by Opera.</p>
+#
+
+!= issue24.html issue24-ref.html
+annotate(@note1) fails-if(Quirks||IE7||IE8) skip-if(Chrome) == xhtml-1.xhtml basic-ref.html
+annotate(@note1) fails-if(Quirks||IE7||IE8) skip-if(Chrome) == xhtml-2.html basic-ref.html
+annotate(@note1) fails-if(MSIE) == namespace-1.html basic-ref.html
+annotate(@note1) fails-if(MSIE||Konqueror) == namespace-2.html basic-ref.html
+annotate(@note1) == math-location-1.html math-location-ref.html
 == math-location-2.html math-location-ref.html
-# XXXfred These too tests require support for foreignObject in SVG.
-fails-if(Opera) == svg-1a.html svg-1-ref.html
-fails-if(Opera) == svg-1b.html svg-1-ref.html
+annotate(@note2) fails-if(Opera) == svg-1a.html svg-1-ref.html
+annotate(@note2) fails-if(Opera) == svg-1b.html svg-1-ref.html

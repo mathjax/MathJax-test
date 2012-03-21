@@ -1,7 +1,13 @@
+#
+# @note
+#
+# <p>columnspan and rowspan are not implemented in MathJax.</p>
+#
+
 == columnalign-1a.html columnalign-1-ref.html
 == columnalign-1b.html columnalign-1-ref.html
-fails != columnspan-1.html columnspan-1-ref.html
+annotate(@note) fails != columnspan-1.html columnspan-1-ref.html
 == rowalign-1a.html rowalign-1-ref.html
 == rowalign-1b.html rowalign-1-ref.html
-fails != rowspan-1.html rowspan-1-ref.html
+annotate(@note) fails != rowspan-1.html rowspan-1-ref.html
 

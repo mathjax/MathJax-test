@@ -1,8 +1,20 @@
-== mspace1.html mspace1-ref.html
-random == mspace2.html mspace2-ref.html
+#
+# @note1
+#
+# <p>Small difference, invisible at the naked eye...</p>
+#
+# @note2
+#
+# <p>See
+# <a href="http://groups.google.com/group/mathjax-dev/msg/f6ed494448bf18de">
+# this message on the MathJax-Dev Group</a> for details and suggestions.</p>
+# 
+
+annotate(@note1) random == mspace1.html mspace1-ref.html
+annotate(@note1) random == mspace2.html mspace2-ref.html
 == mspace-1.html mspace-1-ref.html
-fails == mspace-2a.html mspace-2-ref.html
-fails == mspace-2b.html mspace-2-ref.html
+annotate(@note2) fails == mspace-2a.html mspace-2-ref.html
+annotate(@note2) fails == mspace-2b.html mspace-2-ref.html
 == mspace-3.html mspace-3-ref.html
 load mspace-4.html
 load mspaceAbreak3.html

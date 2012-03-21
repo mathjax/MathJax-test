@@ -1,24 +1,24 @@
 include mtextFontInherit/reftest.list
 
 #
-# @note1
+# @note
 #
 # <p>This test is not correct. See this
 # <a href="http://groups.google.com/group/mathjax-dev/msg/f6ed494448bf18de">
-# thread on the MathJax-Dev Group</a> for details and suggestions.</p>
+# message on the MathJax-Dev Group</a> for details and suggestions.</p>
 #
 
 require(TeX) skip-if(Opera||Safari) != undefinedFamily-1.html undefinedFamily-1-ref.html
 != undefinedFamily-2.html undefinedFamily-2-ref.html
 == scale-1.html scale-1-ref.html
-annotate(@note2) fails == minScaleAdjust-1.html minScaleAdjust-1-ref.html
+annotate(@note) fails == minScaleAdjust-1.html minScaleAdjust-1-ref.html
 
 # before the tooltip is displayed
 == tooltip-1.html?delayPost=2000&delayFinalize=1000 tooltip-1-ref.html?show=false
 # after the tooltip is displayed and before it is cleared
 == tooltip-1.html?delayPost=2000&delayClear=2000&delayFinalize=3000 tooltip-1-ref.html?show=true
 # after the tooltip is cleared
-== tooltip-1.html?delayPost=2000&delayClear=2000&delayFinalize=5000 tooltip-1-ref.html?show=false
+== tooltip-1.html?delayPost=2000&delayClear=2000&delayFinalize=6000 tooltip-1-ref.html?show=false
 # testing offsetX
 == tooltip-1.html?delayPost=0&delayClear=5000&offsetX=100 tooltip-1-ref.html?show=true&offsetX=100
 # testing offsetY
