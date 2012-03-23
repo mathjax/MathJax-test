@@ -12,7 +12,7 @@
 == mi2.html mi2-ref.html
 == mi3.html mi3-ref.html
 == mi4.html mi4-ref.html
-== miAtoken5.html miAtoken5-ref.html
+annotate(@note) random == miAtoken5.html miAtoken5-ref.html
 annotate(@note) random == miequivalents11.html miequivalents11-ref.html
 == mifontstyle12.html mifontstyle12-ref.html
 annotate(@note) random == mimathvariant13.html mimathvariant13-ref.html

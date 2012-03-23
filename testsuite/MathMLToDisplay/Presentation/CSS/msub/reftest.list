@@ -14,7 +14,7 @@
 == msub-05.html msub-05-ref.html
 == msub-06.html msub-06-ref.html
 == msub-07.html msub-07-ref.html
-annotate(@note) == msub-08.html msub-08-ref.html
+annotate(@note) fails == msub-08.html msub-08-ref.html
 == msub-09.html msub-09-ref.html
 == msub-10.html msub-10-ref.html
 == msub-11.html msub-11-ref.html

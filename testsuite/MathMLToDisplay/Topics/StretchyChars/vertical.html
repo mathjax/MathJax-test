@@ -18,9 +18,8 @@
       div.innerHTML += "&#x" + op + ";"
 
       textNode = document.createTextNode(div.innerHTML);
-      // getElementById("mo") does not seem to work on Chrome
-      // document.getElementById("mo").appendChild(textNode);
-      document.getElementsByTagName("mo")[0].appendChild(textNode);
+      <!-- this does not seem to work on IE < 9 -->
+      document.getElementById("mo").appendChild(textNode);
       }
     </script>
     <script type="text/javascript" src="../../../header.js"></script>

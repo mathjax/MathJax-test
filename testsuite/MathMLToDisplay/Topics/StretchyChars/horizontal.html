@@ -14,13 +14,12 @@
       if (!op) {
       op = "005F"; // _
       }
-      div = document.getElementById("div");
-      div.innerHTML += "&#x" + op + ";"
+      mydiv = document.getElementById("div");
+      mydiv.innerHTML += "&#x" + op + ";"
 
-      textNode = document.createTextNode(div.innerHTML);
-      // getElementById("mo") does not seem to work on Chrome
-      // document.getElementById("mo").appendChild(textNode);
-      document.getElementsByTagName("mo")[0].appendChild(textNode);
+      textNode = document.createTextNode(mydiv.innerHTML);
+      <!-- this does not seem to work on IE < 9 -->
+      document.getElementById("mo").appendChild(textNode);
       }
     </script>
     <script type="text/javascript" src="../../../header.js"></script>

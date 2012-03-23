@@ -1,6 +1,19 @@
-# XXXfred
-# accents-1: avoid combining mark? use one character for multiple dots?
-fails tree== accents-1.html accents-1-ref.html
+#
+# @note
+# 
+# Some improvements that could be made in MathJax:
+# 
+# <ul>
+#  <li>Avoid using combining mark in the mo operators. Normally these
+#  characters are supposed to be combined with another one. Using them may
+#  result in bad rendering because of inappropriate font metrics. </li>
+#  <li>Use the corresponding Unicode character for multiple dots instead of
+#  using several characters.</li>
+# </ul>
+#
+
+
+annotate(@note) fails tree== accents-1.html accents-1-ref.html
 tree== accents-2.html accents-2-ref.html
 tree== buildrel-1.html buildrel-1-ref.html
 tree== overbrace-1.html overbrace-1-ref.html

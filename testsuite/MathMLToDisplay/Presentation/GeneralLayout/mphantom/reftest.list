@@ -7,7 +7,7 @@
 == mphantomB1.html mphantomB1-ref.html
 == mphantomBinferred2.html mphantomBinferred2-ref.html
 == mphantomBoperators3.html mphantomBoperators3-ref.html
-annotate(@note) == mphantom_colors.html mphantom_colors-ref.html
+annotate(@note) fails == mphantom_colors.html mphantom_colors-ref.html
 == mphantomScolor4.html mphantomScolor4-ref.html
 == mphantomSinheritance5.html mphantomSinheritance5-ref.html
 == rec3-mphantom-1.html rec3-mphantom-1-ref.html
