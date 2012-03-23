@@ -51,10 +51,6 @@ div.testsuiteNotes>div {
     margin: .5em;
 }
 
-div.testsuiteNotes>div>code {
-    color: red;
-}
-
 div.testsuiteNotes>div>h2 {
     background: transparent;
     border: 0;

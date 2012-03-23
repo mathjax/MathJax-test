@@ -1,3 +1,12 @@
+#
+# @note
+#
+# This test comes from the W3C test suite. The author seems to expect that an
+# element with an &lt;mphantom&gt; script will behave the same as this element
+# alone. See <code>MathMLToDisplay/Presentation/ScriptsAndLimits/munderover/munderover-empty-scripts.html</code>
+# for a more general test with empty-scripts.
+#
+
 == msub-01.html msub-01-ref.html
 == msub-02.html msub-02-ref.html
 == msub-03.html msub-03-ref.html
@@ -5,7 +14,7 @@
 == msub-05.html msub-05-ref.html
 == msub-06.html msub-06-ref.html
 == msub-07.html msub-07-ref.html
-== msub-08.html msub-08-ref.html
+annotate(@note) == msub-08.html msub-08-ref.html
 == msub-09.html msub-09-ref.html
 == msub-10.html msub-10-ref.html
 == msub-11.html msub-11-ref.html

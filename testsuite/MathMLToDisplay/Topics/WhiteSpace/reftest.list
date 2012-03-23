@@ -1,13 +1,21 @@
+# 
+# @note
+#
+# These tests compare the rendering of various Unicode characters (corresponding
+# to whitespaces) againt a MathML &lt;mspace&gt;. However, the exact expected
+# rendering of the unicode characters is not always clear.
+#
+
 == invChars.html invChars-ref.html
 == whBcomments1.html whBcomments1-ref.html
 == whBgeneral1.html whBgeneral1-ref.html
-== white1.html white1-ref.html
-fails == white2.html white2-ref.html
-fails-if(!(HTML-CSS&&TeX)) == white3.html white3-ref.html
-fails-if(!(HTML-CSS&&TeX)) == white4.html white4-ref.html
-fails == white5.html white5-ref.html
-fails == white6.html white6-ref.html
-fails == white7.html white7-ref.html
-fails == white8.html white8-ref.html
-fails == white9.html white9-ref.html
-fails == white10.html white10-ref.html
+annotate(@note) fails == white1.html white1-ref.html
+annotate(@note) fails == white2.html white2-ref.html
+annotate(@note) fails-if(!(HTML-CSS&&TeX)) == white3.html white3-ref.html
+annotate(@note) fails-if(!(HTML-CSS&&TeX)) == white4.html white4-ref.html
+annotate(@note) fails == white5.html white5-ref.html
+annotate(@note) fails == white6.html white6-ref.html
+annotate(@note) fails == white7.html white7-ref.html
+annotate(@note) fails == white8.html white8-ref.html
+annotate(@note) fails == white9.html white9-ref.html
+annotate(@note) fails == white10.html white10-ref.html

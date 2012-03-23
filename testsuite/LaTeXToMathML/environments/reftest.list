@@ -1,3 +1,10 @@
+#
+# @note
+#
+# These tests fail because <code>style="width:85%"</code> is added to work
+# around the lack of support for the "width" attribute in Firefox 12 and below.
+# 
+
 tree== align-1a.html align-1-ref.html
 tree== align-1b.html align-1-ref.html
 tree== alignat-1a.html alignat-1-ref.html
@@ -16,8 +23,8 @@ tree== gather-1b.html gather-1-ref.html
 tree== gathered-1.html gathered-1-ref.html
 tree== gathered-2.html gathered-2-ref.html
 tree== leqalignno-1.html leqalignno-1-ref.html
-fails-if(Firefox) tree== multiline-1a.html multiline-1-ref.html
-fails-if(Firefox) tree== multiline-1b.html multiline-1-ref.html
+annotate(@note) fails-if(Firefox) tree== multiline-1a.html multiline-1-ref.html
+annotate(@note) fails-if(Firefox) tree== multiline-1b.html multiline-1-ref.html
 != multiline-2a.html multiline-2-ref.html
 == multiline-2b.html multiline-2-ref.html
 tree== split-1.html split-1-ref.html

@@ -8,16 +8,28 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
-      function getTestCases()
+      var gPageFound = false;
+
+      function postMathJax()
       {
+      httpRequest = new XMLHttpRequest();
+      httpRequest.onreadystatechange = function() { 
+      if (httpRequest.readyState === 4) 
+        // only verify that we don't have a 404 error, because some
+        // browser restrictions may also prevent httpRequest.status to be 200.
+        gPageFound = !(httpRequest.status === 404);
+      }
+      httpRequest.open('GET', MathJax.Hub.config.MathMenu.helpURL);
+      httpRequest.send();
+
+      // Wait one second
+      MathJax.Hub.Queue(["Delay", MathJax.Callback, 1000]);
       }
 
       function getTestCases()
       {
       return [
-      newScriptReftestResult("MathJax.Hub.config.MathMenu.helpURL",
-      MathJax.Hub.config.MathMenu.helpURL ==
-      "http://www.mathjax.org/help/user/")
+      newScriptReftestResult("MathJax.Hub.config.MathMenu.helpURL", gPageFound)
       ];
       }
     </script>
