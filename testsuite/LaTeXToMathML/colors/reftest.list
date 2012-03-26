@@ -1,7 +1,7 @@
 #
 # @note
 #
-# Color model 'cmyk' is not implemented.
+# <p>Color model 'cmyk' is not implemented.</p>
 #
 
 tree== color-1.html color-1-ref.html

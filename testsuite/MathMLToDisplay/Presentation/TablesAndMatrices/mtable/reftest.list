@@ -1,3 +1,9 @@
+#
+# @note1
+#
+# The vertical alignment is slightly different...
+#
+
 == align-1.html align-1-ref.html
 == align-2.html align-2-ref.html
 == align-3a.html align-3-ref.html
@@ -43,8 +49,8 @@ fails-if(Quirks||IE7||IE8) == mtable-2-5.html mtable-2-5-ref.html
 == mtable-align-negative-rownumber.html mtable-align-negative-rownumber-ref.html
 == rowalign-1.html rowalign-1-ref.html
 == rowalign-2.html rowalign-2-ref.html
-fails == rowalign-3.html rowalign-3-ref.html
-fails == rowalign-4.html rowalign-4-ref.html
+annotate(@note1) fails == rowalign-3.html rowalign-3-ref.html
+annotate(@note1) fails == rowalign-4.html rowalign-4-ref.html
 == rowlines-1a.html rowlines-1-ref.html
 != rowlines-1b.html rowlines-1-ref.html
 != rowlines-1c.html rowlines-1-ref.html

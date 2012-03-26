@@ -1,14 +1,12 @@
 #
 # @note
 #
-# These tests verify that operators marked "stretchy" in the MathML operator
+# <p>These tests verify that operators marked "stretchy" in the MathML operator
 # dictionary stretch correctly. However, the necessary glyphs to stretch
-# operators are not always available in the mathematical fonts.
+# operators are not always available in the mathematical fonts.</p>
 #
-# For manual testing convenience, you can click on the blue rectangle to show
-# the glyph behind it.
-#
-# The tests page are not compatible with IE < 9.
+# <p>For manual testing convenience, you can click on the blue rectangle to show
+# the glyph behind it. The tests page are not compatible with IE < 9.</p>
 #
 
 annotate(@note) fails skip-if(MSIE&&!IE9) != horizontal.html?op=005E horizontal-ref.html

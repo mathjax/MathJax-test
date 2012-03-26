@@ -1,8 +1,10 @@
 #
 # @note
 #
-# These tests fail because <code>style="width:85%"</code> is added to work
-# around the lack of support for the "width" attribute in Firefox 12 and below.
+# <p>These tests fail because <code>style="width:85%"</code> is added to work
+# around the lack of support for the "width" attribute in Firefox 12 and
+# below. See <a href="https://github.com/mathjax/MathJax/issues/214">issue
+# 214</a></p>
 # 
 
 tree== align-1a.html align-1-ref.html

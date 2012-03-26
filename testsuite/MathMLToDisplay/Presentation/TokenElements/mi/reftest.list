@@ -1,5 +1,5 @@
 #
-# @note
+# @note1
 #
 # <p>These tests are taken from the W3C MathML testsuite. To convert them in
 # reftest, they compare the combination of mathvariant on a mi (for example
@@ -7,18 +7,23 @@
 # character (for example U+1D538). It turns out that this is not perfect, the
 # result depending on fonts installed, how browsers pick the glyph etc.</p>
 #
+# @note2
+#
+# <p>This test verifies that no additional italic style is applied to some
+# characters. This test seems to fail with the STIX fonts.</p>
+#
 
 == mi1.html mi1-ref.html
 == mi2.html mi2-ref.html
 == mi3.html mi3-ref.html
 == mi4.html mi4-ref.html
-annotate(@note) random == miAtoken5.html miAtoken5-ref.html
-annotate(@note) random == miequivalents11.html miequivalents11-ref.html
+annotate(@note1) random == miAtoken5.html miAtoken5-ref.html
+annotate(@note1) random == miequivalents11.html miequivalents11-ref.html
 == mifontstyle12.html mifontstyle12-ref.html
-annotate(@note) random == mimathvariant13.html mimathvariant13-ref.html
-annotate(@note) random == mimathvariant14.html mimathvariant14-ref.html
+annotate(@note1) random == mimathvariant13.html mimathvariant13-ref.html
+annotate(@note1) random == mimathvariant14.html mimathvariant14-ref.html
 == mi-mathvariant-1.html mi-mathvariant-1-ref.html
-fails-if(!TeX) == mi-mathvariant-2.html mi-mathvariant-2-ref.html
+annotate(@note2) fails-if(STIX) == mi-mathvariant-2.html mi-mathvariant-2-ref.html
 == miScolorname6.html miScolorname6-ref.html
 == miScolorscope7.html miScolorscope7-ref.html
 == miSfonts8.html miSfonts8-ref.html
@@ -27,4 +32,3 @@ fails-if(!TeX) == mi-mathvariant-2.html mi-mathvariant-2-ref.html
 == miSmathsize17.html miSmathsize17-ref.html
 == miStoken10.html miStoken10-ref.html
 == miScolorname15.html miScolorname15-ref.html
-

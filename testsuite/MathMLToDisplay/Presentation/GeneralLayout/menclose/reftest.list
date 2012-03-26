@@ -1,3 +1,18 @@
+#
+# @noteRoot
+#
+# <p>Currently, <code>menclose@radical</code> is drawn with lines rather than
+# built from glyphs, so its render differently than a normal
+# <code>&lt;sqrt&gt;</code>.
+# See <a href="https://github.com/mathjax/MathJax/issues/101">issue 101</a>.</p>
+#
+# @noteCircle
+#
+# <p>The circle notation should not overlap its content. That means that the
+# bounding box of the &lt;menclose&gt; should be at least \sqrt(2) times larger
+# than its content.</p>
+#
+
 != menclose-1a.html menclose-1-ref.html
 != menclose-1b.html menclose-1-ref.html
 != menclose-1c.html menclose-1-ref.html
@@ -15,7 +30,7 @@
 != menclose-1o.html menclose-1-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2a.html menclose-2a-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2b.html menclose-2b-ref.html
-fails-if(!(NativeMML&&(Firefox||MSIE))) == menclose-2c.html menclose-2c-ref.html
+annotate(@noteCircle) fails-if(!(NativeMML&&(Firefox||MSIE))) == menclose-2c.html menclose-2c-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2d.html menclose-2d-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2e.html menclose-2e-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2f.html menclose-2f-ref.html
@@ -29,5 +44,4 @@ fails-if(Quirks||IE7||IE8||Safari) == menclose-2m.html menclose-2m-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2n.html menclose-2n-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2o.html menclose-2o-ref.html
 == menclose-3.html menclose-3-ref.html
-fails script menclose-4.html
-
+annotate(@noteCircle) fails-if(!(NativeMML&&Firefox)) script menclose-4.html

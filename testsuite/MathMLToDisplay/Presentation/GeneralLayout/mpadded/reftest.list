@@ -7,6 +7,13 @@ include mozilla/reftest.list
 # <a href="http://groups.google.com/group/mathjax-dev/msg/f6ed494448bf18de">
 # this message on the MathJax-Dev Group</a> for details and suggestions.</p>
 # 
+# @note2
+#
+# <p>The background colors are made slightly larger than their contents in
+# order to properly cover slight differences in the antialiasing of characters
+# (which causes them to fall slightly outside the font metric bounding boxes).
+# </p>
+#
 
 == mpadded1.html mpadded1-ref.html
 == mpadded7.html mpadded7-ref.html
@@ -17,5 +24,5 @@ annotate(@note1) fails == mpadded-2b.html mpadded-2-ref.html
 == mpadded-4.html mpadded-4-ref.html
 == mpadded-5.html mpadded-5-ref.html
 == mpadded-6a.html mpadded-6-ref.html
-random == mpadded-6b.html mpadded-6-ref.html
+annotate(@note2) fails == mpadded-6b.html mpadded-6-ref.html
 == mpadded-7.html mpadded-7-ref.html

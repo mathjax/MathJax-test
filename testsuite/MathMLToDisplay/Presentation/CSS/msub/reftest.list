@@ -1,10 +1,10 @@
 #
 # @note
 #
-# This test comes from the W3C test suite. The author seems to expect that an
+# <p>This test comes from the W3C test suite. The author seems to expect that an
 # element with an &lt;mphantom&gt; script will behave the same as this element
 # alone. See <code>MathMLToDisplay/Presentation/ScriptsAndLimits/munderover/munderover-empty-scripts.html</code>
-# for a more general test with empty-scripts.
+# for a more general test with empty-scripts.</p>
 #
 
 == msub-01.html msub-01-ref.html

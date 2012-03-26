@@ -1,6 +1,7 @@
 #
-# @note The green mphantom is slightly wider than the reference in HTML-CSS
-# output mode.
+# @note
+# <p>The green mphantom is slightly wider than the reference in HTML-CSS
+# output mode.</p>
 # 
 
 == mphantom-1.html mphantom-1-ref.html

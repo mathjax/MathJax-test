@@ -10,18 +10,18 @@
     <script type="text/javascript" src="../../../../header.js"></script>
   </head>
 
-  <!-- This test tries to verify that the circle notation does not overlap
-       its content -->
+  <!-- 20.71067811865478 = ((sqrt(2)-1)*squareSize)/2 -->
+
   <body style="background: white;">
-    <div style="position: absolute;">
+    <div style="position: absolute;
+                left: 20.71067811865478px;
+                top: 20.71067811865478px;">
       <math>
-        <menclose notation="circle" mathcolor="white">
-          <mpadded width="100px" height="100px" lspace="2px" voffset="2px"
-                   mathbackground="white">
-            <mspace width="96px" height="96px"
-                    mathbackground="red"></mspace>
-          </mpadded>
-        </menclose>
+        <mpadded width="100px" height="100px" lspace="2px" voffset="2px"
+                 mathbackground="white">
+          <mspace width="96px" height="96px"
+                  mathbackground="red"></mspace>
+        </mpadded>
       </math>
     </div>
   </body>

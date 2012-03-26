@@ -1,7 +1,7 @@
 #
 # @note
 # 
-# Some improvements that could be made in MathJax:
+# <p>Some improvements that could be made in MathJax:</p>
 # 
 # <ul>
 #  <li>Avoid using combining mark in the mo operators. Normally these

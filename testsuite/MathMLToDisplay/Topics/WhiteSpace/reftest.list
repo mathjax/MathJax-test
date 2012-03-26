@@ -1,9 +1,9 @@
 # 
 # @note
 #
-# These tests compare the rendering of various Unicode characters (corresponding
-# to whitespaces) againt a MathML &lt;mspace&gt;. However, the exact expected
-# rendering of the unicode characters is not always clear.
+# <p>These tests compare the rendering of various Unicode characters
+# (corresponding to whitespaces) againt a MathML &lt;mspace&gt;. However, the
+# exact expected rendering of the unicode characters is not always clear.</p>
 #
 
 == invChars.html invChars-ref.html

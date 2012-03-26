@@ -1,3 +1,12 @@
+#
+# @note
+#
+# <p>These tests fail because <code>style="width:85%"</code> is added to work
+# around the lack of support for the "width" attribute in Firefox 12 and
+# below. See <a href="https://github.com/mathjax/MathJax/issues/214">issue
+# 214</a></p>
+# 
+
 tree== boxes-1.html boxes-1-ref.html
 tree== skip-1a.html skip-1-ref.html
 tree== skip-1b.html skip-1-ref.html
@@ -12,7 +21,7 @@ tree== newline-1.html newline-1-ref.html
 tree== phantom-1.html phantom-1-ref.html
 tree== raise-1.html raise-1-ref.html
 tree== rlap-1.html rlap-1-ref.html
-fails-if(Firefox) tree== shove-1.html shove-1-ref.html
+annotate(@note) fails-if(Firefox) tree== shove-1.html shove-1-ref.html
 tree== smash-1.html smash-1-ref.html
 tree== spaces-1.html spaces-1-ref.html
 tree== strut-1.html strut-1-ref.html
