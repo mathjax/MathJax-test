@@ -11,6 +11,9 @@
 #  using several characters.</li>
 # </ul>
 #
+# <p>See <a href="https://github.com/mathjax/MathJax/issues/216">issue 216</a>.
+# </p>
+#
 
 
 annotate(@note) fails tree== accents-1.html accents-1-ref.html

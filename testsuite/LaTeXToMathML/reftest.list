@@ -19,12 +19,17 @@ include symbols/reftest.list
 #
 # @note1
 #
-# <p>The commands \injlim, \projlim etc should generate only one &lt;mi&gt;.</p>
+# <p>The commands \injlim, \projlim etc should generate only one &lt;mi&gt;.
+# See <a href="https://github.com/mathjax/MathJax/issues/215">issue</a>.</p>
 #
 # @note2
 #
 # <p>Possible improvement: generate the appropriate Unicode character for
 # multiple primes, instead of several single '.</p>
+#
+# <p>See <a href="https://github.com/mathjax/MathJax/issues/216">issue 216</a>.
+# </p>
+
 
 tree== boxed-1.html boxed-1-ref.html
 == cases-1.html cases-1-ref.html

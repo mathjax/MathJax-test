@@ -5,6 +5,9 @@
 # the quadruple integral instead of four integral symbols separated by negative
 # spaces. Issue: does the MathJax fonts have this symbol?</p>
 #
+# <p>See <a href="https://github.com/mathjax/MathJax/issues/216">issue 216</a>.
+# </p>
+#
 
 tree== binaryops-1.html binaryops-1-ref.html
 tree== dots-1.html dots-1-ref.html
