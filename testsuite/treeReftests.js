@@ -50,10 +50,20 @@
 function serialize(aNode)
 {
     var source;
-    if (MathJax.Hub.Browser.isMSIE) {
-        // XXXfred: Internet Explorer does not support XMLSerializer
-        source = serialize2(aNode);
-    } else {
+    if (MathJax.Hub.Browser.isMSIE ||
+        MathJax.Hub.Browser.isSafari ||
+        MathJax.Hub.Browser.isChrome ||
+        MathJax.Hub.Browser.isKonqueror) {
+        // Use a custom serializer:
+        // - Internet Explorer does not support XMLSerializer.
+        // - Webkit browsers seems to serialize attributes in different orders.
+        var sortAttributes = (MathJax.Hub.Browser.isSafari ||
+                              MathJax.Hub.Browser.isChrome ||
+                              MathJax.Hub.Browser.isKonqueror);
+        source = serialize2(aNode, sortAttributes);
+    } else {        
+        // Use the standard XMLSerializer object, which is expected to be more
+        // complete and faster.
         source = (new XMLSerializer()).serializeToString(aNode);
     }
 
@@ -68,18 +78,19 @@ function serialize(aNode)
  * A basic serializer for browsers that do not support XMLSerializer. It is not
  * claimed to be complete.
  *
- * @tparam  Node   aNode the node to serialize
+ * @tparam  Node    aNode the node to serialize
+ * @tparam  Boolean aSortAttributes whether to sort attributes
  *
  * @treturn String an XML string describing the node
  *
  * @exception "serialization error"
  *
  */
-function serialize2(aNode)
+function serialize2(aNode, aSortAttributes)
 {
     var s = "";
 
-    // XXXfred: Versions of IE <= 8 do not know the Node constants
+    // Versions of IE <= 8 do not know the Node constants
     switch(aNode.nodeType)
     {
     case 3: // Node.TEXT_NODE:
@@ -108,16 +119,21 @@ function serialize2(aNode)
         s += "<";
         s += aNode.tagName;
         var attributes = aNode.attributes;
-        // var attributesCopy = new Array();
-        for (var i = 0; i < attributes.length; i++) {
-          s += serialize2(attributes[i]);
-          // attributesCopy.push(serialize2(attributes[i]));
-        }
 
-        // attributesCopy.sort();
-        // for (var i = 0; i < attributesCopy.length; i++) {
-        //  s += attributesCopy[i];
-        //}
+        if (aSortAttributes) {
+            var attributesCopy = new Array();
+            for (var i = 0; i < attributes.length; i++) {
+                attributesCopy.push(serialize2(attributes[i]));
+            }
+            attributesCopy.sort();
+            for (var i = 0; i < attributesCopy.length; i++) {
+                s += attributesCopy[i];
+            }
+        } else {
+            for (var i = 0; i < attributes.length; i++) {
+                s += serialize2(attributes[i]);
+            }
+        }
 
         s += ">";
         var children = aNode.childNodes;
@@ -152,14 +168,14 @@ function serialize2(aNode)
 function getMathJaxSourceMathML(aNode)
 {
     if (MathJax.Hub.Browser.isMSIE) {
-        // XXXfred Internet Explorer lacks support for getElementsByClassName
+        // Internet Explorer lacks support for getElementsByClassName
         var children = aNode.children;
         for (var i = 0; i < children.length; i++) {
             if (children[i].className == "MathJax_MathML") {
                 var mathNodes;
                 mathNodes = children[i].getElementsByTagName("math");
                 if (mathNodes.length == 0) {
-                    // XXXfred getElementsByTagName fails with IE9
+                    // getElementsByTagName fails with IE9
                     mathNodes = children[i].querySelectorAll("math");
                 }
                 if (mathNodes.length > 0) {

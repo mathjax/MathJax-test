@@ -1,4 +1,4 @@
-== msubsup-01.html msubsup-01-ref.html
+fails-if(TeX) == msubsup-01.html msubsup-01-ref.html
 == msubsup-02.html msubsup-02-ref.html
 == msubsup-03.html msubsup-03-ref.html
 == msubsup-04.html msubsup-04-ref.html

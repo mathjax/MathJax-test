@@ -8,14 +8,14 @@ script delayStartupUntil-1.html
 script issue163.html
 script messageStyle-1.html
 script messageStyle-2.html
-slow-if(Opera) script messageStyle-3.html?messageStyle=none
-slow-if(Opera) script messageStyle-3.html?messageStyle=simple
-slow-if(Opera) script messageStyle-3.html?messageStyle=normal
+slow script messageStyle-3.html?messageStyle=none
+slow script messageStyle-3.html?messageStyle=simple
+slow script messageStyle-3.html?messageStyle=normal
 == prepostJax-1.html prepostJax-1-ref.html
 == preRemoveClass-1.html preRemoveClass-1-ref.html
 == preRemoveClass-2.html preRemoveClass-2-ref.html
-slow-if(Opera) script showProcessingMessages-1.html?showProcessing=false
-slow-if(Opera) script showProcessingMessages-1.html?showProcessing=true
+slow script showProcessingMessages-1.html?showProcessing=false
+slow script showProcessingMessages-1.html?showProcessing=true
 == skipStartupTypeset-1.html skipStartupTypeset-1-ref.html
 == styles-1.html styles-1-ref.html
 script v1.0-compatible-1.html

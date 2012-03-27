@@ -9,4 +9,4 @@
 == munder-09.html munder-09-ref.html
 == munder-10.html munder-10-ref.html
 == munder-11.html munder-11-ref.html
-== munder-12.html munder-12-ref.html
+fails-if(TeX) == munder-12.html munder-12-ref.html
