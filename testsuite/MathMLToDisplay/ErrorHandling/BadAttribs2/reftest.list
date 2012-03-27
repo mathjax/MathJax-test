@@ -1,3 +1,15 @@
+#
+# @note1
+#
+# <p>This page from the W3C test suite verifies how are bad attributes are
+# handled. Here mathbackground="quagmire" is ignored in HTML-CSS output mode
+# but is a black square is displayed in SVG output mode.</p>
+#
+# @note2
+#
+# <p>Horizontal shift in Chrome+HTML-CSS</p>
+#
+
 == badAttribs2.html badAttribs2-ref.html
 == badAttribsAction.html badAttribsAction-ref.html
-== badAttribsVal3.html badAttribsVal3-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Chrome&&HTML-CSS)) == badAttribsVal3.html badAttribsVal3-ref.html

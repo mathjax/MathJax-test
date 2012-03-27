@@ -1,9 +1,23 @@
-fails-if(SVG) == mglyph3.html mglyph3-ref.html
-fails-if(SVG) == mglyph_aspect_gif.html mglyph_aspect_gif-ref.html
-fails-if(SVG) == mglyph_aspect.html mglyph_aspect-ref.html
-fails-if(SVG) == mglyph_stretched.html mglyph_stretched-ref.html
-fails-if(SVG) == mglyph_valignbottom.html mglyph_valignbottom-ref.html
-fails-if(SVG) == mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
-fails-if(SVG) == mglyph_valigntop.html mglyph_valigntop-ref.html
+# @note1
+#
+# <p>background-image is not implemented in SVG output mode, so the reference
+# can not be rendered correctly.</p>
+#
+# @note2
+#
+# <p>The images do not exactly match in Opera+HTML-CSS.</p>
+#
+# @note3
+#
+# <p>Vertical shift in Chrome+HTML-CSS</p>
+#
+
+annotate(@note1) fails-if(SVG) == mglyph3.html mglyph3-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)) == mglyph_aspect_gif.html mglyph_aspect_gif-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)) == mglyph_aspect.html mglyph_aspect-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)) == mglyph_stretched.html mglyph_stretched-ref.html
+annotate(@note1,@note3) fails-if(SVG||(Chrome&&HTML-CSS)) == mglyph_valignbottom.html mglyph_valignbottom-ref.html
+annotate(@note1) fails-if(SVG) == mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
+annotate(@note1,@note3) fails-if(SVG||(Chrome&&HTML-CSS)) == mglyph_valigntop.html mglyph_valigntop-ref.html
 require(HTML-CSS) script rec-mglyph1.html
 fails-if(MSIE) == rec-mglyph2.html rec-mglyph2-ref.html

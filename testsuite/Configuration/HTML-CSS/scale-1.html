@@ -15,7 +15,7 @@
       gConfigObject["SVG"].scale = 200;
       MathJax.Hub.Config(gConfigObject);
 
-      var math = MathJax.Hub.getAllJax("div")[0];
+      var math = MathJax.Hub.getAllJax("MathDiv")[0];
       MathJax.Hub.Queue(["Rerender", math]);
       }
     </script>
@@ -24,7 +24,7 @@
 
   <body>
 
-    <div style="position: absolute; left: 0px; top: -1px;">
+    <div id="MathDiv" style="position: absolute; left: 0px; top: -1px;">
       <math>
         <mspace width="8em" height="4em" mathbackground="red"></mspace>
       </math>

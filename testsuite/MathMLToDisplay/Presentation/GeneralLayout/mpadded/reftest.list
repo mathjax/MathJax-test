@@ -14,15 +14,27 @@ include mozilla/reftest.list
 # (which causes them to fall slightly outside the font metric bounding boxes).
 # </p>
 #
+# @note3
+#
+# <p>Small differences invisible at the naked eye.</p>
+#
+# @note4
+#
+# <p>Small shifts.</p>
+#
+# @note5
+#
+# <p>Small differences in Opera+HTML-CSS</p>
+#
 
-== mpadded1.html mpadded1-ref.html
+annotate(@note3) fails-if(SVG) == mpadded1.html mpadded1-ref.html
 == mpadded7.html mpadded7-ref.html
-== mpadded-1.html mpadded-1-ref.html
+annotate(@note5) fails-if(Opera&&HTML-CSS) == mpadded-1.html mpadded-1-ref.html
 annotate(@note1) fails == mpadded-2a.html mpadded-2-ref.html
 annotate(@note1) fails == mpadded-2b.html mpadded-2-ref.html
-== mpadded-3.html mpadded-3-ref.html
-== mpadded-4.html mpadded-4-ref.html
-== mpadded-5.html mpadded-5-ref.html
-== mpadded-6a.html mpadded-6-ref.html
-annotate(@note2) fails == mpadded-6b.html mpadded-6-ref.html
+annotate(@note5) fails-if(Opera&&HTML-CSS) == mpadded-3.html mpadded-3-ref.html
+annotate(@note5) fails-if(Opera&&HTML-CSS) == mpadded-4.html mpadded-4-ref.html
+annotate(@note4,@note5) fails-if(SVG||(Opera&&HTML-CSS)) == mpadded-5.html mpadded-5-ref.html
+annotate(@note4,@note5) fails-if(SVG||(Opera&&HTML-CSS)) == mpadded-6a.html mpadded-6-ref.html
+annotate(@note2,@note4) fails == mpadded-6b.html mpadded-6-ref.html
 == mpadded-7.html mpadded-7-ref.html

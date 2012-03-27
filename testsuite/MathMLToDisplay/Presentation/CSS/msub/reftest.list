@@ -1,21 +1,33 @@
 #
-# @note
+# @note1
+#
+# <p>Small differences invisible at the naked eye.</p>
+#
+# @note2
 #
 # <p>This test comes from the W3C test suite. The author seems to expect that an
 # element with an &lt;mphantom&gt; script will behave the same as this element
 # alone. See <code>MathMLToDisplay/Presentation/ScriptsAndLimits/munderover/munderover-empty-scripts.html</code>
 # for a more general test with empty-scripts.</p>
 #
+# @note3
+#
+# <p>Horizontal shifts in Opera HTML-CSS.</p>
+#
+# @note4
+#
+# <p>Vertical shifts in Chrome HTML-CSS.</p>
+#
 
-== msub-01.html msub-01-ref.html
-== msub-02.html msub-02-ref.html
-== msub-03.html msub-03-ref.html
-== msub-04.html msub-04-ref.html
+annotate(@note1) fails-if(SVG) == msub-01.html msub-01-ref.html
+annotate(@note1,@note3) fails-if(SVG||(Opera&&HTML-CSS)) == msub-02.html msub-02-ref.html
+annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS)) == msub-03.html msub-03-ref.html
+annotate(@note1) fails-if(SVG) == msub-04.html msub-04-ref.html
 == msub-05.html msub-05-ref.html
-== msub-06.html msub-06-ref.html
-== msub-07.html msub-07-ref.html
-annotate(@note) fails == msub-08.html msub-08-ref.html
-== msub-09.html msub-09-ref.html
+annotate(@note1) fails-if(SVG) == msub-06.html msub-06-ref.html
+annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS)) == msub-07.html msub-07-ref.html
+annotate(@note2,@note3) fails-if(Firefox||(Opera&&HTML-CSS)) == msub-08.html msub-08-ref.html
+annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS)) == msub-09.html msub-09-ref.html
 == msub-10.html msub-10-ref.html
 == msub-11.html msub-11-ref.html
 == msub-12.html msub-12-ref.html

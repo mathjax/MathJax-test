@@ -1,7 +1,13 @@
-== mpadded-1.html mpadded-1-ref.html
-== mpadded-2.html mpadded-2-ref.html
-== mpadded-3.html mpadded-3-ref.html
+#
+# @note1
+#
+# <p>Size difference in Opera+HTML-CSS</p>
+#
+
+annotate(@note1) fails-if(Opera&&HTML-CSS) == mpadded-1.html mpadded-1-ref.html
+annotate(@note1) fails-if(Opera&&HTML-CSS) == mpadded-2.html mpadded-2-ref.html
+annotate(@note1) fails-if(Opera&&HTML-CSS) == mpadded-3.html mpadded-3-ref.html
 == mpadded-4.html mpadded-4-ref.html
-== mpadded-5.html mpadded-5-ref.html
-== mpadded-1-2.html mpadded-1-2-ref.html
+annotate(@note1) fails-if(Opera&&HTML-CSS) == mpadded-5.html mpadded-5-ref.html
+annotate(@note1) fails-if(Opera&&HTML-CSS) == mpadded-1-2.html mpadded-1-2-ref.html
 == mpadded-6.html mpadded-6-ref.html

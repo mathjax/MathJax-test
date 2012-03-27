@@ -1,3 +1,12 @@
+# @note1
+#
+# <p>Small differences invisible at the naked eye.</p>
+#
+# @note2
+#
+# <p>Horizontal shift in TeX + HTML-CSS ouput mode.</p>
+#
+
 == munder-01.html munder-01-ref.html
 == munder-02.html munder-02-ref.html
 == munder-03.html munder-03-ref.html
@@ -8,5 +17,5 @@
 == munder-08.html munder-08-ref.html
 == munder-09.html munder-09-ref.html
 == munder-10.html munder-10-ref.html
-== munder-11.html munder-11-ref.html
-fails-if(TeX) == munder-12.html munder-12-ref.html
+annotate(@note1) fails-if(SVG) == munder-11.html munder-11-ref.html
+annotate(@note2) fails-if(Firefox&&HTML-CSS&&TeX) == munder-12.html munder-12-ref.html

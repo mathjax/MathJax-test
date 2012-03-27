@@ -1,21 +1,34 @@
 #
-# @note
+# @note1
+#
+# <p>Small differences invisible at the naked eye.</p>
+#
+# @note2
 #
 # <p>These two tests are taken from the W3C MathML testsuite, and were already
 # more or less "reftests". They use &lt;mspace linebreak="newline"/&gt;'s and
 # &lt;mphantom/&gt;'s. The author seems to expect that these elements won't
 # have effect on the rendering.
 #
+# @note3
+#
+# <p>Horizontal shifts in Opera HTML+CSS.</p>
+#
+# @note4
+#
+# <p>Vertical shifts and other small differences in Chrome HTML-CSS</p>
+# 
 
-fuzzy-if(Opera&&SVG&&TeX) == mfrac-01.html mfrac-01-ref.html
+
+annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS)) == mfrac-01.html mfrac-01-ref.html
 == mfrac-02.html mfrac-02-ref.html
-fuzzy == mfrac-03.html mfrac-03-ref.html
-fuzzy == mfrac-04.html mfrac-04-ref.html
-fuzzy == mfrac-05.html mfrac-05-ref.html
-fuzzy == mfrac-06.html mfrac-06-ref.html
-fuzzy-if(Opera&&SVG&&TeX) fuzzy == mfrac-07.html mfrac-07-ref.html
-fuzzy == mfrac-08.html mfrac-08-ref.html
-fuzzy == mfrac-09.html mfrac-09-ref.html
-fuzzy == mfrac-10.html mfrac-10-ref.html
-annotate(@note) skip == mfrac-11.html mfrac-11-ref.html
-annotate(@note) skip == mfrac-12.html mfrac-12-ref.html
+annotate(@note1,@note3,@note4) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)) == mfrac-03.html mfrac-03-ref.html
+== mfrac-04.html mfrac-04-ref.html
+annotate(@note4) fails-if(Chrome&&HTML-CSS) == mfrac-05.html mfrac-05-ref.html
+== mfrac-06.html mfrac-06-ref.html
+annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS)) == mfrac-07.html mfrac-07-ref.html
+annotate(@note3) fails-if((Opera&&HTML-CSS)) == mfrac-08.html mfrac-08-ref.html
+annotate(@note1) fails-if(SVG) == mfrac-09.html mfrac-09-ref.html
+== mfrac-10.html mfrac-10-ref.html
+annotate(@note2) skip == mfrac-11.html mfrac-11-ref.html
+annotate(@note2) skip == mfrac-12.html mfrac-12-ref.html

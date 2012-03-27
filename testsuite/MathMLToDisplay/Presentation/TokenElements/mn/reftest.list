@@ -1,3 +1,9 @@
+#
+# @note
+#
+# <p>Small differences invisible at the naked eye...</p>
+#
+
 == mn1.html mn1-ref.html
 == mn2.html mn2-ref.html
 == mn3.html mn3-ref.html
@@ -8,5 +14,5 @@
 == mnScolor8.html mnScolor8-ref.html
 == mnSdisplaystyle9.html mnSdisplaystyle9-ref.html
 == mnSfont10.html mnSfont10-ref.html
-== mnSscriptlevel11.html mnSscriptlevel11-ref.html
+annotate(@note) fails-if(SVG) == mnSscriptlevel11.html mnSscriptlevel11-ref.html
 

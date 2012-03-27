@@ -1,12 +1,26 @@
+
+# @note1
+#
+# <p>Small differences invisible at the naked eye.</p>
+#
+# @note2
+#
+# <p>Vertical shift in SVG ouput mode.</p>
+#
+# @note3
+#
+# <p>Horizontal shifts in Opera HTML+CSS.</p>
+#
+
 fails-if(TeX) == msubsup-01.html msubsup-01-ref.html
-== msubsup-02.html msubsup-02-ref.html
-== msubsup-03.html msubsup-03-ref.html
-== msubsup-04.html msubsup-04-ref.html
-== msubsup-05.html msubsup-05-ref.html
+annotate(@note2,@note3) fails-if(SVG||(Opera&&HTML-CSS)) == msubsup-02.html msubsup-02-ref.html
+annotate(@note1) fails-if(SVG) == msubsup-03.html msubsup-03-ref.html
+annotate(@note1) fails-if(SVG) == msubsup-04.html msubsup-04-ref.html
+annotate(@note1) fails-if(SVG) == msubsup-05.html msubsup-05-ref.html
 == msubsup-06.html msubsup-06-ref.html
-== msubsup-07.html msubsup-07-ref.html
-== msubsup-08.html msubsup-08-ref.html
-== msubsup-09.html msubsup-09-ref.html
+annotate(@note1) fails-if(SVG) == msubsup-07.html msubsup-07-ref.html
+annotate(@note1) fails-if(SVG) == msubsup-08.html msubsup-08-ref.html
+annotate(@note1) fails-if(SVG||(Chrome&&HTML-CSS)) == msubsup-09.html msubsup-09-ref.html
 == msubsup-10.html msubsup-10-ref.html
 == msubsup-11.html msubsup-11-ref.html
 == msubsup-12.html msubsup-12-ref.html

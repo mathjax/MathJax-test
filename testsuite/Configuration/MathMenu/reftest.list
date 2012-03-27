@@ -1,3 +1,10 @@
-script helpURL-1.html
+#
+# @note1
+#
+# <p>This test tries to verify that the help page URL is correct. It does not
+# work well because of same domain restriction.</p>
+#
+
+annotate(@note1) skip script helpURL-1.html
 != styles-1.html styles-1-ref.html
 == styles-2.html styles-2-ref.html

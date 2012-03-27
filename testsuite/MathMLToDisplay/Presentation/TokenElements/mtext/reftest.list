@@ -1,16 +1,21 @@
 #
-# @note
+# @note1
 #
 # <p>This is a test from the W3C testsuite that verifies whitespace processing
 # (&amp;#x2009; and &amp;#x205F;) within an &lt;mtext&gt; element. It has been
 # converted to a reftest using <code>&lt;mspace&gt;</code>, but the space widths
 # do not match.</p>
 #
+# @note2
+#
+# <p>This test uses the space <code>&amp;#x200A;</code> whose glyph does not
+# seem to be found in SVG output mode.</p>
+#
 
 == mtext1.html mtext1-ref.html
-== mtext2.html mtext2-ref.html
+annotate(@note2) fails-if(SVG) == mtext2.html mtext2-ref.html
 == mtextAtoken3.html mtextAtoken3-ref.html
 == mtextSbg4.html mtextSbg4-ref.html
 == mtextScolor5.html mtextScolor5-ref.html
-annotate(@note) fails == mtextspaces7.html mtextspaces7-ref.html
+annotate(@note1) fails == mtextspaces7.html mtextspaces7-ref.html
 == mtextStoken6.html mtextStoken6-ref.html

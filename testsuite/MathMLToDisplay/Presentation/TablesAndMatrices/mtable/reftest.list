@@ -3,6 +3,14 @@
 #
 # The vertical alignment is slightly different...
 #
+# @note2
+#
+# The width of the central green rectangle is slightly different...
+#
+# @note3
+#
+# Small vertical shift in Chrome HTML-CSS.
+#
 
 == align-1.html align-1-ref.html
 == align-2.html align-2-ref.html
@@ -23,7 +31,7 @@
 == columnlines-2b.html columnlines-2-ref.html
 == columnspacing-1.html columnspacing-1-ref.html
 == columnwidth-1.html columnwidth-1-ref.html
-== columnwidth-2.html columnwidth-2-ref.html
+annotate(@note2) fails-if(SVG&&Firefox) == columnwidth-2.html columnwidth-2-ref.html
 == displaystyle-1.html displaystyle-1-ref.html
 == equalcolumns-1.html equalcolumns-1-ref.html
 == equalrows-1.html equalrows-1-ref.html
@@ -47,8 +55,8 @@ fails-if(Quirks||IE7||IE8) == mtable-2-4.html mtable-2-4-ref.html
 fails-if(Quirks||IE7||IE8) == mtable-2-5.html mtable-2-5-ref.html
 == mtable-3.html mtable-3-ref.html
 == mtable-align-negative-rownumber.html mtable-align-negative-rownumber-ref.html
-== rowalign-1.html rowalign-1-ref.html
-== rowalign-2.html rowalign-2-ref.html
+annotate(@note2,@note3) fails-if(Chrome&&HTML-CSS) == rowalign-1.html rowalign-1-ref.html
+annotate(@note2,@note3) fails-if(Chrome&&HTML-CSS) == rowalign-2.html rowalign-2-ref.html
 annotate(@note1) fails == rowalign-3.html rowalign-3-ref.html
 annotate(@note1) fails == rowalign-4.html rowalign-4-ref.html
 == rowlines-1a.html rowlines-1-ref.html
