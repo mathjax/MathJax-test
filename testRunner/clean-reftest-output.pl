@@ -185,7 +185,7 @@ while (<$gReftestOutput>) {
                     # convert references @ to link
                     my $testNote = $gWebURI."testsuiteNotes.html#";
                     $_ = $testID;
-                    s,\/([^\/]*)\.html$,_,;
+                    s,\/([^\/]*)\.html(\?(.*))?$,_,;
                     s,\/,_,g;
                     $testNote .= $_;
                     $_ = $testInfo;
