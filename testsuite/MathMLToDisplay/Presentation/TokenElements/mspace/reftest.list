@@ -14,9 +14,9 @@
 # <p>Small difference in Opera+HTML-CSS.</p>
 #
 
-annotate(@note1,@note3) fails-if(Opera&&HTML-CSS) random == mspace1.html mspace1-ref.html
+annotate(@note1) random == mspace1.html mspace1-ref.html
 annotate(@note1) random == mspace2.html mspace2-ref.html
-== mspace-1.html mspace-1-ref.html
+annotate(@note3) fails-if(Opera&&HTML-CSS) == mspace-1.html mspace-1-ref.html
 annotate(@note2) fails == mspace-2a.html mspace-2-ref.html
 annotate(@note2) fails == mspace-2b.html mspace-2-ref.html
 annotate(@note3) fails-if(Opera&&HTML-CSS) == mspace-3.html mspace-3-ref.html

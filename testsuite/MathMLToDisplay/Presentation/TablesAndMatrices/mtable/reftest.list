@@ -1,15 +1,19 @@
 #
 # @note1
 #
-# The vertical alignment is slightly different...
+# <p>The vertical alignment is slightly different...</p>
 #
 # @note2
 #
-# The width of the central green rectangle is slightly different...
+# <p>The width of the central green rectangle is slightly different...</p>
 #
 # @note3
 #
-# Small vertical shift in Chrome HTML-CSS.
+# <p>Small vertical shift in Chrome HTML-CSS.</p>
+#
+# @note4
+#
+# <p>Horizontal shift and other small differences in Opera HTML-CSS</p>
 #
 
 == align-1.html align-1-ref.html
@@ -20,10 +24,10 @@
 != align-4b.html align-4-ref.html
 # XXXfred align with rownumber does not seem implemented
 == columnalign-1.html columnalign-1-ref.html
-== columnalign-2.html columnalign-2-ref.html
+annotate(@note4) fails-if(Opera&&HTML-CSS) == columnalign-2.html columnalign-2-ref.html
 == columnalign-3a.html columnalign-3-ref.html
 == columnalign-3b.html columnalign-3-ref.html
-== columnalign-4.html columnalign-4-ref.html
+annotate(@note4) fails-if(Opera&&HTML-CSS) == columnalign-4.html columnalign-4-ref.html
 == columnlines-1a.html columnlines-1-ref.html
 != columnlines-1b.html columnlines-1-ref.html
 != columnlines-1c.html columnlines-1-ref.html
@@ -53,10 +57,10 @@ fails-if(Quirks||IE7||IE8) == mtable-2-2.html mtable-2-2-ref.html
 fails-if(Quirks||IE7||IE8) == mtable-2-3.html mtable-2-3-ref.html
 fails-if(Quirks||IE7||IE8) == mtable-2-4.html mtable-2-4-ref.html
 fails-if(Quirks||IE7||IE8) == mtable-2-5.html mtable-2-5-ref.html
-== mtable-3.html mtable-3-ref.html
+annotate(@note4) fails-if(Opera&&HTML-CSS) == mtable-3.html mtable-3-ref.html
 == mtable-align-negative-rownumber.html mtable-align-negative-rownumber-ref.html
-annotate(@note2,@note3) fails-if(Chrome&&HTML-CSS) == rowalign-1.html rowalign-1-ref.html
-annotate(@note2,@note3) fails-if(Chrome&&HTML-CSS) == rowalign-2.html rowalign-2-ref.html
+annotate(@note2,@note3,@note5) fails-if((Chrome&&HTML-CSS)||(Opera&&HTML-CSS)) == rowalign-1.html rowalign-1-ref.html
+annotate(@note2,@note3,@note5) fails-if((Chrome&&HTML-CSS)||(Opera&&HTML-CSS)) == rowalign-2.html rowalign-2-ref.html
 annotate(@note1) fails == rowalign-3.html rowalign-3-ref.html
 annotate(@note1) fails == rowalign-4.html rowalign-4-ref.html
 == rowlines-1a.html rowlines-1-ref.html

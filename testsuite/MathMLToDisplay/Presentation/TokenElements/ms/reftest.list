@@ -7,10 +7,6 @@
 #
 # <p>Some glyphs are not found in SVG output mode.</p>
 #
-# @note3
-#
-# <p>Some style rules are not applied in the reference, in SVG output mode.</p>
-#
 # @note4
 #
 # <p>Horizontal shift in Opera+HTML-CSS.</p>
@@ -23,4 +19,4 @@ annotate(@note1,@note4) fails-if(SVG||(Opera&&HTML-CSS)) == msAtoken4.html msAto
 annotate(@note1,@note2) fails-if(SVG) == msAtoken5.html msAtoken5-ref.html
 annotate(@note1) fails-if(SVG) == msScolorscope6.html msScolorscope6-ref.html
 annotate(@note1) fails-if(SVG) == msSinheritance7.html msSinheritance7-ref.html
-annotate(@note3) fails-if(SVG) == msSinheritance8.html msSinheritance8-ref.html
+== msSinheritance8.html msSinheritance8-ref.html
