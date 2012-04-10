@@ -8,11 +8,17 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.TeX = { extensions: ["mhchem.js"] };
+      }
+    </script>
   </head>
 
   <body>
     <!-- See issue 211
          https://github.com/mathjax/MathJax/issues/211 -->
-    <div>\( {}^{-1}_{\phantom{-}1}{\rm H} \Space{0em}{3em}{0em} \)</div>
+    <div>\( \raise 1pt{\scriptstyle\begin{CEscriptstack}{-1}\\ 1\end{CEscriptstack}}\kern-.125em {\rm H} \)</div>
   </body>
 </html>
