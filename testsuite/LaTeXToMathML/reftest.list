@@ -46,7 +46,7 @@ tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
 == issue139.html issue139-ref.html
 require(TeX) != issue145.html issue145-ref.html
-annotate(@issue211) == fails issue211.html issue211-ref.html
+annotate(@issue211) fails == issue211.html issue211-ref.html
 tree== LaTeX-1.html LaTeX-1-ref.html
 tree== limits-1.html limits-1-ref.html
 annotate(@issue215) fails tree== limits-2.html limits-2-ref.html
