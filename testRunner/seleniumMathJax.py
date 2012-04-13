@@ -396,12 +396,7 @@ class seleniumMathJax(object):
             if (self.mBrowser == "MSIE" and
                 not(self.mBrowserMode == "default")):
                 # For MSIE, we choose the document mode
-                # XXXfred Currently, opening the IE developer toolbar
-                # makes the execution fails with a "Modal Dialog Present"
-                # assertion. That seems to be issue 3360:
-                # http://code.google.com/p/selenium/issues/detail?id=3360
-                # self.chooseInternetExplorerDocumentMode()
-                pass
+                self.chooseInternetExplorerDocumentMode()
 
             if (self.mBrowser == "Opera"):
                 # Screenshots taken by OperaDriver have random noise at the
