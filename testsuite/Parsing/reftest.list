@@ -1,7 +1,14 @@
+#
+# @issue228
+#
+# <p>See <a href="https://github.com/mathjax/MathJax/issues/228">issue 228</a></p>
+#
+
 tree== comments-1a.html comments-1-ref.html
 tree== comments-1b.html comments-1-ref.html
 == escaped-dollars-1.html escaped-dollars-1-ref.html  
 == issue165.html issue165-ref.html
+annotate(@issue228) fails == issue228.html issue228-ref.html
 tree== missing-brace-1.html missing-brace-1-ref.html
 tree!= missing-brace-2.html missing-brace-2-ref.html
 tree== parameter-priority-1.html parameter-priority-1-ref.html

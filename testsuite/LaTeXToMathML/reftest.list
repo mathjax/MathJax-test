@@ -34,6 +34,10 @@ include symbols/reftest.list
 #
 # <p>See <a href="https://github.com/mathjax/MathJax/issues/211">issue 211</a></p>
 #
+# @issue227
+#
+# <p>See <a href="https://github.com/mathjax/MathJax/issues/227">issue 227</a></p>
+#
 
 
 tree== boxed-1.html boxed-1-ref.html
@@ -51,6 +55,7 @@ tree== LaTeX-1.html LaTeX-1-ref.html
 tree== limits-1.html limits-1-ref.html
 annotate(@issue215) fails tree== limits-2.html limits-2-ref.html
 tree== limits-3.html limits-3-ref.html
+annotate(@issue227) fails load limits-4.html
 tree== mathsize-1.html mathsize-1-ref.html
 tree== mod-1.html mod-1-ref.html
 tree== not-1.html not-1-ref.html
