@@ -6,13 +6,8 @@ random include Variants/reftest.list
 #
 # <ul>
 #
-# <li>Opera: &amp;lang; and &amp;rang; are not mapped to the right unicode
-# characters. Bug report ID is DSK-343994 (not publicly available).</li>
-#
-# <li>Safari/Chrome: &amp;notinE; and &amp;notindot; are not supported. See
-# <a href="https://bugs.webkit.org/show_bug.cgi?id=62187">bug 62187</a> and
-# <a href="https://bugs.webkit.org/show_bug.cgi?id=43949#c39">bug 43949</a>. Not
-# tested with Konqueror yet.</li>
+# <li>Safari: &amp;notinE; and &amp;notindot; are not supported. See
+# <a href="https://bugs.webkit.org/show_bug.cgi?id=62187">bug 62187</a>.</li>
 #
 # <li>Internet Explorer: Entity definitions for characters are not up-to-date.
 # See <a href="https://connect.microsoft.com/IE/feedback/details/674766/">
@@ -25,10 +20,10 @@ random include Variants/reftest.list
 # The XML whitespaces &NewLine; and &Tab; are not included in the following
 # tests:
 annotate(@note1) fails-if(MSIE) tree== entities-1.html entities-1-ref.html
-annotate(@note) fails-if(MSIE||Konqueror) tree== entities-2.html entities-2-ref.html
-annotate(@note) fails-if(MSIE||Konqueror||Safari) tree== entities-3.html entities-3-ref.html
-annotate(@note) fails-if(MSIE||Konqueror||Chrome||Safari) tree== entities-4.html entities-4-ref.html
-annotate(@note) fails-if(MSIE||Konqueror) tree== entities-5.html entities-5-ref.html
+annotate(@note) fails-if(MSIE) tree== entities-2.html entities-2-ref.html
+annotate(@note) fails-if(MSIE) tree== entities-3.html entities-3-ref.html
+annotate(@note) fails-if(MSIE||Safari) tree== entities-4.html entities-4-ref.html
+annotate(@note) fails-if(MSIE) tree== entities-5.html entities-5-ref.html
 
 require(TeX||ImageTeX) == greek-1.html greek-1-ref.html
 require(TeX||ImageTeX) == greek-2.html greek-2-ref.html
