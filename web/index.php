@@ -73,7 +73,7 @@
       <ul>
         <li><a href="docs/html/index.html">MathJax-test</a></li>
         <li><a href="docs/doxygen/index.html">Doxygen</a></li>
-        <li><a href="https://sites.google.com/site/mathjaxproject/design-documents/testing">Working document</a></li>
+        <li><a href="https://github.com/mathjax/MathJax/wiki/Testing">Working document</a></li>
       </ul>
     </div>
   </body>

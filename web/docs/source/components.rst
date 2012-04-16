@@ -49,7 +49,7 @@ we want a graphical interface, browsers, fonts, plugins etc. It can be the local
 machine on which the testing framework is installed, virtual machines on the
 same host or even other remote hosts.
 
-`Typical configurations <https://sites.google.com/site/mathjaxproject/design-documents/testing/platforms-supported>`_ for test machine include:
+`Typical configurations <https://github.com/mathjax/MathJax/wiki/Platforms-supported>`_ for test machine include:
 
   - Operating System: Linux, MacOS, Windows.
   - Browser: `Chrome <https://www.google.com/chrome/index.html>`_, `Firefox <http://www.mozilla.org/firefox/>`_, `Internet Explorer <http://windows.microsoft.com/en-us/internet-explorer/products/ie/home>`_, `Opera <http://www.opera.com/>`_, `Safari <http://www.apple.com/safari/>`_.
@@ -80,7 +80,7 @@ want to run tests on your local machine, a tip is to use virtual test machines.
 Note for Selenium 2 (Webdriver):
 The test machine may require installation of other programs than simply the
 Selenium server. See the page
-`platforms supported <https://sites.google.com/site/mathjaxproject/design-documents/testing/platforms-supported>`_
+`platforms supported <https://github.com/mathjax/MathJax/wiki/Platforms-supported>`_
 for a more precise description of the requirements specific to each browser.
 
 .. _test-runner:

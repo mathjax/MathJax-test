@@ -33,8 +33,8 @@ doxygen:
 html:
 	rm -rf html/
 	mkdir html
-	$(DOT) -Tsvg source/testing-framework.dot > html/testing-framework.svg
-	$(DOT) -Tsvg source/testing-framework-basic.dot > html/testing-framework-basic.svg
+	$(DOT) -Tsvg source/testing-framework.dot > source/testing-framework.svg
+	$(DOT) -Tsvg source/testing-framework-basic.dot > source/testing-framework-basic.svg
 	$(SPHINXBUILD) -b html source html
 
 .PHONY: doxygen html

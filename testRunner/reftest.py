@@ -26,6 +26,25 @@
 @file reftest.py
 The file for the @ref reftest module.
 
+@var EXPECTED_PASS
+The test is expected to pass.
+
+@var EXPECTED_FAIL
+The test is expected to fail.
+
+@var EXPECTED_RANDOM
+The test is expected to pass or fail randomly.
+
+@var EXPECTED_DEATH
+The test is marked skip and is expected to cause a crash, hang etc.
+
+@var EXPECTED_FUZZY
+The test is expected to have small pixel differences.
+
+@var EXPECTED_IRRELEVANT
+The test is marked with a require field which is not fullfilled by the current
+configuration.
+
 @package reftest
 This module implements various types of reftests, controls the executions and
 reports the results.
@@ -46,26 +65,6 @@ import time
 import unittest
 from selenium.common.exceptions import WebDriverException
 
-""" 
-@var EXPECTED_PASS
-The test is expected to pass.
-
-@var EXPECTED_FAIL
-The test is expected to fail.
-
-@var EXPECTED_RANDOM
-The test is expected to pass or fail randomly.
-
-@var EXPECTED_DEATH
-The test is marked skip and is expected to cause a crash, hang etc.
-
-@var EXPECTED_FUZZY
-The test is expected to have small pixel differences.
-
-@var EXPECTED_IRRELEVANT
-The test is marked with a require field which is not fullfilled by the current
-configuration.
-"""
 EXPECTED_PASS = 0
 EXPECTED_FAIL  = 1
 EXPECTED_RANDOM = 2
@@ -566,7 +565,7 @@ class reftest(unittest.TestCase):
         @fn __init__(self,
                      aTestSuite,
                      aSelenium, aType, aReftestDirectory, aURI, aURIRef,
-                     aExpectedStatus, aSlow)
+                     aExpectedStatus, aSlow, aTestAnnotation)
         @param aTestSuite Value to assign to @ref mTestSuite
         @param aSelenium Value to assign to @ref mSelenium
         @param aType Value to assigne to @ref mType
@@ -598,7 +597,7 @@ class reftest(unittest.TestCase):
         @property mSlow
         whether this test is marked slow
         @property mTestAnnotation
-        A string containing references of the form @id to point to the
+        A string containing references of the form id to point to the
         testsuite note page.
         """
         unittest.TestCase.__init__(self)
