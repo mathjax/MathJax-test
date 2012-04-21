@@ -1,3 +1,9 @@
+#
+# @note(issue206)
+#
+# See <a href="https://github.com/mathjax/MathJax/issues/206">issue 206</a>
+#
+
 include displayAlign/reftest.list
 include elements/reftest.list
 include menuSettings/reftest.list
@@ -20,3 +26,5 @@ slow script showProcessingMessages-1.html?showProcessing=true
 == styles-1.html styles-1-ref.html
 script v1.0-compatible-1.html
 script v1.0-compatible-2.html
+annotate(@issue206) script positionToHash-1.html?firstLoad=true#hash
+script positionToHash-2.html?success=true#hash
