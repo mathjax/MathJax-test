@@ -62,7 +62,8 @@ import string
 import subprocess
 import sys
 import time
-import unittest
+
+from selenium.common.exceptions import WebDriverException
 
 def boolToString(aBoolean):
     """
@@ -114,16 +115,14 @@ def resultsExist(aName):
             os.path.exists(aName + ".txt.gz") or
             os.path.exists(aName + ".html.gz"))
 
-def getOutputFileName(aDirectory, aSelenium, aSuite, aDoNotOverwrite):
+def getOutputFileName(aDirectory, aSelenium, aSuite):
     """
-    @fn getOutputFileName(aDirectory, aSelenium, aSuite, aDoNotOverwrite)
+    @fn getOutputFileName(aDirectory, aSelenium, aSuite)
     @brief build a file name for the output
 
     @param aDirectory directory where the test output will be stored
     @param aSelenium @ref seleniumMathJax::seleniumMathJax object
     @param aSuite @ref reftest::reftestSuite object
-    @param aDoNotOverwrite whether the name should be changed to prevent
-           overwriting the result files.
 
     @return Concatenation of aDirectory, the operating system, the browser,
     the browser mode, the font and the output Jax, separated by underscores.
@@ -137,7 +136,7 @@ def getOutputFileName(aDirectory, aSelenium, aSuite, aDoNotOverwrite):
         aSelenium.mFont + "_" + \
         aSelenium.mOutputJax
 
-    if aDoNotOverwrite and resultsExist(aDirectory + name):
+    if resultsExist(aDirectory + name):
         i = 1
         while (resultsExist(aDirectory + name + "-" + str(i)) and
                i < MAX_TEST_RESULTS_WITH_SAME_NAME):
@@ -147,7 +146,7 @@ def getOutputFileName(aDirectory, aSelenium, aSuite, aDoNotOverwrite):
     if (aSuite.mTaskHandler != None):
         sendOutputFileName(name);
 
-    return aDirectory + name
+    return name
 
 def gzipFile(aFile):
     """
@@ -250,7 +249,7 @@ def removeTemporaryData(aSelenium):
     aSelenium.stop()
 
 def runTestingInstance(aDirectory, aSelenium, aSuite,
-                       aFormatOutput, aCompressOutput):
+                       aFormatOutput, aCompressOutput, aFileName):
     """
     @fn runTestingInstance(aDirectory, aSelenium, aSuite,
                            aFormatOutput, aCompressOutput)
@@ -276,12 +275,8 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
     aSuite.addReftests(aSelenium, MATHJAX_TESTSUITE_PATH,
                        "reftest.list", index)
 
-    # Create the output file. Do not overwrite the file name if we are not
-    # recovering a previous testing instance
-    output = getOutputFileName(aDirectory, aSelenium, aSuite,
-                               aSuite.mRunningTestID == "")
-    outputTxt  = output + ".txt"
-    outputHTML = output + ".html"
+    outputTxt  = aDirectory + aFileName + ".txt"
+    outputHTML = aDirectory + aFileName + ".html"
 
     if aSuite.mRunningTestID == "":
         # Create a new text file
@@ -289,12 +284,13 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
     else:
         # A startID is used to recover a test interrupted.
 
-        # First delete the lines between the startID and the ==Interruption== 
-        # marker. This will clear outputs for tests after the startID and keep
+        # First delete all the lines from the line containing
+        # "| startID |" to the one containing " ==Interruption== ".
+        # This will clear outputs for tests after the startID and keep
         # the info about the fact that the instance was interrupted.
         regExp = aSuite.mRunningTestID
         regExp = regExp.replace("/", "\\/")
-        regExp = "/" + regExp + "/,"
+        regExp = "/| " + regExp + " |/,"
         regExp += "/==Interruption==/d"
         subprocess.call([SED, "-i", regExp, outputTxt])
 
@@ -329,8 +325,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         sys.stdout.flush()
         aSelenium.start()
         aSelenium.pre()
-        aSuite.sendRequest("Running")
-        unittest.TextTestRunner(sys.stderr, verbosity = 2).run(aSuite)
+        aSuite.run()
         aSelenium.post()
         aSelenium.stop()
         time.sleep(4)
@@ -338,6 +333,15 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         aSelenium.post()
         aSelenium.stop()
         interrupted = True
+    except WebDriverException:
+        interrupted = True
+    except Exception:
+        if (not aSuite.mTaskHandler):
+            # If we don't have a task handler, report this expection normally.
+            # Indeed, that can be a possible syntax error in the Python script
+            raise
+        else:
+            interrupted = True
 
     endTime = datetime.utcnow()
     deltaTime = endTime - startTime
@@ -346,7 +350,8 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         aSuite.printInfo("Testing Instance Finished ; " +
                          endTime.isoformat())
     else:
-        # this marker is used to clean outputs when the test is recovered
+        # these markers are used to clean output when the test is recovered
+        print "==| " + aSuite.mRunningTestID + " |=="
         print "==Interruption=="
 
         aSuite.printInfo("Testing Instance Interrupted ; " +
@@ -359,7 +364,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
                                      * 24 * 60 + deltaTime.seconds) / 60))
                      + " minute(s) and " +
                      str(deltaTime.seconds % 60) + " second(s)")
-    print
+    aSuite.printInfo("")
 
     sys.stdout = stdout
     fp.close()
@@ -388,7 +393,6 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
         aSuite.sendRequest("Complete")
     else:
         print
-        print "Test Launcher received SIGINT!"
         print "Testing Instance Interrupted."
         aSuite.sendRequest("Interrupted", aSuite.mRunningTestID)
     
@@ -570,8 +574,16 @@ def main(aArgs, aTransmitToTaskHandler):
                                                          runSkipTests,
                                                          listOfTests,
                                                          startID)
+                            # use the specified file name
+                            if hasattr(aArgs, "filename"):
+                                filename = aArgs.filename
+                            else:
+                                filename = getOutputFileName(directory,
+                                                             selenium,
+                                                             suite)
                             runTestingInstance(directory, selenium, suite,
-                                               formatOutput, compressOutput)
+                                               formatOutput, compressOutput,
+                                               filename)
                         # end browserMode
                     # end browserVersion
                 #end outputJax
@@ -634,6 +646,10 @@ file is config/default.cfg.")
                         help="By default, the output files are stored in \
 default web/results/YEAR-MONTH-DAY/TIME/. This option allows to specify a \
 custom sub directory instead of the date.")
+    parser.add_argument("-f", "--filename", nargs = "?",
+                        default = argparse.SUPPRESS,
+                        help="Specify a file name to use. Warning: should only \
+be used by the task handler during test recovery.")
     parser.add_argument("-p", "--printList", nargs = "?",
                         default = argparse.SUPPRESS,
                         help="If this option is used, the script will print \

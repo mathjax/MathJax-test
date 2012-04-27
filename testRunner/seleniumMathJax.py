@@ -62,6 +62,12 @@ VK_F11 = 122
 VK_F12 = 123
 VK_DELETE =	127
 
+class ReftestError(Exception):
+    def __init__(self, aMessage):
+        self.mMessage = aMessage
+    def __str__(self):
+        return repr(self.mMessage)
+
 class seleniumMathJax(object):
 
     """
@@ -293,7 +299,7 @@ class seleniumMathJax(object):
                 message = self.mWebDriver.\
                     execute_script("return document.documentElement.\
                                     lastChild.nodeValue")
-                raise Exception, message
+                raise ReftestError(message)
         else:
             self.mSelenium.open(newURI)
             self.mSelenium.wait_for_condition(
@@ -307,7 +313,7 @@ class seleniumMathJax(object):
                 message = self.mSelenium.get_eval("selenium.browserbot.\
                           getCurrentWindow().document.documentElement.\
                           lastChild.nodeValue")
-                raise Exception, message
+                raise ReftestError(message)
 
     def start(self):
         """

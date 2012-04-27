@@ -62,7 +62,6 @@ import socket
 import string
 import sys
 import time
-import unittest
 from selenium.common.exceptions import WebDriverException
 
 EXPECTED_PASS = 0
@@ -86,12 +85,10 @@ def verifyPageExistence(aTestDir, aTestPage):
     if (not os.path.exists(MATHJAX_TESTSUITE_PATH + path)):
         print >> sys.stderr, "warning: " + path + " does not exist!"
 
-class reftestSuite(unittest.TestSuite):
+class reftestSuite():
     """
     @class reftest::reftestSuite
-    @brief A class inheriting from Python's TestSuite, augmented with reftest
-    features.
-    @see http://docs.python.org/library/unittest.html#unittest.TestSuite
+    @brief A class implementing a test suite.
     """
 
     def __init__(self,
@@ -152,8 +149,10 @@ class reftestSuite(unittest.TestSuite):
 
         @property mNumberOfTests
         Total number of tests in the suite.
+
+        @property mTests
+        The list of tests.
         """
-        unittest.TestSuite.__init__(self)
         self.mTaskHandler = aTaskHandler
         self.mRunSlowTests = aRunSlowTests
         self.mRunSkipTests = aRunSkipTests
@@ -164,6 +163,7 @@ class reftestSuite(unittest.TestSuite):
         self.mPreviousImageRef = None
         self.mTestsExecuted = 0
         self.mNumberOfTests = 0
+        self.mTests = []
 
     def printInfo(self, aString):
         """
@@ -465,15 +465,15 @@ fails/random")
                                                     testURIRef)
                     else:
                         if (index == -1 or self.mListOfTests[index] == "1"):
-                            self.addTest(testClass(self,
-                                                   aSelenium,
-                                                   testType,
-                                                   testDirectory,
-                                                   testURI,
-                                                   testURIRef,
-                                                   testExpectedStatus,
-                                                   testSlow,
-                                                   testAnnotation))
+                            self.mTests.append(testClass(self,
+                                                         aSelenium,
+                                                         testType,
+                                                         testDirectory,
+                                                         testURI,
+                                                         testURIRef,
+                                                         testExpectedStatus,
+                                                         testSlow,
+                                                         testAnnotation))
                             self.mNumberOfTests = self.mNumberOfTests + 1
 
                         if (index == -1):
@@ -536,25 +536,31 @@ fails/random")
                   aStatus + " " +
                   aProgress + "\n")
 
-    def testComplete(self, aReftest):
+    def run(self):
         """
-        @fn testComplete(self, aReftest)
-        @brief Function called after completion of a test in the suite
-        @details This function flushes the output buffer (so that the test
-        information will really be written in the output file), increments
-        @ref mTestsExecuted and sends the new status to the task handler.
+        @fn run(self)
+        @brief run the test suite
+        @return True if the testsuite completed. False if a fatal error occured.
         """
+        for test in self.mTests:
+            self.sendRequest("Running")
 
-        sys.stdout.flush()
-        self.mTestsExecuted = self.mTestsExecuted + 1
-        self.sendRequest("Running")
+            # execute the test
+            test.runTest()
 
-class reftest(unittest.TestCase):
+            # flush the output buffer (so that the test information will really
+            # be written in the output file)
+            sys.stdout.flush()
+
+            self.mTestsExecuted = self.mTestsExecuted + 1
+
+        return True
+            
+class reftest():
 
     """
     @class reftest::reftest
-    @brief The base class for reftests, inheriting from Python's TestCase
-    @see http://docs.python.org/library/unittest.html#unittest.TestCase
+    @brief A class implementing a test case.
     """
 
     def __init__(self,
@@ -600,7 +606,6 @@ class reftest(unittest.TestCase):
         A string containing references of the form id to point to the
         testsuite note page.
         """
-        unittest.TestCase.__init__(self)
         self.mTestSuite = aTestSuite
         self.mSelenium = aSelenium
         self.mType = aType
@@ -710,39 +715,40 @@ class reftest(unittest.TestCase):
 
         return success, msg
 
+    def escapeExceptionMessage(self, aExceptionMessage):
+        # escape '&', '<' and '> for inclusion in test results
+        msg = cgi.escape(aExceptionMessage);
+        # also escape '@', so that it won't be considered an annotation
+        msg = msg.replace("@", "&#64;");
+        return msg;
+
     def runTest(self):
 
         if self.shouldSkipTest():
             # skip the test
-            self.mTestSuite.testComplete(self)
             return
 
         try:
             # execute the test
             self.runTest_()
-            self.mTestSuite.testComplete(self)
-        except AssertionError:
-            # exception raised by a self.fail()
-            self.mTestSuite.testComplete(self)
-            self.fail()
+        except seleniumMathJax.ReftestError as data:
+            (success, msg) = self.determineSuccess(None, False)
+            msg += self.escapeExceptionMessage(repr(data.mMessage))
+            print msg
         except WebDriverException as data:
             # exception raised by WebDriver
             (success, msg) = self.determineSuccess(None, False)
-            msg += cgi.escape(data.msg)
+            msg += self.escapeExceptionMessage(data.msg)
             print msg
-            self.mTestSuite.testComplete(self)
-            self.fail()
+            # XXXfred: are WebDriverExceptions all fatal exceptions?
+            # Otherwise, we should not propagate them
+            raise
         except Exception as data:
-            # other exception
-            # XXXfred This may prevent exceptions to be reported when
-            # runTestsuite.py is called without transmitToTaskHandler (i.e.
-            # when we run it directly with the command line). However, we also
-            # want to report these exceptions when the task handler is used...
+            # other exception.
             (success, msg) = self.determineSuccess(None, False)
-            msg += cgi.escape(repr(data))
+            msg += self.escapeExceptionMessage(repr(data))
             print msg
-            self.mTestSuite.testComplete(self)
-            self.fail()
+            raise
         
     def runTest_(self):
         None
@@ -795,7 +801,6 @@ class scriptReftest(reftest):
         else:
             print msg
             self.mTestSuite.printInfo(msg1)
-            self.fail()
        
 class treeReftest(reftest):
 
@@ -846,7 +851,6 @@ class treeReftest(reftest):
                     self.mSelenium.encodeSourceToBase64(source)
 
             print msg
-            self.fail()
 
 def isSmallPixelValue(aPixelValue):
     if aPixelValue <= 15:
@@ -900,4 +904,3 @@ class visualReftest(reftest):
                 msg += "REFTEST   IMAGE: " + \
                     self.mSelenium.encodeImageToBase64(image)
             print msg
-            self.fail()

@@ -950,10 +950,14 @@ class task:
         global gServer
         self.generateConfigFile()
         self.mExceptionMessage = None
-        self.mPopen = subprocess.Popen([PYTHON, 'runTestsuite.py',
-                                        '-c', self.getConfigPath(),
-                                        '-o', self.mOutputDirectory,
-                                        '-t'])
+        command = [PYTHON, 'runTestsuite.py',
+                   '-c', self.getConfigPath(),
+                   '-o', self.mOutputDirectory,
+                   '-t']
+        if self.mOutputFileName:
+            command.extend(['-f', self.mOutputFileName])
+
+        self.mPopen = subprocess.Popen(command)
         gServer.mRunningTaskFromPID[str(self.mPopen.pid)] = self
         gServer.addTaskToRunningList(self)
 
@@ -1267,10 +1271,10 @@ class taskHandler:
                         status = "Inactive"
                     else:
                         status = items[2]
-                    if (items[6] == "None"):
-                        items[6] = None
                     if (items[5] == "None"):
                         items[5] = None
+                    if (items[6] == "None"):
+                        items[6] = None
                     t = task(items[0], status, items[4], items[5], items[6])
                     t.mProgress = items[3]
                     # host = items[1] is already saved in the config file.
