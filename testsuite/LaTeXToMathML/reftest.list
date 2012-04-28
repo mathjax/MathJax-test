@@ -1,4 +1,5 @@
 include above-below/reftest.list
+include action/reftest.list
 include arrows/reftest.list
 include atoms/reftest.list
 include basic-operators/reftest.list
