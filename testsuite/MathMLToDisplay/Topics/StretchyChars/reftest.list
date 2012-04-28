@@ -12,6 +12,10 @@
 #
 # <p>See <a href="https://github.com/mathjax/MathJax/issues/210">issue 210</a></p>
 #
+# @issue213
+#
+# <p>See <a href="https://github.com/mathjax/MathJax/issues/213">issue 213</a></p>
+#
 
 annotate(@note) fails skip-if(MSIE&&!IE9) != horizontal.html?op=005E horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=005F horizontal-ref.html
@@ -225,3 +229,5 @@ annotate(@note) fails-if(TeX) skip-if(MSIE&&!IE9) != vertical.html?op=2997 verti
 annotate(@note) fails-if(TeX) skip-if(MSIE&&!IE9) != vertical.html?op=2998 vertical-ref.html
 annotate(@note) fails skip-if(MSIE&&!IE9) != vertical.html?op=29FC vertical-ref.html
 annotate(@note) fails skip-if(MSIE&&!IE9) != vertical.html?op=29FD vertical-ref.html
+
+annotate(@issue213) fails == issue213.html issue213-ref.html

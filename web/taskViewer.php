@@ -215,13 +215,13 @@
                  commandButton($taskName, "RUN");
                 } else if ($status == "Running") {
                   commandButton($taskName, "STOP");
-                } else if($status == "Interrupted") {
+                } else if($status == "Interrupted" || $status == "Killed") {
                   if (!$isScheduled) {
                     commandButton($taskName, "RUN");
                     commandButton($taskName, "RESTART");
                   }
                   commandButton($taskName, "REMOVE");
-                } else if ($status == "Complete" || $status == "Killed") {
+                } else if ($status == "Complete") {
                   if (!$isScheduled) {
                     commandButton($taskName, "RESTART");
                   }
