@@ -11,6 +11,7 @@ include letters/reftest.list
 include macro/reftest.list
 include mathvariant/reftest.list
 include matrices/reftest.list
+include mhchem/reftest.list
 include non-standard/reftest.list
 include roots/reftest.list
 include references/reftest.list
