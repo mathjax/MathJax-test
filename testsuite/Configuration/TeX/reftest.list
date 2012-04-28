@@ -1,4 +1,5 @@
 include equationNumbers/reftest.list
+include noUndefined/reftest.list
 
 == Macros-1.html Macros-1-ref.html
 tree== Macros-2.html Macros-2-ref.html

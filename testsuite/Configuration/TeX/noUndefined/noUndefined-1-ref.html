@@ -3,25 +3,22 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>boldsymbol</title>
+    <title>noUndefined</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript" src="../../../header.js"></script>
   </head>
-
+  
   <body>
-    <div id="reftest-element">
-      \(
-      \boldsymbol a
-      b
-      \boldsymbol 1
-      2
-      \boldsymbol +
-      -
-      \boldsymbol {\frac c 3}
-      \)
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mrow>
+          <mtext mathsize="90%" mathcolor="red" mathbackground="#FFEEEE">
+            \undefined
+          </mtext>
+        </mrow>
+      </math>
     </div>
   </body>
 </html>

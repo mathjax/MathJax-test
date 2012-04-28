@@ -6,6 +6,7 @@ include basic-operators/reftest.list
 include colors/reftest.list
 include delimiters/reftest.list
 include environments/reftest.list
+include errors/reftest.list
 include frac/reftest.list
 include layout/reftest.list
 include letters/reftest.list
@@ -41,12 +42,15 @@ include symbols/reftest.list
 # <p>See <a href="https://github.com/mathjax/MathJax/issues/227">issue 227</a></p>
 #
 
-
+tree== autobold-1.html autobold-1-ref.html
+tree== bbox-1.html bbox-1-ref.html
 tree== boxed-1.html boxed-1-ref.html
+tree== cancel-1.html cancel-1-ref.html
 == cases-1.html cases-1-ref.html
+tree== displaylines-1.html displaylines-1-ref.html
 tree== display-math-1.html display-math-ref.html
 tree== display-math-2.html display-math-ref.html
-tree== displaylines-1.html displaylines-1-ref.html
+tree== enclose-1.html enclose-1-ref.html
 tree== functions-1.html functions-1-ref.html
 tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html

@@ -3,22 +3,28 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>texttip</title>
+    <title>cancel</title>
     <!-- Copyright (c) 2012 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../treeReftests.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.TeX = { extensions: ["cancel.js"] };
+      }
+    </script>
   </head>
 
   <body>
     <div id="reftest-element">
-      <math xmlns="http://www.w3.org/1998/Math/MathML">
-        <maction actiontype="tooltip">
-          <mn>1</mn>
-          <mtext>2</mtext>
-        </maction>
-      </math>
+      \(
+      \cancel{x}
+      \bcancel{x} 
+      \xcancel{x} 
+      \cancelto{0}{3}
+      \)
     </div>
   </body>
 </html>

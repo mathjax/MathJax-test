@@ -3,24 +3,29 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>boldsymbol</title>
+    <title>begingroup</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.TeX = { extensions: ["begingroup.js"] };
+      }
+    </script>
   </head>
 
   <body>
     <div id="reftest-element">
       \(
-      \boldsymbol a
-      b
-      \boldsymbol 1
-      2
-      \boldsymbol +
-      -
-      \boldsymbol {\frac c 3}
+      \frac 1 2
+	    \begingroup
+      \renewcommand\frac[2]{#1 / #2}
+      \frac 1 2
+      \endgroup
+      \frac 1 2
       \)
     </div>
   </body>
