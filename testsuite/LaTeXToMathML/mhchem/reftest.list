@@ -1,12 +1,21 @@
-tree== advanced-1.html advanced-1-ref.html
-tree== advanced-2.html advanced-2-ref.html
-tree== advanced-3.html advanced-3-ref.html
-tree== amounts-1.html amounts-1-ref.html
-tree== arrows-1.html arrows-1-ref.html
-tree== arrows-2.html arrows-2-ref.html
-tree== basics-1.html basics-1-ref.html
-tree== bonds-1.html bonds-1-ref.html
-tree== environments-1.html environments-1-ref.html
-tree== isotopes-1.html isotopes-1-ref.html
-tree== math-1.html math-1-ref.html
-tree== special_symbols-1.html special_symbols-1-ref.html
+#
+# @note1
+# <p>See <a href="https://github.com/mathjax/MathJax/issues/234">issue 234</a></p>
+#
+# @note2
+#
+# <p>Empty mi serialized differently in Firefox</p>
+#
+
+annotate(note1) tree== advanced-1.html advanced-1-ref.html
+annotate(note1) tree== advanced-2.html advanced-2-ref.html
+annotate(note1) tree== advanced-3.html advanced-3-ref.html
+annotate(note1) tree== amounts-1.html amounts-1-ref.html
+annotate(note1) tree== arrows-1.html arrows-1-ref.html
+annotate(note1) tree== arrows-2.html arrows-2-ref.html
+annotate(note1) tree== basics-1.html basics-1-ref.html
+annotate(note1) tree== bonds-1.html bonds-1-ref.html
+annotate(note1) tree== environments-1.html environments-1-ref.html
+annotate(note1) tree== isotopes-1.html isotopes-1-ref.html
+annotate(note1,note2) tree== math-1.html math-1-ref.html
+annotate(note1) tree== special_symbols-1.html special_symbols-1-ref.html
