@@ -504,7 +504,7 @@ fails/random")
         if (aURIRef == self.mPreviousURIRef):
             return self.mPreviousImageRef
 
-        aSelenium.open(aURIRef)
+        aSelenium.open(aURIRef, aIsReference=True)
         # self.mPreviousURIRef is only set after the page is loaded, so that
         # the screenshot won't be used if the loading failed.
         self.mPreviousURIRef = aURIRef
@@ -733,7 +733,7 @@ class reftest():
             self.runTest_()
         except seleniumMathJax.ReftestError as data:
             (success, msg) = self.determineSuccess(None, False)
-            msg += self.escapeExceptionMessage(repr(data.mMessage))
+            msg += self.escapeExceptionMessage(str(data))
             print msg
         except WebDriverException as data:
             # exception raised by WebDriver
@@ -819,7 +819,7 @@ class treeReftest(reftest):
 
         self.mSelenium.open(self.mURI)
         source = self.mSelenium.getMathJaxSourceMathML()
-        self.mSelenium.open(self.mURIRef)
+        self.mSelenium.open(self.mURIRef, aIsReference=True)
         sourceRef = self.mSelenium.getMathJaxSourceMathML()
 
         # Compare source == sourceRef

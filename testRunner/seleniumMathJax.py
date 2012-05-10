@@ -63,10 +63,14 @@ VK_F12 = 123
 VK_DELETE =	127
 
 class ReftestError(Exception):
-    def __init__(self, aMessage):
+    def __init__(self, aMessage, aIsReference):
         self.mMessage = aMessage
+        self.mIsReference = aIsReference
     def __str__(self):
-        return repr(self.mMessage)
+        s = repr(self.mMessage)
+        if self.mIsReference:
+            s += " (from *-ref page)"
+        return s
 
 class seleniumMathJax(object):
 
@@ -245,7 +249,7 @@ class seleniumMathJax(object):
             self.mSelenium = selenium(host, port, startCommand,
                                       aMathJaxTestPath)
 
-    def open(self, aURI, aWaitTime = 0.5):
+    def open(self, aURI, aWaitTime = 0.5, aIsReference = False):
 
         """
         @fn open(self, aURI, aWaitTime = 0.5)
@@ -253,6 +257,7 @@ class seleniumMathJax(object):
         
         @param aURI URI of the page to open
         @param aWaitTime time to wait
+        @param aIsReference whether this is a reference page of a test
 
         @details This function open the specified page in the browser, appending
         the testing framework options to the query string. Then it waits for the
@@ -299,7 +304,7 @@ class seleniumMathJax(object):
                 message = self.mWebDriver.\
                     execute_script("return document.documentElement.\
                                     lastChild.nodeValue")
-                raise ReftestError(message)
+                raise ReftestError(message, aIsReference)
         else:
             self.mSelenium.open(newURI)
             self.mSelenium.wait_for_condition(
@@ -313,7 +318,7 @@ class seleniumMathJax(object):
                 message = self.mSelenium.get_eval("selenium.browserbot.\
                           getCurrentWindow().document.documentElement.\
                           lastChild.nodeValue")
-                raise ReftestError(message)
+                raise ReftestError(message, aIsReference)
 
     def start(self):
         """
