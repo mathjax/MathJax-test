@@ -206,7 +206,10 @@ function updateFieldsFromTaskName()
                                     getElementsByTagName("th")[0].innerHTML;
                                 var paramValue = tr.
                                     getElementsByTagName("td")[0].innerHTML;
-                                updateField(paramName, paramValue);
+                                if (paramName == "startID")
+                                    paramValue = paramValue.replace(/&amp;/g,
+                                                                    "&");
+                                updateField(paramName, unescape(paramValue));
                             }
                         }
                     }

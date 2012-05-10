@@ -712,7 +712,8 @@ class task:
         @brief serialize a pair (aName, aValue) as an HTML row
         @return an HTML row tr(th(aName), td(aValue)) in text format
         """
-        return "<tr><th>" + aName + "</th><td>" + aValue + "</td></tr>"
+        return "<tr><th>" + aName + "</th><td>" + \
+            cgi.escape(aValue) + "</td></tr>"
 
     def serializeParameter(self, aKey):
         """
@@ -1077,7 +1078,7 @@ option values"
             if (request == "TASKEDITOR EDIT END"):
                 break
 
-            item = request.split("=")
+            item = request.split("=", 1)
             self.setParameter(item[0], item[1])
 
     def readParametersFromConfigFile(self, aConfigFile):

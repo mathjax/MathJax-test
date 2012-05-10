@@ -353,7 +353,7 @@
           <p>
             <label>startID:
               <input id="startID" name="startID" type="text" value="default"
-                     size="50" pattern="(default|([a-z]|[A-Z]|[0-9]|_|-|\.|/)+)" />
+                     size="50" pattern="(default|([a-z]|[A-Z]|[0-9]|=|?|&|_|-|\.|/)+)" />
             </label> (used for test recovery)
           </p>
         </fieldset>
