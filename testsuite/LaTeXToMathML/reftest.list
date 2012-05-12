@@ -61,7 +61,7 @@ tree== LaTeX-1.html LaTeX-1-ref.html
 tree== limits-1.html limits-1-ref.html
 annotate(@issue215) fails tree== limits-2.html limits-2-ref.html
 tree== limits-3.html limits-3-ref.html
-annotate(@issue227) load limits-4.html
+annotate(@issue227) skip load limits-4.html
 tree== mathsize-1.html mathsize-1-ref.html
 tree== mod-1.html mod-1-ref.html
 tree== not-1.html not-1-ref.html

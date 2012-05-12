@@ -26,5 +26,4 @@ slow script showProcessingMessages-1.html?showProcessing=true
 == styles-1.html styles-1-ref.html
 script v1.0-compatible-1.html
 script v1.0-compatible-2.html
-annotate(@issue206) script positionToHash-1.html?firstLoad=true#hash
-script positionToHash-2.html?success=true#hash
+annotate(@issue206) fails script positionToHash-1.html?firstLoad=true#hash

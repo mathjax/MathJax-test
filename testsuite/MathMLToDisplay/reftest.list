@@ -1,3 +1,9 @@
+#
+# @note(issue219)
+#
+# See <a href="https://github.com/mathjax/MathJax/issues/219">issue 219</a>
+#
+
 include Characters/reftest.list
 include Content/SemanticMappingElements/semantics/reftest.list
 include ErrorHandling/reftest.list
@@ -20,3 +26,4 @@ include TortureTests/reftest.list
 == unit-2b.html unit-2-ref.html
 tree== unit-3.html unit-3-ref.html
 == issue162.html issue162-ref.html
+annotate(@issue219) fails-if(SVG) != issue219.html issue219-ref.html
