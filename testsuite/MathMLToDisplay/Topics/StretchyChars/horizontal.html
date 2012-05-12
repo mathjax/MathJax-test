@@ -28,24 +28,23 @@
   <body>
     
     <!-- the stretchy char should not be entirely hidden by the blue band  -->
-    <div style="position: absolute; left: 2em; top: 3em; z-index: 0;">
+    <div style="position: absolute;">
       <math>
-        <mover>
-          <mo id="mo" stretchy="true"></mo>
-          <mspace width="4em" height="1px"></mspace>
-        </mover>
+        <mpadded width="2em" height="3em" depth="3em">
+          <mover align="left">
+            <mo id="mo" stretchy="true"></mo>
+            <mspace width="4em" height="1px"></mspace>
+          </mover>
+        </mpadded>
       </math>
     </div>
     
     <!-- one can click on the blue rectangle to make it transparent -->
     <div onclick="this.style.opacity = 0.2" id="rect"
-         style="position: absolute; left: 2.25em; top: 0; z-index: 1;">
+         style="position: absolute;">
       <math>
-        <mover>
-          <mphantom><mtext></mtext></mphantom>
-          <mspace width="3.5em" height="3em" depth="3em"
-                  mathbackground="blue"></mspace>
-        </mover>
+        <mspace width="2em" height="3em" depth="3em"
+                mathbackground="blue"></mspace>
       </math>
     </div>
 
