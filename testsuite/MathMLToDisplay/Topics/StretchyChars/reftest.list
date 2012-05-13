@@ -22,11 +22,11 @@ annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=005F horizontal-ref.ht
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=007E horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=00AF horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=02C6 horizontal-ref.html
-annotate(@note) fails skip-if(MSIE&&!IE9) != horizontal.html?op=02C7 horizontal-ref.html
+annotate(@note) fails-if(TeX) skip-if(MSIE&&!IE9) != horizontal.html?op=02C7 horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=02C9 horizontal-ref.html
 annotate(@note) fails-if(TeX) skip-if(MSIE&&!IE9) != horizontal.html?op=02CD horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=02DC horizontal-ref.html
-annotate(@note) fails skip-if(MSIE&&!IE9) != horizontal.html?op=02F7 horizontal-ref.html
+annotate(@note) fails-if(TeX) skip-if(MSIE&&!IE9) != horizontal.html?op=02F7 horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=0302 horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=203E horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=2190 horizontal-ref.html
