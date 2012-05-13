@@ -27,10 +27,15 @@
 
   <body>
     
-    <!-- the stretchy char should not be entirely hidden by the blue band  -->
+    <!-- the stretchy char should not be entirely hidden by the blue rectangle.
+         Note: the rectangle should be wide enough to avoid UNEXPECTED-PASS
+         with operators that can not stretch but should not be too wide to
+         avoid UNEXPECTED-FAIL with operators like accents that can not stretch
+         to an arbitrary width.
+      -->
     <div style="position: absolute;">
       <math>
-        <mpadded width="1.5em" height="3em" depth="3em">
+        <mpadded width="1.75em" height="3em" depth="3em">
           <mover align="left">
             <mo id="mo" stretchy="true"></mo>
             <mspace width="4em" height="1px"></mspace>
@@ -43,7 +48,7 @@
     <div onclick="this.style.opacity = 0.2" id="rect"
          style="position: absolute;">
       <math>
-        <mspace width="1.5em" height="3em" depth="3em"
+        <mspace width="1.75em" height="3em" depth="3em"
                 mathbackground="blue"></mspace>
       </math>
     </div>

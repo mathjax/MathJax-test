@@ -9,7 +9,7 @@
 == invChars.html invChars-ref.html
 == whBcomments1.html whBcomments1-ref.html
 == whBgeneral1.html whBgeneral1-ref.html
-annotate(@note) fails-if(!(HTML-CSS&&TeX)) == white1.html white1-ref.html
+annotate(@note) fails-if(!((Opera||Firefox)&&HTML-CSS&&TeX)) == white1.html white1-ref.html
 annotate(@note) fails == white2.html white2-ref.html
 annotate(@note) fails-if(!(HTML-CSS&&TeX)) == white3.html white3-ref.html
 annotate(@note) fails-if(!(HTML-CSS&&TeX)&&!(HTML-CSS&&Chrome&&STIX)) == white4.html white4-ref.html

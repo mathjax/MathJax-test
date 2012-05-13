@@ -9,9 +9,13 @@
 # @note3
 #
 # <p>Small vertical shift in Chrome HTML-CSS</p>
+#
+# @note4
+#
+# <p>Small vertical shift in Chrome HTML-CSS TeX</p>
 
 annotate(@note1) fails-if(SVG) == msup-01.html msup-01-ref.html
-annotate(@note2) fails-if(SVG) == msup-02.html msup-02-ref.html
+annotate(@note2) fails-if(SVG||(Chrome&&HTML-CSS&&TeX)) == msup-02.html msup-02-ref.html
 annotate(@note1,@note3) fails-if(SVG||(Chrome&&HTML-CSS)) == msup-03.html msup-03-ref.html
 annotate(@note1,@note3) fails-if(SVG||(Chrome&&HTML-CSS)) == msup-04.html msup-04-ref.html
 == msup-05.html msup-05-ref.html

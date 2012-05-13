@@ -13,20 +13,25 @@
          https://github.com/mathjax/MathJax/issues/206 -->
     <!-- This test verifies that positionToHash don't redirect to the base
          url -->
-    <script type="text/javascript">
-      function postMathJax()
+    <base href="?success=false"/>
+
+   <script type="text/javascript">
+      var firstLoad = false;
+
+      function preMathJax()
       {
-      // Wait some time, to be sure that the frame is not loaded again
-      MathJax.Hub.Queue(["Delay", MathJax.Callback, 2000]);
+      firstLoad = getQueryBoolean("firstLoad");
+      gConfigObject.positionToHash = firstLoad;
+
+      if (!firstLoad) {
+        document.body.style.background = "red";
+      }
       }
     </script>
-
+    
   </head>
 
-  <body>
-
-    <iframe src="positionToHash-1-iframe.html?firstLoad=true#hash">
-    </iframe>
+  <body style="background: green;">
 
   </body>
 </html>
