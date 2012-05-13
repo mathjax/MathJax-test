@@ -16,6 +16,6 @@ annotate(@note1) fails tree== arrows-2.html arrows-2-ref.html
 annotate(@note1) tree== basics-1.html basics-1-ref.html
 annotate(@note1) tree== bonds-1.html bonds-1-ref.html
 annotate(@note1) tree== environments-1.html environments-1-ref.html
-annotate(@note1) fails tree== isotopes-1.html isotopes-1-ref.html
-annotate(@note1,@note2) tree== math-1.html math-1-ref.html
+annotate(@note1,@note2) fails-if(Firefox) tree== isotopes-1.html isotopes-1-ref.html
+annotate(@note1) tree== math-1.html math-1-ref.html
 annotate(@note1) tree== special_symbols-1.html special_symbols-1-ref.html

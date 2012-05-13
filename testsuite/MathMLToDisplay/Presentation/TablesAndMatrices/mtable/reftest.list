@@ -15,6 +15,10 @@
 #
 # <p>Horizontal shift and other small differences in Opera HTML-CSS</p>
 #
+# @note5
+#
+# <p>Small difference at the left side of the red rectangle in Chrome SVG.</p>
+#
 
 == align-1.html align-1-ref.html
 == align-2.html align-2-ref.html
@@ -37,7 +41,7 @@ annotate(@note4) fails-if(Opera&&HTML-CSS) == columnalign-4.html columnalign-4-r
 == columnwidth-1.html columnwidth-1-ref.html
 annotate(@note2) fails-if(SVG&&Firefox) == columnwidth-2.html columnwidth-2-ref.html
 == displaystyle-1.html displaystyle-1-ref.html
-== equalcolumns-1.html equalcolumns-1-ref.html
+annotate(@note5) fails-if(Chrome&&SVG) == equalcolumns-1.html equalcolumns-1-ref.html
 == equalrows-1.html equalrows-1-ref.html
 == frame-1a.html frame-1-ref.html
 != frame-1b.html frame-1-ref.html

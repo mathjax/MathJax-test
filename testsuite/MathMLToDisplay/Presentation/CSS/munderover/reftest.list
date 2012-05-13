@@ -6,9 +6,13 @@
 #
 # <p>Horizontal shift in TeX + HTML-CSS ouput mode.</p>
 #
+# @note3
+#
+# <p>Small differences invisible at the naked eye in Chrome SVG.</p>
+#
 
 == munderover-01.html munderover-01-ref.html
-annotate(@note2) fails-if(Firefox&&HTML-CSS&&TeX) == munderover-02.html munderover-02-ref.html
+annotate(@note2,@note3) fails-if((Firefox&&HTML-CSS&&TeX)||(Chrome&&SVG)) == munderover-02.html munderover-02-ref.html
 == munderover-03.html munderover-03-ref.html
 == munderover-04.html munderover-04-ref.html
 == munderover-05.html munderover-05-ref.html

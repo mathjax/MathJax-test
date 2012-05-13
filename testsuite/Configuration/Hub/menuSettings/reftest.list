@@ -21,6 +21,6 @@ annotate(@note1) fails-if(MSIE&&!IE9) == zoom-1.html?zoomConfig=Double-Click&zoo
 annotate(@note1) fails-if(MSIE&&!IE9) == zoom-1.html?zoomConfig=Hover&zoomTrigger=Click zoom-1-ref.html
 annotate(@note1) fails-if(MSIE&&!IE9) == zoom-1.html?zoomConfig=Hover&zoomTrigger=DblClick zoom-1-ref.html
 annotate(@note1) fails-if(MSIE&&!IE9) != zoom-1.html?zoomConfig=Hover&zoomTrigger=Hover zoom-1-ref.html
-annotate(@note1,@note2) fails-if(HTML-CSS) == zscale-1.html zscale-1-ref.html
+annotate(@note1,@note2) fails-if(HTML-CSS&&!Chrome) == zscale-1.html zscale-1-ref.html
 
 # XXXfred: TODO context=browser?

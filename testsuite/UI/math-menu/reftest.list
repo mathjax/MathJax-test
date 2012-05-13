@@ -1,1 +1,8 @@
-fails-if(Chrome) skip-if(Konqueror||MSIE) != math-menu-1.html math-menu-1-ref.html
+#
+# @note1
+#
+# <p>This test may fail on some browsers, when Flash is installed. See
+# <a href="https://github.com/mathjax/MathJax/issues/79">issue 79</a>.</p>
+#
+
+annotate(@note1) random-if(Chrome) random-if(Konqueror||MSIE) != math-menu-1.html math-menu-1-ref.html
