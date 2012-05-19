@@ -587,10 +587,10 @@ class task:
         self.mProgress = "-"
         self.mParameters = {}
         self.mParameters["host"] = HOST_LIST[0]
-        self.mParameters["aloneOnHost"] = True
 
         # Default values for boolean parameters. This should match
         # getBooleanOption in runTestsuite.py
+        self.mParameters["aloneOnHost"] = False
         self.mParameters["useGrid"] = False
         self.mParameters["fullScreenMode"] = True
         self.mParameters["formatOutput"] = True

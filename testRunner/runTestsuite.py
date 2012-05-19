@@ -100,6 +100,7 @@ def getBooleanOption(aConfig, aSection, aOption):
             # "runSlowTests"
             # "runSkipTests"
             # "useGrid"
+            # "aloneOnHost"
             return False
 
 def resultsExist(aName):
