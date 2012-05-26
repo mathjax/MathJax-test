@@ -101,7 +101,7 @@
                      required="required"
                      pattern="([a-z]|[A-Z]|[0-9]|\-){1,40}"
                      value="<?php echo $taskName;?>"
-                     onchange="updateFieldValueFrom('taskName', 'outputDirectory'); updateFieldsFromTaskSingleMultiple();"
+                     onchange="taskNameChange();"
                      maxlength="40"/></label> (alphanumeric)
           </p>
           <p>

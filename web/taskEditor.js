@@ -147,7 +147,7 @@ function updateField(aParamName, aParamValue)
  * taskName field.
  *
  */
-function updateFieldsFromTaskName()
+function updateFieldsFromTaskName(aWarning)
 {
     var request = new XMLHttpRequest();
     var taskName = document.getElementById("taskName").value;
@@ -165,51 +165,58 @@ function updateFieldsFromTaskName()
                     var tables = tree.getElementsByTagName("table");
                     if (tables.length > 0) {
                         updateTaskExists(taskName, true);
+                        if (!aWarning ||
+                            window.confirm("A task with the same name already "+
+                                           "exists, do you want to load its "+
+                                           "configuration?")) {
+                            // First table is special. We only take schedule and
+                            // output directory into account and need particular
+                            // treatment.
 
-                        // First table is special. We only take schedule and
-                        // output directory into account and need particular
-                        // treatment.
+                            var scheduled =
+                                (tree.getElementById("taskSchedule") != null);
 
-                        var scheduled =
-                            (tree.getElementById("taskSchedule") != null);
+                            if (scheduled) {
+                                // Update the field 'taskSchedule'
+                                updateField("taskSchedule", "true");
 
-                        if (scheduled) {
-                            // Update the field 'taskSchedule'
-                            updateField("taskSchedule", "true");
-
-                            // Update the cron parameters
-                            cronParams = ["crontabDow", "crontabDom",
-                                          "crontabMon", "crontabH", "crontabM"];
-                            for (var i = 0; i < cronParams.length; i++) {
-                                var paramName = cronParams[i];
-                                var paramValue = tree.
-                                    getElementById(paramName).innerHTML;
-                                updateField(paramName, paramValue);
+                                // Update the cron parameters
+                                cronParams = ["crontabDow", "crontabDom",
+                                              "crontabMon", "crontabH",
+                                              "crontabM"];
+                                for (var i = 0; i < cronParams.length; i++) {
+                                    var paramName = cronParams[i];
+                                    var paramValue = tree.
+                                        getElementById(paramName).innerHTML;
+                                    updateField(paramName, paramValue);
+                                }
                             }
-                        }
 
-                        // Update the field 'outputDirectory'
-                        var paramName = "outputDirectory";
-                        var paramValue = tree.
-                            getElementById(paramName).innerHTML;
-                        paramValue = paramValue.substring(
-                            (scheduled ? 0 : paramValue.indexOf("/") + 1),
-                            paramValue.length - 1);
-                        updateField(paramName, paramValue);
-
-                        // Update the field from the information of the tables
-                        for (var i = 1; i < tables.length; i++) {
-                            var trs = tables[i].getElementsByTagName("tr");
-                            for (var j = 0; j < trs.length; j++) {
-                                var tr = trs[j];
-                                var paramName = tr.
-                                    getElementsByTagName("th")[0].innerHTML;
-                                var paramValue = tr.
-                                    getElementsByTagName("td")[0].innerHTML;
-                                if (paramName == "startID")
-                                    paramValue = paramValue.replace(/&amp;/g,
-                                                                    "&");
-                                updateField(paramName, unescape(paramValue));
+                            // Update the field 'outputDirectory'
+                            var paramName = "outputDirectory";
+                            var paramValue = tree.
+                                getElementById(paramName).innerHTML;
+                            paramValue = paramValue.substring(
+                                (scheduled ? 0 : paramValue.indexOf("/") + 1),
+                                paramValue.length - 1);
+                            updateField(paramName, paramValue);
+                            
+                            // Update the field from the information of the
+                            // tables
+                            for (var i = 1; i < tables.length; i++) {
+                                var trs = tables[i].getElementsByTagName("tr");
+                                for (var j = 0; j < trs.length; j++) {
+                                    var tr = trs[j];
+                                    var paramName = tr.
+                                        getElementsByTagName("th")[0].innerHTML;
+                                    var paramValue = tr.
+                                        getElementsByTagName("td")[0].innerHTML;
+                                    if (paramName == "startID")
+                                        paramValue = paramValue.
+                                        replace(/&amp;/g, "&");
+                                    updateField(paramName,
+                                                unescape(paramValue));
+                                }
                             }
                         }
                     }
@@ -304,14 +311,14 @@ function updateAllFieldVisibilities()
  * multiple checkboxes. In the latter case, it shows these checkboxes and
  * update the submit button.
  **/
-function updateFieldsFromTaskSingleMultiple()
+function updateFieldsFromTaskSingleMultiple(aWarning)
 {
     var taskSingleMultiple =
         document.getElementById("commandHandlerForm").taskSingleMultiple;
     var taskMultipleList = document.getElementById("taskMultipleList");
 
     if (taskSingleMultiple[0].checked) {
-        updateFieldsFromTaskName();
+        updateFieldsFromTaskName(aWarning);
         taskMultipleList.style.visibility = "hidden";
         taskMultipleList.style.position = "absolute";
     } else {
@@ -366,6 +373,16 @@ function updateMathJaxPathFromBranch()
 }
 
 /**
+ *  Update information when the task name changed
+ */
+
+function taskNameChange()
+{
+    updateFieldsFromTaskSingleMultiple(true);
+    updateFieldValueFrom('taskName', 'outputDirectory');
+}
+
+/**
  * Initialize the field visibilities and values.
  */
 function init()
@@ -379,6 +396,6 @@ function init()
     updateFieldValueFrom("host_select", "host");
     updateFieldValueFrom("taskName", "outputDirectory");
     updateSelectIndex("host_select", "operatingSystem", HOST_LIST_OS);
-    updateFieldsFromTaskSingleMultiple();
+    updateFieldsFromTaskSingleMultiple(false);
     updateUnpackedBoxFromMathJaxPath();
 }
