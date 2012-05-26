@@ -74,12 +74,22 @@ function removeMultipleTasks()
 }
 
 /**
- * Send a request to run/restart selected tasks
+ * Send a request to run selected tasks
  */
 function runMultipleTasks()
 {
     // XXXfred Warn user about impossible run before submitting?
-    // Ask the user whether he wants to remove
+    document.getElementById("multipleTasksCommand").value = "MULTIPLE_RUN";
+    computeTaskNameList();
+    document.forms['multipleTasks'].submit();
+}
+
+/**
+ * Send a request to restart selected tasks
+ */
+function restartMultipleTasks()
+{
+    // XXXfred Warn user about impossible restart before submitting?
     document.getElementById("multipleTasksCommand").value = "MULTIPLE_RESTART";
     computeTaskNameList();
     document.forms['multipleTasks'].submit();

@@ -243,20 +243,30 @@
             echo '<p>';
             echo '<form name="multipleTasks" action="commandHandler.php"';
             echo '      method="post">';
-            echo '<a href="javascript:removeMultipleTasks();">
-                 Remove selected tasks</a> - ';
-            echo '<a href="javascript:runMultipleTasks();">
-                 Run selected tasks</a> - ';
-            echo '<a href="javascript:stopMultipleTasks();">
-                  Stop selected tasks</a> - ';
+            echo '<a class="multipleTaskCommand"
+                     href="javascript:runMultipleTasks();">
+                     Run selected tasks <img src="icons/run.png"/></a> ';
+            echo '<a class="multipleTaskCommand"
+                     href="javascript:restartMultipleTasks();">
+                 Restart selected tasks <img src="icons/restart.png"/></a> ';
+            echo '<a class="multipleTaskCommand"
+                     href="javascript:stopMultipleTasks();">
+                  Stop selected tasks <img src="icons/stop.png"/></a> ';
+            echo '<a class="multipleTaskCommand"
+                     href="javascript:removeMultipleTasks();">
+                 Remove selected tasks <img src="icons/remove.png"/></a> ';
             echo '<input name="command" id="multipleTasksCommand"';
             echo '       type="text" class="hiddenField" readonly="readonly"/>';
             echo '<input name="taskList" id="multipleTasksList"';
             echo '       type="text" readonly="readonly"';
             echo       ' value="" class="hiddenField"/>';
             echo '</form>';
-            echo '<a href="javascript:taskCheckboxes(true);">Check all tasks</a> - ';
-            echo '<a href="javascript:taskCheckboxes(false);">Uncheck all tasks</a>';
+            echo '<a class="multipleTaskCommand"
+                     href="javascript:taskCheckboxes(true);">
+                     Check all tasks</a> ';
+            echo '<a class="multipleTaskCommand"
+                     href="javascript:taskCheckboxes(false);">
+                     Uncheck all tasks</a>';
             echo '</p>';
           }
         } else {

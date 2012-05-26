@@ -29,6 +29,13 @@ a[href^="taskEditor.php"]:not(.noIcon) {
     background: url('icons/secure.png') no-repeat 100% 0;
 }
 
+a.multipleTaskCommand {
+    border: 2px outset blue;
+    padding: 5px;
+    background: #eee;
+    text-decoration: none;
+}
+
 table {
     border: 1px solid black;
     border-collapse: collapse;

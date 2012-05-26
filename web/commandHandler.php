@@ -415,6 +415,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                    $_POST['command'] == 'FORMAT') {
           executeCommand($_POST['command'], $taskName);
         } else if ($_POST['command'] == "MULTIPLE_REMOVE" ||
+                   $_POST['command'] == "MULTIPLE_RUN" ||
                    $_POST['command'] == "MULTIPLE_RESTART" ||
                    $_POST['command'] == "MULTIPLE_STOP") {
           $command = substr($_POST['command'], strlen("MULTIPLE_"));
