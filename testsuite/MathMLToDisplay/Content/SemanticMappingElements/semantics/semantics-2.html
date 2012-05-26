@@ -1,0 +1,28 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Test semantics 2</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- See issue 247
+         https://github.com/mathjax/MathJax/issues/247 -->
+    <math>
+      <semantics>
+        <mrow>
+          <mi>a</mi>
+          <mspace linebreak="newline"></mspace>
+          <mi>b</mi>
+        </mrow>
+      </semantics>
+    </math>
+
+  </body>
+</html>
