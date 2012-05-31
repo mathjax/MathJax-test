@@ -3,31 +3,39 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>TextNode</title>
+    <title>variables</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
     <script type="text/javascript">
-      function getReftestElements()
+      var r = false;
+
+      function f()
       {
-        return ["root"];
+      r = true;
       }
 
       function postMathJax()
       {
-      var parent = document.getElementById("root");
-      MathJax.HTML.addText(parent, "mytext");
+      var hooks = MathJax.Callback.Hooks();
+      hooks.Remove(hooks.Add(f));
+      hooks.Execute();
       }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("hook not executed", !r)
+      ];
+      }    
     </script>
-    <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
 
   </head>
 
   <body>
-
-    <div id="root"></div>
-    
   </body>
 </html>

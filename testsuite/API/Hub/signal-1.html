@@ -1,0 +1,42 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>signal</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false, r2 = false, r3 = false;
+
+      function postMathJax() 
+      {
+      r1 = !MathJax.Hub.signal.hooks;
+      MathJax.Hub.Register.MessageHook("Signal1", function() {} );
+      r2 = MathJax.Hub.signal.hooks.Signal1 &&
+      !MathJax.Hub.signal.hooks.Signal2;
+      MathJax.Hub.Register.MessageHook("Signal2", function() {} );
+      r3 = MathJax.Hub.signal.hooks.Signal1 &&
+      MathJax.Hub.signal.hooks.Signal2;
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("MathJax.Hub.signal (no signals)", r1),
+      newScriptReftestResult("MathJax.Hub.signal (Signal1)", r2),
+      newScriptReftestResult("MathJax.Hub.signal (Signal1, Signal2)", r3)
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  </body>
+</html>

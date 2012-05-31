@@ -1,0 +1,43 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Queue</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+    
+      var r1 = false, r2 = false;
+
+      function f(x)
+      {
+        r1 = true;
+        r2 = (x === 10);
+      }
+
+      function postMathJax() 
+      {
+      MathJax.Hub.Queue([f, 10]);
+      }
+
+      function getTestCases()
+      {
+      return [
+        newScriptReftestResult("MathJax.Hub.Queue([f, 10]): callback f called",
+        r1),
+        newScriptReftestResult("MathJax.Hub.Queue([f, 10]): argument passed",
+        r2)
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

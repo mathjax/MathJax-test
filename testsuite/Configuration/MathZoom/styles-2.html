@@ -1,0 +1,40 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>styles</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+
+    <!-- Same as style-1, but testing multiple entries for one selector -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.jax = ["input/MathML", "output/NativeMML"];
+      gConfigObject.extensions.push("MathZoom.js");
+
+      gConfigObject.MathZoom = {
+        styles: {
+          "#MathJax_Zoom /* 1 */": { background : "red" },
+          "#MathJax_Zoom /* 2 */": { border : "10px solid blue" }
+        } };
+      }
+
+      function postMathJax()
+      {
+      var jax = MathJax.Hub.getAllJax()[0];
+      var math = document.getElementById(jax.inputID+"-Frame").firstChild;
+      MathJax.Extension.MathZoom.Zoom(null, math);
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    <math><mi>x</mi></math>
+
+  </body>
+</html>

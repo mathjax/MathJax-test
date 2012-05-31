@@ -1,6 +1,7 @@
 script Cookies-1.html
 == Element-1a.html Element-1-ref.html
 == Element-1b.html Element-1-ref.html
+script getScript-1.html
 script properties-1.html
 script setScript-1.html
 script setScript-2.html

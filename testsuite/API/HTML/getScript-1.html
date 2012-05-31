@@ -3,31 +3,30 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>TextNode</title>
+    <title>getScript</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <script type="text/javascript">
-      function getReftestElements()
-      {
-        return ["root"];
-      }
+      var r1 = false, r2 = false;
 
-      function postMathJax()
+      function getTestCases()
       {
-      var parent = document.getElementById("root");
-      MathJax.HTML.addText(parent, "mytext");
+      var script = document.getElementById("script");
+      r1 = (MathJax.HTML.getScript(script) == "var x = 0;");
+      return [
+      newScriptReftestResult("script before MathJax.HTML.getScript", r1)];
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
 
   </head>
 
   <body>
 
-    <div id="root"></div>
+    <script id="script" type="text/javascript">var x = 0;</script>
     
   </body>
 </html>

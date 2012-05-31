@@ -1,0 +1,49 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>variables</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false, r2 = false;
+
+      function f()
+      {
+      r1 = true;
+      }
+
+      function g()
+      {
+      r2 = true;
+      }
+
+      function postMathJax()
+      {
+      var hooks1 = MathJax.Callback.Hooks();
+      hooks1.Add(f);
+      hooks1.Execute();
+      var hooks2 = MathJax.Callback.Hooks();
+      hooks1.Add(g);
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("hook1 executed", r1),
+      newScriptReftestResult("hook2 not executed", !r2)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

@@ -3,21 +3,36 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>MathJax.version</title>
+    <title>variables</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <script type="text/javascript" src="../header.js"></script>
-    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      var r = 0;
+
+      function f()
+      {
+      r++;
+      }
+
+      function postMathJax()
+      {
+      var hooks = MathJax.Callback.Hooks();
+      hooks.Add(f);
+      hooks.Add(f);
+      hooks.Add(f);
+      hooks.Add(f);
+      hooks.Execute();
+      }
+
       function getTestCases()
       {
       return [
-      newScriptReftestResult("typeof(MathJax.version)", typeof(MathJax.version) == "string"),
-      newScriptReftestResult("typeof(MathJax.fileversion)", typeof(MathJax.fileversion) == "string")
-      // more tests on MathJax.version, MathJax.fileversion?
+      newScriptReftestResult("hook executed four times", r == 4)
       ];
       }    
     </script>

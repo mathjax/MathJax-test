@@ -13,21 +13,6 @@
 
     <script type="text/javascript">
       var r1 = false, r2 = false;
-
-      myTimeOut = function(aFile)
-      {
-      r1 = true;
-      r2 = (aFile == "timeout.js");
-      setEndTime();
-
-      // same as loadTimeout
-      var a = MathJax.Ajax;
-      if (a.loading[aFile].timeout) {clearTimeout(a.loading[aFile].timeout)}
-      a.loading[aFile].status = a.STATUS.ERROR;
-      a.loadError(aFile);
-      a.loadComplete(aFile);
-      }
-
       var start, end;
 
       function setStartTime()
@@ -48,7 +33,16 @@
       function postMathJax()
       {
       MathJax.Ajax.timeout = 2000;
-      MathJax.Ajax.loadTimeout = myTimeOut;
+
+      MathJax.Ajax.oldLoadTimeout = MathJax.Ajax.loadTimeout;
+      MathJax.Ajax.loadTimeout = function(aFile) {
+      r1 = true;
+      r2 = (aFile == "timeout.js");
+      setEndTime();
+
+      MathJax.Ajax.oldLoadTimeout(aFile);
+      };
+
       MathJax.Hub.Queue([updateMessage, "Loading timeout.js..."]);
       MathJax.Hub.Queue([setStartTime]);
       MathJax.Hub.Queue(["Load", MathJax.Ajax, "timeout.js"  ]);

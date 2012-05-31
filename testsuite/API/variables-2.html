@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>MathJax.isReady</title>
+    <title>variables</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,26 +12,28 @@
     <script type="text/javascript" src="../scriptTests.js"></script>
 
     <script type="text/javascript">
-      var r1, r2, r3;
+      var r1 = false, r2 = false;
 
       function xMathJaxConfig()
       {
-      MathJax.Hub.Register.StartupHook("onLoad",function () {
-        r1 = !MathJax.hasOwnProperty("isReady");
+      MathJax.Hub.Register.StartupHook("Begin Extensions",function () {
+        r1 = !MathJax.hasOwnProperty("Menu");
       });
-      MathJax.Hub.Register.StartupHook("Begin Typeset",function () {
-        r2 = MathJax.hasOwnProperty("isReady");
+      MathJax.Hub.Register.StartupHook("End Extensions",function () {
+        r2 = MathJax.hasOwnProperty("Menu");
       });
+      }
+
+      function preMathJax()
+      {
+      gConfigObject.extensions.push("MathMenu.js");
       }
 
       function getTestCases()
       {
-      r3 = MathJax.isReady;
-
       return [
-      newScriptReftestResult("MathJax.isReady is undefined before onLoad", r1),
-      newScriptReftestResult("MathJax.isReady is true after Begin Typeset", r2),
-      newScriptReftestResult("MathJax.isReady is true at the end", r3)
+      newScriptReftestResult("MathJax.Menu, before loading extensions...", r1),
+      newScriptReftestResult("MathJax.Menu, after loading extensions...", r2)
       ];
       }    
     </script>

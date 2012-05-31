@@ -3,25 +3,31 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>TextNode</title>
+    <title>variables</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <script type="text/javascript">
-      function getReftestElements()
-      {
-        return ["root"];
-      }
-    </script>
     <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("MathJax.Hub.inputJax",
+      MathJax.Hub.hasOwnProperty("inputJax")),
+      newScriptReftestResult("MathJax.Hub.ouputJax",
+      MathJax.Hub.hasOwnProperty("outputJax"))
+      ];
+      }    
+    </script>
 
   </head>
 
   <body>
 
-    <div id="root">mytext</div>
-    
+    \(x\)
+
   </body>
 </html>

@@ -3,31 +3,29 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>TextNode</title>
+    <title>Config()</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
     <script type="text/javascript">
-      function getReftestElements()
+      function xMathJaxConfig()
       {
-        return ["root"];
+      MathJax.Hub.Config({myConfigOption : true});
       }
 
-      function postMathJax()
+      function getTestCases()
       {
-      var parent = document.getElementById("root");
-      MathJax.HTML.addText(parent, "mytext");
-      }
+      return [
+      newScriptReftestResult("Callback called",
+                             MathJax.Hub.config.myConfigOption === true)
+      ];
+      }    
     </script>
     <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
-
+    <script type="text/javascript" src="../../scriptTests.js"></script>
   </head>
 
   <body>
 
-    <div id="root"></div>
-    
   </body>
 </html>

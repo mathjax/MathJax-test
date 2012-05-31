@@ -1,5 +1,6 @@
 include Queue/reftest.list
 include Signal/reftest.list
+include Hooks/reftest.list
 
 script delay-1.html
 script delay-2.html

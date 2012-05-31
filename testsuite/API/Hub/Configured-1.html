@@ -3,31 +3,36 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>TextNode</title>
+    <title>Configured()</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
     <script type="text/javascript">
-      function getReftestElements()
+      function insertScript()
       {
-        return ["root"];
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      var s = "MathJax.Hub.Configured();"
+      if (window.opera) {
+        script.innerHTML = s;
+      } else {
+        script.text = s;
+      }
+      document.body.appendChild(script);
       }
 
-      function postMathJax()
+      function preMathJax()
       {
-      var parent = document.getElementById("root");
-      MathJax.HTML.addText(parent, "mytext");
+      gMathJaxQueryString += "&delayStartupUntil=configured";
+      setTimeout(insertScript, 2000);
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
-    <script type="text/javascript" src="../../treeReftests.js"></script>
-
   </head>
 
   <body>
 
-    <div id="root"></div>
-    
+    <p><math><mi>x</mi></math></p>
+
   </body>
 </html>

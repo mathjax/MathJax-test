@@ -1,0 +1,40 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Preloading</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false, r2 = false, r3 = false;
+
+      function postMathJax()
+      {
+      MathJax.Ajax.Preloading("file1", "file2", "file3");
+      r1 = MathJax.Ajax.loading[MathJax.Ajax.fileURL("file1")].preloaded;
+      r2 = MathJax.Ajax.loading[MathJax.Ajax.fileURL("file2")].preloaded;
+      r3 = MathJax.Ajax.loading[MathJax.Ajax.fileURL("file3")].preloaded;
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("MathJax.Ajax.Preloading, file1", r1),
+      newScriptReftestResult("MathJax.Ajax.Preloading, file2", r2),
+      newScriptReftestResult("MathJax.Ajax.Preloading, file3", r3)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+  </body>
+</html>

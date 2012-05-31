@@ -3,35 +3,28 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>MathJax.isReady</title>
+    <title>MathJax.Hub.Register.StartupHook</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <script type="text/javascript" src="../header.js"></script>
-    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      var r1, r2, r3;
+      var r1 = false;
 
       function xMathJaxConfig()
       {
       MathJax.Hub.Register.StartupHook("onLoad",function () {
-        r1 = !MathJax.hasOwnProperty("isReady");
-      });
-      MathJax.Hub.Register.StartupHook("Begin Typeset",function () {
-        r2 = MathJax.hasOwnProperty("isReady");
+        r1 = true;
       });
       }
 
       function getTestCases()
       {
-      r3 = MathJax.isReady;
-
       return [
-      newScriptReftestResult("MathJax.isReady is undefined before onLoad", r1),
-      newScriptReftestResult("MathJax.isReady is true after Begin Typeset", r2),
-      newScriptReftestResult("MathJax.isReady is true at the end", r3)
+      newScriptReftestResult("MathJax.Hub.Register.StartupHook", r1)
       ];
       }    
     </script>
