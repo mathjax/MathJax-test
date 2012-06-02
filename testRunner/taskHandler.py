@@ -390,9 +390,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
         @fn handle(self)
         @brief Handle a client request
 
-        For security reasons, this function only accept request from clients on
-        on the same host as the server. It reads a line from the socket and
-        sends a response:
+        The task handler accept request from any host, so be sure to configure
+        your firewall appropriately. This function reads a line from the socket
+        and sends a response:
 
         - If the request is "TASKVIEWER", it sends the result of
         @ref taskHandler::getTaskList
@@ -438,89 +438,85 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         global gServer
 
-        if (self.client_address[0] == self.server.server_address[0]):
-            # Only accept request from the same host as the server
-            request = self.rfile.readline().strip()
-            print request
-            items = request.split()
-            client = items[0]
-            if (client == "TASKVIEWER"):
-                self.wfile.write(gServer.getTaskList())
-            elif (client == "TASKINFO"):
-                taskName = items[1]
-                self.wfile.write(gServer.getTaskInfo(taskName))
-            elif (client == "HOSTINFO"):
-                host = items[1]
-                self.wfile.write(gServer.getHostInfo(host))
-            elif (client == "SAVETASKLIST"):
-                gServer.saveTaskList()
-                self.wfile.write("Task list saved!")
-            elif (client == "TASK"):
-                command = items[1]
-                pid = items[2]
-                if pid in gServer.mRunningTaskFromPID.keys():
-                    t = gServer.mRunningTaskFromPID[pid]
-                    if (command == "UPDATE"):
-                        status = items[3]
-                        if (status in
-                            ["Running", "Complete", "Interrupted"]):
-                            t.mStatus = status
-                            if (t.mStatus == "Interrupted"):
-                                if (len(items) >= 5):
-                                    t.mParameters["startID"] = items[4]
-                                else:
-                                    t.mParameters["startID"] = ""
+        request = self.rfile.readline().strip()
+        print request
+        items = request.split()
+        client = items[0]
+        if (client == "TASKVIEWER"):
+            self.wfile.write(gServer.getTaskList())
+        elif (client == "TASKINFO"):
+            taskName = items[1]
+            self.wfile.write(gServer.getTaskInfo(taskName))
+        elif (client == "HOSTINFO"):
+            host = items[1]
+            self.wfile.write(gServer.getHostInfo(host))
+        elif (client == "SAVETASKLIST"):
+            gServer.saveTaskList()
+            self.wfile.write("Task list saved!")
+        elif (client == "TASK"):
+            command = items[1]
+            pid = items[2]
+            if pid in gServer.mRunningTaskFromPID.keys():
+                t = gServer.mRunningTaskFromPID[pid]
+                if (command == "UPDATE"):
+                    status = items[3]
+                    if (status in
+                        ["Running", "Complete", "Interrupted"]):
+                        t.mStatus = status
+                        if (t.mStatus == "Interrupted"):
+                            if (len(items) >= 5):
+                                t.mParameters["startID"] = items[4]
                             else:
-                                t.mProgress = items[4]
-                    elif (command == "EXPECTED_DEATH" or
-                          command == "UNEXPECTED_DEATH"):
-                        del gServer.mRunningTaskFromPID[pid]
-                        gServer.removeTaskFromRunningList(t)
-                        if (command == "UNEXPECTED_DEATH"):
-                            t.mStatus = "Killed"
-                            t.mExceptionMessage = self.readExceptionMessage()
-                        gServer.runNextTasksFromPendingQueue(t.host())
-                    elif (command == "OUTPUTFILENAME"):
-                        t.mOutputFileName = items[3]
+                                t.mParameters["startID"] = ""
+                        else:
+                            t.mProgress = items[4]
+                elif (command == "EXPECTED_DEATH" or
+                      command == "UNEXPECTED_DEATH"):
+                    del gServer.mRunningTaskFromPID[pid]
+                    gServer.removeTaskFromRunningList(t)
+                    if (command == "UNEXPECTED_DEATH"):
+                        t.mStatus = "Killed"
+                        t.mExceptionMessage = self.readExceptionMessage()
+                    gServer.runNextTasksFromPendingQueue(t.host())
+                elif (command == "OUTPUTFILENAME"):
+                    t.mOutputFileName = items[3]
                         
-            elif (client == "TASKEDITOR"):
-                command = items[1]
-                taskName = items[2]
-                if command == "EDIT":
-                    if items[3] == "None":
-                        configFile = None
-                    else:
-                        configFile = items[3]
-                    if items[4] == "None":
-                        outputDirectory = None
-                    else:
-                        outputDirectory = items[4]
-                    if items[5] == "None":
-                        schedule = None
-                    else:
-                        schedule = items[5]
-                    self.wfile.write(self.editTask(taskName,
-                                                   configFile,
-                                                   outputDirectory,
-                                                   schedule))
-                elif command == "CLONE":
-                    cloneName = items[3]
-                    self.wfile.write(self.cloneTask(taskName, cloneName))
-                elif command == "RENAME":
-                    newName = items[3]
-                    self.wfile.write(self.renameTask(taskName, newName))
-                elif command == "REMOVE":
-                    self.wfile.write(self.removeTask(taskName))
-                elif command == "RUN":
-                    self.wfile.write(self.runTask(taskName, False))
-                elif command == "RESTART":
-                    self.wfile.write(self.runTask(taskName, True))
-                elif command == "STOP":
-                    self.wfile.write(self.stopTask(taskName))
-                elif command == "FORMAT":
-                    self.wfile.write(self.formatTask(taskName))
-        else:
-            print "Received request by unknown host " + self.client_address[0]
+        elif (client == "TASKEDITOR"):
+            command = items[1]
+            taskName = items[2]
+            if command == "EDIT":
+                if items[3] == "None":
+                    configFile = None
+                else:
+                    configFile = items[3]
+                if items[4] == "None":
+                    outputDirectory = None
+                else:
+                    outputDirectory = items[4]
+                if items[5] == "None":
+                    schedule = None
+                else:
+                    schedule = items[5]
+                self.wfile.write(self.editTask(taskName,
+                                               configFile,
+                                               outputDirectory,
+                                               schedule))
+            elif command == "CLONE":
+                cloneName = items[3]
+                self.wfile.write(self.cloneTask(taskName, cloneName))
+            elif command == "RENAME":
+                newName = items[3]
+                self.wfile.write(self.renameTask(taskName, newName))
+            elif command == "REMOVE":
+                self.wfile.write(self.removeTask(taskName))
+            elif command == "RUN":
+                self.wfile.write(self.runTask(taskName, False))
+            elif command == "RESTART":
+                self.wfile.write(self.runTask(taskName, True))
+            elif command == "STOP":
+                self.wfile.write(self.stopTask(taskName))
+            elif command == "FORMAT":
+                self.wfile.write(self.formatTask(taskName))
 
 class task:
     """
