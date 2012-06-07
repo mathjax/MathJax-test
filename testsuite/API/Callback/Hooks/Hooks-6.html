@@ -1,0 +1,65 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Hooks-6</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r = "";
+      var n = 0;
+
+      function incrementN()
+      {
+      n++;
+      }
+
+      function f(x)
+      {
+      r += x;
+      var hooks = MathJax.Callback.Hooks();
+      hooks.Add(incrementN)
+      hooks.Add(["Delay", MathJax.Callback, 500]);
+      return hooks.Execute();
+      }
+
+      function g(x)
+      {
+      r += x;
+      }
+
+      function postMathJax()
+      {
+      var hooks = MathJax.Callback.Hooks();
+      hooks.Add([f, "a"]);
+      hooks.Add([g, "b"]);
+      hooks.Add([f, "c"]);
+      hooks.Add([g, "d"]);
+      hooks.Add([g, "e"]);
+      hooks.Add([f, "f"]);
+      cb = hooks.Execute();
+      MathJax.Hub.Queue(cb);
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("hooks.Execute().isCallback", cb.isCallback),
+      newScriptReftestResult("hooks.Execute().called", cb.called),
+      newScriptReftestResult("r == 'abcdef'", r == 'abcdef'),
+      newScriptReftestResult("n == 3", n == 3)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

@@ -6,7 +6,7 @@
 #
 # @note2
 #
-# <p>These two tests require support for the <foreignObject> in SVG.</p>
+# <p>These two tests require support for the &lt;foreignObject&gt; in SVG.</p>
 #
 
 != issue24.html issue24-ref.html
