@@ -1,0 +1,45 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Translate</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.jax = ["input/MathML", "output/" + gOutputJax];
+      }
+
+      function getTestCases()
+      {
+      var el = MathJax.Hub.getAllJax()[0];
+      var outputJax = MathJax.OutputJax[gOutputJax];
+      var r1 = (outputJax.Remove(el) == null);
+
+      var p = document.getElementById("p");
+      var r2 = (p.getElementsByTagName("math").length == 0 &&
+                p.getElementsByTagName("span").length <= 1 &&
+                p.getElementsByTagName("svg").length == 0);
+
+      return [
+      newScriptReftestResult("Remove(el) == null", r1),
+      newScriptReftestResult("Math removed", r2)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+    <p id="p">
+      <script id="id" type="math/mml"><math><mi>x</mi></math></script>
+    </p>
+  </body>
+</html>

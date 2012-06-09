@@ -1,0 +1,53 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>variables</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var inputJaxName = "";
+
+      function preMathJax()
+      {
+      inputJaxName = getQueryString("inputJaxName");
+      gConfigObject.jax = ["input/"+inputJaxName];
+      }
+
+      function getTestCases()
+      {
+      var inputJax = MathJax.InputJax[inputJaxName];
+
+      // Just checking that all the variables exist
+      return [
+      newScriptReftestResult("inputJax.id",
+                             inputJax.has("id")),
+      newScriptReftestResult("inputJax.version",
+                             inputJax.has("version")),
+      newScriptReftestResult("inputJax.directory",
+                             inputJax.has("directory")),
+      newScriptReftestResult("inputJax.elementJax",
+                             inputJax.has("elementJax")),
+      newScriptReftestResult("inputJax.Process",
+                             inputJax.can("Process")),
+      newScriptReftestResult("inputJax.Translate",
+                             inputJax.can("Translate")),
+      newScriptReftestResult("inputJax.Register",
+                             inputJax.can("Register")),
+      newScriptReftestResult("inputJax.needsUpdate",
+                             inputJax.can("needsUpdate"))
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

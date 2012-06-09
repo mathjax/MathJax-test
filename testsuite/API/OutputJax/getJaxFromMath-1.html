@@ -1,0 +1,42 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Translate</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.jax = ["input/MathML", "output/" + gOutputJax];
+      }
+
+      function getTestCases()
+      {
+      var el = MathJax.Hub.getAllJax()[0];
+      var outputJax = MathJax.OutputJax[gOutputJax];
+      var math;
+      if (gOutputJax == "NativeMML") {
+        math = document.getElementsByClassName("MathJax_MathContainer")[0];
+      } else if (gOutputJax == "HTML-CSS") {
+        math = document.getElementsByClassName("MathJax")[0];
+      } else if (gOutputJax == "SVG") {
+        math = document.getElementsByClassName("MathJax_SVG")[0];
+      }
+      return [newScriptReftestResult("outputJax.getJaxFromMath(math)",
+                                     outputJax.getJaxFromMath(math) == el)];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+    <script id="id" type="math/mml"><math><mi>x</mi></math></script>
+  </body>
+</html>

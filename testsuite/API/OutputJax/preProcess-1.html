@@ -1,0 +1,54 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>preProcess</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var outputJax;
+      var r1 = false, r2 = false, r3 = false;
+      var cb;
+
+      function preMathJax()
+      {
+      gConfigObject.jax = ["input/MathML", "output/"+gOutputJax];
+      }
+
+      function postMathJax()
+      {
+      outputJax = MathJax.OutputJax[gOutputJax];
+      document.getElementById("id").type = "math/mml";
+      r1 = (outputJax.preProcess != outputJax.preTranslate);
+      cb = outputJax.preProcess();
+      r2 = cb.isCallback;
+      MathJax.Hub.Queue(MathJax.Hub.Process());
+      }
+
+      function getTestCases()
+      {
+      r3 = (outputJax.preProcess == outputJax.preTranslate);
+      state = { jax: {} };
+      state.jax[outputJax.id] = [];
+      r4 = (outputJax.preTranslate(state) == null);
+      return [
+      newScriptReftestResult("preProcess != outputJax.preTranslate (before processing)", r1),
+      newScriptReftestResult("outputJax.preProcess().isCallback", r2),
+      newScriptReftestResult("preProcess == outputJax.preTranslate (after processing)", r3),
+      newScriptReftestResult("preProcess() == null (after processing)", r4)
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+    <script id="id" type="unknown"><math><mi>x</mi></math></script>
+  </body>
+</html>

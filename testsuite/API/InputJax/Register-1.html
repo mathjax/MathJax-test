@@ -1,0 +1,59 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Register</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var r1 = false, r2 = false, r3 = false;
+
+      function preMathJax()
+      {
+      gConfigObject.jax =
+      ["input/MathML", "input/TeX", "input/AsciiMath", "output/NativeMML"];
+      gConfigObject.extensions.push("asciimath2jax.js");
+      }
+
+      function postMathJax()
+      {
+      var inputJax1 = MathJax.InputJax["MathML"];
+      var inputJax2 = MathJax.InputJax["TeX"];
+      var inputJax3 = MathJax.InputJax["AsciiMath"];
+      r1 = (inputJax1.Register("math/mml2") == null);
+      r2 = (inputJax2.Register("math/tex2") == null);
+      r3 = (inputJax3.Register("math/asciimath2") == null);
+      MathJax.Hub.Queue(MathJax.Hub.Process());
+      }
+
+      function getTestCases()
+      {
+      var alljax = MathJax.Hub.getAllJax();
+
+      return [
+      newScriptReftestResult("Register() (MathML)",
+                             r1 && alljax[0].inputJax == "MathML"),
+      newScriptReftestResult("Register() (TeX)",
+                             r2 && alljax[1].inputJax == "TeX"),
+      newScriptReftestResult("Register() (AsciiMath)",
+                             r3 && alljax[2].inputJax == "AsciiMath")
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <script id="id1" type="math/mml2"><math><mi>x</mi></math></script>
+    <script id="id2" type="math/tex2">x</script>
+    <script id="id3" type="math/asciimath2">x</script>
+
+  </body>
+</html>

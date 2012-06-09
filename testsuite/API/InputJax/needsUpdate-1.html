@@ -1,0 +1,65 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>needsUpdate</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.jax =
+      ["input/MathML", "input/TeX", "input/AsciiMath", "output/NativeMML"];
+      gConfigObject.extensions.push("asciimath2jax.js");
+      }
+
+      function postMathJax()
+      {
+      document.getElementById("id1").text = "<math><mi>y</mi></math>";
+      document.getElementById("id2").text = "y";
+      document.getElementById("id3").text = "y";
+      }
+
+      function getTestCases()
+      {
+      var alljax = MathJax.Hub.getAllJax();
+      var inputJax1 = MathJax.InputJax["MathML"];
+      var inputJax2 = MathJax.InputJax["TeX"];
+      var inputJax3 = MathJax.InputJax["AsciiMath"];
+
+      return [
+      newScriptReftestResult("needsUpdate() (MathML, true)",
+                             inputJax1.needsUpdate(alljax[0])),
+      newScriptReftestResult("needsUpdate() (TeX, true)",
+                             inputJax2.needsUpdate(alljax[1])),
+      newScriptReftestResult("needsUpdate() (AsciiMath, true)",
+                             inputJax3.needsUpdate(alljax[2])),
+      newScriptReftestResult("needsUpdate() (MathML, false)",
+                             !inputJax1.needsUpdate(alljax[3])),
+      newScriptReftestResult("needsUpdate() (TeX, false)",
+                             !inputJax2.needsUpdate(alljax[4])),
+      newScriptReftestResult("needsUpdate() (AsciiMath, false)",
+                             !inputJax3.needsUpdate(alljax[5]))
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <script id="id1" type="math/mml"><math><mi>x</mi></math></script>
+    <script id="id2" type="math/tex">x</script>
+    <script id="id3" type="math/asciimath">x</script>
+    <script id="id1bis" type="math/mml"><math><mi>x</mi></math></script>
+    <script id="id2bis" type="math/tex">x</script>
+    <script id="id3bis" type="math/asciimath">x</script>
+
+  </body>
+</html>

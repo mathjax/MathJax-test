@@ -1,0 +1,57 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>variables</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.jax = ["input/MathML", "output/"+gOutputJax];
+      }
+
+      function getTestCases()
+      {
+      var outputJax = MathJax.OutputJax[gOutputJax];
+
+      // Just checking that all the variables exist
+      return [
+      newScriptReftestResult("outputJax.id",
+                             outputJax.has("id")),
+      newScriptReftestResult("outputJax.version",
+                             outputJax.has("version")),
+      newScriptReftestResult("outputJax.directory",
+                             outputJax.has("directory")),
+      newScriptReftestResult("outputJax.preProcess",
+                             outputJax.can("preProcess")),
+      newScriptReftestResult("outputJax.preTranslate",
+                             outputJax.can("preTranslate")),
+      newScriptReftestResult("outputJax.Translate",
+                             outputJax.can("Translate")),
+      newScriptReftestResult("outputJax.postTranslate",
+                             outputJax.can("postTranslate")),
+      newScriptReftestResult("outputJax.Register",
+                             outputJax.can("Register")),
+      newScriptReftestResult("outputJax.Remove",
+                             outputJax.can("Remove")),
+      newScriptReftestResult("outputJax.getJaxFromMath",
+                             outputJax.can("getJaxFromMath")),
+      newScriptReftestResult("outputJax.Zoom",
+                             outputJax.can("Zoom"))
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+    <math><mi>x</mi></math>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Register</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var inputJax1, inputJax2, inputJax3;
+      var id1, id2, id3;
+      var r1, r2, r3;
+
+      function preMathJax()
+      {
+      gConfigObject.jax =
+      ["input/MathML", "input/TeX", "input/AsciiMath", "output/NativeMML"];
+      gConfigObject.extensions.push("asciimath2jax.js");
+      }
+
+      function tryTranslate(aInputJax, aId)
+      {
+      try {
+        aInputJax.Translate(aId);
+        return false;
+      }
+      catch(e if e instanceof Error) {
+        return (e.message.
+                indexOf("failed to define the Translate() method") >= 0);
+      }
+      }
+
+      function postMathJax()
+      {
+      inputJax1 = MathJax.InputJax["MathML"];
+      inputJax2 = MathJax.InputJax["TeX"];
+      inputJax3 = MathJax.InputJax["AsciiMath"];
+      id1 = document.getElementById("id1");
+      id2 = document.getElementById("id2")
+      id3 = document.getElementById("id3");
+      id1.type = "math/mml";
+      id2.type = "math/tex";
+      id3.type = "math/asciimath";
+      r1 = tryTranslate(inputJax1, id1);
+      r2 = tryTranslate(inputJax2, id2);
+      r3 = tryTranslate(inputJax3, id3);
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult(
+      "Translate raises an error (MathML)", r1),
+      newScriptReftestResult(
+      "Translate raises an error (TeX)", r2),
+      newScriptReftestResult(
+      "Translate raises an error (AsciiMathML)", r3)
+      ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="div">
+      <script id="id1" type="unknown"><math><mi>x</mi></math></script>
+      <script id="id2" type="unknown">x</script>
+      <script id="id3" type="unknown">x</script>
+    </div>
+
+  </body>
+</html>

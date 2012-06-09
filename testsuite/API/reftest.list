@@ -1,4 +1,5 @@
 include Ajax/reftest.list
+include BaseJax/reftest.list
 include Callback/reftest.list
 include ElementJax/reftest.list
 include HTML/reftest.list

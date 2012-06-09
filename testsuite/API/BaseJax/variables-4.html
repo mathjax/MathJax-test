@@ -3,40 +3,27 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>needsUpdate</title>
+    <title>variables</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
-    <!-- This is an example from the doc -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      var r1 = false, r2 = false;
-
-      function postMathJax() 
-      {
-      var maths = MathJax.Hub.getAllJax();
-      document.getElementById("tex1").innerHTML="\(y+1\)";
-      r1 = maths[0].needsUpdate();
-      r2 = !maths[1].needsUpdate();
-      }
-
       function getTestCases()
       {
+      var BaseJaxInstance = MathJax.OutputJax.SUPER();
       return [
-      newScriptReftestResult("maths[0].needsUpdate()", r1),
-      newScriptReftestResult("maths[1].needsUpdate()", r2)
+      newScriptReftestResult("BaseJaxInstance.JAXFILE",
+                             BaseJaxInstance.JAXFILE == "jax.js")
       ];
-      }
+      }    
     </script>
 
   </head>
 
   <body>
-
-    <div><script id="tex1" type="math/tex">x+1</script></div>
-    <div><script id="tex2" type="math/tex">x+2</script></div>
-
   </body>
 </html>
