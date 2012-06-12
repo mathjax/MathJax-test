@@ -1,0 +1,36 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>test</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.jax = ["input/cutom", "output/custom"];
+      gConfigObject.extensions.push("custom2jax.js");
+      }
+
+      function getTestCases()
+      {
+      var el = MathJax.Hub.getAllJax()[0];
+      return [
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <script id="id" type="math/custom">line1,line2,line3</script>
+
+  </body>
+</html>
