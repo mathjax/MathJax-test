@@ -50,7 +50,7 @@ This module implements various types of reftests, controls the executions and
 reports the results.
 """
 
-from config import MATHJAX_TEST_URI
+from config import MATHJAX_TEST_PUBLIC_URI
 MATHJAX_TESTSUITE_PATH = "../testsuite/"
 
 from PIL import Image, ImageChops
@@ -255,7 +255,7 @@ class reftestSuite():
                             print '<div id="' + \
                                 annotationPrefix + \
                                 annotationID + '">'
-                            print '<h2><a href="' + MATHJAX_TEST_URI + \
+                            print '<h2><a href="' + MATHJAX_TEST_PUBLIC_URI + \
                                 'testsuite/' + aManifestFile + '">' + \
                                 aManifestFile + ' [' + \
                                 annotationID + ']</a></h2>'

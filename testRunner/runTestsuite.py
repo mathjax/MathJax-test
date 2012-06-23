@@ -40,11 +40,13 @@ MATHJAX_TESTSUITE_PATH = "../testsuite/"
 
 from config import PERL, SED
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
-from config import MATHJAX_TEST_URI, WARNING_GENERATED_FILE
+from config import WARNING_GENERATED_FILE
+
+from config import MATHJAX_TEST_PUBLIC_URI, MATHJAX_TEST_LOCAL_URI
+from config import DEFAULT_MATHJAX_PATH
 
 from config import HOST_LIST, OS_LIST, HOST_LIST_OS, SELENIUM_SERVER_PORT
 from config import BROWSER_LIST, FONT_LIST
-from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH
 from config import DEFAULT_TIMEOUT, OUTPUT_JAX_LIST
 
 from datetime import datetime, timedelta
@@ -376,7 +378,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
             print "Formatting the text ouput...",
             pipe = subprocess.Popen([PERL, "clean-reftest-output.pl",
                                      outputTxt, aSelenium.mMathJaxTestPath,
-                                     MATHJAX_TEST_URI + "web/"],
+                                     MATHJAX_TEST_PUBLIC_URI + "web/"],
                                     stdout=subprocess.PIPE)
             fp = file(outputHTML, "w")
             print >> fp, pipe.stdout.read()
@@ -470,7 +472,7 @@ def main(aArgs, aTransmitToTaskHandler):
             mathJaxPath = DEFAULT_MATHJAX_PATH
         mathJaxTestPath = config.get(section, "mathJaxTestPath")
         if (mathJaxTestPath == "default"):
-            mathJaxTestPath = DEFAULT_MATHJAX_TEST_PATH
+            mathJaxTestPath = MATHJAX_TEST_LOCAL_URI
         timeOut = config.getint(section, "timeOut")
         if (timeOut == -1):
             timeOut = DEFAULT_TIMEOUT

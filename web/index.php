@@ -52,7 +52,7 @@
       <?php
          for ($i = 0; $i < count($TESTSUITE_TOPDIR_LIST); $i++) {
            echo "<li><a href=\"";
-           echo $DEFAULT_MATHJAX_TEST_PATH.$TESTSUITE_TOPDIR_LIST[$i];
+           echo $MATHJAX_TEST_LOCAL_URI.$TESTSUITE_TOPDIR_LIST[$i];
            echo "/\">";
            echo $TESTSUITE_TOPDIR_LIST[$i]."/</a></li>";
          } 

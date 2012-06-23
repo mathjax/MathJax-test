@@ -277,7 +277,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
           if (isset($_POST['mathJaxTestPath'])) {
             $mathJaxTestPath = truncateString($_POST['mathJaxTestPath'], 255);
           } else {
-            $mathJaxTestPath = $DEFAULT_MATHJAX_TEST_PATH;
+            $mathJaxTestPath = $MATHJAX_TEST_LOCAL_URI;
           }
     
           $timeOut = intval($_POST['timeOut']);

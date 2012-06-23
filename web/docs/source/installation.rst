@@ -227,8 +227,8 @@ restrict access to some directories or serve the test results as gzipped files.
 It is possible that you need to add some ``AllowOverride`` directives in your
 Apache configuration in order to make the htaccess rules effective.
 
-If you want, you can also set ``MATHJAX_TEST_URI`` to your local
-installation (e.g. ``http://localhost/MathJax-test/``).
+If you want, you can also set ``MATHJAX_TEST_LOCAL_URI`` to your local
+installation.
 
 QA Web Interface
 ----------------

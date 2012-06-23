@@ -40,13 +40,15 @@ The server handling the task list.
 Path to the taskList directory
 """
 
-from config import PYTHON, PERL, MATHJAX_TEST_URI
+from config import PYTHON, PERL
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import HOST_LIST, HOST_LIST_OS, OS_LIST, BROWSER_LIST
 from config import FONT_LIST, OUTPUT_JAX_LIST, SELENIUM_SERVER_PORT
-from config import DEFAULT_MATHJAX_PATH, DEFAULT_MATHJAX_TEST_PATH 
 from config import DEFAULT_TIMEOUT
 from config import MONTH_LIST, WEEKDAY_LIST
+
+from config import MATHJAX_TEST_PUBLIC_URI, MATHJAX_TEST_LOCAL_URI
+from config import DEFAULT_MATHJAX_PATH
 
 TASK_LIST_DIRECTORY = "config/taskList/"
 TASK_LIST_TXT = "taskList.txt"
@@ -376,7 +378,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
             pipe = subprocess.Popen([PERL, "clean-reftest-output.pl",
                                      outputTxt,
                                      t.mParameters["mathJaxTestPath"],
-                                     MATHJAX_TEST_URI + "web/"],
+                                     MATHJAX_TEST_PUBLIC_URI + "web/"],
                                     stdout=subprocess.PIPE)
             fp = file(outputHTML, "w")
             print >> fp, pipe.stdout.read()
@@ -1020,7 +1022,7 @@ option values"
                 if (parameterName == "mathJaxPath"):
                     parameterValue = DEFAULT_MATHJAX_PATH
                 elif (parameterName == "mathJaxTestPath"):
-                    parameterValue = DEFAULT_MATHJAX_TEST_PATH
+                    parameterValue = MATHJAX_TEST_LOCAL_URI
                 elif (parameterName == "operatingSystem"):
                     parameterValue = OS_LIST[0]
                 elif (parameterName == "browser"):

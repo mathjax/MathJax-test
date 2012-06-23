@@ -104,15 +104,18 @@ SELENIUM_SERVER_HUB_HOST = configParser.get("selenium_server",
 SELENIUM_SERVER_HUB_PORT = configParser.get("selenium_server",
                                             "SELENIUM_SERVER_HUB_PORT")
 
+MATHJAX_TEST_PUBLIC_URI = configParser.get("mathjax_paths",
+                                           "MATHJAX_TEST_PUBLIC_URI")
+MATHJAX_TEST_LOCAL_URI = configParser.get("mathjax_paths",
+                                          "MATHJAX_TEST_LOCAL_URI")
+DEFAULT_MATHJAX_PATH = MATHJAX_TEST_LOCAL_URI + \
+    configParser.get("mathjax_paths", "DEFAULT_MATHJAX_BRANCH")
+
 DEFAULT_TASK_NAME = configParser.get("testing_instance", "DEFAULT_TASK_NAME")
 HOST_LIST = parseStringArray(configParser.get("testing_instance",
                                               "HOST_LIST"))
 HOST_LIST_OS_ = parseStringArray(configParser.get("testing_instance",
                                                  "HOST_LIST_OS"))
-DEFAULT_MATHJAX_PATH = configParser.get("testing_instance",
-                                        "DEFAULT_MATHJAX_PATH")
-DEFAULT_MATHJAX_TEST_PATH = configParser.get("testing_instance",
-                                             "DEFAULT_MATHJAX_TEST_PATH")
 DEFAULT_TIMEOUT = configParser.getint("testing_instance",
                                       "DEFAULT_TIMEOUT")
 
@@ -140,7 +143,6 @@ WARNING_GENERATED_FILE = configParser.get("messages",
 ERROR_CONNECTION_TASK_HANDLER = \
     configParser.get("messages", "ERROR_CONNECTION_TASK_HANDLER")
 
-MATHJAX_TEST_URI = configParser.get("other", "MATHJAX_TEST_URI")
 MONTH_LIST = parseStringArray(configParser.get("other", "MONTH_LIST"))
 WEEKDAY_LIST = parseStringArray(configParser.get("other", "WEEKDAY_LIST"))
 TESTSUITE_TOPDIR_LIST = \
@@ -184,18 +186,21 @@ declarePythonString(f_out, "SELENIUM_SERVER_HUB_HOST", SELENIUM_SERVER_HUB_HOST)
 declarePythonInteger(f_out, "SELENIUM_SERVER_HUB_PORT",
                      SELENIUM_SERVER_HUB_PORT)
 
+declarePythonString(f_out, "MATHJAX_TEST_PUBLIC_URI",
+                    MATHJAX_TEST_PUBLIC_URI)
+declarePythonString(f_out, "MATHJAX_TEST_LOCAL_URI",
+                    MATHJAX_TEST_LOCAL_URI)
+declarePythonString(f_out, "DEFAULT_MATHJAX_PATH",
+                    DEFAULT_MATHJAX_PATH)
+
 declarePythonStringArray(f_out, "HOST_LIST", HOST_LIST)
 declarePythonStringArray(f_out, "OS_LIST", OS_LIST)
 declarePythonIntegerArray(f_out, "HOST_LIST_OS", HOST_LIST_OS)
 declarePythonStringArray(f_out, "BROWSER_LIST", BROWSER_LIST)
 declarePythonStringArray(f_out, "FONT_LIST", FONT_LIST)
 declarePythonStringArray(f_out, "OUTPUT_JAX_LIST", OUTPUT_JAX_LIST)
-declarePythonString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
-declarePythonString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
-                    DEFAULT_MATHJAX_TEST_PATH)
 declarePythonInteger(f_out, "DEFAULT_TIMEOUT", DEFAULT_TIMEOUT)
 
-declarePythonString(f_out, "MATHJAX_TEST_URI", MATHJAX_TEST_URI)
 declarePythonStringArray(f_out, "MONTH_LIST", MONTH_LIST)
 declarePythonStringArray(f_out, "WEEKDAY_LIST", WEEKDAY_LIST)
 declarePythonStringArray(f_out, "OUTPUT_JAX_LIST", OUTPUT_JAX_LIST)
@@ -215,11 +220,12 @@ declarePhpInteger(f_out, "SELENIUM_SERVER_PORT", SELENIUM_SERVER_PORT)
 declarePhpString(f_out, "SELENIUM_SERVER_HUB_HOST", SELENIUM_SERVER_HUB_HOST)
 declarePhpInteger(f_out, "SELENIUM_SERVER_HUB_PORT", SELENIUM_SERVER_HUB_PORT)
 
+declarePhpString(f_out, "MATHJAX_TEST_PUBLIC_URI", MATHJAX_TEST_PUBLIC_URI)
+declarePhpString(f_out, "MATHJAX_TEST_LOCAL_URI", MATHJAX_TEST_LOCAL_URI)
+declarePhpString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
+
 declarePhpString(f_out, "DEFAULT_TASK_NAME", DEFAULT_TASK_NAME)
 declarePhpStringArray(f_out, "HOST_LIST", HOST_LIST)
-declarePhpString(f_out, "DEFAULT_MATHJAX_PATH", DEFAULT_MATHJAX_PATH)
-declarePhpString(f_out, "DEFAULT_MATHJAX_TEST_PATH",
-                 DEFAULT_MATHJAX_TEST_PATH)
 declarePhpInteger(f_out, "DEFAULT_TIMEOUT", DEFAULT_TIMEOUT)
 
 declarePhpStringArray(f_out, "BROWSER_LIST", BROWSER_LIST)
@@ -242,6 +248,6 @@ f_out.close()
 # Create web/config.js
 f_out = open(CONFIG_JS, "w")
 print >>f_out, "/* " + WARNING_GENERATED_FILE + " */"
-declareJsString(f_out, "MATHJAX_TEST_URI", MATHJAX_TEST_URI)
+declareJsString(f_out, "MATHJAX_TEST_LOCAL_URI", MATHJAX_TEST_LOCAL_URI)
 declareJsIntegerArray(f_out, "HOST_LIST_OS", HOST_LIST_OS)
 f_out.close()
