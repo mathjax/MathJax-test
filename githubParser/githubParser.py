@@ -33,54 +33,111 @@ This module implements allow to parse github comments
 from lxml import etree
 from urllib import urlretrieve
 from copy import deepcopy
+from config import TESTSUITE_TOPDIR_LIST
+import re
 
 GITHUB_URI='https://github.com/mathjax/MathJax/'
-GITHUB_ISSUE_LIST="issues?labels=Accepted&state=open"
+GITHUB_ISSUE_LIST="issues?&state=open"
 TMP_FILE = "tmp.html"
+REGEXP_TEST_LIST = ""
+
+class issueClass:
+    def __init__(self, aId):
+        self.mId = aId
+        self.mLabels = []
+        self.mTests = []
+
+    def addLabel(self, aLabel):
+        self.mLabels.append(aLabel)
+
+    def hasLabel(self, aLabel):
+        return self.mLabels.count(aLabel) > 0
 
 def downloadPage(aURL, aFile):
     print "Downloading " + aURL + "..."
     urlretrieve(aURL, aFile)
     print "done"
 
-def isInTestSuite(aNode):
+def appendIssues(aList, aNode):
+    for issueNode in aNode:
+        # remove the sharp prefix and convert to a number
+        issue = issueClass(int(issueNode.get("id")[1:]))
+        for labelNode in issueNode:
+            issue.addLabel(labelNode.text)
+        aList.append(issue)
 
-    for child in aNode:
-        if child.text == "QA - In Testsuite":
-            return True
-
-    return False
-
-def appendElements(aList, aNode):
-    for child in aNode:
-        if isInTestSuite(child):
-            # remove the sharp prefix and convert to a number
-            issueId = int(child.get("id")[1:])
-            aList.append(issueId)
+def getTestListsFromComment(aList, aComment):
+    words = re.findall(r"\S+", aComment)
+    for w in words:
+        if re.match(REGEXP_TEST_LIST, w):
+            aList.append(w)
 
 if __name__ == "__main__":
+    # Load XSL stylesheets
     HTMLparser = etree.HTMLParser()
     issueListXSLT = etree.XSLT(etree.parse("githubIssueList.xsl"))
     issuePageXSLT = etree.XSLT(etree.parse("githubIssuePage.xsl"))
 
+    # Download the first page of issue list and determine the number of pages
     downloadPage(GITHUB_URI + GITHUB_ISSUE_LIST + "&page=1", TMP_FILE)
     root = issueListXSLT(etree.parse(TMP_FILE, HTMLparser)).getroot()
-    numberOfPages = int(root[0].get("numberOfPages"))
+    numberOfPages = root[0].get("numberOfPages")
+    if (numberOfPages):
+        numberOfPages = int(numberOfPages)
+    else:
+        numberOfPages = 1
 
+    # Fill-in the issue list with the issue marked "In Testsuite"
     issueList = []
-    appendElements(issueList, root[1])
-
+    appendIssues(issueList, root.find('issueList'))
     for i in range(2,numberOfPages+1):
         downloadPage(GITHUB_URI + GITHUB_ISSUE_LIST + "&page=" + str(i),
                      TMP_FILE)
         root = \
             issueListXSLT(etree.parse(TMP_FILE, HTMLparser)).getroot()
-        appendElements(issueList, root[1])
-
+        appendIssues(issueList, root.find('issueList'))
     issueList.sort()
 
-    for issueId in issueList:
-        downloadPage(GITHUB_URI + "issues/" + str(issueId),
-                     TMP_FILE)
-        root = issuePageXSLT(etree.parse(TMP_FILE, HTMLparser)).getroot()
-        print etree.tostring(root)
+    # Initialize regexp to match "TESTSUITE_TOPDIR_LIST/*.html" that does not
+    # end by "-ref.html".
+    topdir = ""
+    for i in range(len(TESTSUITE_TOPDIR_LIST)):
+        if i > 0:
+            topdir += "|"
+        topdir += TESTSUITE_TOPDIR_LIST[i]
+    REGEXP_TEST_LIST = re.compile("(?:" + topdir + ")/.*(?<!-ref)\.html")
+
+    # Download each issue page and 
+    for i in range(len(issueList)):
+        issue = issueList[i]
+        if (issue.hasLabel("Accepted") and
+            issue.hasLabel("Ready for Release")):
+            if (issue.hasLabel("QA - In Testsuite")):
+                downloadPage(GITHUB_URI + "issues/" + str(issue.mId),
+                             TMP_FILE)
+                root = issuePageXSLT(etree.parse(TMP_FILE, HTMLparser)).\
+                    getroot()
+                for paragraph in root.iter("paragraph"):
+                    getTestListsFromComment(issue.mTests, paragraph.text)
+
+    # Generate the list of issues ready for release
+    f1 = open("IssueList.txt", "w")
+    f2 = open("AutomatedTestList.txt", "w")
+    for i in range(len(issueList)):
+        issue = issueList[i]
+        if (issue.hasLabel("Accepted") and
+            issue.hasLabel("Ready for Release")):
+            print >>f1, "Issue " + str(issue.mId)
+            print >>f1, "https://github.com/mathjax/MathJax/issues/" + \
+                str(issue.mId) + "\n"
+            if (issue.hasLabel("QA - Do Not Write Automated Test")):
+                print "No Automated Test. To verify manually."
+            elif (issue.hasLabel("QA - In Testsuite")):
+                for test in issue.mTests:
+                    print >>f1, test
+                    print >>f2, test
+            else:
+                print >>f1, "Is it ready for Release?"
+            print >>f1
+    f2.close()
+    f1.close()

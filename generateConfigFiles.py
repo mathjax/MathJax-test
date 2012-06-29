@@ -208,6 +208,14 @@ declarePythonString(f_out, "WARNING_GENERATED_FILE", WARNING_GENERATED_FILE)
 
 f_out.close()
 
+# Create githubParser/config.py
+f_out = open("githubParser/config.py", "w")
+print >>f_out, "# " + WARNING_GENERATED_FILE
+
+declarePythonStringArray(f_out, "TESTSUITE_TOPDIR_LIST", TESTSUITE_TOPDIR_LIST)
+
+f_out.close()
+
 # Create web/config.php
 f_out = open(CONFIG_PHP, "w")
 print >>f_out, "<?php"

@@ -29,16 +29,20 @@ limitations under the License.
   </xsl:template>
 
   <xsl:template match="div[@class='formatted-content']/div">
-    <xsl:choose>
-       <xsl:when test="starts-with(., '#TESTS')">
-         <test>
-           <xsl:value-of select="."/>
-         </test>
-       </xsl:when>
-       <xsl:otherwise>
-         <xsl:apply-templates select="*"/>
-       </xsl:otherwise>
-     </xsl:choose>
+    <xsl:for-each select="*">
+      <xsl:choose>
+        <!-- XXXfred: The XSLT language/implementation does not seem really
+             powerful... Do more filters on the Python side. -->
+        <xsl:when test="contains(., '.html')">
+          <paragraph>
+            <xsl:value-of select="."/>
+          </paragraph>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="*"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
 
 </xsl:stylesheet>
