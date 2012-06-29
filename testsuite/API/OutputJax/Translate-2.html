@@ -22,10 +22,11 @@
       try {
         aOutputJax.Translate();
         return false;
-      }
-      catch(e if e instanceof Error) {
-        return (e.message.
-                indexOf("failed to define the Translate() method") >= 0);
+      } catch(e) {
+        if (e.message.indexOf("failed to define the Translate() method") >= 0) {
+          return true;
+        }
+        throw e;
       }
       }
 
