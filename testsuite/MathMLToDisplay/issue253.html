@@ -1,0 +1,31 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 253</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- See issue 253
+         https://github.com/mathjax/MathJax/issues/253 -->
+    <table style="border-collapse: collapse; border: 1px solid grey;">
+      <tr>
+        <td style="vertical-align: top;">
+          □□□□□□ ■<sup>■<sup>■</sup></sup> □□□□□□
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top;">
+          □□□□□□ \(\displaystyle\int_0^x f(t)\,dt\) □□□□□□
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>

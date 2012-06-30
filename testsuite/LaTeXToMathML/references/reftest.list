@@ -6,5 +6,5 @@ tree== ref-2.html ref-2-ref.html
 tree== ref-3.html ref-3-ref.html
 require(HTML-CSS) fails-if(Quirks||IE7) == tag-1.html tag-1-ref.html
 == tag-2.html tag-2-ref.html
-# @annotate(issue240) tag-3.html
+# annotate(@issue240) tag-3.html
 == notag-1.html notag-1-ref.html
