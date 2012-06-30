@@ -1,0 +1,50 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue255</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
+      gConfigObject["SVG"].linebreaks = { automatic: true };
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- See issue 255
+         https://github.com/mathjax/MathJax/issues/255 -->
+    <!-- Should first break at 6em -->
+    <div style="width: 6em;">
+      <math>
+        <mfenced open="◀" separators="■" close="▶">
+          <!-- ◀ -->
+          <mspace mathbackground="red" width="3px"
+                  height="10px" depth="10px"></mspace>
+          <!-- ■ -->
+          <mspace mathbackground="green" width="3px"
+                  height="10px" depth="10px"></mspace>
+          <!-- ■ -->
+          <mspace mathbackground="blue" width="3px"
+                  height="10px" depth="10px"></mspace>
+          <!-- ■ -->
+          <mspace mathbackground="cyan" width="3px"
+                  height="10px" depth="10px"></mspace>
+          <!-- ■ -->
+          <mspace mathbackground="yellow" width="3px"
+                  height="10px" depth="10px"></mspace>
+          <!-- ■ -->
+          <mspace mathbackground="magenta" width="3px"
+                  height="10px" depth="10px"></mspace>
+          <!-- ▶ -->
+        </mfenced>
+      </math>
+    </div>
+  </body>
+</html>

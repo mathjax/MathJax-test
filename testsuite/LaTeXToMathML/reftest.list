@@ -23,7 +23,7 @@ include symbols/reftest.list
 # @issue215
 #
 # <p>The commands \injlim, \projlim etc should generate only one &lt;mi&gt;.
-# See <a href="https://github.com/mathjax/MathJax/issues/215">issue</a>.</p>
+# See <a href="https://github.com/mathjax/MathJax/issues/215">issue 215</a>.</p>
 #
 # @issue216
 #
@@ -41,6 +41,12 @@ include symbols/reftest.list
 #
 # <p>See <a href="https://github.com/mathjax/MathJax/issues/227">issue 227</a></p>
 #
+#
+# @issue263
+#
+# <p>
+# See <a href="https://github.com/mathjax/MathJax/issues/263">issue 263</a>.</p>
+#
 
 tree== autobold-1.html autobold-1-ref.html
 tree== bbox-1.html bbox-1-ref.html
@@ -57,6 +63,7 @@ tree== inline-math-2.html inline-math-ref.html
 == issue139.html issue139-ref.html
 require(TeX) != issue145.html issue145-ref.html
 annotate(@issue211) fails == issue211.html issue211-ref.html
+annotate(@issue263) fails == issue263.html issue263-ref.html
 tree== LaTeX-1.html LaTeX-1-ref.html
 tree== limits-1.html limits-1-ref.html
 annotate(@issue215) fails tree== limits-2.html limits-2-ref.html

@@ -131,7 +131,7 @@ if __name__ == "__main__":
             print >>f1, "https://github.com/mathjax/MathJax/issues/" + \
                 str(issue.mId) + "\n"
             if (issue.hasLabel("QA - Do Not Write Automated Test")):
-                print "No Automated Test. To verify manually."
+                print >>f1, "No Automated Test. To verify manually."
             elif (issue.hasLabel("QA - In Testsuite")):
                 for test in issue.mTests:
                     print >>f1, test

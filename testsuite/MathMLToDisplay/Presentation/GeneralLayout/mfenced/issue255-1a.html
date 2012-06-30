@@ -1,0 +1,38 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue255</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
+      gConfigObject["SVG"].linebreaks = { automatic: true };
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- See issue 255
+         https://github.com/mathjax/MathJax/issues/255 -->
+
+    <!-- testing open delimiter -->
+    <div style="width: 50px; height: 100px; border: 1px solid black;">
+      <math>
+        <mfenced open="?" separators="ST" close="C">
+          <mspace mathbackground="red" width="30px"
+                  height="10px" depth="10px"></mspace>
+          <mspace mathbackground="red" width="30px"
+                  height="10px" depth="10px"></mspace>
+          <mspace mathbackground="red" width="30px"
+                  height="10px" depth="10px"></mspace>
+        </mfenced>
+      </math>
+    </div>
+  </body>
+</html>
