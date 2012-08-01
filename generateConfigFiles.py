@@ -213,6 +213,7 @@ f_out = open("githubParser/config.py", "w")
 print >>f_out, "# " + WARNING_GENERATED_FILE
 
 declarePythonStringArray(f_out, "TESTSUITE_TOPDIR_LIST", TESTSUITE_TOPDIR_LIST)
+declarePythonString(f_out, "PYTHON", PYTHON)
 
 f_out.close()
 

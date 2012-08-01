@@ -33,12 +33,13 @@ This module implements allow to parse github comments
 from lxml import etree
 from urllib import urlretrieve
 from copy import deepcopy
-from config import TESTSUITE_TOPDIR_LIST
+from config import TESTSUITE_TOPDIR_LIST, PYTHON
 import re
+import subprocess
 
 GITHUB_URI='https://github.com/mathjax/MathJax/'
 GITHUB_ISSUE_LIST="issues?&state=open"
-TMP_FILE = "tmp.html"
+TMP_FILE = "temporary.tmp"
 REGEXP_TEST_LIST = ""
 
 class issueClass:
@@ -87,7 +88,7 @@ if __name__ == "__main__":
     else:
         numberOfPages = 1
 
-    # Fill-in the issue list with the issue marked "In Testsuite"
+    # Fill-in the issue list
     issueList = []
     appendIssues(issueList, root.find('issueList'))
     for i in range(2,numberOfPages+1):
@@ -122,7 +123,7 @@ if __name__ == "__main__":
 
     # Generate the list of issues ready for release
     f1 = open("IssueList.txt", "w")
-    f2 = open("AutomatedTestList.txt", "w")
+    f2 = open(TMP_FILE, "w")
     for i in range(len(issueList)):
         issue = issueList[i]
         if (issue.hasLabel("Accepted") and
@@ -140,4 +141,10 @@ if __name__ == "__main__":
                 print >>f1, "Is it ready for Release?"
             print >>f1
     f2.close()
+
+    print >>f1, "List of Tests:"
+    pipe = subprocess.Popen([PYTHON, "../testRunner/runTestsuite.py",
+                             "--printListOfTests", TMP_FILE],
+                             stdout=subprocess.PIPE)
+    print >> f1, pipe.stdout.read()
     f1.close()

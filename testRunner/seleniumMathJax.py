@@ -43,6 +43,7 @@ import string
 import sys
 import time
 import urlparse
+import inspect
 
 VK_TAB = 9
 VK_ENTER = 10
@@ -532,16 +533,6 @@ class seleniumMathJax(object):
 
                 self.mSelenium.stop()
         
-    def clearBrowserData(self):
-        """
-        @fn clearBrowserData(self)
-        @brief Clear the browser data.
-        @exception "clearBrowserData: not implemented"
-        @note Selenium can not be used to clear the browser data, so this
-        is not implemented at the moment.
-        """
-        raise Exception("clearBrowserData: not implemented")
-
     def takeScreenshot(self, aWaitTime = 0.5):
         """
         @fn takeScreenshot(self, aWaitTime = 0.5)

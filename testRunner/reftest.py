@@ -353,6 +353,11 @@ class reftestSuite():
                           elif aSelenium == "printNotes":
                               self.addReftests(aSelenium, aRoot, reftestList,
                                                -1, testExpectedStatus)
+                        elif type(aSelenium) == list:
+                            if aSelenium[0] == "printListOfTests":
+                                sys.stdout.write("1")
+                                self.addReftests(aSelenium, aRoot, reftestList,
+                                                 -1, testExpectedStatus)
                         else:
                             if index == -1:
                                 self.addReftests(aSelenium,
@@ -436,7 +441,8 @@ fails/random")
                         elif testClass == scriptReftest:
                             state = 6
                         elif testClass == visualReftest:
-                            if (type(aSelenium) != str and
+                            if (isinstance(aSelenium,
+                                           seleniumMathJax.seleniumMathJax) and
                                 aSelenium.mBrowser == "HTMLUnit"):
                                 testExpectedStatus = EXPECTED_IRRELEVANT
                             state = 5
@@ -463,6 +469,12 @@ fails/random")
                             if testURIRef:
                                 verifyPageExistence(testDirectory,
                                                     testURIRef)
+                    elif type(aSelenium) == list:
+                        if aSelenium[0] == "printListOfTests":
+                            if (testDirectory + testURI in aSelenium[1]):
+                                sys.stdout.write("1")
+                            else:
+                                sys.stdout.write("0")
                     else:
                         if (index == -1 or self.mListOfTests[index] == "1"):
                             self.mTests.append(testClass(self,

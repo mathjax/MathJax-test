@@ -170,3 +170,7 @@ runSeleniumHub:
 runSeleniumNode:
 	@ echo 'Running selenium server (Node mode)...'
 	cd testRunner/; $(JAVA) -jar seleniumServer.jar -role node -port $(SELENIUM_SERVER_NODE_PORT) -hubHost $(SELENIUM_SERVER_HUB_HOST) -hubPort $(SELENIUM_SERVER_HUB_PORT) `for opt in $(SELENIUM_SERVER_NODE_OPTIONS); do echo "-browser $$opt"; done;` -nodeTimeout $(SELENIUM_SERVER_NODE_TIMEOUT)
+
+generateReadyForRelease:
+	@ echo 'Generating githubParser/IssueList.txt...'
+	@ cd githubParser; $(PYTHON) githubParser.py

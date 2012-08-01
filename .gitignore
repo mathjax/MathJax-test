@@ -3,10 +3,9 @@
 *~
 .htpasswd
 custom.cfg
-githubParser/AutomatedTestList.txt
 githubParser/IssueList.txt
 githubParser/config.py
-githubParser/tmp.html
+githubParser/temporary.tmp
 mathjax/*/
 testRunner/conditionParser.py
 testRunner/config.py

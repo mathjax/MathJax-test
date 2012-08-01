@@ -230,26 +230,27 @@ def printNotes():
 
     suite.addReftests("printNotes",
                       MATHJAX_TESTSUITE_PATH, "reftest.list", -1)
-    sys.stdout = stdout
-    fp.close()
-
     print '</div>'
     print '</body>'
     print '</html>'
+    sys.stdout = stdout
+    fp.close()
 
     print "done"
 
-def removeTemporaryData(aSelenium):
+def printListOfTests(aFile):
     """
-    @fn removeTemporaryData(aSelenium)
-    @brief Execute a Selenium instance and call the
-           @ref seleniumMathJax::seleniumMathJax::clearBrowserData function.
-
-    @param aSelenium @ref seleniumMathJax::seleniumMathJax object
+    @fn printNotes(aFile)
+    @brief generate a listOftests from a file
     """
-    aSelenium.start()
-    aSelenium.clearBrowserData()
-    aSelenium.stop()
+    lines = []
+    for line in open(aFile, "r"):
+        line = line.rstrip('\n')
+        lines.append(line)
+    suite = reftest.reftestSuite()
+    suite.addReftests(["printListOfTests", lines],
+                      MATHJAX_TESTSUITE_PATH, "reftest.list", -1)
+    print
 
 def runTestingInstance(aDirectory, aSelenium, aSuite,
                        aFormatOutput, aCompressOutput, aFileName):
@@ -424,24 +425,30 @@ def main(aArgs, aTransmitToTaskHandler):
         printNotes()
         exit(0)
 
-    clearBrowsersData = hasattr(aArgs, "removeTemporaryData")
+    # if the option --printListOfTests is passed, only generate a ListOfTests
+    # from a file containing test URIs
+    if hasattr(aArgs, "printListOfTests"):
+        if not aArgs.printListOfTests:
+            print >> sys.stderr, "No input file!"
+            exit(0)
+        printListOfTests(aArgs.printListOfTests)
+        exit(0)
 
-    if (not clearBrowsersData):
-        # create the date directory
-        now = datetime.utcnow();
-        directory = MATHJAX_WEB_PATH + "results/"
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+    # create the date directory
+    now = datetime.utcnow();
+    directory = MATHJAX_WEB_PATH + "results/"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
-        # create the subdirectory
-        if aArgs.output and re.match("^([0-9]|[a-z]|[A-Z]|-|/){1,50}/$",
-                                    aArgs.output):
-            directory += aArgs.output
-        else:
-            directory += now.strftime("%Y-%m-%d/%H-%M-%S/")
+    # create the subdirectory
+    if aArgs.output and re.match("^([0-9]|[a-z]|[A-Z]|-|/){1,50}/$",
+                                aArgs.output):
+        directory += aArgs.output
+    else:
+        directory += now.strftime("%Y-%m-%d/%H-%M-%S/")
 
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
     # execute testing instances for all the config files
     configFileList = aArgs.config.split(",")
@@ -510,14 +517,6 @@ def main(aArgs, aTransmitToTaskHandler):
             print >> sys.stderr, "Warning: browserPath ignored"
             browserPath = "default"
 
-        # If we just want to clear browsers data, we ignore the list of fonts
-        # and browser modes.
-        if clearBrowsersData:
-            fontList = ["STIX"]
-            browserVersionList = ["default"]
-            browserModeList = ["default"]
-            outputJaxList = ["HTML-CSS"]
-
         for browser in browserList:
 
             if (browser == "default"):
@@ -561,15 +560,12 @@ def main(aArgs, aTransmitToTaskHandler):
                                                                 timeOut,
                                                                 fullScreenMode)
                             
-                            if (clearBrowsersData):
-                                removeTemporaryData(selenium)
+                            if aTransmitToTaskHandler:
+                                taskHandler = [TASK_HANDLER_HOST,
+                                               TASK_HANDLER_PORT,
+                                               str(os.getpid())]
                             else:
-                                if aTransmitToTaskHandler:
-                                    taskHandler = [TASK_HANDLER_HOST,
-                                                   TASK_HANDLER_PORT,
-                                                   str(os.getpid())]
-                                else:
-                                    taskHandler = None
+                                taskHandler = None
 
                             # Create the test suite
                             suite = reftest.reftestSuite(taskHandler,
@@ -661,14 +657,15 @@ generate the file reftestList.txt instead of running tests.")
                         default = argparse.SUPPRESS,
                         help="If this option is used, the script will print \
 generate the file testsuiteNotes.html instead of running tests.")
+    parser.add_argument("-l", "--printListOfTests", nargs = "?",
+                        default = argparse.SUPPRESS,
+                        help="Specify a file containting a list of test URIs. \
+If this option is used, the script will print a listOfTests parameter instead \
+of running tests.")
     parser.add_argument("-t", "--transmitToTaskHandler", nargs = "?",
                         default = argparse.SUPPRESS,
                         help="If this option is used, the script will transmit \
 the its status to the task handler.")
-    parser.add_argument("-r", "--removeTemporaryData", nargs = "?",
-                        default = argparse.SUPPRESS,
-                        help="Remove temporary data from the browsers \
-(not implemented)")
 
     args = parser.parse_args()
 

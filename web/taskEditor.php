@@ -233,7 +233,7 @@
             <label>mathJaxTestPath:
               <input id="mathJaxTestPath" name="mathJaxTestPath" type="text" size="50"
                      pattern="(.)+\/"
-                     value="<?php echo $DEFAULT_MATHJAX_TEST_PATH;?>"/>
+                     value="<?php echo $MATHJAX_TEST_LOCAL_URI;?>testsuite/"/>
             </label>
           </p>
           <p>
