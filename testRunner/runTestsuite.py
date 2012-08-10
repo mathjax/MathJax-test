@@ -479,7 +479,7 @@ def main(aArgs, aTransmitToTaskHandler):
             mathJaxPath = DEFAULT_MATHJAX_PATH
         mathJaxTestPath = config.get(section, "mathJaxTestPath")
         if (mathJaxTestPath == "default"):
-            mathJaxTestPath = MATHJAX_TEST_LOCAL_URI
+            mathJaxTestPath = MATHJAX_TEST_LOCAL_URI + "testsuite/"
         timeOut = config.getint(section, "timeOut")
         if (timeOut == -1):
             timeOut = DEFAULT_TIMEOUT

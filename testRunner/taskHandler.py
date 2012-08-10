@@ -1022,7 +1022,7 @@ option values"
                 if (parameterName == "mathJaxPath"):
                     parameterValue = DEFAULT_MATHJAX_PATH
                 elif (parameterName == "mathJaxTestPath"):
-                    parameterValue = MATHJAX_TEST_LOCAL_URI
+                    parameterValue = MATHJAX_TEST_LOCAL_URI + "testsuite/"
                 elif (parameterName == "operatingSystem"):
                     parameterValue = OS_LIST[0]
                 elif (parameterName == "browser"):
