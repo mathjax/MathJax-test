@@ -45,7 +45,7 @@
 # reftest run.  It will extract the parts of the output run relevant to
 # reftest and convert it to an HTML page.
 #
-# Usage: clean-reftest-output.pl output.txt [[testsuiteURI] webURI] > output.html
+# Usage: clean-reftest-output.pl output.txt [mathjaxTestURI] > output.html
 #
 
 use strict;
@@ -61,20 +61,12 @@ if ($nargs >= 1) {
     open($gReftestOutput, "<$ARGV[0]");
 }
 
-## @var String gTestsuiteURI
-#  @brief URI to the testsuite/ directory
+## @var String gMathjaxTestURI
+#  @brief URI of the MathJax test server
 #
-my $gTestsuiteURI = "http://localhost/MathJax-test/testsuite/";
+my $gMathJaxTestURI = "http://localhost/MathJax-test/";
 if ($nargs >= 2) {
-    $gTestsuiteURI = $ARGV[1];
-}
-
-## @var String gWebURI
-#  @brief URI of the web/ directory
-#
-my $gWebURI = "http://localhost/MathJax-test/web/";
-if ($nargs >= 3) {
-    $gWebURI = $ARGV[2];
+    $gMathJaxTestURI = $ARGV[1];
 }
 
 ## @var Integer N_TESTS
@@ -179,11 +171,12 @@ while (<$gReftestOutput>) {
 
                     $parsedContent = "<div class=\"$testTypes[$i][1]\">";
                     $parsedContent .= $1.$2.": ";
-                    $parsedContent .= "<a href=\"".$gTestsuiteURI.$testID;
+                    $parsedContent .= "<a href=\"".$gMathJaxTestURI;
+                    $parsedContent .= "testsuite/".$testID;
                     $parsedContent .= $queryString2."\">".$testID."</a>";
                     
                     # convert references @ to link
-                    my $testNote = $gWebURI."testsuiteNotes.html#";
+                    my $testNote = $gMathJaxTestURI."web/testsuiteNotes.html#";
                     $_ = $testID;
                     s,\/([^\/]*)\.html(\?(.*))?$,_,;
                     s,\/,_,g;
@@ -258,7 +251,7 @@ while (<$gReftestOutput>) {
 
     if ($state == 4) {
         if ($unparsedContent) {
-            $parsedContent .= "\nREFTEST   <a href=\"".$gWebURI;
+            $parsedContent .= "\nREFTEST   <a href=\"".$gMathJaxTestURI."web/";
             $parsedContent .= "reftest-analyzer.xhtml#log=";
             $parsedContent .= uri_escape(uri_escape($unparsedContent));
             $parsedContent .= "\">DIFF</a>";

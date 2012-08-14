@@ -378,8 +378,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
             # Execute the Perl script to format the output
             print "Formatting the text ouput...",
             pipe = subprocess.Popen([PERL, "clean-reftest-output.pl",
-                                     outputTxt, aSelenium.mMathJaxTestPath,
-                                     MATHJAX_TEST_PUBLIC_URI + "web/"],
+                                     outputTxt, MATHJAX_TEST_PUBLIC_URI],
                                     stdout=subprocess.PIPE)
             fp = file(outputHTML, "w")
             print >> fp, pipe.stdout.read()

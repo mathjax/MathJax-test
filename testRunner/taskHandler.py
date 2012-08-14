@@ -377,8 +377,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
         if (os.path.exists(outputTxt)):
             pipe = subprocess.Popen([PERL, "clean-reftest-output.pl",
                                      outputTxt,
-                                     t.mParameters["mathJaxTestPath"],
-                                     MATHJAX_TEST_PUBLIC_URI + "web/"],
+                                     MATHJAX_TEST_PUBLIC_URI],
                                     stdout=subprocess.PIPE)
             fp = file(outputHTML, "w")
             print >> fp, pipe.stdout.read()
