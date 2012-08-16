@@ -311,8 +311,16 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
     try:
         aSuite.printInfo("host = " + str(aSelenium.mHost))
         aSuite.printInfo("port = " + str(aSelenium.mPort))
-        aSuite.printInfo("mathJaxPath = " + aSelenium.mMathJaxPath)
-        aSuite.printInfo("mathJaxTestPath = " + aSelenium.mMathJaxTestPath)
+        
+        aSuite.printInfo("mathJaxPath = " + 
+                         string.replace(aSelenium.mMathJaxPath,
+                                        MATHJAX_TEST_LOCAL_URI,
+                                        MATHJAX_TEST_PUBLIC_URI, 1))
+        aSuite.printInfo("mathJaxTestPath = " +
+                         string.replace(aSelenium.mMathJaxTestPath,
+                                        MATHJAX_TEST_LOCAL_URI,
+                                        MATHJAX_TEST_PUBLIC_URI, 1))
+
         aSuite.printInfo("useWebDriver = " +
                          boolToString(aSelenium.mWebDriver != None))
         aSuite.printInfo("operatingSystem = " + aSelenium.mOperatingSystem)
