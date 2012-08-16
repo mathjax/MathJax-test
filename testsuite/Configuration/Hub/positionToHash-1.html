@@ -11,11 +11,14 @@
 
     <!-- See issue 206
          https://github.com/mathjax/MathJax/issues/206 -->
-    <!-- This test verifies that positionToHash don't redirect to the base
+    <!-- This test verifies that positionToHash doesn't redirect to the base
          url -->
     <script type="text/javascript">
       function postMathJax()
       {
+      document.getElementById("iframe").src = 
+      "positionToHash-1-iframe.html?firstLoad=true&" + 
+      location.search.substring(1) + "#hash";
       // Wait some time, to be sure that the frame is not loaded again
       MathJax.Hub.Queue(["Delay", MathJax.Callback, 2000]);
       }
@@ -25,7 +28,7 @@
 
   <body>
 
-    <iframe src="positionToHash-1-iframe.html?firstLoad=true#hash">
+    <iframe id="iframe">
     </iframe>
 
   </body>
