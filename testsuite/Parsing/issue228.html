@@ -11,6 +11,7 @@
     <script type="text/javascript">
       function xMathJaxConfig()
       {
+      MathJax.Hub.Config({ errorSettings: { message: "[Crash]" } } );
       MathJax.Hub.Register.StartupHook("TeX Jax Ready",
         function () {
           var TEX = MathJax.InputJax.TeX;

@@ -1,3 +1,9 @@
+#
+# @issue205
+#
+# <p>See <a href="https://github.com/mathjax/MathJax/issues/205">issue 205</a></p>
+#
+
 include equationNumbers/reftest.list
 include noUndefined/reftest.list
 
@@ -8,3 +14,5 @@ tree== Macros-2.html Macros-2-ref.html
 == MultLineWidth-1.html MultLineWidth-1-ref.html
 == TagIndent-1.html TagIndent-1-ref.html
 == TagSide-1.html TagSide-1-ref.html
+annotate(@issue205) fails == autoload-all-1.html autoload-all-1-ref.html
+annotate(@issue205) fails == autoload-all-2.html autoload-all-2-ref.html
