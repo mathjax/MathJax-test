@@ -11,14 +11,10 @@ include mtextFontInherit/reftest.list
 #
 # <p>Sometimes the tooltip is not cleared yet when the screenshot is taken.</p>
 # 
-# @issue244
-#
-# <p>See <a href="https://github.com/mathjax/MathJax/issues/244">issue 244</a></p>
-# 
 
 require(TeX) skip-if(Opera||Safari) != undefinedFamily-1.html undefinedFamily-1-ref.html
 != undefinedFamily-2.html undefinedFamily-2-ref.html
-annotate(@issue244) fails-if(SVG) == scale-1.html scale-1-ref.html
+== scale-1.html scale-1-ref.html
 annotate(@note1) random == minScaleAdjust-1.html minScaleAdjust-1-ref.html
 
 # before the tooltip is displayed

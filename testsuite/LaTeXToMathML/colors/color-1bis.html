@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>DefineColor: rgb model</title>
+    <title>Color</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -18,22 +18,8 @@
   </head>
 
   <body>
-    <div>
-      \(
-      \definecolor{schwarz}{rgb}{0,0,0}
-      \definecolor{rouge}{rgb}{1,0,0}
-      \definecolor{grøn}{rgb}{0,1,0}
-      \definecolor{azul}{rgb}{0,0,1}
-      \definecolor{白}{rgb}{1,1,1}
-      \)
-    </div>
-
-    <div id="reftest-element">\(
-      {\color{schwarz}{\text{schwarz}}}
-      {\color{rouge}{\text{rouge}}}
-      {\color{grøn}{\text{grøn}}}
-      {\color{azul}{\text{azul}}}
-      {\color{白}{\text{白}}}
-      \)</div>
+    <!-- See issue 38
+         https://github.com/mathjax/MathJax/issues#issue/77 -->
+    <div id="reftest-element">\( \textcolor {red} x y z \)</div>
   </body>
 </html>

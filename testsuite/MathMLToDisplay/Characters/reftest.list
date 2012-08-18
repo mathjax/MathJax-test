@@ -16,10 +16,6 @@ random include Variants/reftest.list
 #
 # </ul>
 #
-# @issue222
-#
-# <p>See <a href="https://github.com/mathjax/MathJax/issues/222">issue 222</a></p>
-#
 
 # The XML whitespaces &NewLine; and &Tab; are not included in the following
 # tests:
@@ -32,4 +28,4 @@ annotate(@note) fails-if(MSIE) tree== entities-5.html entities-5-ref.html
 require(TeX||ImageTeX) == greek-1.html greek-1-ref.html
 require(TeX||ImageTeX) == greek-2.html greek-2-ref.html
 require(TeX||ImageTeX) == greek-3.html greek-3-ref.html
-annotate(@issue222) fails require(STIX) != issue222.html issue222-ref.html
+require(STIX) != issue222.html issue222-ref.html

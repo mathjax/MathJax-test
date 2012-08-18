@@ -1,18 +1,7 @@
-#
-# @issue219
-#
-# <p>See <a href="https://github.com/mathjax/MathJax/issues/219">issue 219</a>
-# </p>
-#
-#
 # @issue253
 #
 # <p>This seems to be a bug in Webkit.
 # See <a href="https://github.com/mathjax/MathJax/issues/253">issue 253</a></p>
-#
-# @issue268
-#
-# See <a href="https://github.com/mathjax/MathJax/issues/268">issue 268</a></p>
 #
 
 include Characters/reftest.list
@@ -37,6 +26,6 @@ include TortureTests/reftest.list
 == unit-2b.html unit-2-ref.html
 tree== unit-3.html unit-3-ref.html
 == issue162.html issue162-ref.html
-annotate(@issue219) fails-if(SVG) != issue219.html issue219-ref.html
+!= issue219.html issue219-ref.html
 annotate(@issue253) fails-if(Chrome||Safari) != issue253.html issue253-ref.html
-annotate(@issue268) fails-if(TeX) != issue268.html issue268-ref.html
+!= issue268.html issue268-ref.html
