@@ -8,12 +8,11 @@
 #
 # @note2
 #
-# <p>This test uses the space <code>&amp;#x200A;</code> whose glyph does not
-# seem to be found in SVG output mode.</p>
+# <p>Difference invisible by eye</p>
 #
 
-== mtext1.html mtext1-ref.html
-annotate(@note2) fails-if(SVG) == mtext2.html mtext2-ref.html
+annotate(@note2) fails-if((Firefox&&HTML-CSS&&Linux)) == mtext1.html mtext1-ref.html
+annotate(@note2) fails-if((Firefox&&HTML-CSS&&Linux)||(Chrome&&SVG&&Windows)) == mtext2.html mtext2-ref.html
 == mtextAtoken3.html mtextAtoken3-ref.html
 == mtextSbg4.html mtextSbg4-ref.html
 == mtextScolor5.html mtextScolor5-ref.html

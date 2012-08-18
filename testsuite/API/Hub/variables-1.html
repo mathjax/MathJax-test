@@ -35,7 +35,8 @@
       newScriptReftestResult("MathJax.Hub.Browser.isPC",
       MathJax.Hub.Browser.hasOwnProperty("isPC")),
       newScriptReftestResult("MathJax.Hub.Browser.isMobile",
-      MathJax.Hub.Browser.hasOwnProperty("isMobile")),
+      (!MathJax.Hub.Browser.isFirefox ||
+       MathJax.Hub.Browser.hasOwnProperty("isMobile"))),
       newScriptReftestResult("MathJax.Hub.Browser.isFirefox",
       MathJax.Hub.Browser.hasOwnProperty("isFirefox")),
       newScriptReftestResult("MathJax.Hub.Browser.isSafari",

@@ -4,7 +4,7 @@
 #
 # @note2
 #
-# <p>Horizontal shift in TeX + HTML-CSS ouput mode.</p>
+# <p>Horizontal shift.</p>
 #
 # @note3
 #
@@ -16,7 +16,7 @@ annotate(@note2,@note3) fails-if((Firefox&&HTML-CSS&&TeX)||(Chrome&&SVG)) == mun
 == munderover-03.html munderover-03-ref.html
 == munderover-04.html munderover-04-ref.html
 == munderover-05.html munderover-05-ref.html
-annotate(@note1) fails-if(SVG) == munderover-06.html munderover-06-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Linux&&Opera&&SVG&&TeX&&HTML-CSS)) == munderover-06.html munderover-06-ref.html
 == munderover-07.html munderover-07-ref.html
 == munderover-08.html munderover-08-ref.html
 == munderover-09.html munderover-09-ref.html

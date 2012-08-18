@@ -13,7 +13,7 @@
 #
 # @note4
 #
-# <p>Horizontal shift and other small differences in Opera HTML-CSS</p>
+# <p>Shift and other small differences in Opera HTML-CSS</p>
 #
 # @note5
 #
@@ -27,22 +27,22 @@
 == align-4a.html align-4-ref.html
 != align-4b.html align-4-ref.html
 # XXXfred align with rownumber does not seem implemented
-== columnalign-1.html columnalign-1-ref.html
-annotate(@note4) fails-if(Opera&&HTML-CSS) == columnalign-2.html columnalign-2-ref.html
-== columnalign-3a.html columnalign-3-ref.html
-== columnalign-3b.html columnalign-3-ref.html
-annotate(@note4) fails-if(Opera&&HTML-CSS) == columnalign-4.html columnalign-4-ref.html
+annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-1.html columnalign-1-ref.html
+annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-2.html columnalign-2-ref.html
+annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-3a.html columnalign-3-ref.html
+annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-3b.html columnalign-3-ref.html
+annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-4.html columnalign-4-ref.html
 == columnlines-1a.html columnlines-1-ref.html
 != columnlines-1b.html columnlines-1-ref.html
 != columnlines-1c.html columnlines-1-ref.html
 == columnlines-2a.html columnlines-2-ref.html
 == columnlines-2b.html columnlines-2-ref.html
 == columnspacing-1.html columnspacing-1-ref.html
-== columnwidth-1.html columnwidth-1-ref.html
-annotate(@note2) fails-if(SVG&&Firefox) == columnwidth-2.html columnwidth-2-ref.html
+annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnwidth-1.html columnwidth-1-ref.html
+annotate(@note2,@note4) fails-if((SVG&&Firefox)||(Linux&&Opera&&HTML-CSS&&TeX)) == columnwidth-2.html columnwidth-2-ref.html
 == displaystyle-1.html displaystyle-1-ref.html
-annotate(@note5) fails-if(Chrome&&SVG) == equalcolumns-1.html equalcolumns-1-ref.html
-== equalrows-1.html equalrows-1-ref.html
+annotate(@note5,@note4) fails-if((Chrome&&SVG)||(Linux&&Opera&&HTML-CSS&&TeX)) == equalcolumns-1.html equalcolumns-1-ref.html
+annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == equalrows-1.html equalrows-1-ref.html
 == frame-1a.html frame-1-ref.html
 != frame-1b.html frame-1-ref.html
 != frame-1c.html frame-1-ref.html

@@ -3,6 +3,10 @@
 #
 # <p>Small differences invisible at the naked eye.</p>
 #
+# @note2
+#
+# <p>Small shifts</p>
+#
 
 == mover-01.html mover-01-ref.html
 == mover-02.html mover-02-ref.html
@@ -14,5 +18,5 @@
 == mover-08.html mover-08-ref.html
 == mover-09.html mover-09-ref.html
 == mover-10.html mover-10-ref.html
-annotate(@note1) fails-if(SVG) == mover-11.html mover-11-ref.html
-== mover-12.html mover-12-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Linux&&Opera&&TeX&&HTML-CSS)) == mover-11.html mover-11-ref.html
+annotate(@note2) fails-if(SVG||(Linux&&Opera&&TeX&&HTML-CSS)) == mover-12.html mover-12-ref.html

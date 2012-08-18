@@ -7,9 +7,9 @@
 #
 # @note2
 #
-# <p>Horizontal shift in Chrome+HTML-CSS+STIX</p>
+# <p>Horizontal shifts on some browsers.</p>
 #
 
 == badAttribs2.html badAttribs2-ref.html
 == badAttribsAction.html badAttribsAction-ref.html
-annotate(@note1,@note2) fails-if(SVG||(Chrome&&HTML-CSS&&STIX)) == badAttribsVal3.html badAttribsVal3-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Opera&&Linux&&HTML-CSS&&TeX)) == badAttribsVal3.html badAttribsVal3-ref.html

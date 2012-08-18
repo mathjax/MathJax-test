@@ -27,5 +27,5 @@ include TortureTests/reftest.list
 tree== unit-3.html unit-3-ref.html
 == issue162.html issue162-ref.html
 != issue219.html issue219-ref.html
-annotate(@issue253) fails-if(Chrome||Safari) != issue253.html issue253-ref.html
+annotate(@issue253) fails-if(Chrome||Safari) == issue253.html issue253-ref.html
 != issue268.html issue268-ref.html
