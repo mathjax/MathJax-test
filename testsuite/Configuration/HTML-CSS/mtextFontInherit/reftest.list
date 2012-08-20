@@ -1,13 +1,6 @@
-#
-# @issue226
-#
-# <p>See <a href="https://github.com/mathjax/MathJax/issues/226">issue 226</a>
-# </p>
-#
-
 != cursive.html serif.html
 != fantasy.html serif.html
 != monospace.html serif.html
 != sans-serif.html serif.html
-annotate(@issue226) fails != issue226a.html issue226-ref.html
-annotate(@issue226) fails != issue226b.html issue226-ref.html
+!= issue226a.html issue226-ref.html
+!= issue226b.html issue226-ref.html

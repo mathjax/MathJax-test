@@ -63,7 +63,7 @@ fails-if(Quirks||IE7||IE8) == mtable-2-4.html mtable-2-4-ref.html
 fails-if(Quirks||IE7||IE8) == mtable-2-5.html mtable-2-5-ref.html
 annotate(@note4) fails-if(Opera&&HTML-CSS) == mtable-3.html mtable-3-ref.html
 == mtable-align-negative-rownumber.html mtable-align-negative-rownumber-ref.html
-annotate(@note2,@note3,@note5) fails-if((Chrome&&HTML-CSS)||(Opera&&HTML-CSS)) == rowalign-1.html rowalign-1-ref.html
+annotate(@note2,@note3,@note5) fails-if((Windows&&Chrome&&HTML-CSS)||(Opera&&HTML-CSS)) == rowalign-1.html rowalign-1-ref.html
 annotate(@note2,@note3,@note5) fails-if((Chrome&&HTML-CSS)||(Opera&&HTML-CSS)) == rowalign-2.html rowalign-2-ref.html
 annotate(@note1) fails == rowalign-3.html rowalign-3-ref.html
 annotate(@note1) fails == rowalign-4.html rowalign-4-ref.html

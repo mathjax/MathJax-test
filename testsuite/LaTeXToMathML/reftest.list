@@ -19,15 +19,6 @@ include roots/reftest.list
 include references/reftest.list
 include symbols/reftest.list
 
-# @issue216
-#
-# <p>Possible improvement: generate the appropriate Unicode character for
-# multiple primes, instead of several single '.</p>
-#
-# <p>See <a href="https://github.com/mathjax/MathJax/issues/216">issue 216</a>.
-# </p>
-#
-
 tree== autobold-1.html autobold-1-ref.html
 tree== bbox-1.html bbox-1-ref.html
 tree== boxed-1.html boxed-1-ref.html
@@ -55,7 +46,7 @@ tree== mathsize-1.html mathsize-1-ref.html
 tree== mod-1.html mod-1-ref.html
 tree== not-1.html not-1-ref.html
 tree== pod-1.html pod-1-ref.html
-annotate(@issue216) fails tree== primes-1.html primes-1-ref.html
+tree== primes-1.html primes-1-ref.html
 == primes-2.html primes-2-ref.html
 tree== primes-3.html primes-3-ref.html
 tree== style-1.html style-1-ref.html

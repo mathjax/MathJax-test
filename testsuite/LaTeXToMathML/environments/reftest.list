@@ -9,8 +9,8 @@ tree== eqalign-1.html eqalign-1-ref.html
 tree== eqalignno-1.html eqalignno-1-ref.html
 tree== eqnarray-1a.html eqnarray-1-ref.html
 tree== eqnarray-1b.html eqnarray-1-ref.html
-fails tree== eqnarray-1c.html eqnarray-1-ref.html
-fails tree== eqnarray-2a.html eqnarray-2-ref.html
+tree== eqnarray-1c.html eqnarray-1-ref.html
+tree== eqnarray-2a.html eqnarray-2-ref.html
 tree== equation-1.html equation-1-ref.html
 tree== equation-2.html equation-2-ref.html
 tree== gather-1a.html gather-1-ref.html

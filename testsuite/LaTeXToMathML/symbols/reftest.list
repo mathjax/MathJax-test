@@ -1,18 +1,8 @@
-#
-# @note
-#
-# <p>Possible improvement for MathJax: use the appropriate Unicode symbol for
-# the quadruple integral instead of four integral symbols separated by negative
-# spaces. Issue: does the MathJax fonts have this symbol?</p>
-#
-# <p>See <a href="https://github.com/mathjax/MathJax/issues/216">issue 216</a>.
-# </p>
-#
-
 tree== binaryops-1.html binaryops-1-ref.html
 tree== dots-1.html dots-1-ref.html
 == issue148.html issue148-ref.html
-annotate(@note) fails tree== largeops-1.html largeops-1-ref.html
+tree== largeops-1.html largeops-1-ref.html
+tree== largeops-2.html largeops-2-ref.html
 tree== relations-1.html relations-1-ref.html
 tree== symbols-1.html symbols-1-ref.html
 tree== symbols-2.html symbols-2-ref.html

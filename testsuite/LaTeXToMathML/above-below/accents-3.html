@@ -3,20 +3,25 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>largeops</title>
+    <title>accents</title>
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../treeReftests.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.TeX = { extensions: ["AMSmath.js"] };
+      }
+    </script>
   </head>
 
   <body>
-    <div id="reftest-element">
-      \[
-      \sum \prod \coprod \bigoplus \bigotimes \bigodot \bigcup \bigcap \biguplus
-      \bigsqcup \bigvee \bigwedge \int \oint \iint \iiint
-      \]
-    </div>
+    <div id="reftest-element">\(
+      \mathring {abc}
+      \dddot {abc}
+      \ddddot {abc}
+      \)</div>
   </body>
 </html>

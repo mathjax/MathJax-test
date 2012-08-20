@@ -24,10 +24,10 @@
 # 
 
 annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS&&STIX)) == mfrac-01.html mfrac-01-ref.html
-== mfrac-02.html mfrac-02-ref.html
+annotate(@note5) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mfrac-02.html mfrac-02-ref.html
 annotate(@note1,@note3,@note5) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)) == mfrac-03.html mfrac-03-ref.html
 == mfrac-04.html mfrac-04-ref.html
-annotate(@note4) fails-if(Chrome&&HTML-CSS&&STIX) == mfrac-05.html mfrac-05-ref.html
+annotate(@note4) fails-if(Windows&&Chrome&&HTML-CSS&&STIX) == mfrac-05.html mfrac-05-ref.html
 == mfrac-06.html mfrac-06-ref.html
 annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS&&STIX)) == mfrac-07.html mfrac-07-ref.html
 annotate(@note3) fails-if((Opera&&HTML-CSS)) == mfrac-08.html mfrac-08-ref.html
