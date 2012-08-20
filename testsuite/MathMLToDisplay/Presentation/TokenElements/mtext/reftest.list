@@ -11,8 +11,8 @@
 # <p>Difference invisible by eye</p>
 #
 
-annotate(@note2) fails-if((Firefox&&HTML-CSS&&Linux)) == mtext1.html mtext1-ref.html
-annotate(@note2) fails-if((Firefox&&HTML-CSS&&Linux)||(Chrome&&SVG&&Windows)) == mtext2.html mtext2-ref.html
+ == mtext1.html mtext1-ref.html
+annotate(@note2) fails-if((Chrome&&SVG&&Windows)) == mtext2.html mtext2-ref.html
 == mtextAtoken3.html mtextAtoken3-ref.html
 == mtextSbg4.html mtextSbg4-ref.html
 == mtextScolor5.html mtextScolor5-ref.html

@@ -27,7 +27,7 @@ include mozilla/reftest.list
 # <p>Small differences in Opera+HTML-CSS</p>
 #
 
-annotate(@note3,@note5) fails-if(SVG||(Opera&&HTML-CSS)) == mpadded1.html mpadded1-ref.html
+annotate(@note3,@note5) fails-if(SVG) == mpadded1.html mpadded1-ref.html
 == mpadded7.html mpadded7-ref.html
 == mpadded-1.html mpadded-1-ref.html
 annotate(@note1) fails == mpadded-2a.html mpadded-2-ref.html
