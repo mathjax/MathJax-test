@@ -1,0 +1,62 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 272</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- See issue 272
+         https://github.com/mathjax/MathJax/issues/272 -->
+    <div style="position: absolute;
+                border: 1px solid grey; width: 600px; height: 200px;">
+      <div style="text-align: right;">
+        <math>
+          <!-- Assumption: the horizontal space occupied by each inner mfrac is
+               <= 10px. There are 50 such mfrac's so the total width is
+               <= 500px < 600px -->
+
+          <!-- Blue bar -->
+          <mfrac linethickness="3px" mathcolor="blue">
+            <mspace width="10px"></mspace>
+            <mspace width="10px"></mspace>
+          </mfrac>
+
+          <!-- 1-10 -->
+          <mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac>
+
+          <!-- 11-20 -->
+          <mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac>
+
+          <!-- 21-30 -->
+          <mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac>
+
+          <!-- 31-40 -->
+          <mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac>
+
+          <!-- 41-50 -->
+          <mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac><mfrac linethickness="0"><mspace width="1px"></mspace><mspace width="1px"></mspace></mfrac>
+
+          <!-- Red bar -->
+          <mfrac linethickness="3px" mathcolor="red">
+            <mspace width="10px"></mspace>
+            <mspace width="10px"></mspace>
+          </mfrac>
+        </math>
+      </div>
+    </div>
+
+    <!-- This green rectangle should not be wide enough to hide the red bar -->
+    <div style="position: absolute; background: green;
+                border: 1px solid grey; width: 590px; height: 200px;"
+         onclick="this.style.opacity=.1;">
+    </div>
+
+  </body>
+</html>
