@@ -1,0 +1,34 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue237</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- See issue 237
+         https://github.com/mathjax/MathJax/issues/237 -->
+
+    <div style="position: absolute; left:10px; top: 10px;">
+      <math>
+        <mover>
+          <mspace width="100px"
+                  height="10px" depth="10px"></mspace>
+          <mo>&#x20D7;<!-- ⃗ --></mo>
+        </mover>
+      </math>
+    </div>
+
+    <!-- 52 = half of the rect + 2 pixels of errors -->
+    <div style="position: absolute; left:10px; top: 0px; background: blue;
+                width: 52px; height: 100px;" onclick="this.style.opacity=.5">
+    </div>
+
+  </body>
+</html>
