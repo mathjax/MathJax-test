@@ -15,14 +15,14 @@
 # <p>Small vertical shift in Chrome HTML-CSS TeX</p>
 
 annotate(@note1) fails-if(SVG) == msup-01.html msup-01-ref.html
-== msup-02.html msup-02-ref.html
-annotate(@note1,@note3) fails-if(SVG||(Windows&&Chrome&&HTML-CSS)) == msup-03.html msup-03-ref.html
+fails-if((Linux&&Firefox)||(Linux&&Opera)||(Linux&&Chrome&&SVG&&TeX)) == msup-02.html msup-02-ref.html
+annotate(@note1,@note3) fails-if(SVG||(Linux&&Chrome&&HTML-CSS&&STIX)||(Windows&&Chrome&&HTML-CSS)) == msup-03.html msup-03-ref.html
 annotate(@note1,@note3) fails-if(SVG||(Chrome&&HTML-CSS)) == msup-04.html msup-04-ref.html
 == msup-05.html msup-05-ref.html
 annotate(@note2) fails-if(SVG) == msup-06.html msup-06-ref.html
 annotate(@note1,@note3) fails-if(SVG||(Chrome&&HTML-CSS)) == msup-07.html msup-07-ref.html
-annotate(@note3) fails-if(Windows&&Chrome&&HTML-CSS) == msup-08.html msup-08-ref.html
-annotate(@note1,@note3) fails-if(SVG||(Linux&&Chrome&&HTML-CSS&&STIX)) == msup-09.html msup-09-ref.html
-annotate(@note3) fails-if((Linux&&Chrome&&HTML-CSS&&STIX)) == msup-10.html msup-10-ref.html
-annotate(@note3) fails-if((Linux&&Chrome&&HTML-CSS&&STIX)) == msup-11.html msup-11-ref.html
-annotate(@note3) fails-if((Linux&&Chrome&&HTML-CSS&&STIX)) == msup-12.html msup-12-ref.html
+annotate(@note3) fails-if((Windows&&Chrome&&HTML-CSS)||(Linux&&Chrome&&HTML-CSS&&TeX)) == msup-08.html msup-08-ref.html
+annotate(@note1,@note3) fails-if(SVG||(Linux&&Chrome&&HTML-CSS)) == msup-09.html msup-09-ref.html
+annotate(@note3) fails-if((Linux&&Chrome&&HTML-CSS)) == msup-10.html msup-10-ref.html
+annotate(@note3) fails-if((Linux&&Chrome&&HTML-CSS)) == msup-11.html msup-11-ref.html
+annotate(@note3) fails-if((Linux&&Chrome&&HTML-CSS)) == msup-12.html msup-12-ref.html

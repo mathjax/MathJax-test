@@ -8,15 +8,15 @@
 # <p>Small shifts</p>
 #
 
-annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mover-01.html mover-01-ref.html
-annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mover-02.html mover-02-ref.html
-annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mover-03.html mover-03-ref.html
+annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS) == mover-01.html mover-01-ref.html
+annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS) == mover-02.html mover-02-ref.html
+annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS) == mover-03.html mover-03-ref.html
 == mover-04.html mover-04-ref.html
-annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mover-05.html mover-05-ref.html
-annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mover-06.html mover-06-ref.html
-annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mover-07.html mover-07-ref.html
-annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mover-08.html mover-08-ref.html
-annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == mover-09.html mover-09-ref.html
+annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS) == mover-05.html mover-05-ref.html
+annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS) == mover-06.html mover-06-ref.html
+annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS) == mover-07.html mover-07-ref.html
+annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS) == mover-08.html mover-08-ref.html
+annotate(@note2) fails-if(Linux&&Chrome&&HTML-CSS) == mover-09.html mover-09-ref.html
 == mover-10.html mover-10-ref.html
 annotate(@note1,@note2) fails-if(SVG||(Linux&&Opera&&TeX&&HTML-CSS)) == mover-11.html mover-11-ref.html
 annotate(@note2) fails-if((Linux&&Opera&&TeX&&HTML-CSS)||(Linux&&Chrome&&HTML-CSS&&STIX)) == mover-12.html mover-12-ref.html

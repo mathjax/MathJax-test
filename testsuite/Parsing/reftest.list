@@ -1,6 +1,6 @@
 tree== comments-1a.html comments-1-ref.html
 tree== comments-1b.html comments-1-ref.html
-== escaped-dollars-1.html escaped-dollars-1-ref.html
+fails-if(Linux&&Firefox) == escaped-dollars-1.html escaped-dollars-1-ref.html
 == issue165.html issue165-ref.html
 == issue228.html issue228-ref.html
 tree== issue230.html issue230-ref.html

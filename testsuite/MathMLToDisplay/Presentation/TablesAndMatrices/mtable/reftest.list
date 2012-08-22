@@ -41,7 +41,7 @@ annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-4.html col
 annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnwidth-1.html columnwidth-1-ref.html
 annotate(@note2,@note4) fails-if((SVG&&Firefox)||(Linux&&Opera&&HTML-CSS&&TeX)) == columnwidth-2.html columnwidth-2-ref.html
 == displaystyle-1.html displaystyle-1-ref.html
-annotate(@note5,@note4) fails-if((Chrome&&SVG)||(Linux&&Opera&&HTML-CSS&&TeX)) == equalcolumns-1.html equalcolumns-1-ref.html
+annotate(@note5,@note4) fails-if((Linux&&Opera&&HTML-CSS&&TeX)) == equalcolumns-1.html equalcolumns-1-ref.html
 annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == equalrows-1.html equalrows-1-ref.html
 == frame-1a.html frame-1-ref.html
 != frame-1b.html frame-1-ref.html
@@ -63,7 +63,7 @@ fails-if(Quirks||IE7||IE8) == mtable-2-4.html mtable-2-4-ref.html
 fails-if(Quirks||IE7||IE8) == mtable-2-5.html mtable-2-5-ref.html
 annotate(@note4) fails-if(Opera&&HTML-CSS) == mtable-3.html mtable-3-ref.html
 == mtable-align-negative-rownumber.html mtable-align-negative-rownumber-ref.html
-annotate(@note2,@note3,@note5) fails-if((Windows&&Chrome&&HTML-CSS)||(Opera&&HTML-CSS)) == rowalign-1.html rowalign-1-ref.html
+annotate(@note2,@note3,@note5) fails-if((Windows&&Chrome&&HTML-CSS)||(Linux&&Chrome&&SVG&&TeX)||(Opera&&HTML-CSS)) == rowalign-1.html rowalign-1-ref.html
 annotate(@note2,@note3,@note5) fails-if((Chrome&&HTML-CSS)||(Opera&&HTML-CSS)) == rowalign-2.html rowalign-2-ref.html
 annotate(@note1) fails == rowalign-3.html rowalign-3-ref.html
 annotate(@note1) fails == rowalign-4.html rowalign-4-ref.html

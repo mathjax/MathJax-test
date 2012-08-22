@@ -11,15 +11,15 @@
 # <p>Vertical shift.</p>
 #
 
-annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == munder-01.html munder-01-ref.html
-annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == munder-02.html munder-02-ref.html
-annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == munder-03.html munder-03-ref.html
+annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS) == munder-01.html munder-01-ref.html
+annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS) == munder-02.html munder-02-ref.html
+annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS) == munder-03.html munder-03-ref.html
 == munder-04.html munder-04-ref.html
-annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == munder-05.html munder-05-ref.html
-annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == munder-06.html munder-06-ref.html
-annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == munder-07.html munder-07-ref.html
-annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == munder-08.html munder-08-ref.html
+annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS) == munder-05.html munder-05-ref.html
+annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS) == munder-06.html munder-06-ref.html
+annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS) == munder-07.html munder-07-ref.html
+annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS) == munder-08.html munder-08-ref.html
 annotate(@note3) fails-if(Linux&&Chrome&&HTML-CSS&&STIX) == munder-09.html munder-09-ref.html
 == munder-10.html munder-10-ref.html
 annotate(@note1) fails-if(SVG||(Linux&&Opera&&HTML-CSS&&TeX)) == munder-11.html munder-11-ref.html
-annotate(@note2) fails-if((Firefox&&HTML-CSS&&TeX)) == munder-12.html munder-12-ref.html
+annotate(@note2) fails-if((Firefox&&HTML-CSS&&TeX)||(Linux&&Chrome&&HTML-CSS&&STIX)) == munder-12.html munder-12-ref.html

@@ -11,15 +11,15 @@
 # <p>Small differences invisible at the naked eye in Chrome SVG.</p>
 #
 
-== munderover-01.html munderover-01-ref.html
-annotate(@note2,@note3) fails-if((Firefox&&HTML-CSS&&TeX)||(Chrome&&SVG)) == munderover-02.html munderover-02-ref.html
+fails-if((Linux&&Chrome&&HTML-CSS)) == munderover-01.html munderover-01-ref.html
+annotate(@note2,@note3) fails-if((Firefox&&HTML-CSS&&TeX)||(Chrome&&SVG)||(Linux&&Chrome&&HTML-CSS)) == munderover-02.html munderover-02-ref.html
 == munderover-03.html munderover-03-ref.html
 == munderover-04.html munderover-04-ref.html
-== munderover-05.html munderover-05-ref.html
-annotate(@note1,@note2) fails-if(SVG||(Linux&&Opera&&TeX&&HTML-CSS)) == munderover-06.html munderover-06-ref.html
-== munderover-07.html munderover-07-ref.html
+fails-if((Linux&&Chrome&&HTML-CSS)) == munderover-05.html munderover-05-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Linux&&Opera&&TeX&&HTML-CSS)||(Linux&&Chrome&&HTML-CSS)) == munderover-06.html munderover-06-ref.html
+fails-if((Linux&&Chrome&&HTML-CSS)) == munderover-07.html munderover-07-ref.html
 == munderover-08.html munderover-08-ref.html
 == munderover-09.html munderover-09-ref.html
-== munderover-10.html munderover-10-ref.html
-annotate(@note1,@note2) fails-if(SVG||(Linux&&Opera&&TeX&&HTML-CSS)) == munderover-11.html munderover-11-ref.html
-annotate(@note2) fails-if(Firefox&&HTML-CSS&&TeX) == munderover-12.html munderover-12-ref.html
+fails-if((Linux&&Chrome&&HTML-CSS)) == munderover-10.html munderover-10-ref.html
+annotate(@note1,@note2) fails-if(SVG||(Linux&&Opera&&TeX&&HTML-CSS)||(Linux&&Chrome&&HTML-CSS&&STIX)) == munderover-11.html munderover-11-ref.html
+annotate(@note2) fails-if((Firefox&&HTML-CSS&&TeX)||(Linux&&Chrome&&HTML-CSS)) == munderover-12.html munderover-12-ref.html
