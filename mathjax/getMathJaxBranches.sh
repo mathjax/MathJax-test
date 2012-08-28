@@ -23,9 +23,14 @@
 #
 # ***** END LICENSE BLOCK *****
 
-# XXXfred Should import this variable from custom.cfg
-SED=sed
-GIT=git
+# Import variables from custom.cfg
+# SED is placed first as it is used by the others. 4 is the length of "SED=".
+TMP=`egrep 'SED(\s)+=' ../custom.cfg | tr -d [:blank:]` ; SED=${TMP:4}
+GIT=`egrep 'GIT(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
+MATHJAX_GIT_FONT_BRANCHES=\
+`egrep 'MATHJAX_GIT_FONT_BRANCHES(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
+MATHJAX_GIT_DOC_BRANCHES=\
+`egrep 'MATHJAX_GIT_DOC_BRANCHES(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
 
 # Determine the GitHub user to get branches from.
 if [ $# -eq 0 ]
@@ -74,17 +79,31 @@ do
         cd $BRANCH
         $GIT pull origin $BRANCH || { cd .. ; rm -rf $BRANCH; continue; }
 
-        # To save space, we remove the directory for image font and create a
-        # symbolic link to the directory in the master branch.
-        cd fonts/HTML-CSS/TeX/
-        rm -rf png/
-        ln -s ../../../../master/fonts/HTML-CSS/TeX/png/ png
-        cd ../../..
+        if [[ "$MATHJAX_GIT_FONT_BRANCHES" != *"$BRANCH"* ]]; then
+          # To save space, we remove the font directory and create a
+          # symbolic link to the directory in the master branch.
+          rm -rf fonts/
+          ln -s ../master/fonts fonts
 
-        # Do not track image fonts.
-        echo "fonts/HTML-CSS/TeX/png" >> .gitignore
-        git add .gitignore
-        git commit -m "Do not track image fonts."
+          # Do not track fonts.
+          echo "fonts/*" >> .gitignore
+          $GIT add .gitignore
+          $GIT commit -m "Do not track fonts/."
+        fi
+        if [[ "$MATHJAX_GIT_DOC_BRANCHES" != *"$BRANCH"* ]]; then
+          # To save space, we remove the docs and test directories and create a
+          # symbolic link to the directories in the master branch.
+          rm -rf docs/
+          ln -s ../master/docs docs
+          rm -rf test/
+          ln -s ../master/test test
+
+          # Do not track documentation.
+          echo "docs/*" >> .gitignore
+          echo "test/*" >> .gitignore
+          $GIT add .gitignore
+          $GIT commit -m "Do not track docs/, test/."
+        fi
     else
         # Update the branch
         cd $BRANCH
