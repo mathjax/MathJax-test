@@ -50,22 +50,10 @@
 function serialize(aNode)
 {
     var source;
-    if (MathJax.Hub.Browser.isMSIE ||
-        MathJax.Hub.Browser.isSafari ||
-        MathJax.Hub.Browser.isChrome ||
-        MathJax.Hub.Browser.isKonqueror) {
-        // Use a custom serializer:
-        // - Internet Explorer does not support XMLSerializer.
-        // - Webkit browsers seems to serialize attributes in different orders.
-        var sortAttributes = (MathJax.Hub.Browser.isSafari ||
-                              MathJax.Hub.Browser.isChrome ||
-                              MathJax.Hub.Browser.isKonqueror);
-        source = serialize2(aNode, sortAttributes);
-    } else {        
-        // Use the standard XMLSerializer object, which is expected to be more
-        // complete and faster.
-        source = (new XMLSerializer()).serializeToString(aNode);
-    }
+    // Because the various browsers serialize elements so differently, we
+    // use a custom serializer instead of XMLSerializer.
+    //  source = (new XMLSerializer()).serializeToString(aNode);
+    source = serialize2(aNode, true);
 
     // add linebreaks to help diffing source
     source = source.replace(/>(?!<)/g, ">\n");

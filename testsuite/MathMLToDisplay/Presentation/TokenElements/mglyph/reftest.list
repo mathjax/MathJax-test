@@ -16,7 +16,7 @@ annotate(@note1) fails-if(SVG||(Chrome&&HTML-CSS)) == mglyph3.html mglyph3-ref.h
 annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)) == mglyph_aspect_gif.html mglyph_aspect_gif-ref.html
 annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)) == mglyph_aspect.html mglyph_aspect-ref.html
 annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)) == mglyph_stretched.html mglyph_stretched-ref.html
-annotate(@note1,@note3) fails-if(SVG||(Chrome&&HTML-CSS&&STIX)) == mglyph_valignbottom.html mglyph_valignbottom-ref.html
+annotate(@note1) fails-if(SVG) == mglyph_valignbottom.html mglyph_valignbottom-ref.html
 annotate(@note1) fails-if(SVG) == mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
 annotate(@note1,@note3) fails-if(SVG) == mglyph_valigntop.html mglyph_valigntop-ref.html
 require(HTML-CSS) script rec-mglyph1.html

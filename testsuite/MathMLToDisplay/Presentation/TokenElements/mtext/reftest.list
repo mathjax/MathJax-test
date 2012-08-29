@@ -16,5 +16,5 @@ annotate(@note2) fails-if((Linux&&Firefox&&HTML-CSS)||(Chrome&&SVG&&Windows)) ==
 == mtextAtoken3.html mtextAtoken3-ref.html
 == mtextSbg4.html mtextSbg4-ref.html
 == mtextScolor5.html mtextScolor5-ref.html
-annotate(@note1) fails == mtextspaces7.html mtextspaces7-ref.html
+annotate(@note1) fails-if(!(Linux&&Chrome&&HTML-CSS&&STIX)) == mtextspaces7.html mtextspaces7-ref.html
 == mtextStoken6.html mtextStoken6-ref.html

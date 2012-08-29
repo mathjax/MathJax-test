@@ -14,10 +14,6 @@
 #
 # <p>Horizontal shifts in Opera HTML-CSS.</p>
 #
-# @note4
-#
-# <p>Vertical shifts in Chrome HTML-CSS.</p>
-#
 # @note5
 #
 # <p>Small differences invisible at the naked eye in Chrome SVG.</p>
@@ -29,13 +25,13 @@
 
 annotate(@note1) fails-if(SVG) == msub-01.html msub-01-ref.html
 annotate(@note1) fails-if(SVG) == msub-02.html msub-02-ref.html
-annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS)) == msub-03.html msub-03-ref.html
-annotate(@note1,@note4) fails-if(SVG||(Linux&&Chrome&&HTML-CSS)) == msub-04.html msub-04-ref.html
+annotate(@note1) fails-if(SVG) == msub-03.html msub-03-ref.html
+annotate(@note1) fails-if(SVG) == msub-04.html msub-04-ref.html
 == msub-05.html msub-05-ref.html
 annotate(@note1) fails-if(SVG) == msub-06.html msub-06-ref.html
-annotate(@note1,@note4) fails-if(SVG||(Chrome&&HTML-CSS)) == msub-07.html msub-07-ref.html
-annotate(@note2,@note3,@note5) fails-if(Firefox||(Linux&&Opera&&TeX&&HTML-CSS)||(Opera&&SVG)||(Chrome&&SVG)||(Linux&&Chrome&&HTML-CSS)) == msub-08.html msub-08-ref.html
-annotate(@note1,@note4,@note6) fails-if(SVG||(Windows&&Chrome&&HTML-CSS&&STIX)||(Linux&&Chrome&&HTML-CSS&&TeX)) annotate(@note4) fails-if(SVG) == msub-09.html msub-09-ref.html
-annotate(@note4) fails-if((Linux&&Chrome&&HTML-CSS)) == msub-10.html msub-10-ref.html
-annotate(@note4) fails-if((Linux&&Chrome&&HTML-CSS)) == msub-11.html msub-11-ref.html
-annotate(@note4) fails-if((Linux&&Chrome&&HTML-CSS)) == msub-12.html msub-12-ref.html
+annotate(@note1) fails-if(SVG) == msub-07.html msub-07-ref.html
+annotate(@note2,@note3,@note5) fails-if(Firefox||(Linux&&Opera&&TeX&&HTML-CSS)||(Opera&&SVG)||(Chrome&&SVG)) == msub-08.html msub-08-ref.html
+annotate(@note1,@note6) fails-if(SVG) == msub-09.html msub-09-ref.html
+== msub-10.html msub-10-ref.html
+== msub-11.html msub-11-ref.html
+== msub-12.html msub-12-ref.html
