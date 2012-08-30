@@ -31,6 +31,8 @@ MATHJAX_GIT_FONT_BRANCHES=\
 `egrep 'MATHJAX_GIT_FONT_BRANCHES(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
 MATHJAX_GIT_DOC_BRANCHES=\
 `egrep 'MATHJAX_GIT_DOC_BRANCHES(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
+MATHJAX_GIT_OBSOLETE_BRANCHES=\
+`egrep 'MATHJAX_GIT_OBSOLETE_BRANCHES(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
 
 # Determine the GitHub user to get branches from.
 if [ $# -eq 0 ]
@@ -69,6 +71,11 @@ cd ..
 for BRANCH in $BRANCHES
 do
     echo "=== $USER/$BRANCH ==="
+
+    if [[ "$MATHJAX_GIT_OBSOLETE_BRANCHES" == *"$BRANCH"* ]]; then
+            echo "Skipped."
+            continue
+    fi
 
     if [ ! -d $BRANCH ]
     then
