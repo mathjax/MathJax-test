@@ -53,7 +53,7 @@ function serialize(aNode)
     // Because the various browsers serialize elements so differently, we
     // use a custom serializer instead of XMLSerializer.
     //  source = (new XMLSerializer()).serializeToString(aNode);
-    source = serialize2(aNode, true);
+    source = serialize2(aNode);
 
     // add linebreaks to help diffing source
     source = source.replace(/>(?!<)/g, ">\n");
@@ -63,18 +63,16 @@ function serialize(aNode)
 }
 
 /**
- * A basic serializer for browsers that do not support XMLSerializer. It is not
- * claimed to be complete.
+ * A basic serializer.
  *
  * @tparam  Node    aNode the node to serialize
- * @tparam  Boolean aSortAttributes whether to sort attributes
  *
  * @treturn String an XML string describing the node
  *
  * @exception "serialization error"
  *
  */
-function serialize2(aNode, aSortAttributes)
+function serialize2(aNode)
 {
     var s = "";
 
@@ -108,19 +106,28 @@ function serialize2(aNode, aSortAttributes)
         s += aNode.tagName;
         var attributes = aNode.attributes;
 
-        if (aSortAttributes) {
-            var attributesCopy = new Array();
-            for (var i = 0; i < attributes.length; i++) {
-                attributesCopy.push(serialize2(attributes[i]));
+        // Serialize the list of attributes. Sort this list, as browsers
+        // specify them in a different order.
+        var attributesCopy = new Array();
+        for (var i = 0; i < attributes.length; i++) {
+            if (MathJax.Hub.Browser.isFirefox) {
+                if (attributes[i].name.match(/_moz/)) {
+                    // workaround for bug 527201
+                    // https://bugzilla.mozilla.org/show_bug.cgi?id=527201
+                    continue;
+                }
+            } else if (MathJax.Hub.Browser.isMSIE) {
+                if (!attributes[i].specified) {
+                    // Ignores weird attributes that are
+                    // accessible from the attributes list.
+                    continue;
+                }
             }
-            attributesCopy.sort();
-            for (var i = 0; i < attributesCopy.length; i++) {
-                s += attributesCopy[i];
-            }
-        } else {
-            for (var i = 0; i < attributes.length; i++) {
-                s += serialize2(attributes[i]);
-            }
+            attributesCopy.push(serialize2(attributes[i]));
+        }
+        attributesCopy.sort();
+        for (var i = 0; i < attributesCopy.length; i++) {
+            s += attributesCopy[i];
         }
 
         s += ">";
