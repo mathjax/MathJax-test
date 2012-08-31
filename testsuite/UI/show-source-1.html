@@ -20,7 +20,13 @@
       return [
         newScriptReftestResult("unit mu is converted in show source",
                                MathJax.Hub.getAllJax()[0].root.
-                               toMathML().indexOf("1234mu") == -1)
+                               toMathML().indexOf("1234mu") == -1),
+        newScriptReftestResult("The xmlns attribute should not be duplicated",
+                               MathJax.Hub.getAllJax()[1].root.
+                               toMathML().match(/xmlns=/g).length == 1),
+        newScriptReftestResult("_moz-* attributes should be ignored",
+                               !MathJax.Hub.getAllJax()[2].root.
+                               toMathML().match(/_moz-/g))
       ];
       }
     </script>
@@ -33,6 +39,34 @@
         https://github.com/mathjax/MathJax/issues/146 -->
     <div>
       \( \hspace{1234mu} \)
+    </div>
+
+    <!--
+        See issue 304
+        https://github.com/mathjax/MathJax/issues/304 -->
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML"></math>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable rowalign="left" columnalign="top"
+                rowlines="dashed" columnlines="dashed">
+          <mtr>
+            <mtd>
+              <mi id="id0">a</mi>
+            </mtd>
+            <mtd id="id1">
+              <mi>b</mi>
+            </mtd>
+          </mtr>
+          <mtr id="id2">
+            <mtd>
+              <mi>c</mi>
+            </mtd>
+            <mtd>
+              <mi>d</mi>
+            </mtd>
+          </mtr>
+        </mtable>
+      </math>
     </div>
   </body>
 </html>
