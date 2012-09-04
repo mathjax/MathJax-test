@@ -72,6 +72,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Task Editor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <!-- Copyright (c) 2011 Design Science, Inc.
          License: Apache License 2.0 -->
     <link rel="stylesheet" type="text/css" href="default.css"/>
@@ -248,8 +249,6 @@
                      onchange="updateFieldVisibility('useWebDriver',
                                                      'fullScreenMode_', false);
                                updateFieldVisibility('useWebDriver',
-                                                     'aloneOnHost_', true);
-                               updateFieldVisibility('useWebDriver',
                                                      'browserPath_', false);
                                updateFieldVisibility('useWebDriver',
                                                      'browserVersion_', true);"/>
@@ -259,11 +258,12 @@
               <input id="fullScreenMode" name="fullScreenMode" type="checkbox" checked="checked"/>
             </label>
           </span>
-          <span id="aloneOnHost_">
-            <label>aloneOnHost:
-              <input id="aloneOnHost" name="aloneOnHost" type="checkbox"/>
-            </label>
-          </span>
+	  </p>
+          <p>
+            <label>priority:</label>
+	    <input id="priority" name="priority" type="text"
+                     value="0"/>
+          <p>
           <p>
             <label>formatOutput:
               <input id="formatOutput" name="formatOutput" type="checkbox" checked="checked"/>

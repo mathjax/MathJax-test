@@ -297,7 +297,6 @@ function updateAllFieldVisibilities()
 {
     updateFieldVisibility("taskSchedule", "crontabParameters", true);
     updateFieldVisibility("useWebDriver", "fullScreenMode_", false);
-    updateFieldVisibility("useWebDriver", "aloneOnHost_", true);
     updateFieldVisibility('useWebDriver', 'browserPath_', false);
     updateFieldVisibility('useWebDriver', 'browserVersion_', true);
     updateFieldVisibility("browser", "browserMode_", "MSIE")

@@ -120,42 +120,56 @@
           } else {
             // Get the task list
             $taskList = array();
+            $taskNames = array();
+            $taskHosts = array();
+            $taskPriorities = array();
+            $i = 0;
             while(!feof($file)) {
               $line = trim(fgets($file));
-              $argument = explode(" ", $line, 7);
-              if (count($argument) == 7) {
-                $taskName = array_shift($argument);
-                $taskList[$taskName] = $argument;
-              }
+	      $row = explode(" ", $line, 8);
+              if (count($row) == 8) {
+                $taskList[$i] = $row;
+                $taskNames[$i] = $row[0];
+                $taskHosts[$i] = $row[1];
+                $taskPriorities[$i] = $row[2];
+	        $i++;
+	      }
             }
             fclose($file);
 
-            // Sort the table by task name
-            ksort($taskList);
+            // Sort the task list by (Host, Priority, Name)
+            array_multisort($taskHosts, SORT_ASC,
+	                    $taskPriorities, SORT_ASC,
+			    $taskNames, SORT_ASC,
+			    $taskList);
 
             echo '<table id="taskList">';
             echo '<tr>';
-            echo '<th>Task Name</th>';
             echo '<th>Host</th>';
+            echo '<th>Priority</th>';
+            echo '<th>Task Name</th>';
             echo '<th>Status</th>';
             echo '<th>Progress</th>';
             echo '<th>Results</th>';
             echo '<th>Actions</th>';
             echo '</tr>';
 
-            foreach ($taskList as $taskName => $taskProperties) {
-                $host = $taskProperties[0];
-                $status = $taskProperties[1];
-                $progress = $taskProperties[2];
-                $resultDir = $taskProperties[3];
-                $resultFileName = $taskProperties[4];
-                $schedule = $taskProperties[5];
+            foreach ($taskList as $taskProperties) {
+                $taskName = $taskProperties[0];
+                $host = $taskProperties[1];
+                $priority = $taskProperties[2];
+                $status = $taskProperties[3];
+                $progress = $taskProperties[4];
+                $resultDir = $taskProperties[5];
+                $resultFileName = $taskProperties[6];
+                $schedule = $taskProperties[7];
 
                 echo '<tr>';
-                echo '<td><a href="taskInfo.php?taskName='.$taskName.'">';
-                echo $taskName.'</a></td>';
                 echo '<td><a href="hostInfo.php?host='.$host.'">';
                 echo $host.'</a></td>';
+                echo '<td>'.$priority.'</td>';
+                echo '<td><a href="taskInfo.php?taskName='.$taskName.'">';
+                echo $taskName.'</a></td>';
                 echo '<td>';
                 if ($status == "Killed") {
                   echo '<a href="taskInfo.php?taskName='.$taskName;

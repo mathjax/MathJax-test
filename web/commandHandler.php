@@ -108,7 +108,7 @@ function truncateString($aValue, $aMaxLength)
  *                 $aTimeOut,
  *                 $aUseWebDriver,
  *                 $aFullScreenMode,
- *                 $aAloneOnHost,
+ *                 $aPriority,
  *                 $aFormatOutput,
  *                 $aCompressOutput,
  *                 $aOperatingSystem,
@@ -138,7 +138,7 @@ function createTask($aTaskName,
                     $aTimeOut,
                     $aUseWebDriver,
                     $aFullScreenMode,
-                    $aAloneOnHost,
+                    $aPriority,
                     $aFormatOutput,
                     $aCompressOutput,
                     $aOperatingSystem,
@@ -166,7 +166,7 @@ function createTask($aTaskName,
                   "timeOut=".strval($aTimeOut)."\n".
                   "useWebDriver=".$aUseWebDriver."\n".
                   "fullScreenMode=".$aFullScreenMode."\n".
-                  "aloneOnHost=".$aAloneOnHost."\n".
+                  "priority=".strval($aPriority)."\n".
                   "formatOutput=".$aFormatOutput."\n".
                   "compressOutput=".$aCompressOutput."\n".
                   "operatingSystem=".$aOperatingSystem."\n".
@@ -289,10 +289,8 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
   
           $useWebDriver = boolToString(isset($_POST['useWebDriver']));
           if ($useWebDriver == 'true') {
-            $aloneOnHost = boolToString(isset($_POST['aloneOnHost']));
             $fullScreenMode = boolToString(False);
           } else {
-            $aloneOnHost = boolToString(True);
             $fullScreenMode = boolToString(isset($_POST['fullScreenMode']));
           }
 
@@ -318,7 +316,13 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
             $browserVersion = "default";
             $browserPath = truncateString($_POST['browserPath'], 100);
           }
-   
+
+          if (isset($_POST['priority'])) {
+            $priority = intval($_POST['priority']);
+          } else {
+            $priority = 0;
+          }
+
           $font = selectToString($_POST['font'], $FONT_LIST);
    
           $aOutputJax = selectToString($_POST['outputJax'], $OUTPUT_JAX_LIST);
@@ -362,7 +366,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                          $timeOut,
                          $useWebDriver,
                          $fullScreenMode,
-                         $aloneOnHost,
+                         $priority,
                          $formatOutput,
                          $compressOutput,
                          $operatingSystem,
@@ -391,7 +395,7 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                              $timeOut,
                              $useWebDriver,
                              $fullScreenMode,
-                             $aloneOnHost,
+                             $priority,
                              $formatOutput,
                              $compressOutput,
                              $operatingSystem,
@@ -415,9 +419,12 @@ function executeCommandWithParameter($aCommand, $aTaskName, $aParameter)
                    $_POST['command'] == 'FORMAT') {
           executeCommand($_POST['command'], $taskName);
         } else if ($_POST['command'] == "MULTIPLE_REMOVE" ||
-                   $_POST['command'] == "MULTIPLE_RUN" ||
-                   $_POST['command'] == "MULTIPLE_RESTART" ||
-                   $_POST['command'] == "MULTIPLE_STOP") {
+                   $_POST['command'] == "MULTIPLE_STOP" ||
+        	   $_POST['command'] == "MULTIPLE_RUN" ||
+                   $_POST['command'] == "MULTIPLE_RESTART") {
+          // The tasks are supposed to have been sorted by priorities, so they
+	  // are executed in the right order (for MULTIPLE_RUN and
+          // MULTIPLE_RESTART).
           $command = substr($_POST['command'], strlen("MULTIPLE_"));
           $taskList = explode(",", $_POST['taskList']);
           for ($i = 0; $i < count($taskList); $i++) {

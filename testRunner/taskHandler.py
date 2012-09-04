@@ -65,6 +65,7 @@ import socket
 import subprocess
 import cgi
 import copy
+import heapq
 
 def boolToString(aBoolean):
     """
@@ -155,6 +156,17 @@ class requestHandler(SocketServer.StreamRequestHandler):
             if t.isRunning():
                 return "'" + aTaskName + \
                     "' is running and can not be edited!" + "'\n"
+
+            if (t.isPending()):
+                # Do not allow to edit pending task: if we modify the priority
+                # of t, mPendingTaskFromHost[t] may no longer be a valid
+                # structure.
+                # Note: a better priority queue model could be implemented
+                # but in general we do not run too many tasks and we can just
+                # stop everything if we send unwanted tasks to the pending
+                # queue.
+                return "'" + aTaskName + "' is pending and can not be edited!\n"
+
             msg = "updated"
             if t.mSchedule:
                 # remove the task from the scheduler
@@ -483,6 +495,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
                     t.mOutputFileName = items[3]
                         
         elif (client == "TASKEDITOR"):
+            # One can only edit one task at once. This means that the
+            # requester have to call run and restart operations in the right
+            # order (i.e. respecting the priorities of task).
             command = items[1]
             taskName = items[2]
             if command == "EDIT":
@@ -584,10 +599,10 @@ class task:
         self.mProgress = "-"
         self.mParameters = {}
         self.mParameters["host"] = HOST_LIST[0]
+        self.mParameters["priority"] = 0
 
         # Default values for boolean parameters. This should match
         # getBooleanOption in runTestsuite.py
-        self.mParameters["aloneOnHost"] = False
         self.mParameters["useGrid"] = False
         self.mParameters["fullScreenMode"] = True
         self.mParameters["formatOutput"] = True
@@ -601,6 +616,10 @@ class task:
         self.mOutputFileName = aOutputFileName
         self.mExceptionMessage = None
         self.mSchedule = aSchedule
+
+    def __le__(self, other):
+        # used to sort task in pending queues
+        return self.priority() <= other.priority()
 
     def host(self):
         """
@@ -617,6 +636,14 @@ class task:
                 "can't resolve hostname %s: %s" % (h, err[1])
             return None
 
+    def priority(self):
+        """
+        @fn priority(self)
+        @brief Priority of the task
+        @return self.mParameters["priority"]
+        """
+        return self.mParameters["priority"]
+        
     def isPending(self):
         """
         @fn isPending(self)
@@ -631,14 +658,6 @@ class task:
         @return Whether the task is running.
         """
         return (self.mPopen != None and self.mPopen.poll() == None)
-
-    def aloneOnHost(self):
-        """
-        @fn aloneOnHost(self)
-        @brief Indicate whether the task should run alone on the test machine
-        @return self.mParameters["aloneOnHost"]
-        """
-        return self.mParameters["aloneOnHost"]
 
     def verifyStatus(self):
         """
@@ -688,6 +707,7 @@ class task:
 
         s = ""
         s += self.mParameters["host"] + " "
+        s += str(self.mParameters["priority"]) + " "
         s += self.mStatus + " ";
         s += self.mProgress + " "
         s += self.mOutputDirectory + " "
@@ -847,7 +867,7 @@ class task:
         s += self.serializeParameter("timeOut")
         s += self.serializeParameter("useWebDriver")
         s += self.serializeParameter("fullScreenMode")
-        s += self.serializeParameter("aloneOnHost")
+        s += self.serializeParameter("priority")
         s += self.serializeParameter("formatOutput")
         s += self.serializeParameter("compressOutput")
         s += "</table></p>"
@@ -905,7 +925,7 @@ class task:
         fp.write("timeOut = " + str(p["timeOut"]) + "\n")
         fp.write("useWebDriver = " + boolToString(p["useWebDriver"]) + "\n")
         fp.write("fullScreenMode = " + boolToString(p["fullScreenMode"]) + "\n")
-        fp.write("aloneOnHost = " + boolToString(p["aloneOnHost"]) + "\n")
+        fp.write("priority = " + str(p["priority"]) + "\n")
         fp.write("formatOutput = " + boolToString(p["formatOutput"]) + "\n")
         fp.write("compressOutput = " + boolToString(p["compressOutput"]) + "\n")
         fp.write("\n")
@@ -990,18 +1010,20 @@ option values"
         if (parameterName == "useGrid" or
             parameterName == "useWebDriver" or
             parameterName == "fullScreenMode" or
-            parameterName == "aloneOnHost" or
             parameterName == "formatOutput" or
             parameterName == "compressOutput" or
             parameterName == "runSlowTests" or
             parameterName == "runSkipTests"):
             self.mParameters[parameterName] = (parameterValue == "true")
         elif (parameterName == "port" or
-              parameterName == "timeOut"):
+              parameterName == "timeOut" or
+              parameterName == "priority"):
             parameterValue = int(parameterValue)
             if (parameterValue == -1):
                 if (parameterName == "port"):
                     parameterValue = SELENIUM_SERVER_PORT
+                elif (parameterName == "priority"):
+                    parameterValue = 0
                 else: # timeout
                     parameterValue = DEFAULT_TIMEOUT
             self.mParameters[parameterName] = parameterValue
@@ -1214,12 +1236,9 @@ class taskHandler:
         s += "PENDING_TASKS\n"
 
         if h in gServer.mPendingTasksFromHost.keys():
-            alone = False
             for t in gServer.mPendingTasksFromHost[h]:
-                if (alone):
-                    s += "\n"
-                s += t.mName + " "
-                alone = t.aloneOnHost()
+                s += t.mName + " (priority=" + str(t.priority()) + ")"
+                s += "\n"
             s += "\n"
 
         s += "PENDING_TASKS END\n"
@@ -1309,10 +1328,10 @@ class taskHandler:
         if h:
             if h in self.mPendingTasksFromHost.keys():
                 q = self.mPendingTasksFromHost[h]
-                q.append(aTask)
+                heapq.heappush(q, aTask)
             else:
-                q = collections.deque()
-                q.append(aTask)
+                q = []
+                heapq.heappush(q, aTask)
                 self.mPendingTasksFromHost[h] = q
 
     def runNextTasksFromPendingQueue(self, aHost):
@@ -1320,37 +1339,33 @@ class taskHandler:
         @fn runNextTasksFromPendingQueue(self, aHost)
         @brief run the next pending tasks for the specified host
         @param aHost on which we want to run the next task
-        @details This function gets the tasks from the pending queue for aHost
-        and starts them as long as it is possible. This is determined by the
-        aloneOnHost property of the tasks: no new tasks can be added if an
-        'aloneOnHost' task is running and an 'aloneOnHost' task can not be
-        added if other tasks are still running.
+        @details This function runs the tasks of lowest priorities from the
+        pending queue of aHost
         """
         if aHost == None:
             return
 
         if aHost in self.mPendingTasksFromHost.keys():
             q = self.mPendingTasksFromHost[aHost]
-            
-            while (True):
-                if len(q) == 0:
-                    del self.mPendingTasksFromHost[aHost]
-                    break
 
-                t = q.popleft()
+            if aHost in self.mRunningTasksFromHost.keys():
+                # execute all tasks with priority at most the maximum
+                # of the priorities among the running tasks
+                running = self.mRunningTasksFromHost[aHost]
+                maxpriority = running[0].priority()
+                for i in range(1, len(running)):
+                    maxpriority = max(maxpriority, running[i].priority())
+            else:
+                # execute all tasks in the pending queue with the
+                # least priority value.
+                maxpriority = q[0].priority()
 
-                if (aHost in self.mRunningTasksFromHost.keys()):
-                    l = self.mRunningTasksFromHost[aHost]
-         
-                    if ((len(l) == 1 and l[0].aloneOnHost()) or
-                        (t.aloneOnHost())):
-                        # A task which should be alone is already running or
-                        # The task to push should be alone but l is nonempty:
-                        # abort.
-                        q.appendleft(t)
-                        break
-
+            while (len(q) > 0 and q[0].priority() <= maxpriority):
+                t = heapq.heappop(q)
                 t.execute()
+
+            if len(q) == 0:
+                del self.mPendingTasksFromHost[aHost]
 
     def addTaskToRunningList(self, aTask):
         """
