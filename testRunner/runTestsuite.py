@@ -239,7 +239,7 @@ def printNotes():
 
 def printListOfTests(aFile):
     """
-    @fn printNotes(aFile)
+    @fn printListOfTests(aFile)
     @brief generate a listOftests from a file
     """
     lines = []
@@ -255,7 +255,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
                        aFormatOutput, aCompressOutput, aFileName):
     """
     @fn runTestingInstance(aDirectory, aSelenium, aSuite,
-                           aFormatOutput, aCompressOutput)
+                           aFormatOutput, aCompressOutput, aFileName)
     @brief Execute a testing instance
     
     @param aDirectory  directory where the test output will be stored
@@ -263,6 +263,7 @@ def runTestingInstance(aDirectory, aSelenium, aSuite,
     @param aSuite    @ref reftest::reftestSuite object
     @param aFormatOutput whether output should be formatted
     @param aCompressOutput whether output should be compressed
+    @param aFileName Name of the output file
 
     @note This function may send the status "Running", "Complete" and
     "Interrupted" to the task handler.

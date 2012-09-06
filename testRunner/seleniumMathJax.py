@@ -64,6 +64,12 @@ VK_F12 = 123
 VK_DELETE =	127
 
 class ReftestError(Exception):
+    """
+    @class seleniumMathJax::ReftestError
+    @brief an exception class used to represent a reftest error that has been
+    indicated by @ref header.js
+    """
+
     def __init__(self, aMessage, aIsReference):
         self.mMessage = aMessage
         self.mIsReference = aIsReference
@@ -253,7 +259,7 @@ class seleniumMathJax(object):
     def open(self, aURI, aWaitTime = 0.5, aIsReference = False):
 
         """
-        @fn open(self, aURI, aWaitTime = 0.5)
+        @fn open(self, aURI, aWaitTime = 0.5, aIsReference = False)
         @brief open a page in the browser
         
         @param aURI URI of the page to open
