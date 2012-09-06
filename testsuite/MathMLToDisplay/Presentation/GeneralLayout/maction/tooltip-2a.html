@@ -11,7 +11,6 @@
     <script type="text/javascript">
       function preMathJax()
       {
-      gConfigObject.jax = ["input/MathML", "output/HTML-CSS"];
       gConfigObject["HTML-CSS"].tooltip = { delayPost: 0 };
       gConfigObject["SVG"].tooltip = { delayPost: 0 };
       window.scrollTo(0, document.getElementById("id").offsetTop);
@@ -25,7 +24,11 @@
       pageX: document.body.scrollLeft + document.documentElement.scrollLeft,
       pageY: document.body.scrollTop + document.documentElement.scrollTop
       };
-      MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOver(event);
+      if (gOutputJax == "HTML-CSS") {
+        MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOver(event);
+      } else if (gOutputJax == "SVG") {
+        MathJax.Hub.getAllJax()[0].root.data[0].data[0].SVGtooltipOver(event);
+      }
       }
     </script>
 
