@@ -98,14 +98,14 @@
                if ($l == "PENDING_TASKS END") {
                  echo '<p>No pending tasks</p>';
                } else {
-                 echo '<ol>';
+                 echo '<ul>';
                  while (!feof($file) && $l != "PENDING_TASKS END") {
                   echo '<li>';
                   printTasks($l);
                   echo '</li>';
                   $l = trim(fgets($file));
                  }
-                 echo '</ol>';
+                 echo '</ul>';
                }
              }
              while (!feof($file)) {

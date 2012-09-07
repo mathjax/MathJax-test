@@ -76,7 +76,7 @@
   {
   if (file_exists($File)) {
     echo ' <a href="'.$File.'"><img ';
-    echo 'src="icons/'.$type.'-output.png"';
+    echo 'src="icons/'.$type.'-output.png" ';
     echo 'alt="'.$type.'output" title="'.$type.' output"/></a>';
   }
   }
