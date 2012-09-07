@@ -1238,7 +1238,6 @@ class taskHandler:
         if h in gServer.mPendingTasksFromHost.keys():
             for t in gServer.mPendingTasksFromHost[h]:
                 s += t.mName + "\n"
-            s += "\n"
 
         s += "PENDING_TASKS END\n"
 

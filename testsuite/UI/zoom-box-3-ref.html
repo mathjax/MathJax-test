@@ -1,0 +1,40 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue217</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.extensions.push("MathZoom.js");
+      }
+
+      function postMathJax()
+      {
+      var jax = MathJax.Hub.getAllJax()[1];
+      var math = document.getElementById(jax.inputID+"-Frame");
+      if (!math.jaxID) {math = math.childNode}
+      MathJax.Extension.MathZoom.Zoom(null, math)
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- See issue 217
+         https://github.com/mathjax/MathJax/issues/217 -->
+    <div style="width: 400px; border: 1px solid black;">
+      <math>
+        <mspace mathbackground="red" width="300px" height="20px"></mspace>
+      </math>
+      x y<br/>
+      <math>
+        <mspace mathbackground="red" width="300px" height="20px"></mspace>
+      </math>
+    </div>
+  </body>
+</html>
