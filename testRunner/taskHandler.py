@@ -158,14 +158,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
                     "' is running and can not be edited!" + "'\n"
 
             if (t.isPending()):
-                # Do not allow to edit pending task: if we modify the priority
-                # of t, mPendingTaskFromHost[t] may no longer be a valid
-                # structure.
-                # Note: a better priority queue model could be implemented
-                # but in general we do not run too many tasks and we can just
-                # stop everything if we send unwanted tasks to the pending
-                # queue.
-                return "'" + aTaskName + "' is pending and can not be edited!\n"
+                # Before editing the task (in particular its host, name and
+                # priority queue) we remove it from the pending queue.
+                gServer.removeTaskFromPendingQueue(t)
 
             msg = "updated"
             if t.mSchedule:
@@ -288,6 +283,10 @@ class requestHandler(SocketServer.StreamRequestHandler):
 
         t = gServer.mTasks[aTaskName]
         if (not t.isRunning()):
+            if t.isPending():
+                # remove the task from the pending queue
+                gServer.removeTaskFromPendingQueue(t)
+
             if t.mSchedule:
                 # remove the task from the scheduler
                 gServer.removeScheduledTask(t)
@@ -616,10 +615,6 @@ class task:
         self.mOutputFileName = aOutputFileName
         self.mExceptionMessage = None
         self.mSchedule = aSchedule
-
-    def __le__(self, other):
-        # used to sort task in pending queues
-        return self.priority() <= other.priority()
 
     def host(self):
         """
@@ -1125,6 +1120,38 @@ option values"
         cmd += self.mName
         return cmd
   
+class pendingTaskInfo:
+    """
+    @class taskHandler::pendingTaskInfo
+    @brief Info of a task in the pending queue
+    """
+    def __init__(self, aTask):
+        """
+        @fn __init__(self, aTask)
+
+        @param aTask task to represent
+
+        @property mName
+        Name of the task
+
+        @property mHost
+        Host on which the task should run.
+
+        @property mPriority
+        Priority of the task
+        
+        @property mRemoved
+        Whether the task has been removed from the pending queue.
+        """
+
+        self.mName = aTask.mName
+        self.mHost = aTask.host()
+        self.mPriority = aTask.priority()
+        self.mRemoved = False
+
+    def __le__(self, other):
+        return self.mPriority <= other.mPriority
+
 class taskHandler:
     """
     @class taskHandler::taskHandler
@@ -1280,19 +1307,34 @@ class taskHandler:
                 line = fp.readline().strip()
                 items = line.split()
                 if (len(items) > 0):
-                    if (items[2] == "Running"):
+                    # name = items[0]
+
+                    # host = items[1] and priority = items[2]
+                    # are already saved in the config file.
+
+                    # status = items[3]
+                    if (items[3] == "Running"):
                         status = "Interrupted"
-                    elif (items[2] == "Pending"):
+                    elif (items[3] == "Pending"):
                         status = "Inactive"
                     else:
-                        status = items[2]
-                    if (items[5] == "None"):
-                        items[5] = None
+                        status = items[3]
+
+                    # progress = items[4]
+
+                    # outputdirectory = items[5]
+
+                    # outputfilename = item[6]
                     if (items[6] == "None"):
                         items[6] = None
-                    t = task(items[0], status, items[4], items[5], items[6])
-                    t.mProgress = items[3]
-                    # host = items[1] is already saved in the config file.
+
+                    # schedule = items[7]
+                    if (items[7] == "None"):
+                        items[7] = None
+
+                    t = task(items[0], status, items[5], items[6], items[7])
+                    t.mProgress = items[4]
+
                     t.readParametersFromConfigFile(t.getConfigPath())
                     t.chooseDefaultHost()
                     self.mTasks[t.mName] = t
@@ -1326,11 +1368,28 @@ class taskHandler:
         if h:
             if h in self.mPendingTasksFromHost.keys():
                 q = self.mPendingTasksFromHost[h]
-                heapq.heappush(q, aTask)
+                heapq.heappush(q, pendingTaskInfo(aTask))
             else:
                 q = []
-                heapq.heappush(q, aTask)
+                heapq.heappush(q, pendingTaskInfo(aTask))
                 self.mPendingTasksFromHost[h] = q
+
+    def removeTaskFromPendingQueue(self, aTask):
+        """
+        @fn removeTaskFromPendingQueue(self, aTask)
+        @brief Remove a task from the pending queue.
+        @param aTask task to remove
+        """
+        # Note: we may have to read the whole heap, but the number of pending
+        # tasks is assumed to be small, so that's not a problem. We only
+        # mark the task "removed" so that we don't need to build the heap
+        # structure again.
+        h = aTask.host()
+        if h and h in self.mPendingTasksFromHost.keys():
+            q = self.mPendingTasksFromHost[h]
+            for i in range(len(q)):
+                if (not q[i].mRemoved and q[i].mName == aTask.mName):
+                    q[i].mRemoved = True
 
     def runNextTasksFromPendingQueue(self, aHost):
         """
@@ -1347,20 +1406,29 @@ class taskHandler:
             q = self.mPendingTasksFromHost[aHost]
 
             if aHost in self.mRunningTasksFromHost.keys():
-                # execute all tasks with priority at most the maximum
-                # of the priorities among the running tasks
+                # Set maxpriority to the maximum priority of running tasks
                 running = self.mRunningTasksFromHost[aHost]
-                maxpriority = running[0].priority()
-                for i in range(1, len(running)):
-                    maxpriority = max(maxpriority, running[i].priority())
+                maxpriority = 0
+                for item in running:
+                    maxpriority = max(maxpriority, item.priority())
             else:
-                # execute all tasks in the pending queue with the
-                # least priority value.
-                maxpriority = q[0].priority()
+                # No tasks are running: set maxpriority to the minimum
+                # priority of pending tasks. Ignore the taskInfo marked
+                # "removed".
+                while (len(q) > 0):
+                    taskInfo = heapq.heappop(q)
+                    if not taskInfo.mRemoved:
+                        heapq.heappush(q, taskInfo)
+                        maxpriority = taskInfo.mPriority
+                        break
 
-            while (len(q) > 0 and q[0].priority() <= maxpriority):
-                t = heapq.heappop(q)
-                t.execute()
+            # Execute all tasks in the pending queue with priority at most
+            # maxpriority. Ignore the taskInfo marked "removed".
+            while (len(q) > 0 and q[0].mPriority <= maxpriority):
+                taskInfo = heapq.heappop(q)
+                if (not taskInfo.mRemoved and
+                    taskInfo.mName in gServer.mTasks.keys()):
+                    gServer.mTasks[taskInfo.mName].execute()
 
             if len(q) == 0:
                 del self.mPendingTasksFromHost[aHost]

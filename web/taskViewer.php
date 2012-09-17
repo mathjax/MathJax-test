@@ -218,7 +218,7 @@
                 echo '<input class="taskCheckbox" type="checkbox"';
                 echo '       name="checkbox-'.$taskName.'"/>'; 
 
-                if ($status != "Pending" && $status != "Running") {
+                if ($status != "Running") {
                   echo '<a class="noIcon"';
                   echo '   href="taskEditor.php?taskName='.$taskName.'">';
                   echo ' <img src="icons/edit.png" width="16" height="16"';
@@ -227,6 +227,7 @@
 
                 if ($status == "Pending") {
                  commandButton($taskName, "RUN");
+                 commandButton($taskName, "REMOVE");
                 } else if ($status == "Running") {
                   commandButton($taskName, "STOP");
                 } else if($status == "Interrupted" || $status == "Killed") {
