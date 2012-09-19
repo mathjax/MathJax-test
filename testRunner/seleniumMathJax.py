@@ -212,7 +212,11 @@ class seleniumMathJax(object):
                 desiredCapabilities["version"] = aBrowserVersion
 
             if aBrowserPath != "default":
-                raise Exception("Webdriver: browserPath is not supported")
+                # TODO: add support for other browsers
+                if aBrowser == "Chrome":
+                    desiredCapabilities["chrome.binary"] = aBrowserPath
+                else:
+                    raise Exception("Webdriver: browserPath is not supported")
 
             self.mWebDriver = webdriver.Remote("http://" + host + ":" +
                                                str(port) + "/wd/hub",
