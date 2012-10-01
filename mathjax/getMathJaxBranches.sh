@@ -25,14 +25,14 @@
 
 # Import variables from custom.cfg
 # SED is placed first as it is used by the others. 4 is the length of "SED=".
-TMP=`egrep 'SED(\s)+=' ../custom.cfg | tr -d [:blank:]` ; SED=${TMP:4}
-GIT=`egrep 'GIT(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
+TMP=`egrep 'SED[[:space:]]+=' ../custom.cfg | tr -d [:blank:]` ; SED=${TMP:4}
+GIT=`egrep 'GIT[[:space:]]+=' ../custom.cfg | $SED 's/.\+=//'`
 MATHJAX_GIT_FONT_BRANCHES=\
-`egrep 'MATHJAX_GIT_FONT_BRANCHES(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
+`egrep 'MATHJAX_GIT_FONT_BRANCHES[[:space:]]+=' ../custom.cfg | $SED 's/.\+=//'`
 MATHJAX_GIT_DOC_BRANCHES=\
-`egrep 'MATHJAX_GIT_DOC_BRANCHES(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
+`egrep 'MATHJAX_GIT_DOC_BRANCHES[[:space:]]+=' ../custom.cfg | $SED 's/.\+=//'`
 MATHJAX_GIT_OBSOLETE_BRANCHES=\
-`egrep 'MATHJAX_GIT_OBSOLETE_BRANCHES(\s)+=' ../custom.cfg | $SED 's/.\+=//'`
+`egrep 'MATHJAX_GIT_OBSOLETE_BRANCHES[[:space:]]+=' ../custom.cfg | $SED 's/.\+=//'`
 
 # Determine the GitHub user to get branches from.
 if [ $# -eq 0 ]
