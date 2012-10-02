@@ -7,11 +7,6 @@
 #
 # <p>For manual testing convenience, you can click on the blue rectangle to show
 # the glyph behind it. The tests page are not compatible with IE < 9.</p>
-#
-# @issue210
-#
-# <p>See <a href="https://github.com/mathjax/MathJax/issues/210">issue 210</a></p>
-#
 
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=005E horizontal-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != horizontal.html?op=005F horizontal-ref.html
@@ -113,7 +108,7 @@ annotate(@note) fails skip-if(MSIE&&!IE9) != horizontal.html?op=2B46 horizontal-
 require(TeX) != horizontal-braces-1a.html horizontal-braces-1-ref.html
 require(TeX) != horizontal-braces-1b.html horizontal-braces-1-ref.html
 fails-if(MSIE) require(STIX) != horizontal-braces-2.html horizontal-braces-2-ref.html
-annotate(@issue210) fails == minsize-1.html minsize-1-ref.html
+== minsize-1.html minsize-1-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != vertical.html?op=0028 vertical-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != vertical.html?op=0029 vertical-ref.html
 annotate(@note) skip-if(MSIE&&!IE9) != vertical.html?op=005B vertical-ref.html

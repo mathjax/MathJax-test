@@ -1,2 +1,2 @@
 != msubsup-1.html msubsup-1-ref.html
-fails == linebreak-1.html linebreak-1-ref.html
+== linebreak-1.html linebreak-1-ref.html
