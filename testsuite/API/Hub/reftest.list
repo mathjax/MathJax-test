@@ -1,3 +1,11 @@
+#
+# @note1
+#
+# <p>This fails in IE &lt; 9 because of config.errorSettings added in header.js
+# to catch [Math Processing Error]'s. Hopefully, this can be fixed by using
+# MathJax 2.1's new signal.</p>
+#
+
 script Config-1.html
 load Configured-1.html
 tree== formatError-1.html formatError-1-ref.html
@@ -12,7 +20,7 @@ script Insert-1.html
 script isJax-1.html
 script isJax-2.html
 script isJax-3.html
-script lastError-1.html
+annotate(@note1) fails-if(Quirks||IE7||IE8) script lastError-1.html
 script loadhook-1.html
 script mathProcessingError-1.html
 script messagehook-1.html
