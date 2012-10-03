@@ -53,7 +53,7 @@ reports the results.
 from config import MATHJAX_TEST_PUBLIC_URI
 MATHJAX_TESTSUITE_PATH = "../testsuite/"
 
-from PIL import Image, ImageChops
+import Image, ImageChops
 import os, cgi
 import conditionParser
 import difflib
