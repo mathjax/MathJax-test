@@ -17,7 +17,7 @@
       function postMathJax() 
       {
       var maths = MathJax.Hub.getAllJax();
-      document.getElementById("tex1").innerHTML="\(y+1\)";
+      document.getElementById("tex1").text="\(y+1\)";
       r1 = maths[0].needsUpdate();
       r2 = !maths[1].needsUpdate();
       }

@@ -1,4 +1,10 @@
-script getJaxFromMath-1.html
+# @note1
+#
+# <p>These test pages rely on getElementsByClassName, which is not implemented
+# in Internet Explorer.</p>
+#
+
+annotate(@note1) fails-if(MSIE) script getJaxFromMath-1.html
 script postTranslate-1.html
 script preProcess-1.html
 script preTranslate-1.html
@@ -10,4 +16,4 @@ script variables-1.html
 script variables-2.html
 script variables-3.html
 script variables-4.html
-script Zoom-1.html
+annotate(@note1) fails-if(MSIE) script Zoom-1.html

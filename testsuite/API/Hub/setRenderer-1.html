@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      var testSVG = true;
       var a1 = false, a2 = false, a3 = false, a4 = false;
       var b1 = false, b2 = false, b3 = false, b4 = false;
       var c1 = false, c2 = false, c3 = false, c4 = false;
@@ -52,13 +53,21 @@
       MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", f]);
       MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "HTML-CSS"]);
       MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", g]);
-      MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "SVG"]);
-      MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", h]);
+
+      if (MathJax.Hub.Browser.isMSIE &&
+          !MathJax.Hub.Browser.versionAtLeast(9.0)) {
+        testSVG = false;
+      }
+
+      if (testSVG) {
+        MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "SVG"]);
+        MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", h]);
+      }
       }
 
       function getTestCases()
       {
-      return [
+      var results = [
       newScriptReftestResult("Callback f", a1),
       newScriptReftestResult("NativeMML: math tag", a2),
       newScriptReftestResult("NativeMML: span tag", a3),
@@ -67,11 +76,15 @@
       newScriptReftestResult("HTML-CSS: math tag", b2),
       newScriptReftestResult("HTML-CSS: span tag", b3),
       newScriptReftestResult("HTML-CSS: svg tag", b4),
-      newScriptReftestResult("Callback h", c1),
-      newScriptReftestResult("SVG: math tag", c2),
-      newScriptReftestResult("SVG: span tag", c3),
-      newScriptReftestResult("SVG: svg tag", c4),
-      ];
+      newScriptReftestResult("Callback h", c1)];
+
+      if (testSVG) {
+        results.push(newScriptReftestResult("SVG: math tag", c2),
+                     newScriptReftestResult("SVG: span tag", c3),
+                     newScriptReftestResult("SVG: svg tag", c4));
+      }
+
+      return results;
       }
     </script>
 

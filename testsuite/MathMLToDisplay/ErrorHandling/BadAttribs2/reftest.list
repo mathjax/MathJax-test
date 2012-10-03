@@ -9,9 +9,15 @@
 #
 # <p>Horizontal shifts on some browsers.</p>
 #
+# @note3
+#
+# <p>Here, the mathbackrground value is being used to set the background-color
+# CSS style, and for IE7, using an unknown value there causes a runtime error.
+# </p>
+# 
 
 == badAttribs2.html badAttribs2-ref.html
 == badAttribsAction.html badAttribsAction-ref.html
-annotate(@note1,@note2) fails-if(SVG||(Opera&&Linux&&HTML-CSS&&TeX)) == badAttribsVal3.html badAttribsVal3-ref.html
+annotate(@note1,@note2,@note3) fails-if(MSIE||SVG||(Opera&&Linux&&HTML-CSS&&TeX)) == badAttribsVal3.html badAttribsVal3-ref.html
 == bad-attribute-value-1.html bad-attribute-value-1-ref.html
 

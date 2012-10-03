@@ -36,7 +36,7 @@
       var div = document.getElementById("div");
       div.style.width = "30px";
       r2 = (div.offsetHeight < 30);
-      document.getElementById("myscript").innerHTML = "<math></math>";
+      document.getElementById("myscript").text = "<math></math>";
       MathJax.Hub.Queue(["Rerender", MathJax.Hub, "div", f]);
       MathJax.Hub.Queue(["Reprocess", MathJax.Hub, "div", g]);
       }
