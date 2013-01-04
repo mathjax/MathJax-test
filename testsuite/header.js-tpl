@@ -192,17 +192,6 @@ function defaultConfigObject()
           // more fonts.
       }
   };
-
-  if (gErrorHandler) {
-      config.errorSettings = {
-          message:
-          [
-              [ "script", { type: "text/javascript" },
-                [ "throw new Error('[Math Processing Error]');" ]
-              ]
-          ]
-      };
-  }
   return config;
 }
 
@@ -236,6 +225,7 @@ function startMathJax()
 
     var config = "";
     config += "MathJax.Hub.Config(gConfigObject);";
+    config += "MathJax.Hub.signal.Interest(signalListener);";
     if (window.xMathJaxConfig) {
         config += "xMathJaxConfig();"
     }
@@ -335,6 +325,14 @@ function errorHandler(aErrorMessage, aURL, aLineNumber)
     addWebdriverTestCompleteMarker();
 
     return true;
+}
+
+function signalListener(aMessage)
+{
+    if (aMessage[0] == "Math Processing Error" ||
+        aMessage[0] == "TeX Jax - parse error") {
+        throw aMessage[2]
+    }
 }
 
 parseQueryString();
