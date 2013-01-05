@@ -1,0 +1,54 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue362</title>
+    <!-- Copyright (c) 2013 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+  </head>
+
+  <body>
+    <!-- See issue 362
+         https://github.com/mathjax/MathJax/issues/362 -->
+    <math>
+      <menclose style="background: red;">
+        <mi>A</mi>
+      </menclose>
+    </math>
+    <math>
+      <mmultiscripts>
+        <mi>A</mi>
+        <mprescripts style="background: red;"></mprescripts>
+      </mmultiscripts>
+    </math>
+    <math>
+      <mmultiscripts>
+        <mi>A</mi>
+        <none style="background: red;"></none>
+        <mn>2</mn>
+      </mmultiscripts>
+    </math>
+    <math>
+      <msubsup>
+        <mi>A</mi>
+        <mrow style="background: red;"></mrow>
+        <mrow style="background: red;"></mrow>
+      </msubsup>
+    </math>
+    <math>
+      <msub>
+        <mi>A</mi>
+        <mrow style="background: red;"></mrow>
+      </msub>
+    </math>
+    <math>
+      <msup>
+        <mi>A</mi>
+        <mrow style="background: red;"></mrow>
+      </msup>
+    </math>
+  </body>
+</html>

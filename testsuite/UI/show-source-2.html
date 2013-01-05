@@ -1,0 +1,56 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>show source</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.extensions.push("toMathML.js");
+      }
+
+      function getTestCases()
+      {
+      var source = MathJax.Hub.getAllJax()[0].root.toMathML();
+      var entities = source.match(/&#x.+;/g);
+      return [
+      newScriptReftestResult("entities.length", entities.length == 9),
+      newScriptReftestResult("&Tscr;", entities[0] == "&#x1D4AF;"),
+      newScriptReftestResult("&Kscr;", entities[1] == "&#x1D4A6;"),
+      newScriptReftestResult("&bfr;", entities[2] == "&#x1D51F;"),
+      newScriptReftestResult("&dfr;", entities[3] == "&#x1D521;"),
+      newScriptReftestResult("&Efr;", entities[4] == "&#x1D508;"),
+      newScriptReftestResult("&Dfr;", entities[5] == "&#x1D507;"),
+      newScriptReftestResult("&Ffr;", entities[6] == "&#x1D509;"),
+      newScriptReftestResult("&Afr;", entities[7] == "&#x1D504;"),
+      newScriptReftestResult("&Bfr;", entities[8] == "&#x1D505;")]
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        See issue 361
+        https://github.com/mathjax/MathJax/issues/361 -->
+    <div>
+      <math>
+        <mo>&Tscr;</mo>
+        <mo>&Kscr;</mo>
+        <mo>&bfr;</mo>
+        <mo>&dfr;</mo>
+        <mo>&Efr;</mo>
+        <mo>&Dfr;</mo>
+        <mo>&Ffr;</mo>
+        <mo>&Afr;</mo>
+        <mo>&Bfr;</mo>
+      </math>
+    </div>
+  </body>
+</html>
