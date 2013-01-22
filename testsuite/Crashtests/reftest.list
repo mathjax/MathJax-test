@@ -1,8 +1,10 @@
 require(HTML-CSS) skip-if(IE9) load issue170.html
 load webkit-column-count-1.html
+load issue352.html
 load issue362.html
 load issue363.html
 load issue364.html
 load issue365.html
 skip load issue366.html
 load issue367.html
+load issue373.html
