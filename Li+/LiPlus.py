@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- Mode: Python; tab-width: 2; indent-tabs-mode:nil; -*-
 # vim: set ts=2 et sw=2 tw=80:
 #
@@ -31,8 +32,9 @@ from this iterable must not be None.</li>
 </ul>
 
 <p>See also <a href="http://www.squarefree.com/2007/09/15/introducing-lithium-a-testcase-reduction-tool/">Jesse's Lithium program</a>. For a detailed
-description of the query complexity of Lithium, see
-also [...]</p>
+description of the query complexity of Lithium, see also
+<a href="http://www.maths-informatique-jeux.com/blog/frederic/?post/2013/01/22/Analysis-of-Lithium-s-algorithm">this blog post</a>.
+</p>
 """
 
 from collections import deque
@@ -69,15 +71,14 @@ class LiPlus:
         if self.mTestcaseSize == 0:
             raise LiPlusException("Testcase can not be empty!")
 
-        self.mChunkSize = 1
-        while self.mChunkSize < self.mTestcaseSize:
+        self.mChunkSize = 2
+        while self.mChunkSize <= self.mTestcaseSize:
             self.mChunkSize *= 2
         self.mChunkSize /= 2
+        self.mFinalAttempts = (self.mChunkSize == 1)
 
-        # and add a "None" sentinel to mark the end.
+        # Add a "None" element to mark the end.
         self.mElements.appendleft(None)
-
-        self.mFinalAttempts = False
 
     def verifyInitalization(self):
         if self.mTestcase is None:

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- Mode: Python; tab-width: 2; indent-tabs-mode:nil; -*-
 # vim: set ts=2 et sw=2 tw=80:
 #
@@ -18,7 +19,8 @@
 
 """
 @package LiPlusXML
-This modules implements 
+This modules implements LiPlus's testcase interface for XML documents where
+tokens are elements and attributes. The HTML parser can also be used.
 """
 
 from collections import deque
@@ -29,9 +31,13 @@ ATTRIBUTE_LIPLUS_REMOVE = "{%s}liplusrm" % NS_LIPLUS
 
 class LiPlusXML:
 
-    def __init__(self, aFileName, aIsXML = True,
+    def __init__(self,
+                 aFileName,
+                 aIsXML = True,
                  aRootId = None,
-                 aBreadthBrowing = True):
+                 aDepthBrowing = False,
+                 aElementsOnly = False,
+                 aAttributesOnly = False):
 
         self.mFileName = aFileName
         self.mIsXML = aIsXML
@@ -52,37 +58,47 @@ class LiPlusXML:
             elements = self.mDocument.xpath("//*[@id='%s']" % aRootId)
             if len(elements) == 1:
                 root = elements[0]
-
-        if aBreadthBrowing:
-            self.breadthFirstBrowsing(root)
+        
+        if aDepthBrowing:
+            self.breadthFirstBrowsing(root, aElementsOnly, aAttributesOnly)
         else:
-            self.depthFirstBrowsing(root)
+            self.depthFirstBrowsing(root, aElementsOnly, aAttributesOnly)
 
-        # do not touch the root element
-        self.mElements.pop()
+        if not aAttributesOnly:
+            # never try to remove the root
+            self.mElements.pop()
 
-    def breadthFirstBrowsing(self, aRoot):
+    def breadthFirstBrowsing(self, aRoot, aElementsOnly, aAttributesOnly):
         q = deque()
         q.append(aRoot)
         while q:
             node = q.popleft()
-            self.mElements.appendleft(node)
-            self.mMarkedAttributes[node] = dict()
-            for attr in node.attrib:
-                self.mElements.appendleft((node, attr))
+
+            if not aAttributesOnly and isinstance(node, etree.ElementBase):
+                self.mElements.appendleft(node)
+
+            if not aElementsOnly:
+                self.mMarkedAttributes[node] = dict()
+                for attr in node.attrib:
+                    self.mElements.appendleft((node, attr))
 
             for child in node:
                 q.append(child)
 
-    def depthFirstBrowsing(self, aRoot):
+    def depthFirstBrowsing(self, aRoot, aElementsOnly, aAttributesOnly):
         q = []
         q.append(aRoot)
         while q:
             node = q.pop()
-            self.mElements.appendleft(node)
-            self.mMarkedAttributes[node] = dict()
-            for attr in node.attrib:
-                self.mElements.appendleft((node, attr))
+
+            if not aAttributesOnly and isinstance(node, etree.ElementBase):
+                self.mElements.appendleft(node)
+
+            if not aElementsOnly:
+                self.mMarkedAttributes[node] = dict()
+                for attr in node.attrib:
+                    self.mElements.appendleft((node, attr))
+
             for child in node.iterchildren(reversed=True):
                 q.append(child)
 
@@ -90,7 +106,7 @@ class LiPlusXML:
         return self.mElements
 
     def mark(self, aElement):
-        if isinstance(aElement, etree._Element):
+        if isinstance(aElement, etree.ElementBase):
             aElement.set(ATTRIBUTE_LIPLUS_REMOVE, "R")
         else:
             el = aElement[0]
@@ -100,7 +116,7 @@ class LiPlusXML:
                 del el.attrib[attr]
 
     def unmark(self, aElement):
-        if isinstance(aElement, etree._Element):
+        if isinstance(aElement, etree.ElementBase):
             del aElement.attrib[ATTRIBUTE_LIPLUS_REMOVE]
         else:
             el = aElement[0]
@@ -110,7 +126,7 @@ class LiPlusXML:
                 del self.mMarkedAttributes[el][attr]
 
     def remove(self, aElement):
-        if isinstance(aElement, etree._Element):
+        if isinstance(aElement, etree.ElementBase):
             del self.mMarkedAttributes[aElement]
 
     def outputFile(self):

@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-def interesting():
+def interesting(args, tempPrefix):
     if (raw_input("Is the testcase still interesting? ") in ["yes", "y"]):
         return True
     else:
