@@ -192,7 +192,17 @@ function defaultConfigObject()
           // more fonts.
       }
   };
-  return config;
+    if (gErrorHandler) {
+        config.errorSettings = {
+            message:
+            [
+                [ "script", { type: "text/javascript" },
+                  [ "throw new Error('[Math Processing Error]');" ]
+                ]
+            ]
+        };
+    }
+    return config;
 }
 
 /**

@@ -45,6 +45,11 @@ Example: \n\
      ~/tracemonkey/js/src/debug/js -j a.js",
 
         epilog="\
+Condition scripts\n\
+\n\
+  interactive\n\
+  mathjax-processing-error\n\
+\n\
 Text mode\n\
 \n\
 This mode is used to reduce general text documents, viewed as a sequence of\n\
@@ -62,8 +67,8 @@ ending to the next line containing the end delimiter.\n\
 XML and HTML modes\n\
 \n\
 These modes are used to reduce XML or HTML documents, by relying on their DOM\n\
-structures. The --subset option can be used to specify the DOM id of an\n\
-element to reduce. The --init options are the following:\n\
+structures. Use --subset=[id] or --subset=[tagName] to restrict the reduction\n\
+an element. The --init options are the following:\n\
 \n\
   depthBrowing: browse the tree in depth rather than in breadth.\n\
   elOnly: only remove elements, not attributes.\n\
@@ -76,14 +81,15 @@ the document to which the reduction algorithm should be restricted.",
     parser.add_argument("--init", action="append", default=[],
                         help="Indicate how the set of tokens is initialized.")
 
-    parser.add_argument("mode", nargs="?", help="Mode used to reduce the file. \
+    parser.add_argument("--mode", help="Mode used to reduce the file. \
 The following modes are available: XML, HTML, text. If this option is not \
 specified then it will be determined from the extension of the input file. If \
 the extension is not recognized, the text mode is used as a default.",
                         default=None)
 
     parser.add_argument("condition", help="Condition script in Python, used to \
-determine whether the file is still interesting. For example 'interactive'.")
+determine whether the file is still interesting. See a list of some predefined \
+scripts below.")
 
     parser.add_argument('conditionArgs', nargs="*", help="Arguments of the \
 condition script.")
@@ -91,12 +97,6 @@ condition script.")
     parser.add_argument("input", help="Input file to reduce.")
 
     args = parser.parse_args()
-    args.conditionArgs.append(args.input)
-
-    # Load the condition script module and its arguments
-    conditionScript = legacy.importRelativeOrAbsolute(args.condition)
-    if hasattr(conditionScript, "init"):
-        conditionScript.init(args.conditionArgs)
 
     if args.mode is None:
         # Try to guess the mode from the file extension
@@ -107,6 +107,14 @@ condition script.")
             args.mode = "HTML"
         else:
             args.mode = "text"
+
+    args.conditionArgs.append(args.mode)
+    args.conditionArgs.append(args.input)
+
+    # Load the condition script module and its arguments
+    conditionScript = legacy.importRelativeOrAbsolute(args.condition)
+    if hasattr(conditionScript, "init"):
+        conditionScript.init(args.conditionArgs)
 
     # Create the testcase according to the selected mode
     if args.mode == "XML" or args.mode == "HTML":
@@ -122,8 +130,14 @@ condition script.")
     # Finally create a Lithium instance to work on that testcase and apply the
     # algorithm!
     lithium = LiPlus(testcase)
-    isMinimal = (len(lithium.mElements) <= 1)
-    
+    isMinimal = (len(lithium.mElements) <= 1)               
+
+    if not conditionScript.interesting(args.conditionArgs, None):
+        print "The initial testcase is not interesting!"
+        if hasattr(conditionScript, "finalize"):
+            conditionScript.finalize(args.conditionArgs)
+        exit(0)
+
     while not isMinimal:
 
         print ("size of Testcase: %d ; Chunck size: %d" %
@@ -135,7 +149,10 @@ condition script.")
 
         isMinimal = lithium.\
             provideResult(conditionScript.\
-                              interesting(args.conditionArgs, "tmp"))
+                              interesting(args.conditionArgs, None))
+
+    if hasattr(conditionScript, "finalize"):
+        conditionScript.finalize(args.conditionArgs)
 
     testcase.outputFile()
     print "Minimal testcase obtained"

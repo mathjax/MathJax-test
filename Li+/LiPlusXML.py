@@ -34,7 +34,7 @@ class LiPlusXML:
     def __init__(self,
                  aFileName,
                  aIsXML = True,
-                 aRootId = None,
+                 aSubset = None,
                  aDepthBrowing = False,
                  aElementsOnly = False,
                  aAttributesOnly = False):
@@ -54,10 +54,13 @@ class LiPlusXML:
         self.mElements = deque()
 
         root = self.mDocument.getroot()
-        if aRootId is not None:
-            elements = self.mDocument.xpath("//*[@id='%s']" % aRootId)
+        if aSubset is not None:
+            elements = self.mDocument.xpath("//*[@id='%s']" % aSubset)
             if len(elements) == 1:
                 root = elements[0]
+            else:
+                ns = etree.QName(root).namespace
+                root = root.find("{%s}%s" % (ns, aSubset))
         
         if aDepthBrowing:
             self.breadthFirstBrowsing(root, aElementsOnly, aAttributesOnly)
@@ -91,7 +94,7 @@ class LiPlusXML:
         while q:
             node = q.pop()
 
-            if not aAttributesOnly and isinstance(node, etree.ElementBase):
+            if not aAttributesOnly and isinstance(node, etree._Element):
                 self.mElements.appendleft(node)
 
             if not aElementsOnly:
@@ -106,7 +109,7 @@ class LiPlusXML:
         return self.mElements
 
     def mark(self, aElement):
-        if isinstance(aElement, etree.ElementBase):
+        if isinstance(aElement, etree._Element):
             aElement.set(ATTRIBUTE_LIPLUS_REMOVE, "R")
         else:
             el = aElement[0]
@@ -116,7 +119,7 @@ class LiPlusXML:
                 del el.attrib[attr]
 
     def unmark(self, aElement):
-        if isinstance(aElement, etree.ElementBase):
+        if isinstance(aElement, etree._Element):
             del aElement.attrib[ATTRIBUTE_LIPLUS_REMOVE]
         else:
             el = aElement[0]
@@ -126,12 +129,14 @@ class LiPlusXML:
                 del self.mMarkedAttributes[el][attr]
 
     def remove(self, aElement):
-        if isinstance(aElement, etree.ElementBase):
+        if isinstance(aElement, etree._Element):
             del self.mMarkedAttributes[aElement]
 
     def outputFile(self):
         reducedDocument = self.mLiPlusXSLT(self.mDocument)
+
         outputFile = open(self.mFileName, "w")
+
         if self.mIsXML:
             outputFile.write(etree.tostring(reducedDocument,
                                             method="xml",
@@ -144,4 +149,3 @@ class LiPlusXML:
                                             pretty_print=True,
                                             encoding = "UTF-8"))
 
-        outputFile.close()
