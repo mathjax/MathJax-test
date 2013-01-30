@@ -36,13 +36,11 @@ def init(args):
     global gOutputFile
     global gTestsuiteHeaderXSLT
     global gErrorFragment
-    global gIsXML
     global gXHTMLContainerXSLT
 
     testFile = args[-1]
     mode = args[-2]
     if mode == "XML":
-        gIsXML = True
         gOutputFile = "Li+.xhtml"
         doc = etree.parse(testFile)
         ns = etree.QName(doc.getroot()).namespace
@@ -53,8 +51,9 @@ def init(args):
         else:
             raise BaseException("Unknown namespace")
     elif mode == "HTML":
-        gIsXML = False
-        gOutputFile = "Li+.html"
+        # LiPlusXML has converted the document into XHTML
+        gOutputFile = "Li+.xhtml"
+        gXHTMLContainerXSLT = None
     else:
         raise BaseException("Unknown document format")
 
@@ -83,8 +82,10 @@ def init(args):
         outputJax = args[3]
     else:
         outputJax = OUTPUT_JAX_LIST[0]
-
-    timeOut = DEFAULT_TIMEOUT
+    if l > 5:
+        timeOut = args[4]
+    else:
+        timeOut = DEFAULT_TIMEOUT * 1000
 
     gSelenium = seleniumMathJax.seleniumMathJax(True,
                                                 False,
@@ -112,38 +113,22 @@ def interesting(args, tempPrefix):
     global gTestsuiteHeaderXSLT
     global gXHTMLContainerXSLT
     global gErrorFragment
-    global gIsXML
 
     testFile = args[-1]
 
-    if gIsXML:
-        doc = etree.parse(testFile)
-    else:
-        parser = etree.HTMLParser()
-        doc = etree.parse(testFile, parser)
-
+    doc = etree.parse(testFile)
     if gXHTMLContainerXSLT is not None:
         doc = gXHTMLContainerXSLT(doc)
 
     doc = gTestsuiteHeaderXSLT(doc)
 
     outputFile = open(("../testsuite/%s" % gOutputFile), "w")
-    if gIsXML:
-        outputFile.write(etree.tostring(doc,
-                                        method="xml",
-                                        xml_declaration = True,
-                                        pretty_print = True,
-                                        encoding = "UTF-8"))
-    else:
-        outputFile.write(etree.tostring(doc,
-                                        method="html",
-                                        pretty_print=True,
-                                        encoding = "UTF-8"))
+    outputFile.write(etree.tostring(doc,
+                                    method="xml",
+                                    xml_declaration = True,
+                                    pretty_print = True,
+                                    encoding = "UTF-8"))
     outputFile.close()
-
-
-    print "%stestsuite/%s" % (MATHJAX_TEST_LOCAL_URI,
-                              gOutputFile)
 
     try:
         # execute the test
@@ -161,4 +146,4 @@ def finalize(args):
 
     gSelenium.post()
     gSelenium.stop()
-    removeFile(("../testsuite/%s" % gOutputFile))
+    # removeFile(("../testsuite/%s" % gOutputFile))

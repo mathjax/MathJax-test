@@ -20,14 +20,25 @@
 """
 @package LiPlusXML
 This modules implements LiPlus's testcase interface for XML documents where
-tokens are elements and attributes. The HTML parser can also be used.
+tokens are elements and attributes. If the HTML mode is used, the file will
+be loaded via the HTML5 parser and converted into XHTML. Warning: the HTML5
+parser may be slow for large document and some information may be lost during
+the conversion.
 """
 
 from collections import deque
 from lxml import etree
+from html5lib import parse as HTML5parse
 
+NS_XHTML = "http://www.w3.org/1999/xhtml"
+NS_SVG = "http://www.w3.org/2000/svg"
+NS_XLINK = "http://www.w3.org/1999/xlink"
+NS_MATHML = "http://www.w3.org/1998/Math/MathML"
 NS_LIPLUS = "http://www.mathjax.org/namespace/LiPlus"
 ATTRIBUTE_LIPLUS_REMOVE = "{%s}liplusrm" % NS_LIPLUS
+
+NS_MAP = { "li": NS_LIPLUS,
+           "h": NS_XHTML, "s": NS_SVG, "m": NS_MATHML, "xl": NS_XLINK }
 
 class LiPlusXML:
 
@@ -45,8 +56,9 @@ class LiPlusXML:
         if aIsXML:
             self.mDocument = etree.parse(self.mFileName)
         else:
-            parser = etree.HTMLParser()
-            self.mDocument = etree.parse(self.mFileName, parser)
+            inputFile = open(self.mFileName)
+            self.mDocument = HTML5parse(inputFile, treebuilder="lxml")
+            inputFile.close()
 
         self.mLiPlusXSLT = etree.XSLT(etree.parse("LiPlusXML.xsl"))
 
@@ -133,19 +145,31 @@ class LiPlusXML:
             del self.mMarkedAttributes[aElement]
 
     def outputFile(self):
-        reducedDocument = self.mLiPlusXSLT(self.mDocument)
+        # By default, lxml uses namespace prefixes ns0, ns1 etc We want to use
+        # our own prefixes and in particular no prefix at all for the host
+        # language. There seem to be no way to modify the mapping on the doc
+        # element, once created. To workaround that, we use a dummy root with
+        # the right mapping...
+        root = self.mDocument.getroot()
+        rootNamespace = etree.QName(root).namespace
+        nsmap = NS_MAP
+        key = None
+        for k in nsmap:
+            if nsmap[k] == rootNamespace:
+                key = k
+                break
+        if key is not None:
+            del nsmap[key]
+        nsmap[None] = rootNamespace
+        dummyRoot = etree.Element("{%s}dummyRoot" % rootNamespace, nsmap=nsmap)
+        dummyRoot.append(root)
+
+        reducedDocument = self.mLiPlusXSLT(root)
 
         outputFile = open(self.mFileName, "w")
-
-        if self.mIsXML:
-            outputFile.write(etree.tostring(reducedDocument,
-                                            method="xml",
-                                            xml_declaration = True,
-                                            pretty_print = True,
-                                            encoding = "UTF-8"))
-        else:
-            outputFile.write(etree.tostring(reducedDocument,
-                                            method="html",
-                                            pretty_print=True,
-                                            encoding = "UTF-8"))
-
+        outputFile.write(etree.tostring(reducedDocument,
+                                        method="xml",
+                                        xml_declaration = True,
+                                        pretty_print = True,
+                                        encoding = "UTF-8"))
+        outputFile.close()

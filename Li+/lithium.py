@@ -24,7 +24,6 @@ from LiPlusText import LiPlusText
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-
 if __name__ == "__main__":
 
     parser = ArgumentParser(
@@ -48,7 +47,11 @@ Example: \n\
 Condition scripts\n\
 \n\
   interactive\n\
-  mathjax-processing-error\n\
+    Let the user determine whether the testcase is interesting\n\
+  mathjax [MathjaxURI [browser [font [outputjax [timeout]]]]] errorFragment\n\
+    Open the testcase using MathJax test framework. The testcase is\n\
+    interesting if a Javascript error containing errorFragment is found.\n\
+    \n\
 \n\
 Text mode\n\
 \n\
@@ -132,6 +135,9 @@ condition script.")
     lithium = LiPlus(testcase)
     isMinimal = (len(lithium.mElements) <= 1)               
 
+    # the parsing/serializing of the initial testcase may change it a bit, so
+    # output it now.
+    testcase.outputFile() 
     if not conditionScript.interesting(args.conditionArgs, None):
         print "The initial testcase is not interesting!"
         if hasattr(conditionScript, "finalize"):
