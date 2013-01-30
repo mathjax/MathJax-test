@@ -341,7 +341,13 @@ function signalListener(aMessage)
 {
     if (aMessage[0] == "Math Processing Error" ||
         aMessage[0] == "TeX Jax - parse error") {
-        throw aMessage[2]
+	      if (gErrorHandler) {
+	          errorHandler(aMessage[2],
+			                   aMessage[2].fileName,
+			                   aMessage[2].lineNumber)
+	      } else {
+            throw aMessage[2]
+	      }
     }
 }
 
