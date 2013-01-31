@@ -1,0 +1,41 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue384</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../treeReftests.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.extensions.push("asciimath2jax.js");
+      gConfigObject.jax.push("input/AsciiMath");
+      gConfigObject.AsciiMath = { decimal: "," };
+      }
+    </script>
+    
+  </head>
+
+  <body>
+    <!-- See issue 384
+         https://github.com/mathjax/MathJax/issues/384 -->
+    <div id="reftest-element">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mrow>
+          <mstyle displaystyle="true">
+            <msup>
+              <mi>x</mi>
+              <mn>2,6</mn>
+            </msup>
+            <mo>+</mo>
+            <mn>4,5</mn>
+          </mstyle>
+        </mrow>
+      </math>
+    </div>
+  </body>
+</html>
