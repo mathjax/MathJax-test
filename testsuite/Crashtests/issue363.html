@@ -8,15 +8,36 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].availableFonts = [];
+      gConfigObject["HTML-CSS"].imageFont = null;
+      }
+    </script>
   </head>
 
   <body>
     <!-- See issue 363
          https://github.com/mathjax/MathJax/issues/363 -->
+
+    <!-- test unsupported/invalid mathvariant values -->
     <math><mi mathvariant="inital">x</mi></math>
     <math><mi mathvariant="tailed">x</mi></math>
     <math><mi mathvariant="looped">x</mi></math>
     <math><mi mathvariant="stretched">x</mi></math>
     <math><mi mathvariant="unknown">x</mi></math>
+
+    <!-- test some variant with generic fonts, (HTML-CSS) -->
+    <math><mi>x</mi></math> <!-- italic -->
+    <math><mn mathvariant="bold">x</mn></math>
+    <math><mo mathvariant="fraktur">x</mo></math>
+    <math><mtext style="double-struck">x</mtext></math>
+ 
+    <!-- more tests for mo with generic fonts (HTML-CSS) -->
+    <math><mo largeop="true" displaystyle="false">x</mo></math>
+    <math><mo largeop="true" displaystyle="true">x</mo></math>
+    <math><msub><mtext>base</mtext><mo>"script'</mo></msub></math>
+
   </body>
 </html>
