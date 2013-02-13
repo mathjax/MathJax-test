@@ -75,14 +75,10 @@ def init(args):
     else:
         font = FONT_LIST[0]
     if l > 3:
-        font = args[3]
-    else:
-        font = FONT_LIST[0]
-    if l > 4:
         outputJax = args[3]
     else:
         outputJax = OUTPUT_JAX_LIST[0]
-    if l > 5:
+    if l > 4:
         timeOut = args[4]
     else:
         timeOut = DEFAULT_TIMEOUT * 1000
