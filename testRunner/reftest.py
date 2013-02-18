@@ -50,6 +50,8 @@ This module implements various types of reftests, controls the executions and
 reports the results.
 """
 
+from __future__ import print_function
+
 from config import MATHJAX_TEST_PUBLIC_URI
 MATHJAX_TESTSUITE_PATH = "../testsuite/"
 
@@ -83,7 +85,7 @@ def verifyPageExistence(aTestDir, aTestPage):
         path = path[:i]
     path = aTestDir + path
     if (not os.path.exists(MATHJAX_TESTSUITE_PATH + path)):
-        print >> sys.stderr, "warning: " + path + " does not exist!"
+        print("warning: " + path + " does not exist!", file=sys.stderr)
 
 class reftestSuite():
     """
@@ -176,7 +178,7 @@ class reftestSuite():
         that it will be kept by the output formater.
         """
         prefix = "REFTEST INFO | "
-        print prefix + aString.replace("\n", "\n" + prefix)
+        print(prefix + aString.replace("\n", "\n" + prefix))
 
     def getDirectoryFromManifestFile(self, aManifestFile):
         """
@@ -243,22 +245,22 @@ class reftestSuite():
                         if line.startswith("#") and not line.startswith("# @"):
                             words = line.split()
                             if len(words) > 1:
-                                print line[1:].rstrip().lstrip()
+                                print(line[1:].rstrip().lstrip())
                             continue
                         else:
-                            print '</div>'
+                            print('</div>')
                             state2 = 0
 
                     if state2 == 0:
                         if line.startswith("# @"):
                             annotationID = line.split()[1][1:]
-                            print '<div id="' + \
+                            print('<div id="' + \
                                 annotationPrefix + \
-                                annotationID + '">'
-                            print '<h2><a href="' + MATHJAX_TEST_PUBLIC_URI + \
+                                annotationID + '">')
+                            print('<h2><a href="' + MATHJAX_TEST_PUBLIC_URI + \
                                 'testsuite/' + aManifestFile + '">' + \
                                 aManifestFile + ' [' + \
-                                annotationID + ']</a></h2>'
+                                annotationID + ']</a></h2>')
                             state2 = 1
                             continue
 
@@ -345,11 +347,11 @@ class reftestSuite():
                         reftestList = testDirectory + word
                         if type(aSelenium) == str:
                           if aSelenium == "printList":
-                            print ",[\"" + \
+                            print(",[\"" + \
                                 self.getDirectoryFromManifestFile(word) + "\"",
                             self.addReftests(aSelenium, aRoot, reftestList, -1,
-                                             testExpectedStatus)
-                            print "]",
+                                             testExpectedStatus))
+                            print("]", end=""),
                           elif aSelenium == "printNotes":
                               self.addReftests(aSelenium, aRoot, reftestList,
                                                -1, testExpectedStatus)
@@ -463,7 +465,7 @@ fails/random")
                 if state == 6:
                     if type(aSelenium) == str:
                         if aSelenium == "printList":
-                            print ",\"" + testURI + "\"",
+                            print(",\"" + testURI + "\"", end="")
                             verifyPageExistence(testDirectory,
                                                 testURI)
                             if testURIRef:
@@ -661,7 +663,7 @@ class reftest():
         if self.mExpectedStatus == EXPECTED_IRRELEVANT:
             msg = "REFTEST INFO | " + self.mID
             msg += " is irrelevant for this configuration\n"
-            print msg
+            print(msg)
             return True
 
         if ((not self.mTestSuite.mRunSkipTests) and
@@ -670,7 +672,7 @@ class reftest():
             if (self.mTestAnnotation):
                 msg += " " + self.mTestAnnotation
             msg += "\n"
-            print msg
+            print(msg)
             return True
 
         if  ((not self.mTestSuite.mRunSlowTests) and self.mSlow):
@@ -678,7 +680,7 @@ class reftest():
             if (self.mTestAnnotation):
                 msg += " " + self.mTestAnnotation
             msg += "\n"
-            print msg
+            print(msg)
             return True
 
         return False
@@ -746,12 +748,12 @@ class reftest():
         except seleniumMathJax.ReftestError as data:
             (success, msg) = self.determineSuccess(None, False)
             msg += self.escapeExceptionMessage(str(data))
-            print msg
+            print(msg)
         except WebDriverException as data:
             # exception raised by WebDriver
             (success, msg) = self.determineSuccess(None, False)
             msg += self.escapeExceptionMessage(data.msg)
-            print msg
+            print(msg)
             # XXXfred: are WebDriverExceptions all fatal exceptions?
             # Otherwise, we should not propagate them
             raise
@@ -759,7 +761,7 @@ class reftest():
             # other exception.
             (success, msg) = self.determineSuccess(None, False)
             msg += self.escapeExceptionMessage(repr(data))
-            print msg
+            print(msg)
             raise
         
     def runTest_(self):
@@ -784,7 +786,7 @@ class loadReftest(reftest):
 
         (success, msg) = self.determineSuccess(self.mType, True)
         msg += "(LOAD ONLY)\n"
-        print msg
+        print(msg)
 
 class scriptReftest(reftest):
 
@@ -808,10 +810,10 @@ class scriptReftest(reftest):
         (success, msg) = self.determineSuccess(self.mType, success1)
         msg += "(SCRIPT REFTEST)"
         if success:
-            print msg
+            print(msg)
             self.mTestSuite.printInfo(msg1)
         else:
-            print msg
+            print(msg)
             self.mTestSuite.printInfo(msg1)
        
 class treeReftest(reftest):
@@ -839,7 +841,7 @@ class treeReftest(reftest):
         (success, msg) = self.determineSuccess(self.mType, isEqual)
 
         if success:
-            print msg
+            print(msg)
         else:
             # Return failure together with a diff of the sources
             msg += "source comparison ("+ self.mType +") \n"
@@ -862,7 +864,7 @@ class treeReftest(reftest):
                 msg += "REFTEST   SOURCE: " + \
                     self.mSelenium.encodeSourceToBase64(source)
 
-            print msg
+            print(msg)
 
 def isSmallPixelValue(aPixelValue):
     if aPixelValue <= 15:
@@ -903,7 +905,7 @@ class visualReftest(reftest):
         (success, msg) = self.determineSuccess(self.mType, isEqual)
 
         if success:
-            print msg
+            print(msg)
         else:
             # Return failure together with base64 images of the reftest
             msg += "image comparison ("+ self.mType +") \n"
@@ -915,4 +917,4 @@ class visualReftest(reftest):
             elif isEqual:
                 msg += "REFTEST   IMAGE: " + \
                     self.mSelenium.encodeImageToBase64(image)
-            print msg
+            print(msg)

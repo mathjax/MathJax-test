@@ -38,4 +38,4 @@ if __name__ == "__main__":
     sock.send("TASKVIEWER\n")
 
     response = sock.recv(4096)
-    print response
+    print(response)

@@ -132,7 +132,7 @@ def interesting(args, tempPrefix):
         return False
     except seleniumMathJax.ReftestError as data:
         errorMessage = str(data)
-        print "seleniumMathJax: %s" % errorMessage
+        print("seleniumMathJax: %s" % errorMessage)
         if errorMessage.find(gErrorFragment) >= 0:
             return True
         return False

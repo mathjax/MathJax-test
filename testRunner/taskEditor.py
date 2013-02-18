@@ -48,15 +48,15 @@ def usage():
     @brief Display command line usage for this script
     """
     print
-    print "Usage:"
+    print("Usage:")
     print
-    print "python taskEditor.py command taskName"
+    print("python taskEditor.py command taskName")
     print
-    print "where command is REMOVE, RUN, RESTART, STOP or FORMAT and taskName"
-    print "corresponds to an element in the task list, or"
+    print("where command is REMOVE, RUN, RESTART, STOP or FORMAT and taskName")
+    print("corresponds to an element in the task list, or")
     print
-    print "python taskEditor.py EDIT taskName configFile [outputDirectory\
- [taskSchedule]]"
+    print("python taskEditor.py EDIT taskName configFile [outputDirectory\
+ [taskSchedule]]")
     print
     exit(1)
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     if (command == "EDIT"):
         configFile = sys.argv[3]
         if (not os.path.exists(configFile)):
-            print "File '" + configFile + "' not found."
+            print("File '" + configFile + "' not found.")
             exit(1)
         if l >= 5:
             outputDirectory = sys.argv[4]
@@ -102,11 +102,11 @@ if __name__ == "__main__":
         gRequest += "\nTASKEDITOR EDIT END" 
     gRequest += "\n"
 
-    print gRequest
+    print(gRequest)
     sock.send(gRequest)
 
     response = sock.recv(128).strip()
-    print response
+    print(response)
     
     if ((command == "EDIT" and
          response == ("'" + taskName + "' edited.")) or

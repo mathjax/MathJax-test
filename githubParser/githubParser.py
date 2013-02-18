@@ -30,6 +30,8 @@ The file for the @ref githubParser module.
 This module implements allow to parse github comments
 """
 
+from __future__ import print_function
+
 from lxml import etree
 from urllib import urlretrieve
 from copy import deepcopy
@@ -55,9 +57,9 @@ class issueClass:
         return self.mLabels.count(aLabel) > 0
 
 def downloadPage(aURL, aFile):
-    print "Downloading " + aURL + "..."
+    print("Downloading " + aURL + "...")
     urlretrieve(aURL, aFile)
-    print "done"
+    print("done")
 
 def appendIssues(aList, aNode):
     for issueNode in aNode:
@@ -128,23 +130,23 @@ if __name__ == "__main__":
         issue = issueList[i]
         if (issue.hasLabel("Accepted") and
             issue.hasLabel("Ready for Release")):
-            print >>f1, "Issue " + str(issue.mId)
-            print >>f1, "https://github.com/mathjax/MathJax/issues/" + \
-                str(issue.mId) + "\n"
+            print("Issue " + str(issue.mId), file=f1)
+            print("https://github.com/mathjax/MathJax/issues/" +
+                  str(issue.mId) + "\n", file=f1)
             if (issue.hasLabel("QA - Do Not Write Automated Test")):
-                print >>f1, "No Automated Test. To verify manually."
+                print("No Automated Test. To verify manually.", file=f1)
             elif (issue.hasLabel("QA - In Testsuite")):
                 for test in issue.mTests:
-                    print >>f1, test
-                    print >>f2, test
+                    print(test, file=f1)
+                    print(test, file=f2)
             else:
-                print >>f1, "Is it ready for Release?"
-            print >>f1
+                print("Is it ready for Release?", file=f1)
+            print(file=f1)
     f2.close()
 
-    print >>f1, "List of Tests:"
+    print("List of Tests:", file=f1)
     pipe = subprocess.Popen([PYTHON, "../testRunner/runTestsuite.py",
                              "--printListOfTests", TMP_FILE],
                              stdout=subprocess.PIPE)
-    print >> f1, pipe.stdout.read()
+    print(pipe.stdout.read(), file=f1)
     f1.close()

@@ -139,17 +139,17 @@ condition script.")
     # output it now.
     testcase.outputFile() 
     if not conditionScript.interesting(args.conditionArgs, None):
-        print "The initial testcase is not interesting!"
+        print("The initial testcase is not interesting!")
         if hasattr(conditionScript, "finalize"):
             conditionScript.finalize(args.conditionArgs)
         exit(0)
 
     while not isMinimal:
 
-        print ("size of Testcase: %d ; Chunck size: %d" %
-               (len(lithium.mElements), lithium.mChunkSize))
+        print(("size of Testcase: %d ; Chunck size: %d" %
+               (len(lithium.mElements), lithium.mChunkSize)))
 
-        print "Trying to reduce..."
+        print("Trying to reduce...")
         lithium.tryToReduce()
         testcase.outputFile()
 
@@ -161,4 +161,4 @@ condition script.")
         conditionScript.finalize(args.conditionArgs)
 
     testcase.outputFile()
-    print "Minimal testcase obtained"
+    print("Minimal testcase obtained")

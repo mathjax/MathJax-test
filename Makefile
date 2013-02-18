@@ -157,7 +157,7 @@ clearTaskList:
 
 runTaskHandler:
 	@ echo 'Running the task handler...'
-	@ cd testRunner/ ; python taskHandler.py
+	@ cd testRunner/ ; $(PYTHON) taskHandler.py
 
 runSeleniumServer:
 	@ echo 'Running selenium server (default mode)...'

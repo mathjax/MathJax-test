@@ -39,9 +39,9 @@ def usage():
     @brief Display command line usage for this script
     """
     print
-    print "Usage:"
+    print("Usage:")
     print
-    print "python hostInfo.py host"
+    print("python hostInfo.py host")
     print
     exit(1)
 
@@ -58,4 +58,4 @@ if __name__ == "__main__":
     sock.send("HOSTINFO " + host + "\n")
 
     response = sock.recv(4096)
-    print response
+    print(response)

@@ -40,6 +40,8 @@ The server handling the task list.
 Path to the taskList directory
 """
 
+from __future__ import print_function
+
 from config import PYTHON, PERL
 from config import TASK_HANDLER_HOST, TASK_HANDLER_PORT
 from config import HOST_LIST, HOST_LIST_OS, OS_LIST, BROWSER_LIST
@@ -391,7 +393,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
                                      MATHJAX_TEST_PUBLIC_URI],
                                     stdout=subprocess.PIPE)
             fp = file(outputHTML, "w")
-            print >> fp, pipe.stdout.read()
+            print(pipe.stdout.read(), file=fp)
             fp.close()
             return "Output of '" + aTaskName + "' formatted!\n"
 
@@ -451,7 +453,7 @@ class requestHandler(SocketServer.StreamRequestHandler):
         global gServer
 
         request = self.rfile.readline().strip()
-        print request
+        print(request)
         items = request.split()
         client = items[0]
         if (client == "TASKVIEWER"):
@@ -991,8 +993,8 @@ class task:
             parameterValue = ""
         else:
             if (len(parameterValue) > 1):
-                print "warning: the task handler does not accept multiple\
-option values"
+                print("warning: the task handler does not accept multiple\
+option values")
             parameterValue = parameterValue[0]
     
         if (not(aOverwrite) and
@@ -1055,7 +1057,7 @@ option values"
                     pass
             self.mParameters[parameterName] = parameterValue
         else:
-            print "Unknown parameter " + parameterName
+            print("Unknown parameter " + parameterName)
 
     def chooseDefaultHost(self):
         """
@@ -1087,7 +1089,7 @@ option values"
 
         while(True):
             request = aRequestHandler.rfile.readline().strip()
-            print request
+            print(request)
 
             if (request == "TASKEDITOR EDIT END"):
                 break
@@ -1200,7 +1202,7 @@ class taskHandler:
         @fn start(self)
         @brief start the server
         """
-        print "Task Handler started."
+        print("Task Handler started.")
         if (not os.path.exists(TASK_LIST_TXT)):
             # save an empty task list
             self.saveTaskList()
@@ -1216,7 +1218,7 @@ class taskHandler:
         @fn start(self)
         @brief stop the server
         """
-        print "Task Handler received SIGINT!"
+        print("Task Handler received SIGINT!")
         self.saveTaskList()
 
     def getTaskInfo(self, aTaskName):
