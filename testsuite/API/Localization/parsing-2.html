@@ -1,0 +1,53 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>parsing</title>
+    <!-- Copyright (c) 2013 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var s1 = "%1 %{plural:%1|file|files} loaded";
+      var r10 = MathJax.Localization._("dummy", s1, 0) == "0 files loaded";
+      var r11 = MathJax.Localization._("dummy", s1, 1) == "1 file loaded";
+      var r12 = MathJax.Localization._("dummy", s1, 2) == "2 files loaded";
+
+      var s2 = "%1 %{plural:%1|file|files} loaded and %2 %{plural:%2|image|images} displayed";
+      var r200 = MathJax.Localization._("dummy", s2, 0, 0) == "0 files loaded and 0 images displayed";
+      var r212 = MathJax.Localization._("dummy", s2, 1, 2) == "1 file loaded and 2 images displayed";
+      var r201 = MathJax.Localization._("dummy", s2, 0, 1) == "0 files loaded and 1 image displayed";
+
+      var s3 = "%{plural:%1|One {only%}|Two {or more%}}";
+      var r31 = MathJax.Localization._("dummy", s3, 1) == "One {only}";
+      var r32 = MathJax.Localization._("dummy", s3, 2) == "Two {or more}";
+
+      var s4 = "%%{plural:%%1|A|B}";
+      var r4 = MathJax.Localization._("dummy", s4) == "%{plural:%1|A|B}";
+
+      return [
+        newScriptReftestResult(s1 + "(%1=0)", r10),
+        newScriptReftestResult(s1 + "(%1=1)", r11),
+        newScriptReftestResult(s1 + "(%1=2)", r12),
+        newScriptReftestResult(s2 + "(%1=0,%2=0)", r200),
+        newScriptReftestResult(s2 + "(%1=1,%2=2)", r212),
+        newScriptReftestResult(s2 + "(%1=0,%2=1)", r201),
+        newScriptReftestResult(s3  + "(%1=1)", r31),
+        newScriptReftestResult(s3 + "(%1=2)", r32),
+        newScriptReftestResult(s4, r4)
+      ];
+
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

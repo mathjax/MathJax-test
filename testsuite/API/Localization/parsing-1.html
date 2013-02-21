@@ -1,0 +1,83 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>parsing</title>
+    <!-- Copyright (c) 2013 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      return [
+
+      newScriptReftestResult(
+        "MathJax.Localization (no args)",
+        MathJax.Localization._("dummy", "Simple string") ==
+                               "Simple string"),
+
+      newScriptReftestResult(
+        "MathJax.Localization (number arg)",
+        MathJax.Localization._("dummy", "Number %1", -456.273) ==
+                               "Number -456.273"),
+
+      newScriptReftestResult(
+        "MathJax.Localization (string arg)",
+        MathJax.Localization._("dummy", "String '%1'", "abc") ==
+                               "String 'abc'"),
+
+      newScriptReftestResult(
+        "MathJax.Localization (multiple args)",
+        MathJax.Localization._("dummy", "[%1, %2, %3, %4]", 1, '2', '3', 4) ==
+                               "[1, 2, 3, 4]"),
+
+      newScriptReftestResult(
+        "MathJax.Localization (multiple args, not ordered)",
+        MathJax.Localization._("dummy", "[%3, %2, %4, %1]", 1, '2', 3, '4') ==
+                               "[3, 2, 4, 1]"),
+
+      newScriptReftestResult(
+        "MathJax.Localization (multiple args >= 10)",
+        MathJax.Localization._("dummy",
+                               "%1%10%3%11%4%9%7%8%5%2%13%12%6",
+                               'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                               'k', 'l', 'm') == "ajckdighebmlf"),
+
+      newScriptReftestResult(
+        "MathJax.Localization (% at the end of the string)",
+        MathJax.Localization._("dummy", "100%") == "100%"), 
+
+      newScriptReftestResult(
+        "MathJax.Localization (%{INTEGER})",
+         MathJax.Localization._("dummy", "%{1}0%1_%{10}", 'x') == "10x_10"), 
+
+      newScriptReftestResult(
+        "MathJax.Localization (%CHAR)",
+         MathJax.Localization._("dummy", "%%, %a, %1", 'x') == "%, a, x"),
+
+      newScriptReftestResult(
+        "MathJax.Localization (surrogate pairs)",
+        MathJax.Localization._("dummy",
+                              "%2 \uD800\uDC00 %1 \uDBFF\uDFFF %3",
+                              'a', 2, '\uD835\uDCA6') ==
+                              "2 \uD800\uDC00 a \uDBFF\uDFFF \uD835\uDCA6"),
+
+      newScriptReftestResult(
+        "MathJax.Localization (%\uD835\uDCA6)",
+        "dummy", "%\uD835\uDCA6", "\uD835\uDCA6")
+
+      ];
+
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>
