@@ -31,6 +31,21 @@
       var s4 = "%%{plural:%%1|A|B}";
       var r4 = MathJax.Localization._("dummy", s4) == "%{plural:%1|A|B}";
 
+      MathJax.Localization.plural = function(n) {
+        if (0 <= n && n < 2) return 1;
+        return 2;
+      }
+      var s5 = "%1 %{plural:%1|fichier chargé|fichiers chargés}";
+      var r50 = MathJax.Localization._("dummy", s5, 0) == "0 fichier chargé";
+      var r51 = MathJax.Localization._("dummy", s5, 1) == "1 fichier chargé";
+      var r52 = MathJax.Localization._("dummy", s5, 2) == "2 fichiers chargés";
+
+      MathJax.Localization.number = function (n) {
+        return n.replace(".", ",");
+      }
+      var s6 = "%1 + %2 = %3";
+      var r6 = MathJax.Localization._("sum", s6, 5.3, 2.45, 7.75) == "5,3 + 2,45 = 7,75";
+
       return [
         newScriptReftestResult(s1 + "(%1=0)", r10),
         newScriptReftestResult(s1 + "(%1=1)", r11),
@@ -40,7 +55,11 @@
         newScriptReftestResult(s2 + "(%1=0,%2=1)", r201),
         newScriptReftestResult(s3  + "(%1=1)", r31),
         newScriptReftestResult(s3 + "(%1=2)", r32),
-        newScriptReftestResult(s4, r4)
+        newScriptReftestResult(s4, r4),
+        newScriptReftestResult(s5 + "(%1=0)", r50),
+        newScriptReftestResult(s5 + "(%1=1)", r51),
+        newScriptReftestResult(s5 + "(%1=2)", r52),
+        newScriptReftestResult(s6, r6)
       ];
 
       }    

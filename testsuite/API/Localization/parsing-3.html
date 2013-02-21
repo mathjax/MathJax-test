@@ -1,0 +1,65 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>parsing</title>
+    <!-- Copyright (c) 2013 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var s1 = ["Do this",["b",null,["now!"]]]
+      var s1ref = s1.toString();
+      var r1 = MathJax.Localization._("dummy",s1).toString() == s1ref;
+
+      var s2 = ["Do this",["b",null,["in %1 %{plural:%1|week|weeks}!"]]]
+      var s2ref = ["Do this",["b",null,["in 2 weeks!"]]].toString();
+      var r2 = MathJax.Localization._("dummy", s2, 2).toString() == s2ref;
+
+      var name = "Tom";
+      var url = "http://myimage.png";
+      var s3 = ["%1 likes this picture: ",["img", {src: "%2"}]];
+      var s3ref = [name+" likes this picture: ",["img", {src: url}]].toString();
+      r3 = MathJax.Localization._("dummy", s3, name, url).toString() == s3ref;
+
+      var r4 =
+      MathJax.Localization._("dummy",
+        "a%1b%2f%3h", [], ['c', 'd', 'e'], ['g']).toString() ==
+        ['a', 'b', 'c', 'd', 'e', 'f', 'g'].toString();
+
+      var r5 = MathJax.Localization._(
+        "dummy", "Do this%1", ["b",null,["now!"]]).toString() == s1ref;
+
+      var r6 = MathJax.Localization._(
+        "dummy", "Do this%1",
+        ["b",null,
+          [MathJax.Localization._("dummy", "in %1 %{plural:%1|week|weeks}!",2)]
+        ]) == s2ref;
+
+      var r7 = MathJax.Localization._("dummy", "%1 likes this picture: %2",
+        name, ["img", {src: url}]).toString() == s3ref;
+
+      return [
+        newScriptReftestResult("HTML snippet", r1),
+        newScriptReftestResult("HTML snippet (arg in text node)", r2),
+        newScriptReftestResult("HTML snippet (arg in attribute)", r3),
+        newScriptReftestResult("Array argument", r4),
+        newScriptReftestResult("HTML snippet as argument (1)", r5),
+        newScriptReftestResult("HTML snippet as argument (2)", r6),
+        newScriptReftestResult("HTML snippet as argument (3)", r7),
+      ];
+
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>
