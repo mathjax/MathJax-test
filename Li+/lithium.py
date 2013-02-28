@@ -138,7 +138,7 @@ condition script.")
     # the parsing/serializing of the initial testcase may change it a bit, so
     # output it now.
     testcase.outputFile() 
-    if not conditionScript.interesting(args.conditionArgs, None):
+    if not conditionScript.interesting(args.conditionArgs, "tmp"):
         print("The initial testcase is not interesting!")
         if hasattr(conditionScript, "finalize"):
             conditionScript.finalize(args.conditionArgs)
@@ -155,7 +155,7 @@ condition script.")
 
         isMinimal = lithium.\
             provideResult(conditionScript.\
-                              interesting(args.conditionArgs, None))
+                              interesting(args.conditionArgs, "tmp"))
 
     if hasattr(conditionScript, "finalize"):
         conditionScript.finalize(args.conditionArgs)
