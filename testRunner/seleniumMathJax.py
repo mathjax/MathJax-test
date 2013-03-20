@@ -197,10 +197,16 @@ class seleniumMathJax(object):
             elif aBrowser == "HTMLUnit":
                 desiredCapabilities = \
                     webdriver.DesiredCapabilities.HTMLUNITWITHJS
+            elif aBrowser == "PhantomJS":
+                desiredCapabilities = webdriver.DesiredCapabilities.PHANTOMJS
             elif aOperatingSystem == "Mac" and aBrowser == "iPhone":
                 desiredCapabilities = webdriver.DesiredCapabilities.IPHONE
+            elif aOperatingSystem == "Mac" and aBrowser == "iPad":
+                desiredCapabilities = webdriver.DesiredCapabilities.IPAD
             elif aOperatingSystem == "Linux" and aBrowser == "Android":
                 desiredCapabilities = webdriver.DesiredCapabilities.ANDROID
+            elif aOperatingSystem == "Mac" and aBrowser == "Safari":
+                desiredCapabilities = webdriver.DesiredCapabilities.SAFARI
             else:
                 raise Exception("Webdriver: OS/browser not available")
 
