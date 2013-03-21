@@ -1,0 +1,44 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>maction tooltip</title>
+    <!-- Copyright (c) 2013 MathJax Project
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject["HTML-CSS"].tooltip = { delayPost: 0 };
+      gConfigObject["SVG"].tooltip = { delayPost: 0 };
+      }
+
+      function postMathJax()
+      {
+      var event = {
+      clientX: 0,
+      clientY: 0
+      };
+      if (gOutputJax == "HTML-CSS") {
+        MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOver(event);
+      } else if (gOutputJax == "SVG") {
+        MathJax.Hub.getAllJax()[0].root.data[0].data[0].SVGtooltipOver(event);
+      }
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <math>
+      <maction actiontype="tooltip">
+        <mtext>maction</mtext>
+        <mfenced><mi>x</mi></mfenced>
+      </maction>
+    </math>
+
+  </body>
+</html>
