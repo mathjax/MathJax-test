@@ -348,9 +348,9 @@ class reftestSuite():
                         if type(aSelenium) == str:
                           if aSelenium == "printList":
                             print(",[\"" + \
-                                self.getDirectoryFromManifestFile(word) + "\"",
+                                self.getDirectoryFromManifestFile(word) + "\""),
                             self.addReftests(aSelenium, aRoot, reftestList, -1,
-                                             testExpectedStatus))
+                                             testExpectedStatus)
                             print("]", end=""),
                           elif aSelenium == "printNotes":
                               self.addReftests(aSelenium, aRoot, reftestList,
