@@ -5,7 +5,7 @@
 #
 
 include Characters/reftest.list
-include Content/SemanticMappingElements/semantics/reftest.list
+include Content/reftest.list
 include ErrorHandling/reftest.list
 include General/reftest.list
 include Presentation/reftest.list

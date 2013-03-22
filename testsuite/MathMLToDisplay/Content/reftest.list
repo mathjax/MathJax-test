@@ -1,0 +1,3 @@
+include SemanticMappingElements/semantics/reftest.list
+
+== issue404.html issue404-ref.html
