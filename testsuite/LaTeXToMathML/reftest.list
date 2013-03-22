@@ -1,3 +1,4 @@
+include AMScd/reftest.list
 include above-below/reftest.list
 include action/reftest.list
 include arrows/reftest.list
