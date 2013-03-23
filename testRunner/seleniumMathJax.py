@@ -205,7 +205,8 @@ class seleniumMathJax(object):
                 desiredCapabilities = webdriver.DesiredCapabilities.IPAD
             elif aOperatingSystem == "Linux" and aBrowser == "Android":
                 desiredCapabilities = webdriver.DesiredCapabilities.ANDROID
-            elif aOperatingSystem == "Mac" and aBrowser == "Safari":
+            elif ((aOperatingSystem == "Windows" or
+                   aOperatingSystem == "Mac") and aBrowser == "Safari"):
                 desiredCapabilities = webdriver.DesiredCapabilities.SAFARI
             else:
                 raise Exception("Webdriver: OS/browser not available")
