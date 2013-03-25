@@ -54,6 +54,7 @@ tree== primes-3.html primes-3-ref.html
 tree== style-1.html style-1-ref.html
 tree== style-2.html style-2-ref.html
 tree== verb-1.html verb-1-ref.html
+tree== verb-2.html verb-2-ref.html
 
 # XXXfred
 # \mathscr and \scr are in the doc but produce an "Undefined control sequence"
