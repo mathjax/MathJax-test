@@ -14,10 +14,17 @@
 
     <!-- See issue 427
          https://github.com/mathjax/MathJax/issues/427 -->
-    <div>
+    <div id="m">
       <math xmlns="http://www.w3.org/1998/Math/MathML">
-        <mtext id="m" href="#m" mathcolor="blue">RED</mtext>
+        <mtext mathcolor="red">RED</mtext>
+        <mrow mathcolor="blue"><mi>x</mi><mo>+</mo><mi mathcolor="red">y</mi></mrow>
       </math>    
+      <math mathcolor="blue">
+        <mtext mathcolor="red">RED</mtext>
+      </math>
+      <math mathcolor="blue">
+        <mi mathcolor="green">x</mi><mo>+</mo><mi mathcolor="red">y</mi>
+      </math>
     </div>
 
   </body>
