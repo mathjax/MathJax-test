@@ -9,5 +9,5 @@ fails-if(MSIE) == zoom-box-2.html zoom-box-2-ref.html
 == zoom-box-3.html zoom-box-3-ref.html
 != zoom-box-4.html zoom-box-4-ref.html
 fails != zoom-box-5.html zoom-box-5-ref.html
-
+load zoom-box-6.html
 

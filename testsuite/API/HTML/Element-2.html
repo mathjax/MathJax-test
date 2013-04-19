@@ -1,0 +1,30 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Element</title>
+    <!-- Copyright (c) 2013 MathJax Project
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript">
+      function xMathJaxConfig()
+      {
+      var parent = document.getElementById("root");
+      var div = MathJax.HTML.Element("script", {id: "Damn_IE", type: 'math/tex'}, "\\frac{x}{y}");
+      parent.appendChild(div);
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- See issue 342
+         https://github.com/mathjax/MathJax/issues/342 -->
+    <div id="root"></div>
+    
+  </body>
+</html>

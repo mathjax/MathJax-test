@@ -13,3 +13,4 @@ fails-if(SVG) != link-2.html link-ref.html
 != style-2.html style-2-ref.html
 == xmllang1.html xmllang1-ref.html
 == xref1.html xref1-ref.html
+!= href-1.html href-1-ref.html

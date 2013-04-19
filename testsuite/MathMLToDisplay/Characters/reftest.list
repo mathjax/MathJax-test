@@ -29,3 +29,5 @@ require(TeX||ImageTeX) == greek-1.html greek-1-ref.html
 require(TeX||ImageTeX) == greek-2.html greek-2-ref.html
 require(TeX||ImageTeX) == greek-3.html greek-3-ref.html
 require(STIX) != issue222.html issue222-ref.html
+
+== issue380.html issue380-ref.html

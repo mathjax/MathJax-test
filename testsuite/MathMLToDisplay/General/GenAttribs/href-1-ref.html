@@ -3,17 +3,22 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>issue 378</title>
+    <title>href-1</title>
     <!-- Copyright (c) 2013 MathJax Project
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../../../header.js"></script>
   </head>
 
   <body>
 
-    <!-- See issue 378
-         https://github.com/mathjax/MathJax/issues/378 -->
-    <span class="MathJax_Preview">\begin{array}...\end{array}</span>
+    <!-- See issue 427
+         https://github.com/mathjax/MathJax/issues/427 -->
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtext id="m" href="#m" mathcolor="blue">RED</mtext>
+      </math>    
+    </div>
 
-</body></html>
+  </body>
+</html>
