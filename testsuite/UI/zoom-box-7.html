@@ -1,0 +1,36 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue435</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.extensions.push("MathZoom.js");
+      }
+
+      function postMathJax()
+      {
+      var jax = MathJax.Hub.getAllJax()[0];
+      var math = document.getElementById(jax.inputID+"-Frame");
+      if (!math.jaxID) {math = math.childNode}
+      MathJax.Extension.MathZoom.Zoom(null, math)
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- See issue 435
+         https://github.com/mathjax/MathJax/issues/435 -->
+    <div style="border:1px solid black; overflow-y: hidden; overflow-x: auto; height:25em; width:20em; font-size:150%">
+      <div style="height:20em; width:1em; background-color:yellow"></div>
+      <div id="scroll">\[x+1\over x-1\]</div>
+    </div>
+
+  </body>
+</html>
