@@ -1,0 +1,57 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 444</title>
+    <!-- Copyright (c) 2013 MathJax Project
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- See issue 444
+         https://github.com/mathjax/MathJax/issues/444 -->
+
+<math>
+  <mrow class="MJX-TeXAtom-ORD">
+    <mover>
+      <mrow class="MJX-TeXAtom-ORD">
+        <mi>x</mi>
+      </mrow>
+      <mo stretchy="false">&#x20D7;</mo>
+    </mover>
+  </mrow>
+</math>
+
+  <math>
+    <mover>
+      <mrow>
+        <mi>x</mi>
+      </mrow>
+      <mo>&#x20D7;</mo>
+    </mover>
+  </math>
+
+  <math>
+    <mover>
+      <mphantom>
+        <mi>x</mi>
+      </mphantom>
+      <mo>&#x20D7;</mo>
+    </mover>
+  </math>
+
+  <math>
+    <mover>
+      <mstyle>
+        <mi>x</mi>
+      </mstyle>
+      <mo>&#x20D7;</mo>
+    </mover>
+  </math>
+
+  </body>
+</html>

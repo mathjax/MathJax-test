@@ -14,3 +14,4 @@ annotate(@note) fails tree== definecolor-1b.html definecolor-1-ref.html
 tree== definecolor-1c.html definecolor-1-ref.html
 tree== definecolor-2.html definecolor-2-ref.html
 tree== namedcolors-1.html namedcolors-1-ref.html
+== issue446.html issue446-ref.html

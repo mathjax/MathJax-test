@@ -33,3 +33,4 @@ annotate(@issue253) fails-if(Chrome||Safari) == issue253.html issue253-ref.html
 != issue272.html issue272-ref.html
 != issue296.html issue296-ref.html
 == issue378.html issue378-ref.html
+== issue444.html issue444-ref.html
