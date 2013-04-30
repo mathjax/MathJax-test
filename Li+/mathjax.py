@@ -79,7 +79,7 @@ def init(args):
     else:
         outputJax = OUTPUT_JAX_LIST[0]
     if l > 4:
-        timeOut = args[4]
+        timeOut = int(args[4])
     else:
         timeOut = DEFAULT_TIMEOUT * 1000
 
