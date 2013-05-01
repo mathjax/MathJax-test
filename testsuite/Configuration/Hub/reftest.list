@@ -18,7 +18,8 @@ slow script showProcessingMessages-1.html?showProcessing=false
 slow script showProcessingMessages-1.html?showProcessing=true
 == skipStartupTypeset-1.html skipStartupTypeset-1-ref.html
 == styles-1.html styles-1-ref.html
-script v1.0-compatible-1.html
-script v1.0-compatible-2.html
+# We removed the v1.0 warnings so these tests obsolete
+# script v1.0-compatible-1.html
+# script v1.0-compatible-2.html
 == positionToHash-1.html positionToHash-1-ref.html
 load positionToHash-2.html

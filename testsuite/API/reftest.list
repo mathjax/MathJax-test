@@ -8,6 +8,7 @@ include InputJax/reftest.list
 include Message/reftest.list
 include OOP/reftest.list
 include OutputJax/reftest.list
+include Localization/reftest.list
 
 script properties-1.html
 script properties-2.html
