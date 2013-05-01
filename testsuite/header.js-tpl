@@ -51,6 +51,9 @@
  *
  * @var Boolean gErrorHandler
  * Whether the custom error handler should be used.
+ *
+ * @var Object gMaxErrorSignals
+ * Maximum number of error signals expected. To be set in preMathJax.
  */
 var gMathJaxPath = "DEFAULT_MATHJAX_PATH";
 var gMathJaxQueryString = "config=default";
@@ -59,6 +62,8 @@ var gFont = "STIX";
 var gConfigObject;
 var gQueryString = {};
 var gErrorHandler = false;
+var gMaxErrorSignals = { "Math Processing Error": 0,
+                         "TeX Jax - parse error": 0 };
 
 /**
   *  get the current URI of the test file, without query or hash string 
@@ -326,7 +331,9 @@ function finalizeReftests()
 function errorHandler(aErrorMessage, aURL, aLineNumber)
 {
     var data = aErrorMessage;
-    data += " (" + aURL + ", line " + aLineNumber + ")";
+    if (aURL) {
+        data += " (" + aURL + ", line " + aLineNumber + ")";
+    }
     var comment = document.createComment(data);
     document.documentElement.appendChild(comment);
 
@@ -339,15 +346,29 @@ function errorHandler(aErrorMessage, aURL, aLineNumber)
 
 function signalListener(aMessage)
 {
-    if (aMessage[0] == "Math Processing Error" ||
-        aMessage[0] == "TeX Jax - parse error") {
-	      if (gErrorHandler) {
-	          errorHandler(aMessage[2],
-			                   aMessage[2].fileName,
-			                   aMessage[2].lineNumber)
-	      } else {
-            throw aMessage[2]
-	      }
+    var name = aMessage[0];
+    if (name in gMaxErrorSignals) {
+        if (gMaxErrorSignals[name] == 0) {
+            // Maximum number of tolerated errors exceeded, report the error.
+            if (gErrorHandler) {
+                if (name == "Math Processing Error") {
+	                  errorHandler(name,
+                                 aMessage[2].fileName, aMessage[2].lineNumber);
+                } else {
+	                  errorHandler(aMessage);
+                }
+            } else {
+                if (name == "Math Processing Error") {
+                    throw new Error(name, aMessage[2].fileName,
+                                    aMessage[2].lineNumber)
+                } else {
+                    console.error("Unexpected Error Signal: " + aMessage);
+                }
+            }
+        } else {
+            // Decrease the counter of tolerated errors.
+            gMaxErrorSignals[name]--;
+        }
     }
 }
 

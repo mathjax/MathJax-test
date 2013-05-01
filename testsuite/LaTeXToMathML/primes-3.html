@@ -11,6 +11,12 @@
     <script type="text/javascript" src="../treeReftests.js"></script>
     <!-- See issue 278
          https://github.com/mathjax/MathJax/issues/278 -->
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gMaxErrorSignals["TeX Jax - parse error"] = 1;
+      }
+    </script>
   </head>
 
   <body>
