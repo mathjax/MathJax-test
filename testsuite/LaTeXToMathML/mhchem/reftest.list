@@ -1,5 +1,5 @@
 tree== advanced-1.html advanced-1-ref.html
-tree== advanced-2.html advanced-2-ref.html
+fails-if(Opera) tree== advanced-2.html advanced-2-ref.html
 tree== advanced-3.html advanced-3-ref.html
 tree== amounts-1.html amounts-1-ref.html
 tree== arrows-1.html arrows-1-ref.html

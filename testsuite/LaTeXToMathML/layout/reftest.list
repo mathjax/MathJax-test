@@ -8,7 +8,7 @@ tree== lower-1.html lower-1-ref.html
 tree== mathstrut-1.html mathstrut-1-ref.html
 tree== moveleft-1.html moveleft-1-ref.html
 tree== moveright-1.html moveright-1-ref.html
-tree== newline-1.html newline-1-ref.html
+fails-if(Opera) tree== newline-1.html newline-1-ref.html
 tree== phantom-1.html phantom-1-ref.html
 tree== raise-1.html raise-1-ref.html
 tree== rlap-1.html rlap-1-ref.html
