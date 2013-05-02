@@ -41,7 +41,7 @@
       var r52 = MathJax.Localization._("dummy", s5, 2) == "2 fichiers chargés";
 
       MathJax.Localization.number = function (n) {
-        return n.replace(".", ",");
+        return String(n).replace(".", ",");
       }
       var s6 = "%1 + %2 = %3";
       var r6 = MathJax.Localization._("sum", s6, 5.3, 2.45, 7.75) == "5,3 + 2,45 = 7,75";

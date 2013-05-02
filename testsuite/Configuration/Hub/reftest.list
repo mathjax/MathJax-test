@@ -5,7 +5,6 @@ include styleSheets/reftest.list
 
 script delayStartupUntil-1.html
 == errorSettings-1.html errorSettings-1-ref.html
-script issue163.html
 script messageStyle-1.html
 script messageStyle-2.html
 slow script messageStyle-3.html?messageStyle=none
@@ -19,6 +18,7 @@ slow script showProcessingMessages-1.html?showProcessing=true
 == skipStartupTypeset-1.html skipStartupTypeset-1-ref.html
 == styles-1.html styles-1-ref.html
 # We removed the v1.0 warnings so these tests obsolete
+# script issue163.html
 # script v1.0-compatible-1.html
 # script v1.0-compatible-2.html
 == positionToHash-1.html positionToHash-1-ref.html
