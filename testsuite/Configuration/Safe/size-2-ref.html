@@ -1,0 +1,34 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Size</title>
+    <!-- Copyright (c) 2013 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+        gConfigObject.Safe = {
+          allow: {
+            fontsize: "safe"
+          },
+          sizeMax: 1
+        };
+        gConfigObject.extensions.push("Safe.js");
+        
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+     <!-- sizeMax=1, so this can not increase the font size too much -->
+     <math scriptsizemultiplier="3"><msup><mi>x</mi><mi>x</mi></msup></math>
+     <math scriptminsize="3em"><msup><mi>x</mi><mi>x</mi></msup></math>
+     <math><msup><mi>x</mi><mi scriptlevel="-3">x</mi></msup></math>
+
+  </body>
+</html>
