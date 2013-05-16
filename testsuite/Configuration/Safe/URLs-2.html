@@ -1,0 +1,41 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>URL</title>
+    <!-- Copyright (c) 2013 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+        gConfigObject.Safe = {
+          allow: {
+            URLs: "none"
+          }
+        };
+        gConfigObject.extensions.push("Safe.js");
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+     \( \href{http://mathjax}{x} \)
+     \( \href{https://mathjax}{x} \)
+     \( \href{file://mathjax}{x} \)
+     \( \href{javascript://mathjax}{x} \)
+     \( \href{other://mathjax}{x} \)
+     \( \href{unknown://mathjax}{x} \)
+
+     <math href="http://mathjax"><mi>x</mi></math>
+     <math href="https://mathjax"><mi>x</mi></math>
+     <math href="file://mathjax"><mi>x</mi></math>
+     <math href="javascript://mathjax"><mi>x</mi></math>
+     <math href="other://mathjax"><mi>x</mi></math>
+     <math href="unknown://mathjax"><mi>x</mi></math>
+
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>cssIDs</title>
+    <!-- Copyright (c) 2013 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+        gConfigObject.Safe = {
+          allow: {
+            cssIDs: "none"
+          }
+        };
+        gConfigObject.extensions.push("Safe.js");
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <style type="text/css">
+      #MJX-safe1, #MJX-safe2 {
+        color: blue;
+      }
+      #unsafe1, #unsafe2 {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    \( \cssId{MJX-safe1}{x} \)
+    \( \cssId{unsafe1}{x} \)
+    <math><mi id="MJX-safe2">x</mi></math>
+    <math><mi id="unsafe2">x</mi></math>
+
+  </body>
+</html>

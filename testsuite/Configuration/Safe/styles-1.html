@@ -1,0 +1,47 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Styles</title>
+    <!-- Copyright (c) 2013 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+        gConfigObject.Safe = {
+          allow: {
+            styles: "safe"
+          },
+          safeStyles: {
+            // color: true
+            backgroundColor: false,
+            borderWidth: true,
+            borderStyle: true,
+            // borderColor
+          }
+        };
+        gConfigObject.extensions.push("Safe.js");
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    \( \bbox[color: red]{x} \)
+    \( \bbox[background-color: green]{x} \)
+    \( \bbox[border-width: 10px; border-style: solid; border-color: blue]{x} \)
+
+    \( \style{color: red}{x} \)
+    \( \style{background-color: green}{x} \)
+    \( \style{border-width: 10px; border-style: solid; border-color: blue}{x} \)
+
+    <math style="color: red;"><mi>x</mi></math>
+    <math style="background-color: green;"><mi>x</mi></math>
+    <math style="border-width: 10px; border-style: solid; border-color: blue">
+      <mi>x</mi>
+    </math>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Styles</title>
+    <!-- Copyright (c) 2013 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+
+    \( \bbox[color: red]{x} \)
+    \( x \)
+    \( \bbox[border-width: 10px; border-style: solid;]{x} \)
+
+    \( \style{color: red}{x} \)
+    \( x \)
+    \( \style{border-width: 10px; border-style: solid;}{x} \)
+
+    <math style="color: red;"><mi>x</mi></math>
+    <math><mi>x</mi></math>
+    <math style="border-width: 10px; border-style: solid;">
+      <mi>x</mi>
+    </math>
+  </body>
+</html>
