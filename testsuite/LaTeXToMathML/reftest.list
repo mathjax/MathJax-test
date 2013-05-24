@@ -57,6 +57,7 @@ tree== verb-1.html verb-1-ref.html
 tree== verb-2.html verb-2-ref.html
 tree== issue349.html issue349-ref.html
 script issue428.html
+tree== issue475.html issue475-ref.html
 
 # XXXfred
 # \mathscr and \scr are in the doc but produce an "Undefined control sequence"
