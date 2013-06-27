@@ -28,6 +28,7 @@
 != menclose-1m.html menclose-1-ref.html
 != menclose-1n.html menclose-1-ref.html
 != menclose-1o.html menclose-1-ref.html
+!= menclose-1p.html menclose-1-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2a.html menclose-2a-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2b.html menclose-2b-ref.html
 annotate(@noteRoot) fails-if(!(NativeMML&&(Firefox||MSIE))) == menclose-2c.html menclose-2c-ref.html
@@ -43,5 +44,6 @@ fails-if(Quirks||IE7||IE8||Safari) == menclose-2l.html menclose-2l-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2m.html menclose-2m-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2n.html menclose-2n-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2o.html menclose-2o-ref.html
+fails-if(Quirks||IE7||IE8||Safari) == menclose-2p.html menclose-2p-ref.html
 == menclose-3.html menclose-3-ref.html
 annotate(@noteCircle) fails-if(!(NativeMML&&Firefox)) == menclose-4.html menclose-4-ref.html
