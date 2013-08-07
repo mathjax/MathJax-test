@@ -8,15 +8,16 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
-    <script type="text/javascript" src="../treeReftests.js"></script>
   </head>
 
   <body>
 
-    <!-- See issue 89
-         https://github.com/mathjax/MathJax/issues/89 -->
-    <math><mphantom><mtext>\begin{array}{cc} a &amp; b \end{array}</mtext></mphantom></math>
-    <math><semantics><mrow></mrow><annotation>\begin{array}{cc} a &amp; b \end{array}</annotation></semantics></math>
+    <!-- See issue 484
+         https://github.com/mathjax/MathJax/issues/484 -->
+    <div>
+      <math><mtext>\begin{array}{cc} a &amp; b \end{array}</mtext></math>
+      <math><semantics><mrow></mrow><annotation>\begin{array}{cc} a &amp; b \end{array}</annotation></semantics></math>
+    </div>
 
   </body>
 </html>
