@@ -20,3 +20,4 @@ annotate(@note1) fails-if(IE9) == self-closing-tag-2.html self-closing-tag-2-ref
 load unmatched-math-1.html
 == mfenced-lt-gt-1.html mfenced-lt-gt-1-ref.html
 tree== whitespace-collapse-1.html whitespace-collapse-1-ref.html
+== issue484.html issue484-ref.html
