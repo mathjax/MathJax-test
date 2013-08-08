@@ -9,6 +9,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
     <script type="text/javascript" src="../treeReftests.js"></script>
+    <script type="text/javascript">
+      function preMathJaxConfig()
+      {
+         gConfigObject.extensions = [];
+      }
+      function xMathJaxConfig()
+      {
+        MathJax.Hub.Register.StartupHook("End Config", function () {
+          var queue = MathJax.Callback.Queue(
+            ["Require",MathJax.Ajax,"[MathJax]/extensions/tex2jax.js"],
+            ["Require",MathJax.Ajax,"[MathJax]/extensions/mml2jax.js"]
+          );
+          return queue.Push({});
+        });
+      }
+    </script>
   </head>
 
   <body>
