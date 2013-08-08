@@ -1,0 +1,54 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>setLocale</title>
+    <!-- Copyright (c) 2013 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases()
+      {
+      var L = MathJax.Localization;
+
+      L.setLocale("fr");
+      var r1 = (L.locale === "fr");
+
+      L.setLocale("DE");
+      var r2 = (L.locale === "de");
+
+      L.setLocale("EN-US");
+      var r3 = (L.locale === "en");
+
+      L.setLocale("de-??-??-??");
+      var r4 = (L.locale === "de");
+      
+      L.setLocale("en");
+      L.setLocale("unknown"); // should not change
+      var r5 = (L.locale === "en");
+
+      L.strings["en"].remap = "en-us";
+      L.setLocale("en"); // should remap to en-us
+      var r6 = (L.locale === "en-us");
+
+      return [
+        newScriptReftestResult("fr => fr", r1),
+        newScriptReftestResult("DE => de", r2),
+        newScriptReftestResult("EN-US => en", r3),
+        newScriptReftestResult("de-??-??-?? => de", r4),
+        newScriptReftestResult("unknown", r5),
+        newScriptReftestResult("remap", r6),
+      ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>
