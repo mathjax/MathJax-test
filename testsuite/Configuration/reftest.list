@@ -12,3 +12,5 @@ include NativeMML/reftest.list
 include tex2jax/reftest.list
 include TeX/reftest.list
 include Safe/reftest.list
+
+script issue556.html

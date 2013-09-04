@@ -1,0 +1,58 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue556</title>
+    <!-- Copyright (c) 2013 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- See issue 556
+         https://github.com/mathjax/MathJax/issues/556 -->
+
+    <script type="text/javascript">
+      var sequence = "0";
+
+      var MathJax = {
+        delayStartupUntil: "configured",
+        AuthorInit: function() {
+          sequence += "1";
+          MathJax.Hub.Register.StartupHook("End", function () {
+            sequence += "7"
+          });
+          MathJax.Hub.Register.StartupHook("End Config", function () {
+            sequence += "6"
+          });
+          MathJax.Hub.Register.StartupHook("Begin Config", function () {
+            sequence += "3"
+            setTimeout(MathJax.Hub.Configured, 1600);
+            setTimeout(function() { sequence += "4" }, 800);
+          });
+          MathJax.Hub.Register.StartupHook("Begin", function () {
+            sequence += "2"
+          });
+        }
+      }
+
+      function xMathJaxConfig()
+      {
+          sequence += "5";
+      }
+
+      function getTestCases()
+      {
+      return [
+      newScriptReftestResult("AuthorInit, delayStartupUntil",
+                             sequence === "01234567")
+      ];
+      }    
+    </script>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    
+  </head>
+
+  <body>
+  </body>
+</html>
