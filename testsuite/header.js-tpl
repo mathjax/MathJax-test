@@ -180,9 +180,9 @@ function defaultConfigObject()
       jax: ["input/TeX", "input/MathML", "output/" + gOutputJax],
 
       "HTML-CSS": {
-          availableFonts: [(gFont == "ImageTeX" ? "" : gFont)],
+          availableFonts: (gFont === "TeX" || gFont === "STIX" ? [gFont] : []),
           preferredFont: null,
-          webFont: null
+          webFont: gFont
       },
 
       "SVG" : {
@@ -191,10 +191,8 @@ function defaultConfigObject()
               rect: {
                   "shape-rendering": "crispEdges"
               }
-          }
-          // XXXfred
-          // TODO: take into account gFont when the SVG output Jax supports
-          // more fonts.
+          },
+          font: gFont
       }
   };
     if (gErrorHandler) {
