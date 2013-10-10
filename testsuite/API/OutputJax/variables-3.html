@@ -4,7 +4,7 @@
 <html class="reftest-wait">
   <head>
     <title>variables</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2013 The MathJax Project
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
@@ -14,15 +14,16 @@
     <script type="text/javascript">
       function getTestCases()
       {
+      var prefix = gMathJaxPath.indexOf("unpacked") === -1 ? "" : "../";
       return [
       newScriptReftestResult("MathJax.OutputJax.id",
-      MathJax.OutputJax.id == "OutputJax"),
+      MathJax.OutputJax.id === "OutputJax"),
       newScriptReftestResult("MathJax.OutputJax.directory",
-      MathJax.OutputJax.directory == "[MathJax]/jax/output"),
+      MathJax.OutputJax.directory === "[MathJax]/jax/output"),
       newScriptReftestResult("MathJax.OutputJax.fontDir",
-      MathJax.OutputJax.fontDir == "[MathJax]/fonts"),
+      MathJax.OutputJax.fontDir === "[MathJax]/" + prefix + "fonts"),
       newScriptReftestResult("MathJax.OutputJax.imageDir",
-      MathJax.OutputJax.imageDir == "[MathJax]/images")
+      MathJax.OutputJax.imageDir === "[MathJax]/" + prefix + "images")
       ];
       }    
     </script>

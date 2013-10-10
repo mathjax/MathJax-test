@@ -10,6 +10,7 @@
     <script type="text/javascript">
       function preMathJax()
       {
+        gMaxErrorSignals["TeX Jax - parse error"] = 1;
         gConfigObject.Safe = {
           allow: {
             require: "safe"
