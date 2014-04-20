@@ -26,3 +26,4 @@ annotate(@note1) fails-if(SVG) == mglyph_valignmiddle.html mglyph_valignmiddle-r
 annotate(@note1,@note3) fails-if(SVG) == mglyph_valigntop.html mglyph_valigntop-ref.html
 require(HTML-CSS) annotate(@note4) fails-if(MSIE) script rec-mglyph1.html
 fails-if(MSIE) == rec-mglyph2.html rec-mglyph2-ref.html
+== issue763.html issue763-ref.html
