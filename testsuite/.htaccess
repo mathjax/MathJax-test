@@ -1,2 +1,3 @@
 # Give access to all the testsuite/ directory
 Allow from all
+Options +Indexes

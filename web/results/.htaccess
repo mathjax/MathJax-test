@@ -3,6 +3,8 @@
 Allow from all
 </Limit>
 
+Options +Indexes
+
 # Allow to open .html.gz and .txt.gz files.
 RemoveType .gz
 AddEncoding gzip .gz
