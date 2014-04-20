@@ -3,4 +3,4 @@ include math-menu/reftest.list
 include zoom/reftest.list
 
 script show-source-1.html
-fails script show-source-2.html
+script show-source-2.html
