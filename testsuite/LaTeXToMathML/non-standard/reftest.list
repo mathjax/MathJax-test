@@ -8,3 +8,4 @@ tree== style-1.html style-1-ref.html
 tree== Tiny-1.html Tiny-1-ref.html
 tree== unicode-1.html unicode-1-ref.html
 != mmlToken-1.html mmlToken-1-ref.html
+script issue376.html
