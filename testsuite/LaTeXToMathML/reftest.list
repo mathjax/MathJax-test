@@ -58,6 +58,7 @@ tree== verb-2.html verb-2-ref.html
 tree== issue349.html issue349-ref.html
 script issue428.html
 tree== issue475.html issue475-ref.html
+script issue632.html
 script issue691.html
 == issue687.html issue687-ref.html
 == issue739.html issue739-ref.html
