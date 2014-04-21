@@ -1,0 +1,26 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 743</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.extensions.push("asciimath2jax.js");
+      gConfigObject.jax.push("input/AsciiMath");
+      }
+    </script>
+   
+  </head>
+
+  <body>
+    <!-- See issue 743
+         https://github.com/mathjax/MathJax/issues/743 -->
+    `{n | n > 0}`
+  </body>
+</html>
