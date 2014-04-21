@@ -22,4 +22,6 @@ tree== text-1.html text-1-ref.html
 tree== textbf-1.html textbf-1-ref.html
 tree== textit-1.html textit-1-ref.html
 tree== textrm-1.html textrm-1-ref.html
+tree== textsf-1.html textsf-1-ref.html
+tree== texttt-1.html texttt-1-ref.html
 tree== tt-1.html tt-1-ref.html
