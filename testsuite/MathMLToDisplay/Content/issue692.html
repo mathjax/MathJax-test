@@ -1,0 +1,32 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 692</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.MathML = { extensions: ["content-mathml.js"] }
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+  </head>
+
+  <body>
+    <!-- See issue 692
+         https://github.com/mathjax/MathJax/issues/692 -->
+    <math> 
+      <apply><plus/>
+        <apply><times/>
+          <cn type="integer">-2</cn>
+          <ci>x</ci>
+        </apply>
+        <cn type="integer">3</cn>
+      </apply>
+    </math>
+
+  </body>
+</html>
