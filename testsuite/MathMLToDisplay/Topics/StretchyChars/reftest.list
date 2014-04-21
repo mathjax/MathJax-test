@@ -221,3 +221,4 @@ annotate(@note) fails-if(TeX) skip-if(MSIE&&!IE9) != vertical.html?op=2998 verti
 annotate(@note) fails skip-if(MSIE&&!IE9) != vertical.html?op=29FC vertical-ref.html
 annotate(@note) fails skip-if(MSIE&&!IE9) != vertical.html?op=29FD vertical-ref.html
 == issue213.html issue213-ref.html
+!= issue469.html issue469-ref.html
