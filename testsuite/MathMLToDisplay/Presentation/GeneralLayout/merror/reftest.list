@@ -1,2 +1,3 @@
 != merror-1.html merror-1-ref.html
+require(SVG) == issue387.html issue387-ref.html
 
