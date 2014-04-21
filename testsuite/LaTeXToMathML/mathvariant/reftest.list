@@ -12,11 +12,13 @@ tree== mathcal-1.html mathcal-1-ref.html
 tree== mathfrak-1.html mathfrak-1-ref.html
 tree== mathit-1.html mathit-1-ref.html
 tree== mathrm-1.html mathrm-1-ref.html
+tree== mathscr-1.html mathscr-1-ref.html
 tree== mathsf-1.html mathsf-1-ref.html
 tree== mathtt-1.html mathtt-1-ref.html
 tree== mit-1.html mit-1-ref.html
 tree== pmb-1.html pmb-1-ref.html
 tree== rm-1.html rm-1-ref.html
+tree== scr-1.html scr-1-ref.html
 tree== sf-1.html sf-1-ref.html
 tree== text-1.html text-1-ref.html
 tree== textbf-1.html textbf-1-ref.html
