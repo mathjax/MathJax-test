@@ -57,10 +57,12 @@ tree== verb-1.html verb-1-ref.html
 tree== verb-2.html verb-2-ref.html
 tree== issue349.html issue349-ref.html
 == issue377.html issue377-ref.html
+== issue400-1.html issue400-1-ref.html
+== issue400-2.html issue400-2-ref.html
 script issue428.html
 tree== issue475.html issue475-ref.html
 script issue632.html
-script issue691.html
 == issue687.html issue687-ref.html
+script issue691.html
 == issue739.html issue739-ref.html
 == issue746.html issue746-ref.html
