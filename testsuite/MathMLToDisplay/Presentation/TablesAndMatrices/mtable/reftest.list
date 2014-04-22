@@ -79,3 +79,4 @@ fails-if(SVG) == rowlines-3-2.html rowlines-3-2-ref.html
 == width-1.html width-1-ref.html
 == issue719-1.html issue719-1-ref.html
 == issue719-2.html issue719-2-ref.html
+== issue719-3.html issue719-3-ref.html
