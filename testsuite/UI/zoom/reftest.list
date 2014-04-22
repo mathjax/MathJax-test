@@ -6,3 +6,4 @@ fails-if(MSIE) == zoom-box-2.html zoom-box-2-ref.html
 != zoom-box-5.html zoom-box-5-ref.html
 load zoom-box-6.html
 == zoom-box-7.html zoom-box-7-ref.html
+script issue460.html
