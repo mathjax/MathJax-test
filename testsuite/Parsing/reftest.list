@@ -21,3 +21,4 @@ load unmatched-math-1.html
 == mfenced-lt-gt-1.html mfenced-lt-gt-1-ref.html
 tree== whitespace-collapse-1.html whitespace-collapse-1-ref.html
 tree== issue484.html issue484-ref.html
+requires(MSIE) script issue658.html
