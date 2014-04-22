@@ -6,3 +6,6 @@
 #
 
 annotate(@note1) random-if(Chrome) random-if(Konqueror||MSIE) != math-menu-1.html math-menu-1-ref.html
+!= issue777-1.html issue777-1-ref.html
+!= issue777-2.html issue777-2-ref.html
+!= issue777-3.html issue777-3-ref.html

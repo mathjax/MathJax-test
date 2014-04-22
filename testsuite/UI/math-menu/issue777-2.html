@@ -1,0 +1,48 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 777</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("MathEvents.js");
+        gConfigObject.extensions.push("MathMenu.js");
+        gConfigObject.menuSettings = {locale: "he"};  // Hebrew is RTL
+      }
+
+      function postMenu() {
+        //
+        //  Use a Callback to synchronize with loading of localization files
+        //
+        var posted = MathJax.Callback(function () {});
+        MathJax.Localization.Try(function () {
+          var event;
+          if (document.createEvent) {event = document.createEvent("UIEvents")}
+            else {event = { clientX: 0, clientY: 0, pageX: 0, pageY: 0 }}
+          MathJax.Menu.menu
+                 .FindId("Settings").menu
+                 .FindId("Renderer").menu
+                 .Post(event, null);
+          posted();
+        });
+        return posted;
+      }
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(postMenu);
+    </script>
+  </head>
+
+  <body>
+
+    <!-- See issue 777
+         https://github.com/mathjax/MathJax/issues/777 -->
+    <div style="z-index: 1000; position:absolute; left:25px; top:0; width:300px; height:150px; background:red"></div>
+
+  </body>
+</html>
