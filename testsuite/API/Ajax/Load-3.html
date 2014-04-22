@@ -1,0 +1,41 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Load</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <!-- test loading of js, css, and inexistent file -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+      if (MathJax.Ajax.config.path) {
+        MathJax.Ajax.config.path["Contrib"] = ".";  // current directory
+      }
+    </script>
+
+    <script type="text/javascript">
+      function postMathJax() {
+        MathJax.Ajax.timeout = 2000;
+        MathJax.Hub.Queue(["Load", MathJax.Ajax, "[Contrib]/contrib.js"]);
+      }
+
+      function getTestCases() {
+        var file = MathJax.Ajax.fileURL("[Contrib]/contrib.js");
+        return [
+          newScriptReftestResult("Load contrib.js, status",
+                             MathJax.Ajax.loaded[file] ==
+                             MathJax.Ajax.STATUS.OK)
+        ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+  </body>
+</html>

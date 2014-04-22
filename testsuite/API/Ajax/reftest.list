@@ -1,6 +1,7 @@
 script fileURL-1.html
 script Load-1.html
 skip-if(Quirks||IE7||IE8) script Load-2.html
+script Load-3.html
 script loadComplete-1.html
 script loadError-1.html
 script loadError-2.html
