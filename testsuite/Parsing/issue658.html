@@ -12,7 +12,11 @@
     <script type="text/javascript" src="../scriptTests.js"></script>
     <script type="text/javascript">
       function getTestCases() {
-        return [newScriptReftestResult("Is MSIE ",MathJax.Hub.Browser.isMSIE)];
+        var browser = getQueryString("browser") || "Unknown";
+        var isIt = !getQueryString("fail");
+        return [newScriptReftestResult(
+          "Is "+(isIt ? "" : "not ")+browser+" ",
+          !!MathJax.Hub.Browser["is"+browser] === isIt)];
       }    
     </script>
     

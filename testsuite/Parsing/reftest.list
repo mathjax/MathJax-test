@@ -21,4 +21,14 @@ load unmatched-math-1.html
 == mfenced-lt-gt-1.html mfenced-lt-gt-1-ref.html
 tree== whitespace-collapse-1.html whitespace-collapse-1-ref.html
 tree== issue484.html issue484-ref.html
-requires(MSIE) script issue658.html
+
+require(MSIE) script issue658.html?browser=MSIE
+require(!MSIE) script issue658.html?browser=MSIE&fail=true
+require(Firefox) script issue658.html?browser=Firefox
+require(!Firefox) script issue658.html?browser=Firefox&fail=true
+require(Chrome) script issue658.html?browser=Chrome
+require(!Chrome) script issue658.html?browser=Chrome&fail=true
+require(Safari) script issue658.html?browser=Safari
+require(!Safari) script issue658.html?browser=Safari&fail=true
+require(Opera) script issue658.html?browser=Opera
+require(!Opera) script issue658.html?browser=Opera&fail=true
