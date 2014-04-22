@@ -1,0 +1,38 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 685</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.showMathMenu = false;
+      }
+      function getTestCases() {
+        var AJAX = MathJax.Ajax;
+        var loaded = AJAX.loaded, loading = AJAX.loading;
+        var zoom = AJAX.fileURL("[MathJax]/extensions/MathZoom.js");
+        var menu = AJAX.fileURL("[MathJax]/extensions/MathMenu.js");
+        return [
+          newScriptReftestResult("MathZoom skipped", !loaded[zoom] && !loading[zoom]),
+          newScriptReftestResult("MathMenu skipped", !loaded[menu] && !loading[menu])
+        ];
+      }
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(MathJax.Callback.Delay(2500));  // ZoomBox has a 2 second delay
+    </script>
+  </head>
+
+  <body>
+
+    <!-- See issue 685
+         https://github.com/mathjax/MathJax/issues/685 -->
+
+  </body>
+</html>

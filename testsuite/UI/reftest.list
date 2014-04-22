@@ -4,3 +4,4 @@ include zoom/reftest.list
 
 script show-source-1.html
 script show-source-2.html
+script issue685.html
