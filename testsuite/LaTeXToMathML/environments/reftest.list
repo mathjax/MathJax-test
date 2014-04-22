@@ -23,3 +23,5 @@ tree== multiline-1b.html multiline-1-ref.html
 != multiline-2a.html multiline-2-ref.html
 == multiline-2b.html multiline-2-ref.html
 tree== split-1.html split-1-ref.html
+== issue389-1.html issue389-1-ref.html
+== issue389-2.html issue389-2-ref.html
