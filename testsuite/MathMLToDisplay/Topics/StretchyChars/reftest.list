@@ -222,4 +222,5 @@ annotate(@note) fails skip-if(MSIE&&!IE9) != vertical.html?op=29FC vertical-ref.
 annotate(@note) fails skip-if(MSIE&&!IE9) != vertical.html?op=29FD vertical-ref.html
 == issue213.html issue213-ref.html
 != issue469.html issue469-ref.html
+== issue703.html issue703-ref.html
 require(STIX&&HTML-CSS) == issue715.html issue715-ref.html
