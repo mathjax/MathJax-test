@@ -5,10 +5,6 @@
 # to catch [Math Processing Error]'s. Hopefully, this can be fixed by using
 # MathJax 2.1's new signal.</p>
 #
-# @note2
-#
-# <p>Firefox adds _moz-math-font-style="italic"</p>
-# 
 
 script Config-1.html
 load Configured-1.html
@@ -27,7 +23,7 @@ script isJax-3.html
 annotate(@note1) fails-if(Quirks||IE7||IE8) script lastError-1.html
 script loadhook-1.html
 script mathProcessingError-1.html
-annotate(@note2) fails-if(Firefox) script messagehook-1.html
+script messagehook-1.html
 script PreProcess-1.html
 script PreProcessor-1.html
 == Process-1.html Process-1-ref.html
