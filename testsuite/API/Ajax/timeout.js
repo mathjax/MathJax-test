@@ -1,1 +1,1 @@
-setTimeout('MathJax.Ajax.loadComplete("timeout.js.txt")', 120*1000);
+setTimeout('MathJax.Ajax.loadComplete("timeout.js")', 120*1000);

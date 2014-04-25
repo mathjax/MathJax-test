@@ -17,68 +17,58 @@
       var start, end;
 
       myfiledotjs = "data:text/javascript;base64,Ly8gbXlmaWxlLmpzCgpmdW5jdGlvbiBmKHgpCnsKICByZXR1cm4geCAqIHg7Cn0KCk1hdGhKYXguQWpheC5sb2FkQ29tcGxldGUoIm15ZmlsZS5qcyIpOwo=";
-
       myfiledotcss = "data:text/css;base64,LyogbXlmaWxlLmNzcyAqLwoKI3NxdWFyZSB7CiAgcG9zaXRpb246IGFic29sdXRlOwogIHRvcDogMDsKICBsZWZ0OiAwOwogIHdpZHRoOiAxMDBweDsKICBoZWlnaHQ6IDEwMHB4OwogIGJhY2tncm91bmQ6IHJlZDsKfQo=";
-
       timeoutdotjs = "data:text/javascript;base64,c2V0VGltZW91dCgnTWF0aEpheC5BamF4LmxvYWRDb21wbGV0ZSgidGltZW91dC5qcy50eHQiKScsIDEyMCoxMDAwKTsK";
 
-      function setStartTime()
-      {
-      start = new Date().getTime();
+      function setStartTime() {
+        start = new Date().getTime();
       }
 
-      function setEndTime()
-      {
-      end = new Date().getTime();
+      function setEndTime() {
+        end = new Date().getTime();
       }
 
-      function updateMessage(msg)
-      {
+      function updateMessage(msg) {
         document.getElementById("mydiv").innerHTML += msg;
       }
 
-      function postMathJax()
-      {
-      MathJax.Ajax.timeout = 2000;
-      MathJax.Hub.Queue([updateMessage,
-                        "Loading myfile.js (base64 data URI)..."]);
-      MathJax.Hub.Queue(["Require", MathJax.Ajax,
-                         {js:myfiledotjs}   ]);
-      MathJax.Hub.Queue([updateMessage,
-                        " done ; Loading myfile.css (base64 data URI)..."]);
-      MathJax.Hub.Queue(["Require", MathJax.Ajax,
-                         {css:myfiledotcss} ]);
-      MathJax.Hub.Queue([updateMessage,
-                        " done ; Loading timeout.js (base64 data URI)..."]);
-      MathJax.Hub.Queue([setStartTime]);
-      MathJax.Hub.Queue(["Require", MathJax.Ajax,
-                         {js:timeoutdotjs}  ]);
-      MathJax.Hub.Queue([setEndTime]);
-      MathJax.Hub.Queue([updateMessage, " done."]);
+      function postMathJax() {
+        MathJax.Ajax.timeout = 2000;
+        MathJax.Hub.Queue([updateMessage,"Loading myfile.js (base64 data URI)..."]);
+        MathJax.Hub.Queue(["Require", MathJax.Ajax, {js:myfiledotjs}]);
+        MathJax.Hub.Queue([updateMessage," done ; Loading myfile.css (base64 data URI)..."]);
+        MathJax.Hub.Queue(["Require", MathJax.Ajax, {css:myfiledotcss}]);
+        MathJax.Hub.Queue([updateMessage," done ; Loading timeout.js (base64 data URI)..."]);
+        MathJax.Hub.Queue(
+          [setStartTime],
+          ["Require", MathJax.Ajax,{js:timeoutdotjs}],
+          [setEndTime]
+        );
+        MathJax.Hub.Queue([updateMessage, " done."]);
       }
 
-      function getTestCases()
-      {
-      var delta = end - start;
-      var error = Math.abs(MathJax.Ajax.timeout - delta);
+      function getTestCases() {
+        var delta = end - start;
+        var error = Math.abs(MathJax.Ajax.timeout - delta);
+        var fExecutable = false;
+        try{fExecutable = (f(2) === 4)} catch (err) {}
 
-      return [
-      newScriptReftestResult("Require myfile.js, status",
-                             MathJax.Ajax.loaded["myfile.js"] ==
-                             MathJax.Ajax.STATUS.OK),
-      newScriptReftestResult("Require myfile.js, can be executed",
-                             f(2) == 4),
-      newScriptReftestResult("Require myfile.css, status",
-                             MathJax.Ajax.loaded[myfiledotcss] ==
-                             MathJax.Ajax.STATUS.OK),
-      newScriptReftestResult("Require myfile.css, style changed",
-                    (document.getElementById("square").offsetWidth == 100)),
-      newScriptReftestResult("Require timeout.js, status",
-                             MathJax.Ajax.loaded[timeoutdotjs] ==
-                             MathJax.Ajax.STATUS.ERROR),
-      newScriptReftestResult("Require timeout.js, timeout (delta = " +
-                             delta + ")", (error < 100)) // tolerance of 100ms
-      ];
+        return [
+          newScriptReftestResult("Require myfile.js, status",
+                                 MathJax.Ajax.loaded["myfile.js"] ==
+                                 MathJax.Ajax.STATUS.OK),
+          newScriptReftestResult("Require myfile.js, can be executed", fExecutable),
+          newScriptReftestResult("Require myfile.css, status",
+                                 MathJax.Ajax.loaded[myfiledotcss] ==
+                                 MathJax.Ajax.STATUS.OK),
+          newScriptReftestResult("Require myfile.css, style changed",
+                        (document.getElementById("square").offsetWidth == 100)),
+          newScriptReftestResult("Require timeout.js, status",
+                                 MathJax.Ajax.loaded[timeoutdotjs] ==
+                                 MathJax.Ajax.STATUS.ERROR),
+          newScriptReftestResult("Require timeout.js, timeout (delta = " + delta + ")",
+                                 (error < 500)) // tolerance of 500ms
+        ];
       }    
     </script>
 

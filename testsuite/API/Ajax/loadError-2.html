@@ -12,25 +12,22 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject.messageStyle = "normal";
+      function preMathJax() {
+        gConfigObject.messageStyle = "normal";
       }
 
-      function checkValue(aValue)
-      {
-      return document.getElementById("MathJax_Message").innerHTML == aValue;
+      function checkValue(aValue) {
+        return document.getElementById("MathJax_Message").innerHTML == aValue;
       }
 
-      function getTestCases()
-      {
-      var r1 = (MathJax.Ajax.loadError("myfile") == null);
-      var r2 = checkValue("File failed to load: myfile");
+      function getTestCases() {
+        var r1 = (MathJax.Ajax.loadError("myfile") == null);
+        var r2 = checkValue("File failed to load: myfile");
 
-      return [
-      newScriptReftestResult("MathJax.Ajax.loadError returns null", r1),
-      newScriptReftestResult("MathJax.Ajax.loadError displays a message", r2)
-      ];
+        return [
+          newScriptReftestResult("MathJax.Ajax.loadError returns null", r1),
+          newScriptReftestResult("MathJax.Ajax.loadError displays a message", r2)
+        ];
       }    
     </script>
 

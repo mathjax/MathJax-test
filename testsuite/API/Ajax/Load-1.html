@@ -15,56 +15,55 @@
     <script type="text/javascript">
       var start, end;
 
-      function setStartTime()
-      {
-      start = new Date().getTime();
+      function setStartTime() {
+        start = new Date().getTime();
       }
 
-      function setEndTime()
-      {
-      end = new Date().getTime();
+      function setEndTime() {
+        end = new Date().getTime();
       }
 
-      function updateMessage(msg)
-      {
+      function updateMessage(msg) {
         document.getElementById("mydiv").innerHTML += msg;
       }
 
-      function postMathJax()
-      {
-      MathJax.Ajax.timeout = 2000;
-      MathJax.Hub.Queue([updateMessage, "Loading myfile.js..."]);
-      MathJax.Hub.Queue(["Load", MathJax.Ajax, "myfile.js"]);
-      MathJax.Hub.Queue([updateMessage, " done ; Loading myfile.css..."]);
-      MathJax.Hub.Queue(["Load", MathJax.Ajax, "myfile.css"]);
-      MathJax.Hub.Queue([updateMessage, " done ; Loading timeout.js..."]);
-      MathJax.Hub.Queue([setStartTime]);
-      MathJax.Hub.Queue(["Load", MathJax.Ajax, "timeout.js"]);
-      MathJax.Hub.Queue([setEndTime]);
-      MathJax.Hub.Queue([updateMessage, " done."]);
+      function postMathJax() {
+        MathJax.Ajax.timeout = 2000;
+        MathJax.Hub.Queue(
+          [updateMessage, "Loading myfile.js..."],
+          ["Load", MathJax.Ajax, "myfile.js"],
+          [updateMessage, " done ; Loading myfile.css..."],
+          ["Load", MathJax.Ajax, "myfile.css"],
+          [updateMessage, " done ; Loading timeout.js..."],
+          [setStartTime],
+          ["Load", MathJax.Ajax, "timeout.js"],
+          [setEndTime],
+          [updateMessage, " done."]
+        );
       }
 
-      function getTestCases()
-      {
-      var delta = end - start;
-      var error = Math.abs(MathJax.Ajax.timeout - delta);
+      function getTestCases() {
+        var delta = end - start;
+        var error = Math.abs(MathJax.Ajax.timeout - delta);
+        var fExecutable = false;
+        try{fExecutable = (f(2) === 4)} catch (err) {}
 
-      return [
-      newScriptReftestResult("Load myfile.js, status",
-                             MathJax.Ajax.loaded["myfile.js"] ==
-                             MathJax.Ajax.STATUS.OK),
-      newScriptReftestResult("Load myfile.js, can be executed", f(2) == 4),
-      newScriptReftestResult("Load myfile.css, status",
-                             MathJax.Ajax.loaded["myfile.css"] ==
-                             MathJax.Ajax.STATUS.OK),
-      newScriptReftestResult("Load myfile.css, style changed",
-                    (document.getElementById("square").offsetWidth == 100)),
-      newScriptReftestResult("Load timeout.js, status",
-                             MathJax.Ajax.loaded["timeout.js"] ==
-                             MathJax.Ajax.STATUS.ERROR),
-      newScriptReftestResult("Load timeout.js, timeout (delta = " +
-                             delta + ")", (error < 100)) // tolerance of 100ms
-      ];
+        return [
+          newScriptReftestResult("Load myfile.js, status",
+                                 MathJax.Ajax.loaded["myfile.js"] ==
+                                 MathJax.Ajax.STATUS.OK),
+          newScriptReftestResult("Load myfile.js, can be executed", fExecutable),
+          newScriptReftestResult("Load myfile.css, status",
+                                 MathJax.Ajax.loaded["myfile.css"] ==
+                                 MathJax.Ajax.STATUS.OK),
+          newScriptReftestResult("Load myfile.css, style changed",
+                        (document.getElementById("square").offsetWidth == 100)),
+          newScriptReftestResult("Load timeout.js, status",
+                                 MathJax.Ajax.loaded["timeout.js"] ==
+                                 MathJax.Ajax.STATUS.ERROR),
+          newScriptReftestResult("Load timeout.js, timeout (delta = " +
+                                 delta + ")", (error < 500)) // tolerance of 500ms
+        ];
       }    
     </script>
 
