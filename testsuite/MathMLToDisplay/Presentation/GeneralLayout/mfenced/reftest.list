@@ -5,11 +5,11 @@
 # See <a href="https://github.com/mathjax/MathJax/issues/255">issue 255</a>.</p>
 #
 
-annotate(@issue255) fails != issue255-1a.html issue255-1-ref.html
-annotate(@issue255) fails != issue255-1b.html issue255-1-ref.html
-annotate(@issue255) fails != issue255-1c.html issue255-1-ref.html
-annotate(@issue255) fails != issue255-1d.html issue255-1-ref.html
-annotate(@issue255) fails != issue255-2.html issue255-2-ref.html
+annotate(@issue255) != issue255-1a.html issue255-1-ref.html
+annotate(@issue255) != issue255-1b.html issue255-1-ref.html
+annotate(@issue255) != issue255-1c.html issue255-1-ref.html
+annotate(@issue255) != issue255-1d.html issue255-1-ref.html
+annotate(@issue255) != issue255-2.html issue255-2-ref.html
 annotate(@issue255) fails == issue255-3.html issue255-3-ref.html
 == issue478.html issue478-ref.html
 
