@@ -15,40 +15,34 @@
       var r1 = false, r2 = false;
       var delay, tolerance = 100;
 
-      function preMathJax()
-      {
-      delay = getQueryInteger("delay", 600);
-      gConfigObject.messageStyle = "normal";
-      gConfigObject.extensions.push("MathZoom.js");
-      gConfigObject.extensions.push("MathMenu.js");
+      function preMathJax() {
+        delay = getQueryInteger("delay", 600);
+        gConfigObject.messageStyle = "normal";
+        gConfigObject.extensions.push("MathZoom.js");
+        gConfigObject.extensions.push("MathMenu.js");
       }
 
-      function checkValue(aValue)
-      {
-      return document.getElementById("MathJax_Message").innerHTML == aValue;
+      function checkValue(aValue) {
+        return document.getElementById("MathJax_Message").innerHTML == aValue;
       }
 
-      function postMathJax()
-      {
-      MathJax.Hub.Queue(
-      function () {
-        var id = MathJax.Message.Set("my message");
-        MathJax.Message.Clear(id, delay);
-      },
-      function () {
-        setTimeout("r1 = checkValue('my message');", delay - tolerance);
-        setTimeout("r2 = checkValue('');", delay + tolerance);
-      },
-      ["Delay", MathJax.Callback, delay + tolerance + 100]
-      );
+      function postMathJax() {
+        MathJax.Hub.Queue(
+          function () {
+            var id = MathJax.Message.Set("my message");
+            MathJax.Message.Clear(id, delay);
+            setTimeout("r1 = checkValue('my message');", delay - tolerance);
+            setTimeout("r2 = checkValue('');", delay + tolerance);
+          },
+          ["Delay", MathJax.Callback, delay + tolerance + 100]
+        );
       }
 
-      function getTestCases()
-      {
-      return [
-      newScriptReftestResult("Message before the clear delay...", r1),
-      newScriptReftestResult("Message after the clear delay...", r2)
-      ];
+      function getTestCases() {
+        return [
+          newScriptReftestResult("Message before the clear delay...", r1),
+          newScriptReftestResult("Message after the clear delay...", r2)
+        ];
       }    
     </script>
 

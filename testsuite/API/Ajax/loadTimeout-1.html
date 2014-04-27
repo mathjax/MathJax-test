@@ -15,51 +15,48 @@
       var r1 = false, r2 = false;
       var start, end;
 
-      function setStartTime()
-      {
-      start = new Date().getTime();
+      function setStartTime() {
+        start = new Date().getTime();
       }
 
-      function setEndTime()
-      {
-      end = new Date().getTime();
+      function setEndTime() {
+        end = new Date().getTime();
       }
 
-      function updateMessage(msg)
-      {
+      function updateMessage(msg) {
         document.getElementById("mydiv").innerHTML += msg;
       }
 
-      function postMathJax()
-      {
-      MathJax.Ajax.timeout = 2000;
+      function postMathJax() {
+        MathJax.Ajax.timeout = 2000;
 
-      MathJax.Ajax.oldLoadTimeout = MathJax.Ajax.loadTimeout;
-      MathJax.Ajax.loadTimeout = function(aFile) {
-      r1 = true;
-      r2 = (aFile == "timeout.js");
-      setEndTime();
-
-      MathJax.Ajax.oldLoadTimeout(aFile);
-      };
-
-      MathJax.Hub.Queue([updateMessage, "Loading timeout.js..."]);
-      MathJax.Hub.Queue([setStartTime]);
-      MathJax.Hub.Queue(["Load", MathJax.Ajax, "timeout.js"  ]);
-      MathJax.Hub.Queue([updateMessage, " done."]);
+        MathJax.Ajax.oldLoadTimeout = MathJax.Ajax.loadTimeout;
+        MathJax.Ajax.loadTimeout = function(aFile) {
+          r1 = true;
+          r2 = (aFile == "timeout.js");
+          setEndTime();
+          
+          MathJax.Ajax.oldLoadTimeout(aFile);
+        };
+      
+        MathJax.Hub.Queue([updateMessage, "Loading timeout.js..."]);
+        MathJax.Hub.Queue(
+          [setStartTime],
+          ["Load", MathJax.Ajax, "timeout.js"  ],
+          [updateMessage, " done."]
+        );
       }
 
-      function getTestCases()
-      {
-      var delta = end - start;
-      var error = Math.abs(MathJax.Ajax.timeout - delta);
+      function getTestCases() {
+        var delta = end - start;
+        var error = Math.abs(MathJax.Ajax.timeout - delta);
 
-      return [
-      newScriptReftestResult("MathJax.Ajax.loadTimeout called", r1),
-      newScriptReftestResult("MathJax.Ajax.loadTimeout argument", r2),
-      newScriptReftestResult("Load timeout.js, timeout (delta = " +
-                             delta + ")", (error < 100)) // tolerance of 100ms
-      ];
+        return [
+          newScriptReftestResult("MathJax.Ajax.loadTimeout called", r1),
+          newScriptReftestResult("MathJax.Ajax.loadTimeout argument", r2),
+          newScriptReftestResult("Load timeout.js, timeout (delta = " +
+                                 delta + ")", (error < 500)) // tolerance of 100ms
+        ];
       }    
     </script>
 
