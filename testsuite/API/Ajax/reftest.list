@@ -1,6 +1,6 @@
 script fileURL-1.html
 script Load-1.html
-skip-if(Quirks||IE7||IE8) script Load-2.html
+skip-if(Quirks||IE7||IE8) fails script Load-2.html
 script Load-3.html
 script loadComplete-1.html
 script loadError-1.html
@@ -10,7 +10,7 @@ script loadTimeout-1.html
 script Preloading-1.html
 script properties-1.html
 script Require-1.html
-skip-if(Quirks||IE7||IE8) script Require-2.html
+skip-if(Quirks||IE7||IE8) fails script Require-2.html
 == Styles-1.html Styles-1-ref.html
 script Styles-2.html
 script variables-1.html
