@@ -59,7 +59,7 @@ tree== issue349.html issue349-ref.html
 == issue377.html issue377-ref.html
 == issue400-1.html issue400-1-ref.html
 == issue400-2.html issue400-2-ref.html
-script issue428.html
+fails-if(SVG) script issue428.html
 tree== issue475.html issue475-ref.html
 script issue632.html
 == issue687.html issue687-ref.html
