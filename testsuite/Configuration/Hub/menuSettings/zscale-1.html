@@ -8,23 +8,21 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject.extensions.push("MathZoom.js");
-      gConfigObject.menuSettings = { zoom: "Click", zscale: "400%" };
+      function preMathJax() {
+        gConfigObject.extensions.push("MathZoom.js");
+        gConfigObject.menuSettings = { zoom: "Click", zscale: "400%" };
       }
 
-      function postMathJax()
-      {
-      var math;
-      if (gOutputJax == "HTML-CSS") {
-        math = document.getElementsByClassName("MathJax")[0];
-      } else if (gOutputJax == "SVG") {
-        math = document.getElementsByClassName("MathJax_SVG")[0];
-      } else {
-        throw "zoom-1 works for HTML-CSS and SVG outputs only.";
-      }
-      MathJax.Extension.MathZoom.Click(null, math);
+      function postMathJax() {
+        var math;
+        if (gOutputJax == "HTML-CSS") {
+          math = document.getElementsByClassName("MathJax")[0];
+        } else if (gOutputJax == "SVG") {
+          math = document.getElementsByClassName("MathJax_SVG")[0];
+        } else {
+          throw "zoom-1 works for HTML-CSS and SVG outputs only.";
+        }
+        MathJax.Extension.MathZoom.Click(null, math);
       }
     </script>
     <script type="text/javascript" src="../../../header.js"></script>
@@ -36,7 +34,7 @@
       <!-- zscale = 400% -->
       <div style="font-size: 100%; position: absolute; left: 0px; top: 0px;">
         <math>
-          <mpadded width="200px" height="200px">
+          <mpadded width="10em" height="8em" mathbackground="yellow">
             <mspace width="2em" height="2em" mathbackground="red"></mspace>
           </mpadded>
         </math>
@@ -47,7 +45,7 @@
                   position: absolute; left: 0px; top: 0px; background: grey;">
         <math>
           <mphantom>
-            <mspace width="2em" height="2em" mathbackground="red"></mspace>
+            <mpadded width="10em" height="5em" mathbackground="yellow"></mpadded>
           </mphantom>
         </math>
       </div>
