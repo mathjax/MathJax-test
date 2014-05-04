@@ -1,3 +1,9 @@
-require(MSIE||Firefox||Opera||Safari) script prefer-1.html
+#
+#  @note1
+#
+#  <p>These tests require MathPlayer in IE.</p>
+#
+
+annotate(@note1) require(MSIE||Firefox||Opera||Safari) script prefer-1.html
 script prefer-2.html
-script prefer-3.html
+annotate(@note1) script prefer-3.html

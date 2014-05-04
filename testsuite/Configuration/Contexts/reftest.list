@@ -12,9 +12,9 @@
 != issue24.html issue24-ref.html
 annotate(@note1) fails-if(Quirks||IE7||IE8) skip-if(Chrome) == xhtml-1.xhtml basic-ref.html
 annotate(@note1) fails-if(Quirks||IE7||IE8) skip-if(Chrome) == xhtml-2.html basic-ref.html
-annotate(@note1) fails-if(MSIE) == namespace-1.html basic-ref.html
-annotate(@note1) fails-if(MSIE||Konqueror) == namespace-2.html basic-ref.html
+annotate(@note1) fails-if(Quirks||IE7||IE8) == namespace-1.html basic-ref.html
+annotate(@note1) fails-if(Quirks||IE7||IE8||Konqueror) == namespace-2.html basic-ref.html
 annotate(@note1) == math-location-1.html math-location-ref.html
 == math-location-2.html math-location-ref.html
-annotate(@note2) fails-if(Opera||Chrome) == svg-1a.html svg-1-ref.html
-annotate(@note2) fails-if(Opera||Chrome) == svg-1b.html svg-1-ref.html
+annotate(@note2) fails-if(MSIE||Opera||Chrome) == svg-1a.html svg-1-ref.html
+annotate(@note2) fails-if(MSIE||Opera||Chrome) == svg-1b.html svg-1-ref.html
