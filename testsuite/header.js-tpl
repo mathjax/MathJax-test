@@ -193,6 +193,10 @@ function defaultConfigObject()
               }
           },
           font: gFont
+      },
+      
+      NativeMML: {
+        noMathPlayerWarning: true
       }
   };
     if (gErrorHandler) {
