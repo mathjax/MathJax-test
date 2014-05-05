@@ -12,5 +12,5 @@ load issue392.html
 load issue410.html
 load issue454.html
 load issue486.html
-require(!ImageTeX) load issue615.html
+require(HTML-CSS&&!ImageTeX) load issue615.html
 
