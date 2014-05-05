@@ -10,38 +10,38 @@
     <script type="text/javascript">
       var zoomConfig, zoomTrigger;
       
-      function preMathJax()
-      {
-      zoomConfig = getQueryString("zoomConfig");
-      zoomTrigger = getQueryString("zoomTrigger");
-      gConfigObject.extensions.push("MathZoom.js");
-      gConfigObject.menuSettings = { zoom: zoomConfig };
+      function preMathJax() {
+        zoomConfig = getQueryString("zoomConfig");
+        zoomTrigger = getQueryString("zoomTrigger");
+        gConfigObject.extensions.push("MathZoom.js");
+        gConfigObject.menuSettings = { zoom: zoomConfig };
       }
 
-      function postMathJax()
-      {
-      var math;
-      if (gOutputJax == "HTML-CSS") {
-        math = document.getElementsByClassName("MathJax")[0];
-      } else if (gOutputJax == "SVG") {
-        math = document.getElementsByClassName("MathJax_SVG")[0];
-      } else {
-        throw "zoom-1 works for HTML-CSS and SVG outputs only.";
-      }
+      function postMathJax() {
+        var math;
+        if (gOutputJax == "HTML-CSS") {
+          math = document.getElementsByClassName("MathJax")[0];
+        } else if (gOutputJax == "SVG") {
+          math = document.getElementsByClassName("MathJax_SVG")[0];
+        } else {
+          throw "zoom-1 works for HTML-CSS and SVG outputs only.";
+        }
 
-      switch(zoomTrigger) {
-        case "Click":
-          MathJax.Extension.MathZoom.Click(null, math);
-        break;
-        case "DblClick":
-          MathJax.Extension.MathZoom.DblClick(null, math);
-        break;
-        case "Hover":
-          MathJax.Extension.MathZoom.Hover(null, math);
-        break;
-        default:
-          throw "zoomTrigger not specified";
-        break;
+        MathJax.Extension.MathZoom.Remove = function () {};
+        
+        switch(zoomTrigger) {
+          case "Click":
+            MathJax.Extension.MathZoom.Click(null, math);
+            break;
+          case "DblClick":
+            MathJax.Extension.MathZoom.DblClick(null, math);
+            break;
+          case "Hover":
+            MathJax.Extension.MathZoom.Hover(null, math);
+            break;
+          default:
+            throw "zoomTrigger not specified";
+            break;
         }
       }
     </script>
