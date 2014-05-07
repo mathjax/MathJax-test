@@ -354,7 +354,7 @@ function signalListener(aMessage)
             // Maximum number of tolerated errors exceeded, report the error.
             if (gErrorHandler) {
                 if (name == "Math Processing Error") {
-	                  errorHandler(name,
+	                  errorHandler(name+" ("+aMessage[2].message+")",
                                  aMessage[2].fileName, aMessage[2].lineNumber);
                 } else {
 	                  errorHandler(aMessage);
