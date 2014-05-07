@@ -10,8 +10,8 @@
 #
 
 != issue24.html issue24-ref.html
-annotate(@note1) fails-if(Quirks||IE7||IE8) skip-if(Chrome) == xhtml-1.xhtml basic-ref.html
-annotate(@note1) fails-if(Quirks||IE7||IE8) skip-if(Chrome) == xhtml-2.html basic-ref.html
+annotate(@note1) skip-if(Quirks||IE7||IE8||Chrome) == xhtml-1.xhtml basic-ref.html
+annotate(@note1) skip-if(Quirks||IE7||IE8||Chrome) == xhtml-2.html basic-ref.html
 annotate(@note1) fails-if(Quirks||IE7||IE8) == namespace-1.html basic-ref.html
 annotate(@note1) fails-if(Quirks||IE7||IE8||Konqueror) == namespace-2.html basic-ref.html
 annotate(@note1) == math-location-1.html math-location-ref.html
