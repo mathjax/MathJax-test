@@ -39,3 +39,4 @@ annotate(@issue253) fails-if(Chrome||Safari) == issue253.html issue253-ref.html
 == issue523.html issue523-ref.html
 require(TeX||ImageTeX) != issue684.html issue684-ref.html
 != issue770.html issue770-ref.html
+!= issue820.html issue820-ref.html
