@@ -1,0 +1,39 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 799</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.MathML = { extensions: ["content-mathml.js"] }
+      }
+      var nodeError = false;
+      function xMathJaxConfig() {
+        MathJax.Hub.Register.MessageHook("MathML Jax - unknown node type",
+          function () {nodeError = true}
+        );
+      }
+    </script>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        return [newScriptReftestResult("Node error: ", nodeError)];
+      }    
+    </script>
+  </head>
+
+  <body>
+    <!-- See issue 799
+         https://github.com/mathjax/MathJax/issues/799 -->
+
+    <math  dir="rtl" display="block">
+     <mo>&#x2211;</mo>
+    </math>
+
+  </body>
+</html>
