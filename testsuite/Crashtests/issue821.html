@@ -1,0 +1,37 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 821</title>
+    <!-- Copyright (c) 2013 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/x-mathjax-config">
+      cb = MathJax.Callback({});
+      MathJax.Hub.Queue(cb);       // wait for event listener below to be called.
+    </script>
+    <script>
+    window.addEventListener('message',function (e) {
+      var frame = document.getElementById('sandbox');
+      if (e.origin === "null" && e.source === frame.contentWindow) {
+        if (e.data === "error") {throw new Error("MathJax crashed in iframe")}
+        cb();
+      }
+    });
+    </script>
+  </head>
+
+  <body>
+    <!-- See issue 821
+         https://github.com/mathjax/MathJax/issues/821 -->
+    
+    <iframe id="sandbox" sandbox="allow-scripts">
+    </iframe>
+    <script>
+      document.getElementById("sandbox").src = "iframe.html" + document.location.search;
+    </script>
+
+  </body>
+</html>
