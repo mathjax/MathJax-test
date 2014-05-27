@@ -1,0 +1,44 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>zoom box</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+
+    <!-- This test verifies zoom box size with HTML-CSS output.
+         See issue 824
+         https://github.com/mathjax/MathJax/issues/824 -->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("MathZoom.js");
+      }
+
+      function postMathJax() {
+        var jax = MathJax.Hub.getAllJax()[0];
+        var math = document.getElementById(jax.inputID+"-Frame");
+        if (!math.jaxID) {math = math.firstChild}
+        MathJax.Extension.MathZoom.Zoom(null, math)
+
+        if (getQueryBoolean("auto")) {
+          var zoom = document.getElementById("MathJax_Zoom");
+          zoom.style.overflow = "auto";
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div style="width:600px">
+      $$
+      \Rule{400px}{1em}{0px}
+      \tag{1}
+      $$
+    </div>
+
+  </body>
+</html>
