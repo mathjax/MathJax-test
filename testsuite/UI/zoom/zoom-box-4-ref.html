@@ -18,7 +18,7 @@
       {
       var jax = MathJax.Hub.getAllJax()[1];
       var math = document.getElementById(jax.inputID+"-Frame");
-      if (!math.jaxID) {math = math.childNode}
+      if (!math.jaxID) {math = math.firstChild}
       MathJax.Extension.MathZoom.Zoom(null, math)
       }
     </script>

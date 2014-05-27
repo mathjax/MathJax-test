@@ -23,7 +23,7 @@
       {
       var jax = MathJax.Hub.getAllJax()[0];
       var math = document.getElementById(jax.inputID+"-Frame");
-      if (!math.jaxID) {math = math.childNode}
+      if (!math.jaxID) {math = math.firstChild}
       MathJax.Extension.MathZoom.Zoom(null, math)
 
       // If the zoom box is large enough, it should render the same with or
