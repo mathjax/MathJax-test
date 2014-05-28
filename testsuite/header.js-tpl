@@ -243,18 +243,10 @@ function startMathJax()
     var config = "";
     config += "MathJax.Hub.Config(gConfigObject);";
     config += "MathJax.Hub.signal.Interest(signalListener);";
-    if (window.xMathJaxConfig) {
-        config += "xMathJaxConfig();"
-    }
-    config += "MathJax.Hub.Startup.onload();";
-
-    if (window.postMathJax) {
-      config +=
-        "MathJax.Hub.Queue(postMathJax);";
-    }
-    
-    config +=
-        "MathJax.Hub.Queue(finalizeTest);";
+    if (!getQueryBoolean("semantics"))  {config += "noSemantics();"}
+    if (window.xMathJaxConfig) {config += "xMathJaxConfig();"}
+    if (window.postMathJax)    {config += "MathJax.Hub.Queue(postMathJax);"}
+    config += "MathJax.Hub.Queue(finalizeTest);";
 
     if (window.opera) {
         script1.innerHTML = config;
@@ -266,6 +258,23 @@ function startMathJax()
     head.appendChild(script1);
     head.appendChild(script2);
 }
+
+/**
+  * Don't add semantics elements to TeX and AsciiMath output in NativeMML
+  * (since this is new in v2.4 that would require updating all the
+  * reference files for large numbers of tests).  This can be overridden
+  * using the "semantics=true" query parameter, for tests that want the
+  * extra semantics elements.
+  */
+function noSemantics() {
+  MathJax.Hub.Register.StartupHook("TeX Jax Config",function () {
+    MathJax.InputJax.TeX.annotationEncoding = null;
+  });
+  MathJax.Hub.Register.StartupHook("AsciiMath Jax Config",function () {
+    MathJax.InputJax.AsciiMath.annotationEncoding = null;
+  });
+}
+
 
 /**
   * Add the test finalizer according to the type of test and in particular
