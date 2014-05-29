@@ -14,19 +14,15 @@
 
     <!-- See issue 820
          https://github.com/mathjax/MathJax/issues/820 -->
+   <span style="display:inline-block; height:2em; width:1em"></span>
    <math>
-     <msubsup>
-       <mrow class="MJX-TeXAtom-OP">
-         <mpadded width="0">
-           <mtext>&#x222B;<!-- º --></mtext>
-         </mpadded>
-         <mphantom>
-           <mtext>&#xE0;<!-- ˆ --></mtext>
-         </mphantom>
-       </mrow>
-       <mn>0</mn>
-       <mn>1</mn>
-     </msubsup>
+     <mphantom mathbackground="red">
+       <msubsup>
+         <mo>&#x222B;<!-- º --></mo>
+         <mn>0</mn>
+         <mn>1</mn>
+       </msubsup>
+     </mphantom>
    </math>
 
   </body>

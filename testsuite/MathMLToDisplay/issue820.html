@@ -14,12 +14,17 @@
 
     <!-- See issue 820
          https://github.com/mathjax/MathJax/issues/820 -->
+   <span style="display:inline-block; height:2em; width:1em"></span>
    <math>
-     <msubsup>
-       <mo>&#x222B;<!-- º --></mo>
-       <mn>0</mn>
-       <mn>1</mn>
-     </msubsup>
+     <mphantom mathbackground="red">
+       <msubsup>
+         <mo>&#x222B;<!-- º --></mo>
+         <mn>0</mn>
+         <mpadded width="0">
+           <mphantom><mn>1</mn></mphantom>
+         </mpadded>
+       </msubsup>
+     </mphantom>
    </math>
 
   </body>

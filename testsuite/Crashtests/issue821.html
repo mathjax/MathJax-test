@@ -8,18 +8,24 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
     <script type="text/x-mathjax-config">
       cb = MathJax.Callback({});
       MathJax.Hub.Queue(cb);       // wait for event listener below to be called.
-    </script>
-    <script>
-    window.addEventListener('message',function (e) {
-      var frame = document.getElementById('sandbox');
-      if (e.origin === "null" && e.source === frame.contentWindow) {
-        if (e.data === "error") {throw new Error("MathJax crashed in iframe")}
-        cb();
-      }
-    });
+
+      var error = false;
+
+      window.addEventListener('message',function (e) {
+        var frame = document.getElementById('sandbox');
+        if (e.origin === "null" && e.source === frame.contentWindow) {
+          if (e.data === "error") {error = true}
+          cb();
+        }
+      });
+
+      function getTestCases() {
+        return [newScriptReftestResult("No iframe error: ", !error)];
+      }    
     </script>
   </head>
 
