@@ -18,7 +18,7 @@
       function postMathJax() {
         var jax = MathJax.Hub.getAllJax()[0];
         var math = document.getElementById(jax.inputID+"-Frame");
-        if (!math.jaxID) {math = math.childNode}
+        if (!math.jaxID) {math = math.firstChild}
         MathJax.Extension.MathZoom.Zoom(null, math);
         var zoom = document.getElementById("MathJax_Zoom");
         zoom.style.padding = "0"; zoom.style.border = "none"; // remove padding and border
