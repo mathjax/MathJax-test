@@ -22,21 +22,21 @@ include TortureTests/reftest.list
 == scriptlevel-movablelimits-1.html scriptlevel-movablelimits-1-ref.html
 == unit-1a.html unit-1-ref.html
 == unit-1b.html unit-1-ref.html
-== unit-2a.html unit-2-ref.html
-== unit-2b.html unit-2-ref.html
+fails-if(Firefox&&NativeMML) == unit-2a.html unit-2-ref.html
+fails-if(Firefox&&NativeMML) == unit-2b.html unit-2-ref.html
 tree== unit-3.html unit-3-ref.html
-== issue162.html issue162-ref.html
+fails-if(NativeMML) == issue162.html issue162-ref.html
 != issue219.html issue219-ref.html
 == issue251.html issue251-ref.html
 annotate(@issue253) fails-if(Chrome||Safari) == issue253.html issue253-ref.html
-!= issue268.html issue268-ref.html
+fails-if(NativeMML) != issue268.html issue268-ref.html
 != issue272.html issue272-ref.html
 != issue296.html issue296-ref.html
 == issue378.html issue378-ref.html
-== issue444.html issue444-ref.html
+fails-if(NativeMML) == issue444.html issue444-ref.html
 == issue468.html issue468-ref.html
 == issue473.html issue473-ref.html
 == issue523.html issue523-ref.html
 require(TeX||ImageTeX) != issue684.html issue684-ref.html
-!= issue770.html issue770-ref.html
+fails-if(Firefox&&NativeMML) != issue770.html issue770-ref.html
 require(STIX) != issue820.html issue820-ref.html

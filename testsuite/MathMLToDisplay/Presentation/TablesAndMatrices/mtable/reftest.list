@@ -19,6 +19,10 @@
 #
 # <p>Small difference at the left side of the red rectangle in Chrome SVG.</p>
 #
+# @note6
+#
+# <p>Attributes not implemented in Firefox native MathML</p>
+#
 
 == align-1.html align-1-ref.html
 == align-2.html align-2-ref.html
@@ -33,21 +37,21 @@ annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-3a.html co
 annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-3b.html columnalign-3-ref.html
 annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnalign-4.html columnalign-4-ref.html
 == columnlines-1a.html columnlines-1-ref.html
-!= columnlines-1b.html columnlines-1-ref.html
-!= columnlines-1c.html columnlines-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) != columnlines-1b.html columnlines-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) != columnlines-1c.html columnlines-1-ref.html
 == columnlines-2a.html columnlines-2-ref.html
 == columnlines-2b.html columnlines-2-ref.html
 == columnspacing-1.html columnspacing-1-ref.html
-annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == columnwidth-1.html columnwidth-1-ref.html
-annotate(@note2,@note4) fails-if((SVG&&Firefox)||(Linux&&Opera&&HTML-CSS&&TeX)) == columnwidth-2.html columnwidth-2-ref.html
+annotate(@note4,@note6) fails-if((Linux&&Opera&&HTML-CSS&&TeX)||(Firefox&&NativeMML)) == columnwidth-1.html columnwidth-1-ref.html
+annotate(@note2,@note4,@note6) fails-if((SVG&&Firefox)||(Linux&&Opera&&HTML-CSS&&TeX)||(Firefox&&NativeMML)) == columnwidth-2.html columnwidth-2-ref.html
 == displaystyle-1.html displaystyle-1-ref.html
-annotate(@note5,@note4) fails-if((Linux&&Opera&&HTML-CSS&&TeX)) == equalcolumns-1.html equalcolumns-1-ref.html
-annotate(@note4) fails-if(Linux&&Opera&&HTML-CSS&&TeX) == equalrows-1.html equalrows-1-ref.html
+annotate(@note5,@note4,@note6) fails-if((Linux&&Opera&&HTML-CSS&&TeX)||(Firefox&&NativeMML)) == equalcolumns-1.html equalcolumns-1-ref.html
+annotate(@note4,@note6) fails-if((Linux&&Opera&&HTML-CSS&&TeX)||(Firefox&&NativeMML)) == equalrows-1.html equalrows-1-ref.html
 == frame-1a.html frame-1-ref.html
-!= frame-1b.html frame-1-ref.html
-!= frame-1c.html frame-1-ref.html
-== framespacing-1.html framespacing-1-ref.html
-== framespacing-2.html framespacing-2-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) != frame-1b.html frame-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) != frame-1c.html frame-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) == framespacing-1.html framespacing-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) == framespacing-2.html framespacing-2-ref.html
 == mtable-1-1a.html mtable-1-1-ref.html
 == mtable-1-1b.html mtable-1-1-ref.html
 == mtable-1-2a.html mtable-1-2-ref.html
@@ -68,15 +72,15 @@ annotate(@note2) fails-if((Opera&&HTML-CSS)) == rowalign-2.html rowalign-2-ref.h
 annotate(@note1) fails == rowalign-3.html rowalign-3-ref.html
 annotate(@note1) fails == rowalign-4.html rowalign-4-ref.html
 == rowlines-1a.html rowlines-1-ref.html
-!= rowlines-1b.html rowlines-1-ref.html
-!= rowlines-1c.html rowlines-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) != rowlines-1b.html rowlines-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) != rowlines-1c.html rowlines-1-ref.html
 == rowlines-2a.html rowlines-2-ref.html
 == rowlines-2b.html rowlines-2-ref.html
-!= rowlines-3-1.html rowlines-3-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) != rowlines-3-1.html rowlines-3-1-ref.html
 fails-if(SVG) == rowlines-3-2.html rowlines-3-2-ref.html
 # XXXfred it seems that rowspacing can not be set under a minimum value.
 == rowspacing-1.html rowspacing-1-ref.html
-== width-1.html width-1-ref.html
-== issue719-1.html issue719-1-ref.html
-== issue719-2.html issue719-2-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) == width-1.html width-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) == issue719-1.html issue719-1-ref.html
+annotate(@note6) fails-if(Firefox&&NativeMML) == issue719-2.html issue719-2-ref.html
 == issue719-3.html issue719-3-ref.html

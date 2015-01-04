@@ -16,14 +16,18 @@
 # <p>This test page relies on getElementsByClassName, which is not implemented
 # in Internet Explorer.</p>
 #
+# @note5
+#
+# <p>Firefox no longer implements &lt;mglyph&gt;?.</p>
+#
 
-annotate(@note1) fails-if(SVG||(Chrome&&HTML-CSS)) == mglyph3.html mglyph3-ref.html
-annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)) == mglyph_aspect_gif.html mglyph_aspect_gif-ref.html
-annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)) == mglyph_aspect.html mglyph_aspect-ref.html
-annotate(@note1,@note2) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)) == mglyph_stretched.html mglyph_stretched-ref.html
-annotate(@note1) fails-if(SVG) == mglyph_valignbottom.html mglyph_valignbottom-ref.html
-annotate(@note1) fails-if(SVG) == mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
-annotate(@note1,@note3) fails-if(SVG) == mglyph_valigntop.html mglyph_valigntop-ref.html
+annotate(@note1,@note5) fails-if(SVG||(Chrome&&HTML-CSS)||(Firefox&&NativeMML)) == mglyph3.html mglyph3-ref.html
+annotate(@note1,@note2,@note5) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)||(Firefox&&NativeMML)) == mglyph_aspect_gif.html mglyph_aspect_gif-ref.html
+annotate(@note1,@note2,@note5) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)||(Firefox&&NativeMML)) == mglyph_aspect.html mglyph_aspect-ref.html
+annotate(@note1,@note2,@note5) fails-if(SVG||(Opera&&HTML-CSS)||(Chrome&&HTML-CSS)||(Firefox&&NativeMML)) == mglyph_stretched.html mglyph_stretched-ref.html
+annotate(@note1,@note5) fails-if(SVG||(Firefox&&NativeMML)) == mglyph_valignbottom.html mglyph_valignbottom-ref.html
+annotate(@note1,@note5) fails-if(SVG||(Firefox&&NativeMML)) == mglyph_valignmiddle.html mglyph_valignmiddle-ref.html
+annotate(@note1,@note3,@note5) fails-if(SVG||(Firefox&&NativeMML)) == mglyph_valigntop.html mglyph_valigntop-ref.html
 require(HTML-CSS) annotate(@note4) fails-if(MSIE) script rec-mglyph1.html
-fails-if(MSIE) == rec-mglyph2.html rec-mglyph2-ref.html
+annotate(@note5) fails-if(MSIE||(Firefox&&NativeMML)) == rec-mglyph2.html rec-mglyph2-ref.html
 == issue763.html issue763-ref.html

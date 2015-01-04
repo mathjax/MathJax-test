@@ -12,23 +12,27 @@
 # <p>This test verifies that no additional italic style is applied to some
 # characters. This test seems to fail with the STIX fonts.</p>
 #
+# @note3
+#
+# <p>Firefox no longer implements the STYLE attribute.</p>
+#
 
-== mi1.html mi1-ref.html
-== mi2.html mi2-ref.html
-== mi3.html mi3-ref.html
-== mi4.html mi4-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == mi1.html mi1-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == mi2.html mi2-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == mi3.html mi3-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == mi4.html mi4-ref.html
 annotate(@note1) random == miAtoken5.html miAtoken5-ref.html
 annotate(@note1) random == miequivalents11.html miequivalents11-ref.html
-== mifontstyle12.html mifontstyle12-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == mifontstyle12.html mifontstyle12-ref.html
 annotate(@note1) random == mimathvariant13.html mimathvariant13-ref.html
 annotate(@note1) random == mimathvariant14.html mimathvariant14-ref.html
 == mi-mathvariant-1.html mi-mathvariant-1-ref.html
 annotate(@note2) fails-if(STIX) == mi-mathvariant-2.html mi-mathvariant-2-ref.html
-== miScolorname6.html miScolorname6-ref.html
-== miScolorscope7.html miScolorscope7-ref.html
-== miSfonts8.html miSfonts8-ref.html
-== miSfontsize9.html miSfontsize9-ref.html
-== miSmathsize16.html miSmathsize16-ref.html
-== miSmathsize17.html miSmathsize17-ref.html
-== miStoken10.html miStoken10-ref.html
-== miScolorname15.html miScolorname15-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == miScolorname6.html miScolorname6-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == miScolorscope7.html miScolorscope7-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == miSfonts8.html miSfonts8-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == miSfontsize9.html miSfontsize9-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == miSmathsize16.html miSmathsize16-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == miSmathsize17.html miSmathsize17-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == miStoken10.html miStoken10-ref.html
+annotate(@note3) fails-if(Firefox||NativeMML) == miScolorname15.html miScolorname15-ref.html
