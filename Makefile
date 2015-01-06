@@ -31,6 +31,7 @@ help:
 	@echo 'The following commands are available:'
 	@echo '  make help'
 	@echo '  make config'
+	@echo '  make reftests'
 	@echo '  make doc'
 	@echo '  make updateSeleniumDriver'
 	@echo '  make downloadSeleniumServer VERSION=$(SELENIUM_SERVER_VERSION)'
@@ -117,6 +118,15 @@ HTML_OUTPUT = doxygen/' $(DOXYGEN_CONFIG)
 GENERATE_LATEX = NO' $(DOXYGEN_CONFIG)
 
 	@ make generateBranchList
+
+reftests:
+	@ echo 'Generate $(WEB_REFTEST_LIST)...'
+	@ cd testRunner/; $(PYTHON) runTestsuite.py -p > /dev/null
+
+	@ echo 'Generate $(WEB_TESTSUITE_NOTES)...'
+	@ cd testRunner/; $(PYTHON) runTestsuite.py -n > /dev/null
+
+
 
 doc:
 	@ echo 'Build doxygen documentation...'

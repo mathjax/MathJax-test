@@ -1,5 +1,5 @@
-!= statusline-1.html statusline-1-ref.html
-!= tooltip-1.html tooltip-1-ref.html
+fails-if(Firefox&&NativeMML) != statusline-1.html statusline-1-ref.html
+fails-if(Firefox&&NativeMML) != tooltip-1.html tooltip-1-ref.html
 slow-if(Chrome) != tooltip-2a.html tooltip-2-ref.html
 slow-if(Chrome) != tooltip-2b.html tooltip-2-ref.html
 == issue412.html issue412-ref.html

@@ -1,7 +1,11 @@
 # @note1
 #
 # <p>These test pages rely on getElementsByClassName, which is not implemented
-# in Internet Explorer < 8.</p>
+# in Internet Explorer &lt; 8.</p>
+#
+# @note2
+#
+# <p>Since size is in px, NativeMML zoomed version is the same size.</p>
 #
 
 annotate(@note1) fails-if(Quirks||IE7||IE8) script getJaxFromMath-1.html
@@ -16,4 +20,4 @@ script variables-1.html
 script variables-2.html
 script variables-3.html
 script variables-4.html
-annotate(@note1) fails-if(Quirks||IE7||IE8) script Zoom-1.html
+annotate(@note1,@note2) fails-if((Quirks||IE7||IE8)||NativeMML) script Zoom-1.html

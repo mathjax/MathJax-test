@@ -33,7 +33,7 @@ tree== functions-1.html functions-1-ref.html
 tree== inline-math-1.html inline-math-ref.html
 tree== inline-math-2.html inline-math-ref.html
 == issue139.html issue139-ref.html
-require(TeX) != issue145.html issue145-ref.html
+require(TeX&&!NativeMML) != issue145.html issue145-ref.html
 == issue211.html issue211-ref.html
 != issue236.html issue236-ref.html
 == issue263.html issue263-ref.html
@@ -43,7 +43,7 @@ tree== limits-2.html limits-2-ref.html
 tree== limits-3.html limits-3-ref.html
 load limits-4.html
 == issue242-1.html issue242-1-ref.html
-== issue242-2.html issue242-2-ref.html
+fails-if(NativeMML) == issue242-2.html issue242-2-ref.html
 tree== mathsize-1.html mathsize-1-ref.html
 tree== mod-1.html mod-1-ref.html
 tree== not-1.html not-1-ref.html

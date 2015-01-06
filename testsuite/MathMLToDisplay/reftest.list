@@ -38,5 +38,5 @@ fails-if(NativeMML) == issue444.html issue444-ref.html
 == issue473.html issue473-ref.html
 == issue523.html issue523-ref.html
 require(TeX||ImageTeX) != issue684.html issue684-ref.html
-fails-if(Firefox&&NativeMML) != issue770.html issue770-ref.html
+!= issue770.html issue770-ref.html
 require(STIX) != issue820.html issue820-ref.html

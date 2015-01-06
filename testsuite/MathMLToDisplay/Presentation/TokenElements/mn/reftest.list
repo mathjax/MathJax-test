@@ -5,12 +5,12 @@
 #
 # @note2
 #
-# <p>Firefox no longer implements STYLE.</p>
+# <p>Firefox changes fonts for style with font-style or font-weight.</p>
 #
 
-== mn1.html mn1-ref.html
+annotate(@note2) fails-if(Firefox&&NativeMML) == mn1.html mn1-ref.html
 == mn2.html mn2-ref.html
-== mn3.html mn3-ref.html
+annotate(@note2) fails-if(Firefox&&NativeMML) == mn3.html mn3-ref.html
 == mn4.html mn4-ref.html
 == mnAcolorname5.html mnAcolorname5-ref.html
 == mnAtoken6.html mnAtoken6-ref.html

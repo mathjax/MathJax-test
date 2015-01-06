@@ -8,22 +8,23 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject.tex2jax = { processRefs: false };
-      gConfigObject.TeX = {
-        equationNumbers: { autoNumber: "all" }
-      };
+      function preMathJax() {
+        gConfigObject.tex2jax = { processRefs: false };
+        gConfigObject.TeX = {equationNumbers: { autoNumber: "all" }};
       }
 
-      function getTestCases()
-      {
-      return [
-      newScriptReftestResult("\\ref outside math mode not processed",
-        document.getElementById("ref1").innerHTML == "\\ref{a}"),
-      newScriptReftestResult("\\ref inside math mode processed",
-        document.getElementById("ref2").getElementsByTagName("a").length == 1)
-      ];
+      function getTestCases() {
+        var ref2 = document.getElementById("ref2");
+        var r2 = (ref2.getElementsByTagName("a").length == 1);
+        if (!r2) {
+          var mrow = (ref2.getElementsByTagName("mrow")||[])[0];
+          r2 = !!(mrow && mrow.getAttribute("href") !== "");
+        }
+        return [
+          newScriptReftestResult("\\ref outside math mode not processed",
+            document.getElementById("ref1").innerHTML == "\\ref{a}"),
+          newScriptReftestResult("\\ref inside math mode processed",r2)
+        ];
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>

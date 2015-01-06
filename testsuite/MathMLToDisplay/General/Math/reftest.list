@@ -15,10 +15,10 @@ annotate(@note) fails == dir-1.html dir-1-ref.html
 == mathAdisplay2.html mathAdisplay2-ref.html
 == mathAmacros1.html mathAmacros1-ref.html
 == mathAmode1.html mathAmode1-ref.html
-== math-as-mstyle-1-1.html math-as-mstyle-1-1-ref.html
+fails-if(Firefox&&NativeMML) == math-as-mstyle-1-1.html math-as-mstyle-1-1-ref.html
 == math-as-mstyle-1-2.html math-as-mstyle-1-2-ref.html
-== mathBevelledFrac.html mathBevelledFrac-ref.html
+fails-if(Firefox&&NativeMML) == mathBevelledFrac.html mathBevelledFrac-ref.html
 == mathColorSize.html mathColorSize-ref.html
 annotate(@note) fails == mathDir.html mathDir-ref.html
 == math-display.html math-display-ref.html
-== mathTable1.html mathTable1-ref.html
+fails-if(Firefox&&NativeMML) == mathTable1.html mathTable1-ref.html

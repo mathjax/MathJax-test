@@ -18,31 +18,19 @@
       }
 
       function postMathJax() {
-        var math;
-        if (gOutputJax == "HTML-CSS") {
-          math = document.getElementsByClassName("MathJax")[0];
-        } else if (gOutputJax == "SVG") {
-          math = document.getElementsByClassName("MathJax_SVG")[0];
-        } else {
-          throw "zoom-1 works for HTML-CSS and SVG outputs only.";
-        }
+        var id = ({
+          "HTML-CSS": "MathJax",
+          SVG: "MathJax_SVG",
+          NativeMML: "MathJax_MathContainer"
+        })[gOutputJax];
+
+        if (!id) {throw "zoom-1 doesn't work with "+gOutputJax+" output jax."}
+        var math = document.getElementsByClassName(id)[0];
 
         MathJax.Extension.MathZoom.Remove = function () {};
-        
-        switch(zoomTrigger) {
-          case "Click":
-            MathJax.Extension.MathZoom.Click(null, math);
-            break;
-          case "DblClick":
-            MathJax.Extension.MathZoom.DblClick(null, math);
-            break;
-          case "Hover":
-            MathJax.Extension.MathZoom.Hover(null, math);
-            break;
-          default:
-            throw "zoomTrigger not specified";
-            break;
-        }
+        if (!MathJax.Extension.MathZoom[zoomTrigger])
+          {throw "zoomTrigger "+zoomTrigger+" not defined."}
+        MathJax.Extension.MathZoom[zoomTrigger](null,math);
       }
     </script>
     <script type="text/javascript" src="../../../header.js"></script>

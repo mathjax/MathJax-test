@@ -1,7 +1,7 @@
 #
 # @note1
 #
-# <p>This page from the W3C test suite verifies how are bad attributes are
+# <p>This page from the W3C test suite verifies how bad attributes are
 # handled. Here mathbackground="quagmire" is ignored in HTML-CSS output mode
 # but is a black square is displayed in SVG output mode.</p>
 #
@@ -17,7 +17,7 @@
 # 
 
 == badAttribs2.html badAttribs2-ref.html
-== badAttribsAction.html badAttribsAction-ref.html
-annotate(@note1,@note2,@note3) fails-if((MSIE&&!IE9)||SVG||(Opera&&Linux&&HTML-CSS&&TeX)) == badAttribsVal3.html badAttribsVal3-ref.html
+fails-if(NativeMML) == badAttribsAction.html badAttribsAction-ref.html
+annotate(@note1,@note2,@note3) fails-if((MSIE&&(Quirks||IE7||IE8))||SVG||(Opera&&Linux&&HTML-CSS&&TeX)||NativeMML) == badAttribsVal3.html badAttribsVal3-ref.html
 == bad-attribute-value-1.html bad-attribute-value-1-ref.html
 
