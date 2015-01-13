@@ -1,0 +1,38 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 658</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function xMathJaxConfig() {
+        MathJax.Hub.config.extensions.push("CHTML-preview.js");
+        MathJax.Hub.Config({
+          menuSettings: {CHTMLpreview: true}
+        });
+      }
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax()[0].SourceElement();
+        var preview = math.previousSibling.previousSibling;
+        return [newScriptReftestResult("Preview empty",preview.innerHTML === "")];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- CHTML-preview doesn't remove first preview if math is in script tags
+         https://github.com/mathjax/MathJax/issues/975 -->
+
+    <script type="math/tex">x+1</script>
+    <p>
+
+  </body>
+</html>
