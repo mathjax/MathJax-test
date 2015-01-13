@@ -15,3 +15,4 @@ tree== genfrac-1.html genfrac-1-ref.html
 tree== tbinom-1.html tbinom-1-ref.html
 tree== tfrac-1.html tfrac-1-ref.html
 tree== overwithdelims-1.html overwithdelims-1-ref.html
+== issue969.html issue969-ref.html
