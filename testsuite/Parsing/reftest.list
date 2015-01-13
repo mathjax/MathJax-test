@@ -33,4 +33,5 @@ require(!Safari) script issue658.html?browser=Safari&fail=true
 require(Opera) script issue658.html?browser=Opera
 require(!Opera) script issue658.html?browser=Opera&fail=true
 
+script issue972.html
 script issue975.html

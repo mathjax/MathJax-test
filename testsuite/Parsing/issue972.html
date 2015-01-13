@@ -1,0 +1,42 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 658</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var isLoaded = false;
+      function xMathJaxConfig() {
+        MathJax.Hub.Config({
+          TeX: {extensions: "autoload-all.js"}
+        });
+        MathJax.Hub.Register.LoadHook("[MathJax]/extensions/TeX/color.js",function (status) {
+          isLoaded = (status === MathJax.Ajax.STATUS.OK);
+        });
+      }
+      function preMathJax() {
+        gMaxErrorSignals["TeX Jax - parse error"] = 1;
+      }
+      function getTestCases() {
+        return [newScriptReftestResult("color extension loaded",isLoaded)];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- \definecolor doesn't autoload
+         https://github.com/mathjax/MathJax/issues/972 -->
+
+    \(\definecolor{RED}{RGB}{255,0,0}\color{RED}x\)
+    <p>
+
+  </body>
+</html>
