@@ -2,5 +2,5 @@ include mlabeledtr/reftest.list
 include mtable/reftest.list
 include mtr-mtd/reftest.list
 
-== issue1000-1.html issue1000-1-ref.html
-== issue1000-2.html issue1000-2-ref.html
+require(HTML-CSS||SVG) == issue1000-1.html issue1000-1-ref.html
+require(HTML-CSS||SVG) == issue1000-2.html issue1000-2-ref.html
