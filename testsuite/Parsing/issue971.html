@@ -1,0 +1,72 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 658</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var MML;
+      function xMathJaxConfig() {
+        //
+        //  Load the needed extensions
+        //
+        MathJax.Hub.Config({
+          TeX: {extensions: ["extpfeil.js","action.js"]}
+        });
+        MathJax.Hub.config.extensions.push("toMathML.js");
+        //
+        //  Queue a function to get the MathML for an expression
+        //  that will cause a reset
+        //
+        MathJax.Hub.Queue(function () {
+          var jax = MathJax.Hub.getAllJax()[1];
+          return getMathML(jax,function (mml) {MML = mml});  // save the MML
+        });
+      }
+      //
+      //  A version of toMathML() that handles resets
+      //
+      function getMathML(jax,callback) {
+        var mml;
+        try {
+          mml = jax.root.toMathML("",jax);
+        } catch(err) {
+          if (!err.restart) {throw err} // an actual error
+          return MathJax.Callback.After([getMathML,jax,callback],err.restart);
+        }
+        MathJax.Callback(callback)(mml);
+      }
+
+      //
+      //  Check if the returned MathML string has the stretchy value preserved
+      //
+      function getTestCases() {
+        var OK = MML.match(/stretchy="true"/);
+        return [newScriptReftestResult("Attributes preserved during restart",OK)];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- toMathML loses attributes during a restart
+         https://github.com/mathjax/MathJax/issues/971 -->
+
+    <!-- The stretchy arrow in an unshown toggle position will
+     |   cause toMathML() to reset when the operator table is loaded
+     |   to check if U+2254 is stretchy (this is not in the preloaded
+     |   operator table. -->
+
+    \(\Newextarrow{\xreset}{0,0}{0x2254}\)
+    \(\toggle{A}{\xreset{a}}\endtoggle\)
+    <p>
+
+  </body>
+</html>
