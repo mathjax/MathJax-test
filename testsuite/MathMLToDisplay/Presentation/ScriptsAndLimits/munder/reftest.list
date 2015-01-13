@@ -1,1 +1,2 @@
 != munder-1.html munder-1-ref.html
+require(SVG) script issue966.html
