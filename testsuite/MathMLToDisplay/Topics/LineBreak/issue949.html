@@ -1,0 +1,46 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 949</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].linebreaks = {automatic: true};
+        gConfigObject["SVG"].linebreaks = {automatic: true};
+        gMaxErrorSignals["Math Processing Error"] = 1;
+      }
+
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["Math Processing Error"] === 1);
+        return [newScriptReftestResult("No processing error",OK)];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Linebreak in msubsup base with empty script causes failure
+         https://github.com/mathjax/MathJax/issues/949 -->
+    
+    <div style="width:3em">
+    <math display="block">
+      <msubsup>
+        <mrow>
+          <mspace width="2em" height=".8em" mathbackground="red"></mspace>
+          <mspace width="2em" height=".8em" mathbackground="blue"></mspace>
+        </mrow>
+        <mrow></mrow>
+        <mrow></mrow>
+      </msubsup>
+    </math>
+    </div>
+
+  </body>
+</html>
