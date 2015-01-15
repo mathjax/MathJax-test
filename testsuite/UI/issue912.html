@@ -19,14 +19,9 @@
         var span = document.createElement('span');
         span.innerHTML = mmlString;
         var mstyle = span.firstChild.getElementsByTagName('mstyle')[0];
-        var check;
-        try {
-          check = ( mstyle.getAttribute('scriptlevel') === '0' && mstyle.getAttribute('displaystyle') === 'false');
-          }
-        catch (err) {check = false};
         return [
-          newScriptReftestResult("Check displaystyle and scriptlevel changes in toMathML() output",
-            check),
+          newScriptReftestResult("Check Scriptlevel set to 0",(mstyle && mstyle.getAttribute('scriptlevel') === '0')),
+          newScriptReftestResult("Check Displaystyle set to false",(mstyle && mstyle.getAttribute('displaystyle') === 'false'))
         ];
       }
     </script>
