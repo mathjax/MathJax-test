@@ -18,8 +18,6 @@
         return [
           newScriptReftestResult("TeX strings are XML escaped in Show MathML source",
             jax.root.toMathML('',jax).indexOf("\&amp; &lt; &gt;</annotation>") > -1),
-
-
         ];
       }
     </script>
