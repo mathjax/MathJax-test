@@ -1,0 +1,39 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 918</title>
+    <!-- Copyright (c) 2012 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("MathZoom.js");
+      }
+
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax()[0];
+        var math = document.getElementById(jax.inputID+"-Frame");
+        if (!math.jaxID) {math = math.firstChild}
+        MathJax.Extension.MathZoom.Zoom(null, math);
+        var zoom = document.getElementById("MathJax_Zoom");
+        zoom.style.padding = "0"; zoom.style.border = "none"; // remove padding and border
+        var w = zoom.offsetWidth;
+        return [newScriptReftestResult("Zoom box wide enough ("+w+") ", w > 0)];
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- Zoom box is zero-width for tagged equations in NativeMML
+         https://github.com/mathjax/MathJax/issues/918 -->
+
+      \[x\tag{1}\]
+ 
+      <div style="height:2em"></div>
+
+  </body>
+</html>
