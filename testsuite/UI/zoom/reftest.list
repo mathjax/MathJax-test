@@ -8,4 +8,4 @@ load zoom-box-6.html
 == zoom-box-7.html zoom-box-7-ref.html
 script issue460.html
 == issue824.html issue824.html?auto=true
-require(NativeMML) script issue918
+require(NativeMML) script issue918.html
