@@ -2,5 +2,12 @@ include mlabeledtr/reftest.list
 include mtable/reftest.list
 include mtr-mtd/reftest.list
 
+require(NativeMML) != issue993-1a.html issue993-1-ref.html
+require(NativeMML) != issue993-1b.html issue993-1-ref.html
+require(NativeMML) != issue993-1c.html issue993-1-ref.html
+require(NativeMML) != issue993-1d.html issue993-1-ref.html
+require(NativeMML) != issue993-1e.html issue993-1-ref.html
+require(NativeMML) != issue993-2.html issue993-2-ref.html
+require(NativeMML) != issue993-3.html issue993-3-ref.html
 require(HTML-CSS||SVG) == issue1000-1.html issue1000-1-ref.html
 require(HTML-CSS||SVG) == issue1000-2.html issue1000-2-ref.html
