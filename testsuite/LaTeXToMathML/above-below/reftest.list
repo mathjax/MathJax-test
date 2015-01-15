@@ -11,6 +11,8 @@ tree== substack-1.html substack-1-ref.html
 tree== underbrace-1.html underbrace-1-ref.html
 tree== underset-1.html underset-1-ref.html
 
+require(!NativeMML) script issue937.html
+
 # XXXfred not supported
 # fails tree== overbracket-1.html overbracket-1-ref.html
 # fails tree== underbracket-1.html underbracket-1-ref.html
