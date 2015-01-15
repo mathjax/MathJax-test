@@ -6,3 +6,4 @@ script show-source-1.html
 script show-source-2.html
 script issue685.html
 script issue912.html
+script issue935.html?semantics=true

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>TeX strings in annotation</title>
+    <!-- Copyright (c) 2014 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.menuSettings = {semantics: true};
+        gConfigObject.extensions.push("toMathML.js");
+      }
+
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax()[0];
+        return [
+          newScriptReftestResult("TeX strings are XML escaped in Show MathML source",
+            jax.root.toMathML('',jax).indexOf("\&amp; &lt; &gt;</annotation>") > -1),
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        See issue 935
+        https://github.com/mathjax/MathJax/issues/935 -->
+    <div>
+      \( \&amp; &lt; &gt; \)
+    </div>
+
+  </body>
+</html>
