@@ -1,0 +1,39 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 994</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("MathMenu.js");
+        gMaxErrorSignals["TeX Jax - parse error"] = 1;
+      }
+      function prompt() {return "200%"}          // force request for scale to return 200%
+      function postMathJax() {
+        MathJax.Menu.saveCookie = function () {} // disable saving of cookies
+        MathJax.Menu.Scale();                    // Do Scale action
+      }
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["TeX Jax - parse error"] == 1);
+        return [newScriptReftestResult("Scaling with label is OK",OK)];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- Scaling calls Reprocess rather than Rerender
+         https://github.com/mathjax/MathJax/issues/994 -->
+
+      $$E=mc^2\label{einstein}\tag{1}$$
+
+  </body>
+</html>
