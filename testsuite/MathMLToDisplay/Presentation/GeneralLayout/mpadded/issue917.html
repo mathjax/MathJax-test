@@ -1,0 +1,51 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 917</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var bbox1 = document.getElementById("pad1").bbox;
+        var bbox2 = document.getElementById("pad2").bbox;
+        return [
+          newScriptReftestResult("BBox1 lw == -2 ("+bbox1.lw+") ",bbox1.lw == -2),
+          newScriptReftestResult("BBox1 rw == 0 ("+bbox1.rw+") ",bbox1.rw == 0),
+          newScriptReftestResult("BBox1 H == 4 ("+bbox1.H+") ",bbox1.H == 4),
+          newScriptReftestResult("BBox2 lw == 2 ("+bbox2.lw+") ",bbox2.lw == 2),
+          newScriptReftestResult("BBox2 rw == 4 ("+bbox2.rw+") ",bbox2.rw == 4),
+          newScriptReftestResult("BBox2 D == 2 ("+bbox2.D+") ",bbox2.D == 2)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- mpadded lw, lr, D, and H values aren't kept properly in HTML-CSS output
+         https://github.com/mathjax/MathJax/issues/917 -->
+
+     <div style="margin: 3em 0 3em 3em">
+     <math>
+       <mpadded id="pad1" lspace="-1em" voffset="1em" mathbackground="yellow">
+         <mpadded lspace="-1em" voffset="1em" mathbackground="blue">
+           <mspace width="2em" height="2em" mathbackground="red"></mspace>
+         </mpadded>
+       </mpadded>
+       <mspace width=".5em"></mspace>
+       <mpadded id="pad2" lspace="1em" voffset="-1em" mathbackground="yellow">
+         <mpadded lspace="1em" voffset="-1em" mathbackground="blue">
+           <mspace width="2em" height="2em" mathbackground="red"></mspace>
+         </mpadded>
+       </mpadded>
+     </math>
+     </div>
+    
+  </body>
+</html>
