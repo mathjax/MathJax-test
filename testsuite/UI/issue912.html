@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>TeX strings in annotation</title>
+    <!-- Copyright (c) 2014 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.menuSettings = {semantics: true};
+        gConfigObject.extensions.push("toMathML.js");
+      }
+
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax()[0];
+        var mmlString = jax.root.toMathML('',jax);
+        var span = document.createElement('span');
+        span.innerHTML = mmlString;
+        var mstyle = span.firstChild.getElementsByTagName('mstyle')[0];
+        var check;
+        try {
+          check = ( mstyle.getAttribute('scriptlevel') === '0' && mstyle.getAttribute('displaystyle') === 'false');
+          }
+        catch (err) {check = false};
+        return [
+          newScriptReftestResult("Check displaystyle and scriptlevel changes in toMathML() output",
+            check),
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        See issue 912
+        https://github.com/mathjax/MathJax/issues/912 -->
+    <div>
+      \( x^{\textstyle x} \)
+    </div>
+
+  </body>
+</html>
