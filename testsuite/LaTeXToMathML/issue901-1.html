@@ -1,0 +1,44 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 901</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Use of \limits was too restrictive.
+         https://github.com/mathjax/MathJax/issues/901 -->
+
+      <div style="margin: 1em">
+      \(
+         \sum^x\limits_y \quad
+         \sum^x\nolimits_y \quad
+         \sum^x_y
+      \)
+      <p>
+      \(
+         \underbrace{abcdef}\limits_x \quad
+         \underbrace{abcdef}\nolimits_x \quad
+         \underbrace{abcdef}_x
+      \)
+      </div>
+      
+      \[
+         \sum^x\limits_y \quad
+         \sum^x\nolimits_y \quad
+         \sum^x_y
+      \]
+      \[
+         \underbrace{abcdef}\limits_x \quad
+         \underbrace{abcdef}\nolimits_x \quad
+         \underbrace{abcdef}_x
+      \]
+
+  </body>
+</html>
