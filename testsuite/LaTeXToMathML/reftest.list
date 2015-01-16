@@ -69,5 +69,6 @@ script issue691.html
 == issue811-1.html issue811-1-ref.html
 == issue811-2.html issue811-2-ref.html
 tree== issue814.html?semantics=true issue814-ref.html
+script issue900.html
 == issue901-1.html issue901-1-ref.html
 script issue901-2.html

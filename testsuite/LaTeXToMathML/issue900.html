@@ -1,0 +1,34 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 900</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var REL = MathJax.ElementJax.mml.TEXCLASS.REL;
+        var atom = MathJax.Hub.getAllJax()[0].root.data[0].data[0];
+        return [
+          newScriptReftestResult("\\buildrel produces REL ", atom.texClass === REL)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \buildrel produces an ORD rather than a REL
+         https://github.com/mathjax/MathJax/issues/900 -->
+
+      <p>
+      \(\buildrel x \over =\)
+      </p>
+
+  </body>
+</html>
