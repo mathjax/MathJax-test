@@ -1,0 +1,38 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 903</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gMaxErrorSignals["TeX Jax - parse error"] = 1;
+      }
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["TeX Jax - parse error"] == 1);
+        return [newScriptReftestResult("\hfill processed ", OK)];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Allow \hfill in arrays.
+         https://github.com/mathjax/MathJax/issues/903 -->
+
+    <div id="reftest-element">
+      \[
+        \begin{array}{cc}
+          aaaaaa&b\hfill\\
+          \hfill b&aaaaa\\
+        \end{array}
+      \]
+    </div>
+  </body>
+</html>
