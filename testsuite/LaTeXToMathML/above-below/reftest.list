@@ -12,6 +12,7 @@ tree== underbrace-1.html underbrace-1-ref.html
 tree== underset-1.html underset-1-ref.html
 
 require(!NativeMML) script issue937.html
+require(!NativeMML) script issue877.html
 
 # XXXfred not supported
 # fails tree== overbracket-1.html overbracket-1-ref.html
