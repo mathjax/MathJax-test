@@ -1,0 +1,42 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 902</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var eq = MathJax.Hub.getAllJax();
+        var table1 = eq[0].root.data[0].data[0];
+        var table2 = eq[1].root.data[0].data[0];
+        var r1 = table1.toString() === "mtable(mlabeledtr(mtd([mi(c)]),mtd([mi(a)]),mtd([mo(=),mi(b)])))";
+        var r2 = table1.Get("side") === "right";
+        var r3 = table2.toString() === "mtable(mlabeledtr(mtd([mi(c)]),mtd([mi(a)]),mtd([mo(=),mi(b)])))";
+        var r4 = table2.Get("side") === "left";
+        return [
+          newScriptReftestResult("\eqalignno uses mlabeledtr ", r1),
+          newScriptReftestResult("\eqalignno side is right ", r2),
+          newScriptReftestResult("\leqalignno uses mlabeledtr ", r3),
+          newScriptReftestResult("\leqalignno side is left ", r4)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Use <mlabeledtr> for \eqalignno and \leqalignno
+         https://github.com/mathjax/MathJax/issues/902 -->
+
+    \[\eqalignno{a&=b&c}\]
+
+    \[\leqalignno{a&=b&c}\]
+
+  </body>
+</html>
