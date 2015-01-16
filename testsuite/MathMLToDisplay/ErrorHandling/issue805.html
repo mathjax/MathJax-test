@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>TeX strings in annotation</title>
+    <!-- Copyright (c) 2014 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+      }
+
+      function getTestCases() {
+        return [
+          newScriptReftestResult("No Math Processing Errors",true)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        See issue 805
+        https://github.com/mathjax/MathJax/issues/805 -->
+    <div>
+      <math>
+       <semantics> 
+          <annotation> 
+          </annotation> 
+        </semantics> 
+      </math>
+    </div>
+
+  </body>
+</html>
