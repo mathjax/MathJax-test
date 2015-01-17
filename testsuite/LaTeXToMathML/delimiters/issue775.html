@@ -1,0 +1,31 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 775</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script>
+      function getTestCases() {
+        var mrow = MathJax.Hub.getAllJax()[0].root.data[0].data[0];
+        return [
+          newScriptReftestResult("Empty <mo> used ", mrow.data.length === 3)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- SVG loses text after empty delimiter
+         https://github.com/mathjax/MathJax/issues/775 -->
+
+     \( \left.x\right. \)
+     <p>
+
+  </body>
+</html>

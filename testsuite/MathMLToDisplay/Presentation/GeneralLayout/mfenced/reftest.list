@@ -12,6 +12,7 @@ annotate(@issue255) != issue255-1d.html issue255-1-ref.html
 annotate(@issue255) != issue255-2.html issue255-2-ref.html
 annotate(@issue255) fails == issue255-3.html issue255-3-ref.html
 == issue478.html issue478-ref.html
+require(SVG) script issue775.html
 == issue889.html issue889-ref.html
 
 == mfenced-1.html mfenced-1-ref.html
