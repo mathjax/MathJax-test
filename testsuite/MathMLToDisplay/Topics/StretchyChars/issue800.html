@@ -1,0 +1,37 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 800</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var h = document.getElementById("eq").scrollHeight;
+        return [
+          newScriptReftestResult("Background color placement is OK ("+h+") ", h <= 80)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+   <!-- SVG background for stretched operator is misplaced.
+        https://github.com/mathjax/MathJax/issues/800 -->
+
+   <div id="eq" style="display:inline-block">
+   <math>
+     <mpadded height="40px" depth="30px" width="10px" mathbackground="black" />
+     <mpadded mathbackground="red">
+       <mo>&#x2191;</mo>
+     </mpadded>
+   </math>
+   </div>
+   <p>
+
+  </body>
+</html>

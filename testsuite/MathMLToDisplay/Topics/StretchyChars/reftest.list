@@ -223,4 +223,5 @@ annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertic
 skip-if(NativeMML) == issue213.html issue213-ref.html
 != issue469.html issue469-ref.html
 == issue703.html issue703-ref.html
+require(SVG) script issue800.html
 require(STIX&&HTML-CSS) == issue715.html issue715-ref.html
