@@ -84,3 +84,4 @@ annotate(@note6) fails-if(Firefox&&NativeMML) == width-1.html width-1-ref.html
 annotate(@note6) fails-if(Firefox&&NativeMML) == issue719-1.html issue719-1-ref.html
 annotate(@note6) fails-if(Firefox&&NativeMML) == issue719-2.html issue719-2-ref.html
 == issue719-3.html issue719-3-ref.html
+require(!NativeMML) == issue839.html issue839-ref.html
