@@ -31,5 +31,6 @@ require((TeX||ImageTeX)&&!NativeMML) == greek-3.html greek-3-ref.html
 require(STIX) != issue222.html issue222-ref.html
 
 == issue380.html issue380-ref.html
-
 require(STIX) == issue697.html issue697-ref.html
+script issue826-1.html
+require(!NativeMML) script issue826-2.html

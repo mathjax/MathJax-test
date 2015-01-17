@@ -1,0 +1,51 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 826</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script>
+      function xMathJaxConfig() {
+        MathJax.Hub.Config({
+          menuSettings: {scale: "300"},
+          NativeMML: {matchFontHeight:false}
+        });
+      }
+      function getTestCases() {
+        var w1 = document.getElementById("eq1").scrollWidth;
+        var w2 = document.getElementById("eq2").scrollWidth;
+        return [
+          newScriptReftestResult("Undefined characters same size ("+w1+","+w2+") ",
+             Math.abs(w1 - w2) < 100)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- unknown characters and mtextFontInherit characters scaled improperly
+         https://github.com/mathjax/MathJax/issues/826 -->
+
+    <div id="eq1" style="display:inline-block">
+    <math>
+      <mtext>&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;</mtext>
+    </math>
+    </div>
+    <p>
+    
+    <div id="eq2" style="display:inline-block">
+    <span style="font-family:STIXGeneral,'Arial Unicode MS',serif; font-size:300%">
+    &#xE1;&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;&#xE1;
+    </span>
+    </div>
+    <p>    
+
+
+  </body>
+</html>
