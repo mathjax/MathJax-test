@@ -3,6 +3,7 @@ include mtable/reftest.list
 include mtr-mtd/reftest.list
 
 == issue807.html issue807-ref.html
+== issue832.html issue832-ref.html
 require(NativeMML) != issue993-1a.html issue993-1-ref.html
 require(NativeMML) != issue993-1b.html issue993-1-ref.html
 require(NativeMML) != issue993-1c.html issue993-1-ref.html

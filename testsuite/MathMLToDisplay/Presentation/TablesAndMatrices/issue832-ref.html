@@ -1,0 +1,43 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 832</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- multline is not properly centered in HTML-CSS output
+         see https://github.com/mathjax/MathJax/issues/832 -->
+
+    <div style="width:600px">
+    <div style="width:85%; margin-left:7.5%">
+    <math display="block">
+      <mtable width="100%" columnwidth="100%" displaystyle="true">
+        <mtr>
+          <mtd columnalign="left">
+            <mspace width="10em" height=".8em" mathbackground="red"></mspace>
+          </mtd>
+        </mtr>
+        <mtr>
+          <mtd>
+            <mspace width="10em" height=".8em" mathbackground="red"></mspace>
+          </mtd>
+        </mtr>
+        <mtr>
+          <mtd columnalign="right">
+            <mspace width="10em" height=".8em" mathbackground="red"></mspace>
+          </mtd>
+        </mtr>
+      </mtable>
+    </math>
+    </div>
+    </div>
+
+  </body>
+</html>
