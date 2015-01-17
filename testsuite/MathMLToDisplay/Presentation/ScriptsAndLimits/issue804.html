@@ -1,0 +1,34 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 804</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- subscripts were not aligning correctly
+         https://github.com/mathjax/MathJax/issues/804 -->
+
+      <div style="font-size:200%">
+      <math>
+        <mtable width="200px" columnalign="right">
+          <mtr>
+            <mtd>
+              <msub>
+                <mi style="visibility:hidden">y</mi>
+                <mi>n</mi>
+              </msub>
+            </mtd>
+          </mtr>
+        </mtable>
+      </math>
+      </div>
+
+  </body>
+</html>

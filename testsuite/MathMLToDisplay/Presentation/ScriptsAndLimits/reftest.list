@@ -6,3 +6,4 @@ include msup/reftest.list
 include munder/reftest.list
 include munderover/reftest.list
 
+== issue804.html issue804-ref.html
