@@ -1,0 +1,41 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>displayIndent</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <div style="position: absolute; left: 0; top: 0; width: 600px;">
+      <div style="float: left; margin-left: 350px;">
+        <div style="width: 100px; height: 100px; background: yellow; "></div>
+      </div>
+    </div>
+
+    <!-- gray borders to ignore possible size error of the square -->
+    <div style="position: absolute; left: 0; top: 0; width: 600px;">
+      <div style="float: left; margin-left:250px;">
+        <div style="position: relative; left: -3px; margin-left: 100px;
+                    width: 106px; height: 100px;">
+          <div style="width: 98px; height: 100px;
+                      border-left: 4px solid gray;
+                      border-right: 4px solid gray;"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- horizontal gray bands to ignore a possible vertical shift -->
+    <div style="position: absolute; background: gray; z-index: 1;
+                left: 0; top: 0; height: 40px; width: 100%;"></div>
+    
+    <div style="position: absolute; background: gray; z-index: 1;
+                left: 0; top: 90px; height: 40px; width: 100%;"></div>
+
+  </body>
+</html>

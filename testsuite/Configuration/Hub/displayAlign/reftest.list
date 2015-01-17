@@ -1,7 +1,11 @@
 fails-if(Quirks) == displayAlign-1.html displayAlign-1-ref.html
 fails-if(Quirks) == displayAlign-2.html displayAlign-2-ref.html
 fails-if(Quirks) == displayAlign-3.html displayAlign-3-ref.html
-fails-if(Quirks) == displayIndent-1.html displayIndent-1-ref.html
-fails-if(Quirks) == displayIndent-2.html displayIndent-2-ref.html
+fails-if(Quirks) == displayIndent-1a.html displayIndent-1-ref.html
+fails-if(Quirks) == displayIndent-1b.html displayIndent-1-ref.html
+fails-if(Quirks) == displayIndent-2a.html displayIndent-2-ref.html
+fails-if(Quirks) == displayIndent-2b.html displayIndent-2-ref.html
+fails-if(Quirks) == displayIndent-3a.html displayIndent-3-ref.html
+fails-if(Quirks) == displayIndent-3b.html displayIndent-3-ref.html
 
 
