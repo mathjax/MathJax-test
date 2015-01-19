@@ -1,0 +1,38 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 829</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var h1 = document.getElementById("eq1").scrollHeight;
+        var h2 = document.getElementById("eq2").scrollHeight;
+        return [
+          newScriptReftestResult("2em produces \Big size ("+h1+","+h2+") ",
+                                 Math.abs(h1-h2) < 8)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+   <!-- Implementation of \delimitershortfall and \delimiterfactor
+        https://github.com/mathjax/MathJax/issues/829 -->
+
+   <div id="eq1" style="display:inline-block">
+     \(\left(\vcenter{\Rule{1em}{2em}{0em}}\right)\)
+   </div>
+   <p>
+   <div id="eq2" style="display:inline-block">
+     \(\Bigl(\)
+   </div>
+   <p>
+
+  </body>
+</html>
