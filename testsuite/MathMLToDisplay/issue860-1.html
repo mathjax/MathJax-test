@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Preserve various attributes in output</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var math = document.getElementById('MathJax-Element-1-Frame');
+        return [
+          newScriptReftestResult("Check if resource attribute is preserved",
+          (math.innerHTML.indexOf('resource="om:Apparent_magnitude"') > -1)),
+          newScriptReftestResult("Check if itemscope attribute is preserved",
+          (math.innerHTML.indexOf('itemscope') > -1)),
+          newScriptReftestResult("Check if itemtype attribute is preserved",
+          (math.innerHTML.indexOf('itemtype="http://example.com/magnitude"') > -1)),
+          newScriptReftestResult("Check if data-* attribute is preserved",
+          (math.innerHTML.indexOf('data-test="test"') > -1))
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+  <!--
+      See issue 860
+      https://github.com/mathjax/MathJax/issues/860 -->
+      <div>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi resource="om:Apparent_magnitude"  itemscope itemtype="http://example.com/magnitude" data-test="test">m</mi>
+        </math>
+      </div>
+  </body>
+</html>

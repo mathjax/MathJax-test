@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Test ignoreMMLattributes configuration option</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.ignoreMMLattributes = {'data-skip': true};
+      }
+      function getTestCases() {
+        var math = document.getElementById('MathJax-Element-1-Frame');
+        return [
+          newScriptReftestResult("Check if data-skip attribute is not preserved",
+          !(math.innerHTML.indexOf('data-skip') > -1))
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+  <!--
+      See issue 860
+      https://github.com/mathjax/MathJax/issues/860 -->
+      <div>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi data-skip>x</mi>
+        </math>
+      </div>
+  </body>
+</html>
