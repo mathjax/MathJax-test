@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Preserve aria-label in output</title>
+    <!-- Copyright (c) 2014 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var math = document.getElementById('MathJax-Element-1-Frame');
+        return [
+          newScriptReftestResult("Check if aria-label is in the output",
+          (math.innerHTML.indexOf('aria-label="x"') > -1))
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        Preserve aria-label
+        See issue 502
+        https://github.com/mathjax/MathJax/issues/502 -->
+        <div>
+          <math aria-label="x">
+            <mi>x</mi>
+          </math>
+        </div>
+  </body>
+</html>
