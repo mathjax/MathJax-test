@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Test SVG output inherting color</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+      var path = document.querySelectorAll('g')[0];
+      var check1 = (path.getAttribute('fill') === 'currentColor' & path.getAttribute('stroke') === 'currentColor');
+      var computedColor = window.getComputedStyle(path).color;
+      var check2 = (computedColor === 'rgb(255, 0, 0)');
+        return [
+          newScriptReftestResult("Check if fill and stroke are set to currentColor",
+            check1),
+          newScriptReftestResult("Check if color is inherited by MathJax output",
+            check2),
+        ];
+      }
+    </script>
+    <style>
+    body{
+      color:rgb(255, 0, 0);
+    }
+    </style>
+  </head>
+
+  <body>
+
+    <!--
+        Test if SVG output inherits text color. See issue 1002
+        https://github.com/mathjax/MathJax/issues/1002 -->
+    <div>
+      <math>
+        <mrow>
+          <mi>x</mi><mo>+</mo><mn>1</mn>
+        </mrow>
+      </math>
+    </div>
+
+  </body>
+</html>
