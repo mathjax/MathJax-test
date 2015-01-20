@@ -10,7 +10,7 @@
     <script type="text/javascript">
       function getTestCases() {
       var path = document.querySelectorAll('g')[0];
-      var check1 = (path.getAttribute('fill') === 'currentColor' & path.getAttribute('stroke') === 'currentColor');
+      var check1 = (path.getAttribute('fill') === 'currentColor' && path.getAttribute('stroke') === 'currentColor');
       var computedColor = window.getComputedStyle(path).color;
       var check2 = (computedColor === 'rgb(255, 0, 0)');
         return [
