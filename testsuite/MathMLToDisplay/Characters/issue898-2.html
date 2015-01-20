@@ -9,25 +9,22 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
     <script type="text/javascript">
       function getTestCases() {
-        var texts = document.getElementsByTagName('text');
-        var check1 = (texts.length === 0) ;        
         var svgs = document.getElementsByTagName('svg');
-        var check2 = true;
-        for (i=0;i<svgs.length;i++){
+        var check1 = true;
+        for (var i=0; i < svgs.length; i++){
           if (svgs[i].innerHTML.indexOf('font-style=""')>-1){
-            check2 = false;
+            check1 = false; break;
           }
         }
-        var check3 = true;
-        for (i=0;i<svgs.length;i++){
+        var check2 = true;
+        for (var i=0; i < svgs.length; i++){
           if (svgs[i].innerHTML.indexOf('font-weight=""')>-1){
-            check3 = false;
+            check2 = false; break;
           }
         }
         return [
-          newScriptReftestResult("SVG output supports U+2000 to U+200B", check1),
-          newScriptReftestResult("SVG output does not generate empty font-style attributes", check2),
-          newScriptReftestResult("SVG output does not generate empty font-weight attributes", check3)
+          newScriptReftestResult("SVG output does not generate empty font-style attributes for unkown characters", check1),
+          newScriptReftestResult("SVG output does not generate empty font-weight attributes for unkown characters", check2)
         ];
       }
     </script>
@@ -40,16 +37,7 @@
         See issue 898
         https://github.com/mathjax/MathJax/issues/898 -->
     <div>
-      \( a &#x2000; b \)
-      \( a &#x2001; b \)
-      \( a &#x2002; b \)
-      \( a &#x2003; b \)
-      \( a &#x2004; b \)
-      \( a &#x2005; b \)
-      \( a &#x2006; b \)
-      \( a &#x2009; b \)
-      \( a &#x200A; b \)
-      \( a &#x200B; b \)
+      \( &#x0972; \)
     </div>
 
   </body>
