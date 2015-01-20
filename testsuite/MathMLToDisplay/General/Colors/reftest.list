@@ -15,3 +15,5 @@ annotate(@note1) fails-if(Opera&&SVG) == mathbackground-5b.html mathbackground-5
 != mathcolor-2.html mathcolor-2-ref.html
 != mathcolor-3.html mathcolor-3-ref.html
 == mathcolor-4.html mathcolor-4-ref.html
+
+require(SVG) script issue1002.html
