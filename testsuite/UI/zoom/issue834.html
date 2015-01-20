@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>issue 918</title>
+    <title>issue 834</title>
     <!-- Copyright (c) 2015 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -40,8 +40,9 @@
   </head>
 
   <body>
-    <!-- Zoom box is zero-width for tagged equations in NativeMML
-         https://github.com/mathjax/MathJax/issues/918 -->
+    <!-- Zoommed equations have linebreak width incorrectly set when
+         the last equation typeset has a different width.
+         https://github.com/mathjax/MathJax/issues/834 -->
 
      <div style="width:600px">
       \[x+x+x+x+x+x+x+x+x+x+x+x+x+x\]
