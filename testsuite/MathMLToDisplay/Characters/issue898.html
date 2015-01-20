@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>SVG output of space characters</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var texts = document.getElementsByTagName('text');
+        var check1 = (texts.length === 0) ;        
+        var svgs = document.getElementsByTagName('svg');
+        var check2 = true;
+        for (i=0;i<svgs.length;i++){
+          if (svgs[i].innerHTML.indexOf('font-style=""')>-1){
+            check2 = false;
+          }
+        }
+        var check3 = true;
+        for (i=0;i<svgs.length;i++){
+          if (svgs[i].innerHTML.indexOf('font-weight=""')>-1){
+            check3 = false;
+          }
+        }
+        return [
+          newScriptReftestResult("SVG output supports U+2000 to U+200B", check1),
+          newScriptReftestResult("SVG output does not generate empty font-style attributes", check2),
+          newScriptReftestResult("SVG output does not generate empty font-weight attributes", check3)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        Test if SVG output handles space characters correctly
+        See issue 898
+        https://github.com/mathjax/MathJax/issues/898 -->
+    <div>
+      \( a &#x2000; b \)
+      \( a &#x2001; b \)
+      \( a &#x2002; b \)
+      \( a &#x2003; b \)
+      \( a &#x2004; b \)
+      \( a &#x2005; b \)
+      \( a &#x2006; b \)
+      \( a &#x2009; b \)
+      \( a &#x200A; b \)
+      \( a &#x200B; b \)
+    </div>
+
+  </body>
+</html>
