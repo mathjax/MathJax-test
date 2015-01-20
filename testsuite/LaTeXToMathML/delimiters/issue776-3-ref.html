@@ -1,0 +1,36 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 775</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script>
+      //
+      //  The spacing is different for the fraction with delimiters
+      //  so set teh spacing to zero.
+      //
+      function xMathJaxConfig() {
+        MathJax.Hub.Config({
+          "HTML-CSS": {Augment: {TeX: {nulldelimiterspace: 0}}},
+          SVG: {Augment: {TeX: {nulldelimiterspace: 0}}}
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \binom, \choose, etc. use incorrec delimiters
+         https://github.com/mathjax/MathJax/issues/776 -->
+
+     \( \displaystyle \biggl[{\displaystyle{a\over b}\atop \displaystyle{c\over d}}\biggr] \)
+     \( \textstyle \bigl[{\displaystyle{a\over b}\atop \displaystyle{c\over d}}\bigr] \)
+     \( \scriptstyle \bigl[{\displaystyle{a\over b}\atop \displaystyle{c\over d}}\bigr] \)
+     \( \scriptscriptstyle \bigl[{\displaystyle{a\over b}\atop \displaystyle{c\over d}}\bigr] \)
+
+  </body>
+</html>

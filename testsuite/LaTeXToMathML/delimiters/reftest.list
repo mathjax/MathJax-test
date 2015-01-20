@@ -6,3 +6,9 @@ tree== delimiters-2.html delimiters-2-ref.html
 tree== left-right-1.html left-right-1-ref.html
 
 script issue775.html
+== issue776-1a.html issue776-1-ref.html
+== issue776-1b.html issue776-1-ref.html
+== issue776-2.html issue776-2-ref.html
+== issue776-3.html issue776-3-ref.html
+== issue776-4.html issue776-4-ref.html
+== issue776-5.html issue776-5-ref.html
