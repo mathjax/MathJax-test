@@ -4,3 +4,4 @@ include BadTag1/reftest.list
 include MathML1mtable/reftest.list
 include NumChildren/reftest.list
 
+load issue805.html
