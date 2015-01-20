@@ -1,0 +1,77 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 835</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("MathZoom.js");
+      }
+      
+      function checkZoom(jax,W,H) {
+        var math = document.getElementById(jax.inputID+"-Frame");
+        if (!math.jaxID) {math = math.firstChild}
+        MathJax.Extension.MathZoom.Zoom(null, math);
+        var zoom = document.getElementById("MathJax_Zoom");
+        zoom.style.padding = "0"; zoom.style.border = "none"; // remove padding and border
+        var w = zoom.offsetWidth, h = zoom.offsetHeight;
+        MathJax.Extension.MathZoom.Remove();
+        return (w >= W-3 && h >= H-3);
+      }
+
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax();
+        return [
+          newScriptReftestResult("Right shift ",checkZoom(jax[0],300,40)),
+          newScriptReftestResult("Left shift ",checkZoom(jax[1],300,40)),
+          newScriptReftestResult("Up shift ",checkZoom(jax[2],200,60)),
+          newScriptReftestResult("Down shift ",checkZoom(jax[3],200,60))
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- Zoom box is too small when ink is outside equation bounding box
+         https://github.com/mathjax/MathJax/issues/835 -->
+
+      <div style="margin: 10px 200px">
+        <math>
+          <mpadded lspace="50px" mathbackground="blue">
+            <mspace width="100px" height="10px" depth="10px" mathbackground="red"></mspace>
+          </mpadded>
+        </math>
+      </div>
+ 
+      <div style="margin: 10px 200px">
+        <math>
+          <mpadded lspace="-50px" mathbackground="blue">
+            <mspace width="100px" height="10px" depth="10px" mathbackground="red"></mspace>
+          </mpadded>
+        </math>
+      </div>
+
+      <div style="margin: 10px 200px">
+        <math>
+          <mpadded voffset="10px" mathbackground="blue">
+            <mspace width="100px" height="10px" depth="10px" mathbackground="red"></mspace>
+          </mpadded>
+        </math>
+      </div>
+
+      <div style="margin: 10px 200px">
+        <math>
+          <mpadded voffset="-10px" mathbackground="blue">
+            <mspace width="100px" height="10px" depth="10px" mathbackground="red"></mspace>
+          </mpadded>
+        </math>
+      </div>
+
+  </body>
+</html>
