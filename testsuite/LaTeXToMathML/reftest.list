@@ -73,3 +73,4 @@ script issue856.html
 script issue900.html
 == issue901-1.html issue901-1-ref.html
 script issue901-2.html
+tree== issue375.html issue375-ref.html
