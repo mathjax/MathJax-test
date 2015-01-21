@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>AMScd: close cells before reading arrows</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax()
+      {
+      gConfigObject.TeX = { extensions: ["AMSmath.js", "AMScd.js"] };
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        See issue 1013
+        https://github.com/mathjax/MathJax/issues/1013 -->
+    <div>
+    \[
+      \begin{CD}  
+      A' @>>> B
+      \end{CD}
+    \]
+    </div>
+
+  </body>
+</html>
