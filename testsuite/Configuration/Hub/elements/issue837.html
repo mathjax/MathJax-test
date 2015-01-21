@@ -1,0 +1,46 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>elements</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+    <script type="text/javascript">
+      var events = "";
+
+      function preMathJax() {
+        gConfigObject.elements = ["id1", "id2"];
+      }
+
+      function xMathJaxConfig() {
+        MathJax.Hub.Register.MessageHook("Begin Math",function () {events += "B"});
+        MathJax.Hub.Register.MessageHook("New Math",function () {events += "M"});
+        MathJax.Hub.Register.MessageHook("End Math",function () {events += "E"});
+      }
+
+      function getTestCases() {
+        return [
+          newScriptReftestResult("Both equations in one pass ("+events+") ",events === "BMME")
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Check that both are done together -->
+
+    <div id="id1">
+      \( x \)
+    </div>
+
+    <div id="id2">
+      \( y \)
+    </div>
+
+  </body>
+</html>
