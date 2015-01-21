@@ -34,3 +34,5 @@ require(STIX) != issue222.html issue222-ref.html
 require(STIX) == issue697.html issue697-ref.html
 script issue826-1.html
 require(!NativeMML) script issue826-2.html
+require(SVG) script issue898-1.html
+require(SVG) script issue898-2.html

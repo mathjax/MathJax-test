@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>SVG output of unkown characters</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var svg = document.getElementsByTagName('svg')[0];
+        var check1 = (svg.innerHTML.indexOf('font-style=""') > -1);
+        var check2 = (svg.innerHTML.indexOf('font-weight=""') > -1);        }
+        return [
+          newScriptReftestResult("SVG output does not generate empty font-style attributes for unkown characters", check1),
+          newScriptReftestResult("SVG output does not generate empty font-weight attributes for unkown characters", check2)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        Test if SVG output for unkown characters is valid SVG
+        See issue 898
+        https://github.com/mathjax/MathJax/issues/898 -->
+    <div>
+      \( &#x0972; \)
+    </div>
+
+  </body>
+</html>
