@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Process \{, \} and \\ inside \text{}</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+      }
+      function getTestCases() {
+        var test1 = document.getElementById('test1');
+        var check1 = test1.innerHTML.indexOf('{}\\') > -1;
+        return [
+          newScriptReftestResult("TeX strings are XML escaped in Show MathML source",
+            check1)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        Process \{, \} and \\ inside \text{}
+        See issue 375 https://github.com/mathjax/MathJax/issues/375 -->
+    <div>
+      \( \cssId{test1}{\text{\{\}\\}} \)
+    </div>
+
+  </body>
+</html>
