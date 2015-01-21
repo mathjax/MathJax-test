@@ -1,0 +1,93 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Remove hooks</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var called = {
+        message: 0,
+        startup: 0,
+        preprocessor: 0,
+        loadhook: 0
+      };
+
+      function xMathJaxConfig() {
+        //
+        //  Check MessageHook
+        //
+        var cb = MathJax.Hub.Register.MessageHook("test signal",
+          function (message) {called.message++}
+        );
+        MathJax.Hub.signal.Post("test signal");
+        MathJax.Hub.signal.Post("test signal");
+        if (MathJax.Hub.UnRegister) MathJax.Hub.UnRegister.MessageHook(cb);
+        MathJax.Hub.signal.Post("test signal");
+        //
+        //  Check SignalHook
+        //
+        cb = MathJax.Hub.Register.StartupHook("test signal",
+          function (message) {called.startup++}
+        );
+        MathJax.Hub.Startup.signal.Post("test signal");
+        MathJax.Hub.Startup.signal.Post("test signal");
+        if (MathJax.Hub.UnRegister) MathJax.Hub.UnRegister.StartupHook(cb);
+        MathJax.Hub.Startup.signal.Post("test signal");
+        //
+        //  Check LoadHook
+        //
+        cb = MathJax.Hub.Register.LoadHook("myfile.js",
+          function (message) {called.loadhook++}
+        );
+        if (MathJax.Hub.UnRegister) MathJax.Hub.UnRegister.LoadHook(cb);
+        MathJax.Hub.Queue(["Load",MathJax.Ajax,"myfile.js"]);
+      }
+
+      function postMathJax() {
+        //
+        //  Check PreProcessor
+        //
+        var pp = MathJax.Hub.Register.PreProcessor(function () {called.preprocessor++});
+        MathJax.Hub.Queue(
+          ["PreProcess",MathJax.Hub],
+          ["PreProcess",MathJax.Hub],
+          function () {if (MathJax.Hub.UnRegister) MathJax.Hub.UnRegister.PreProcessor(pp)},
+          ["PreProcess",MathJax.Hub]
+        );
+      }
+
+      function getTestCases() {
+        return [
+          newScriptReftestResult(
+            "Message Hookinstalled and removed ("+called.message+") ",
+            called.message === 2
+          ),
+          newScriptReftestResult(
+            "StartupHook installed and removed ("+called.startup+") ",
+            called.startup === 2
+          ),
+          newScriptReftestResult(
+            "LoadHook installed and removed ("+called.loadhook+") ",
+            called.loadhook === 0
+          ),
+          newScriptReftestResult(
+            "PreProcessor installed and removed ("+called.preprocessor+") ",
+            called.preprocessor === 2
+          )
+        ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+  </body>
+</html>
