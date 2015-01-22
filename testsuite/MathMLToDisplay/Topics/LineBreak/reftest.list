@@ -4,4 +4,16 @@
 == issue768-1a.html issue768-1-ref.html
 == issue768-1b.html issue768-1-ref.html
 == issue768-1c.html issue768-1-ref.html
+fails-if(NativeMML) == issue769-1a.html issue769-1-ref.html
+fails-if(NativeMML) == issue769-1b.html issue769-1-ref.html
+fails-if(NativeMML) == issue769-2a.html issue769-2-ref.html
+fails-if(NativeMML) == issue769-2b.html issue769-2-ref.html
+fails-if(NativeMML) == issue769-3a.html issue769-3-ref.html
+fails-if(NativeMML) == issue769-3b.html issue769-3-ref.html
+fails-if(NativeMML) == issue769-4a.html issue769-4-ref.html
+fails-if(NativeMML) == issue769-4b.html issue769-4-ref.html
+fails-if(NativeMML) == issue769-5a.html issue769-5-ref.html
+fails-if(NativeMML) == issue769-5b.html issue769-5-ref.html
+fails-if(NativeMML) == issue769-6a.html issue769-6-ref.html
+fails-if(NativeMML) == issue769-6b.html issue769-6-ref.html
 script issue949.html

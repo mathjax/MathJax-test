@@ -1,0 +1,59 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 769</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script>
+      gConfigObject.displayIndent = "50px";
+    </script>
+  </head>
+
+  <body>
+
+   <!-- Check that indentshift and indentalign with displayIndent
+        https://github.com/mathjax/MathJax/issues/769 -->
+
+   <div style="width:100px; height:22em; position:absolute; left:0; top:0; background:green"></div>
+   <div style="width:100px; height:22em; position:absolute; left:300px; top:0; background:green"></div>
+   <div style="width:100px; height:22em; position:absolute; left:600px; top:0; background:green"></div>
+
+   <div style="width:600px">
+
+     <math display="block" indentalign="left" indentshift="50px" mathbackground="blue">
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+     </math>
+
+     <math display="block" indentalign="center" indentshift="50px" mathbackground="blue">
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+     </math>
+
+     <math display="block" indentalign="right" indentshift="150px" mathbackground="blue">
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+     </math>
+
+     <math display="block" indentalign="left" indentshift="50px">
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+       <mspace linebreak="newline"></mspace>
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+     </math>
+
+     <math display="block" indentalign="center" indentshift="50px">
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+       <mspace linebreak="newline"></mspace>
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+     </math>
+
+     <math display="block" indentalign="right" indentshift="150px">
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+       <mspace linebreak="newline"></mspace>
+       <mspace width="40px" height="20px" mathbackground="red"></mspace>
+     </math>
+   </div>
+
+  </body>
+</html>
