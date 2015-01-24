@@ -9,9 +9,9 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
     <script type="text/javascript">
       function getTestCases() {
-        var svg = document.getElementsByTagName('svg')[0];
-        var check1 = (svg.innerHTML.indexOf('font-style=""') > -1);
-        var check2 = (svg.innerHTML.indexOf('font-weight=""') > -1);
+        var svg = document.getElementsByTagName('svg')[1];
+        var check1 = (svg.innerHTML.indexOf('font-style=""') === -1);
+        var check2 = (svg.innerHTML.indexOf('font-weight=""') === -1);
         return [
           newScriptReftestResult("SVG output does not generate empty font-style attributes for unkown characters", check1),
           newScriptReftestResult("SVG output does not generate empty font-weight attributes for unkown characters", check2)
