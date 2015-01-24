@@ -10,18 +10,17 @@
     <script type="text/javascript" src="../header.js"></script>
     <script type="text/javascript" src="../scriptTests.js"></script>
     <script type="text/javascript">
-      function preMathJax()
-      {
+      function preMathJax() {
         gConfigObject.TeX = { equationNumbers: { autoNumber: "AMS" } };
-        gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
+        gConfigObject["HTML-CSS"].matchFontHeight = false;
+        gConfigObject["NativeMML"].matchFontHeight = false;
+        gConfigObject["SVG"].matchFontHeight = false;
       }
-      function getTestCases()
-      {
+      function getTestCases() {
         var diff = Math.abs(
           document.getElementById("cell2").getBoundingClientRect().width -
           document.getElementById("cell1").getBoundingClientRect().width - 30);
-
-        return [newScriptReftestResult("Cell width...", diff < .1)];
+        return [newScriptReftestResult("Cell width ("+diff+") ", diff < .1)];
       }
     </script>
   </head>
@@ -34,7 +33,7 @@
       <table>
         <tr>
           <td id="cell1">
-           \begin{align} \hspace{50px}  \end{align}
+           \begin{align} \Rule{50px}{10px}{0px}  \end{align}
           </td>
         </tr>
      </table>
@@ -42,7 +41,7 @@
       <table>
         <tr>
           <td id="cell2">
-           \begin{align} \hspace{80px}  \end{align}
+           \begin{align} \Rule{80px}{10px}{0px}  \end{align}
           </td>
         </tr>
      </table>
