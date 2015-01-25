@@ -8,6 +8,7 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../treeReftests.js"></script>
 
     <script>
       function preMathJax() {
@@ -21,26 +22,24 @@
     <!-- Allow \hfill in arrays.
          https://github.com/mathjax/MathJax/issues/903 -->
 
-      \[
+    <div id="reftest-element">
+    \[
         \begin{array}{ccc}
-          aaaaaa&aaaaaa&aaaaaa\\
+          aaa&aaa&aaa\\
           \hfill b&b\hfill&\hfill b\hfill\\
         \end{array}
-      \]
-
-      \[
+        \quad
         \begin{array}{lll}
-          aaaaaa&aaaaaa&aaaaaa\\
+          aaa&aaa&aaa\\
           \hfill b&b\hfill&\hfill b\hfill\\
         \end{array}
-      \]
-
-      \[
+        \quad
         \begin{array}{rrr}
-          aaaaaa&aaaaaa&aaaaaa\\
+          aaa&aaa&aaa\\
           \hfill b&b\hfill&\hfill b\hfill\\
         \end{array}
-      \]
+    \]
+    </div>
 
   </body>
 </html>
