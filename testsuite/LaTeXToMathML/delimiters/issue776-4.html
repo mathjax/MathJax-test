@@ -8,21 +8,10 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../treeReftests.js"></script>
     <script>
       function preMathJax() {
         gConfigObject.TeX = {extensions: ["AMSmath.js"]};
-      }
-    </script>
-    <script>
-      //
-      //  The spacing is different for the fraction with delimiters
-      //  so set teh spacing to zero.
-      //
-      function xMathJaxConfig() {
-        MathJax.Hub.Config({
-          "HTML-CSS": {Augment: {TeX: {nulldelimiterspace: 0}}},
-          SVG: {Augment: {TeX: {nulldelimiterspace: 0}}}
-        });
       }
     </script>
   </head>
@@ -32,10 +21,14 @@
     <!-- \binom, \choose, etc. use incorrec delimiters
          https://github.com/mathjax/MathJax/issues/776 -->
 
-     \( \displaystyle \tbinom{\displaystyle{a\over b}}{\displaystyle{c\over d}} \)
-     \( \textstyle \tbinom{\displaystyle{a\over b}}{\displaystyle{c\over d}} \)
-     \( \scriptstyle \tbinom{\displaystyle{a\over b}}{\displaystyle{c\over d}} \)
-     \( \scriptscriptstyle \tbinom{\displaystyle{a\over b}}{\displaystyle{c\over d}} \)
+    <div id="reftest-element">
+    \( 
+       \displaystyle \tbinom{\displaystyle{a\over b}}{\displaystyle{c\over d}}
+       \textstyle \tbinom{\displaystyle{a\over b}}{\displaystyle{c\over d}}
+       \scriptstyle \tbinom{\displaystyle{a\over b}}{\displaystyle{c\over d}}
+       \scriptscriptstyle \tbinom{\displaystyle{a\over b}}{\displaystyle{c\over d}}
+    \)
+    </div>
 
   </body>
 </html>
