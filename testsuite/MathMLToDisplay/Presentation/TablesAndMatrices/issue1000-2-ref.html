@@ -21,19 +21,25 @@
     <!-- Issue 1000:  displayIndent not equal to 0 disrupts centering
      |   see https://github.com/mathjax/MathJax/issues/1000 -->
 
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-      <mtable>
-        <mlabeledtr>
-          <mtd>
-            <mtext>(1)</mtext>
-          </mtd>
-          <mtd>
-            <!-- 2em space (centered) compensates for 1em indentShift -->
-            <mspace width="2em"></mspace><mi>x</mi>
-          </mtd>
-        </mlabeledtr>
-      </mtable>
-    </math>
+    <div style="width:600px; position:relative">
+
+      <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mtable>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(1)</mtext>
+            </mtd>
+            <mtd>
+              <!-- 40px space (centered) compensates for 20px indentShift -->
+              <mspace width="40px"></mspace><mi>x</mi>
+            </mtd>
+          </mlabeledtr>
+        </mtable>
+      </math>
+
+      <div style="position:absolute; top:-.5em; right:0; width:3em; height:3em; background:red"></div>
+      <div style="position:absolute; top:-.5em; left:310px; width:2em; height:3em; background:red;"></div>
+    </div>
 
   </body>
 </html>
