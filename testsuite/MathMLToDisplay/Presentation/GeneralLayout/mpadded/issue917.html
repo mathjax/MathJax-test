@@ -11,6 +11,11 @@
     <script type="text/javascript" src="../../../../scriptTests.js"></script>
 
     <script type="text/javascript">
+      function xMathJaxConfig() {
+        MathJax.Hub.Register.StartupHook("HTML-CSS Jax Ready",function () {
+          MathJax.OutputJax["HTML-CSS"].FONTDATA.TeX_factor = 1; // STIX is 1.125, which stretches em's
+        });
+      }
       function getTestCases() {
         var bbox1 = document.getElementById("pad1").bbox;
         var bbox2 = document.getElementById("pad2").bbox;
