@@ -17,9 +17,11 @@
         gConfigObject["SVG"].matchFontHeight = false;
       }
       function getTestCases() {
-        var diff = Math.abs(
-          document.getElementById("cell2").getBoundingClientRect().width -
-          document.getElementById("cell1").getBoundingClientRect().width - 30);
+        var bb1 = document.getElementById("cell1").getBoundingClientRect();
+        var bb2 = document.getElementById("cell2").getBoundingClientRect();
+        var w1 = bb1.width || (bb1.right - bb1.left);
+        var w2 = bb2.width || (bb2.right - bb2.left);
+        var diff = Math.abs(w2 - w1 - 30);
         return [newScriptReftestResult("Cell width ("+diff+") ", diff < .1)];
       }
     </script>
