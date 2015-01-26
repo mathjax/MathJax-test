@@ -16,75 +16,62 @@
       var b1 = false, b2 = false, b3 = false, b4 = false;
       var c1 = false, c2 = false, c3 = false, c4 = false;
 
-      function f()
-      {
-      a1 = true;
-      a2 =
-      document.getElementById("p").getElementsByTagName("math").length == 1;
-      a3 =
-      document.getElementById("p").getElementsByTagName("span").length <= 3;
-      a4 = !document.getElementById("p").getElementsByTagName("svg").length;
+      function f() {
+        var x = (MathJax.Hub.Browser.isMSIE ? 2 : 0);  // extra spans for NativeMML;
+        a1 = true;
+        a2 = (document.getElementById("p").getElementsByTagName("math").length == 1);
+        a3 = (document.getElementById("p").getElementsByTagName("span").length <= 3+x);
+        a4 = !document.getElementById("p").getElementsByTagName("svg").length;
       }
 
-      function g()
-      {
-      b1 = true;
-      b2 =
-      document.getElementById("p").getElementsByTagName("math").length == 0;
-      b3 =
-      document.getElementById("p").getElementsByTagName("span").length > 5;
-      b4 =
-      document.getElementById("p").getElementsByTagName("svg").length == 0;
+      function g() {
+        b1 = true;
+        b2 = (document.getElementById("p").getElementsByTagName("math").length == 0);
+        b3 = (document.getElementById("p").getElementsByTagName("span").length > 5);
+        b4 = (document.getElementById("p").getElementsByTagName("svg").length == 0);
       }
 
-      function h()
-      {
-      c1 = true;
-      c2 = 
-      document.getElementById("p").getElementsByTagName("math").length == 0;
-      c3 =
-      document.getElementById("p").getElementsByTagName("span").length <= 1;
-      c4 = document.getElementById("p").getElementsByTagName("svg").length == 1;
+      function h() {
+        c1 = true;
+        c2 = (document.getElementById("p").getElementsByTagName("math").length == 0);
+        c3 = (document.getElementById("p").getElementsByTagName("span").length <= 1);
+        c4 = (document.getElementById("p").getElementsByTagName("svg").length == 1);
       }
 
-      function postMathJax() 
-      {
-      MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "NativeMML"]);
-      MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", f]);
-      MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "HTML-CSS"]);
-      MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", g]);
+      function postMathJax() {
+        MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "NativeMML"]);
+        MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", f]);
+        MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "HTML-CSS"]);
+        MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", g]);
 
-      if (MathJax.Hub.Browser.isMSIE &&
-          !MathJax.Hub.Browser.versionAtLeast(9.0)) {
-        testSVG = false;
+        if (MathJax.Hub.Browser.isMSIE && document.documentMode < 9) testSVG = false;
+
+        if (testSVG) {
+          MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "SVG"]);
+          MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", h]);
+        }
       }
 
-      if (testSVG) {
-        MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "SVG"]);
-        MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", h]);
-      }
-      }
+      function getTestCases() {
+        var results = [
+          newScriptReftestResult("Callback f", a1),
+          newScriptReftestResult("NativeMML: math tag", a2),
+          newScriptReftestResult("NativeMML: span tag", a3),
+          newScriptReftestResult("NativeMML: svg tag", a4),
+          newScriptReftestResult("Callback g", b1),
+          newScriptReftestResult("HTML-CSS: math tag", b2),
+          newScriptReftestResult("HTML-CSS: span tag", b3),
+          newScriptReftestResult("HTML-CSS: svg tag", b4)
+        ];
 
-      function getTestCases()
-      {
-      var results = [
-      newScriptReftestResult("Callback f", a1),
-      newScriptReftestResult("NativeMML: math tag", a2),
-      newScriptReftestResult("NativeMML: span tag", a3),
-      newScriptReftestResult("NativeMML: svg tag", a4),
-      newScriptReftestResult("Callback g", b1),
-      newScriptReftestResult("HTML-CSS: math tag", b2),
-      newScriptReftestResult("HTML-CSS: span tag", b3),
-      newScriptReftestResult("HTML-CSS: svg tag", b4)];
+        if (testSVG) {
+          results.push(newScriptReftestResult("Callback h", c1),
+                       newScriptReftestResult("SVG: math tag", c2),
+                       newScriptReftestResult("SVG: span tag", c3),
+                       newScriptReftestResult("SVG: svg tag", c4));
+        }
 
-      if (testSVG) {
-        results.push(newScriptReftestResult("Callback h", c1),
-                     newScriptReftestResult("SVG: math tag", c2),
-                     newScriptReftestResult("SVG: span tag", c3),
-                     newScriptReftestResult("SVG: svg tag", c4));
-      }
-
-      return results;
+        return results;
       }
     </script>
 
