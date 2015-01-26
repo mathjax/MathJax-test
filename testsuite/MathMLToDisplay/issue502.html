@@ -12,7 +12,7 @@
         var math = document.getElementById('MathJax-Element-1-Frame');
         return [
           newScriptReftestResult("Check if aria-label is in the output",
-          (math.innerHTML.indexOf('aria-label="x"') > -1))
+               !!math.innerHTML.match(/aria-label=("x"|x)/))
         ];
       }
     </script>
