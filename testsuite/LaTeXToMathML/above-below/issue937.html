@@ -14,7 +14,7 @@
       function getTestCases() {
         var w1 = document.getElementById("eq1").scrollWidth,
             w2 = document.getElementById("eq2").scrollWidth;
-        return [newScriptReftestResult("Double underline width ("+w1+","+w2+")",w1 == w2)];
+        return [newScriptReftestResult("Double underline width ("+w1+","+w2+")",w2 - w1 <= 1)];
       }    
     </script>
 
