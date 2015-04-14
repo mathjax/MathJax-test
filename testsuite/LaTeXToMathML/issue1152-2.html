@@ -1,0 +1,40 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1152</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gConfigObject.extensions.push("toMathML.js");
+      }
+
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax();
+        var math0 = mml[0].root.toMathML(),
+            math1 = mml[1].root.toMathML();
+        return [
+          newScriptReftestResult("\\hbox groups elements correctly ", math0 !== math1)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \hbox doesn't form a group correctly when it contains math
+         https://github.com/mathjax/MathJax/issues/1152 -->
+
+      <p>
+      \(2^\hbox{x$x$}\)
+      \(2^\hbox{x}{x}\)
+      </p>
+
+  </body>
+</html>
