@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1139</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var math1 = document.getElementById('output1');
+        var math2 = document.getElementById('output2');
+        return [
+          newScriptReftestResult("Check for height ",math1.offsetHeight > math2.offsetHeight),
+          newScriptReftestResult("Check for width ", math1.offsetWidth > math2.offsetWidth)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+  <!--
+      HTML-CSS output needs to measure annotation-xml content when used
+       as illegally as first element.
+      https://github.com/mathjax/MathJax/issues/1139 -->
+
+    <div>
+      <span id="output1" style="display:inline-block">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <semantics>
+            <annotation-xml encoding="application/xhtml+xml">
+              <span style="display:inline-block; height:3em; width:5em; background-color:red" xmlns="http://www.w3.org/1999/xhtml"></span>
+            </annotation-xml>
+          </semantics>
+        </math>
+      </span>
+
+      <span id="output2" style="display:inline-block">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mspace height="2em" width="3em" background="red"></mspace>
+        </math>
+      </span>
+    </div>
+
+  </body>
+</html>
