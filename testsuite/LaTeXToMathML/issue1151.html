@@ -1,0 +1,50 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1152</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    var looped = false;
+    MathJax.Hub.Register.StartupHook("TeX mathchoice Ready",function () {
+      var mathchoice = MathJax.ElementJax.mml.TeXmathchoice;
+      var CHOICE = mathchoice.prototype.choice;
+      var n = 0;
+      mathchoice.Augment({
+        choice: function () {
+          if (n == 5) {looped = true; return 2} 
+          n++;
+          var result = CHOICE.call(this);
+          n--;
+          return result;
+        }
+      });
+    });
+    </script>
+
+    <script>
+      function getTestCases() {
+        return [
+          newScriptReftestResult("\\mathchoice doesn't loop infintely in munderover ",!looped)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \mathchoice in munderover causes an infinite loop
+         https://github.com/mathjax/MathJax/issues/1151 -->
+
+      <p>
+      \[\sum_{\mathchoice{D}{T}{S}{SS}}\]
+      </p>
+
+  </body>
+</html>
