@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1158</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var math = document.getElementById('math');
+        var row = document.getElementById('row');
+        var w1 = math.offsetWidth, w2 = row.offsetWidth;
+        return [
+          newScriptReftestResult("Math width correct ("+w1+" === "+w2+")",w1 === w2)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+  <!-- HTML-CSS doesn't measure final expression correctly.
+       https://github.com/mathjax/MathJax/issues/1158 -->
+
+    <div>
+      <math id="math" xmlns="http://www.w3.org/1998/Math/MathML">
+        <mrow id="row">
+          <mi>h</mi>
+          <mo>=</mo>
+          <msub>
+            <mi>u</mi>
+            <mn>0</mn>
+          </msub>
+          <mo>&#x2212;</mo>
+          <msub>
+            <mi>u</mi>
+            <mn>1</mn>
+          </msub>
+          <mo>&#x2212;</mo>
+          <msub>
+            <mi>u</mi>
+            <mn>2</mn>
+          </msub>
+          <mo>&#x2212;</mo>
+          <msub>
+            <mi>u</mi>
+            <mn>3</mn>
+          </msub>
+        </mrow>
+      </math>
+    </div>
+
+  </body>
+</html>
