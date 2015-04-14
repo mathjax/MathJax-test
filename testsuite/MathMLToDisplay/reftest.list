@@ -45,3 +45,4 @@ script issue860-1.html
 require(!NativeMML) script issue860-2.html
 require(HTML-CSS) script issue1139.html
 require(HTML-CSS) script issue1158.html
+require(HTML-CSS) script issue1163.html

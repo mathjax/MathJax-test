@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1158</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var math1 = document.getElementById('math1'),
+            math2 = document.getElementById('math2'),
+            math3 = document.getElementById('math3');
+        var w1 = math1.offsetWidth, w2 = math2.offsetWidth, w3 = math3.offsetWidth;
+        return [
+          newScriptReftestResult("Width measured properly in fraction ("+w1+" === "+w2+")",w1 === w2),
+          newScriptReftestResult("Width large enough ("+w1+" >= "+w3+")",w1 >= w3)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+  <!-- HTML-CSS doesn't measure final expression correctly.
+       https://github.com/mathjax/MathJax/issues/1158 -->
+
+    <div>
+      <math id="math1" display="block">
+        <mfrac>
+          <mrow>
+            <mtext>&#x3333;&#x3333;&#x3333;</mtext>
+          </mrow>
+          <mi>x</mi>
+        </mfrac>
+      </math>
+      <math id="math2" display="block">
+        <mfrac>
+          <mtext>&#x3333;&#x3333;&#x3333;</mtext>
+          <mi>x</mi>
+        </mfrac>
+      </math>
+      <math id="math3" display="block">
+        <mtext>&#x3333;&#x3333;&#x3333;</mtext>
+      </math>
+    </div>
+
+  </body>
+</html>
