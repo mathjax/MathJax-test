@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1179</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        document.getElementById("hidden").style.display="block";
+        var math1 = document.getElementById('math1'),
+            math2 = document.getElementById('math2');
+        var w1 = math1.offsetWidth, w2 = math2.offsetWidth;
+        return [
+          newScriptReftestResult("Width measured properly ("+w1+" === "+w2+")",w1 === w2)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+  <!-- HTML-CSS doesn't measure final expression correctly inside display:none.
+       https://github.com/mathjax/MathJax/issues/1179 -->
+
+    <div>
+      <math id="math1">
+        <mi>x</mi><mo>+</mo><mn>10</mn>
+      </math>
+    </div>
+    <div id="hidden" style="display:none">
+      <math id="math2">
+        <mi>x</mi><mo>+</mo><mn>10</mn>
+      </math>
+    </div>
+
+  </body>
+</html>
