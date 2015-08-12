@@ -26,3 +26,4 @@ tree== split-1.html split-1-ref.html
 == issue389-1.html issue389-1-ref.html
 == issue389-2.html issue389-2-ref.html
 script issue982.html
+script issue1028.html
