@@ -1,0 +1,30 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue1188</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- See issue 1188 (odd number of scripts)
+         https://github.com/mathjax/MathJax/issues/1188 -->
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <mmultiscripts>
+        <mi>X</mi>
+        <mi>a</mi><mi>b</mi>
+        <mi>c</mi>
+        <mprescripts></mprescripts>
+        <mi>x</mi><mi>y</mi>
+        <mi>z</mi>
+      </mmultiscripts>
+    </math>
+
+  </body>
+</html>
