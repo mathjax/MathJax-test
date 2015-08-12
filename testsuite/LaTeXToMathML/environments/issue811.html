@@ -1,0 +1,69 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 389</title>
+    <!-- Copyright (c) 2013 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function compareWidth(name,n,equal) {
+        var wA = document.getElementById("eq"+n+"a").scrollWidth;
+        var wB = document.getElementById("eq"+n+"b").scrollWidth;
+        return newScriptReftestResult(name+" ("+wA+","+wB+")",(wA === wB) === equal);
+      }
+      function getTestCases() {
+        return [
+          compareWidth("Widths for = are equal",1,true),
+          compareWidth("Widths for nothing are equal",2,true),
+          compareWidth("Widths for = and + are not equal",3,false)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- See issue 811
+         https://github.com/mathjax/MathJax/issues/811 -->
+
+    <!-- check that space before = is correct -->
+    <div id="eq1a" style="display:inline-block">
+    \begin{align}
+    a&=b
+    \end{align}
+    </div>
+    <div id="eq1b" style="display:inline-block">
+    \begin{align}
+    a&{}=b
+    \end{align}
+    </div><br>
+
+    <!-- check that space before non-operator is correct -->
+    <div id="eq2a" style="display:inline-block">
+    \begin{align}
+    a&b
+    \end{align}
+    </div>
+    <div id="eq2b" style="display:inline-block">
+    \begin{align}
+    ab
+    \end{align}
+    </div><br>
+
+    <!-- check that space before = is REL spacing and + is BIN spacing -->
+    <div id="eq3a" style="display:inline-block">
+    \begin{align}
+    a&=b
+    \end{align}
+    </div>
+    <div id="eq3b" style="display:inline-block">
+    \begin{align}
+    a&+b
+    \end{align}
+    </div><br>
+
+  </body>
+</html>
