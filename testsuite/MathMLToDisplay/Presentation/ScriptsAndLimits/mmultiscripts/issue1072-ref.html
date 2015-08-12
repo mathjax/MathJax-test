@@ -1,0 +1,28 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue1072</title>
+    <!-- Copyright (c) 2011 Design Science, Inc.
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body>
+
+    <!-- See issue 1072 (prescripts should be right justified)
+         https://github.com/mathjax/MathJax/issues/1072 -->
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <mmultiscripts>
+        <mi>X</mi>
+        <mprescripts></mprescripts>
+        <mtext>xxxxx</mtext><mrow><mphantom><mtext>xxx</mtext></mphantom><mtext>xx</mtext></mrow>
+        <mrow><mphantom><mtext>yyy</mtext></mphantom><mtext>yy</mtext></mrow><mtext>yyyyy</mtext>
+      </mmultiscripts>
+    </math>
+
+  </body>
+</html>
