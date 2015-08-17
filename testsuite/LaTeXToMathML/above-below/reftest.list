@@ -14,6 +14,7 @@ tree== underset-1.html underset-1-ref.html
 tree== issue490.html issue490-ref.html
 require(!NativeMML) script issue877.html
 require(!NativeMML) script issue937.html
+script issue1225.html
 
 # XXXfred not supported
 # fails tree== overbracket-1.html overbracket-1-ref.html

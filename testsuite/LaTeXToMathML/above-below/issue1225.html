@@ -1,0 +1,47 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1225</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("toMathML.js");
+        gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+      }
+
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax();
+        var mml1 = jax[0].root.toMathML();
+            mml2 = jax[1].root.toMathML();
+        return [
+          newScriptReftestResult("\\operatorname skips \\limits",!mml1.match(/mover/)),
+          newScriptReftestResult("\\DelareMathOperator skips \\limits",!mml2.match(/mover/))
+        ];
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- \operatorname doesn't skip following \limits
+         https://github.com/mathjax/MathJax/issues/1225 -->
+
+    <div>
+      \(\operatorname{xyz}\limits^x\)
+    </div>
+    <p>
+    <div>
+      \(\DeclareMathOperator{\xyz}{xyz}\xyz\limits^x\)
+    </div>
+    <p>
+
+  </body>
+</html>
