@@ -1,0 +1,45 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 956</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gConfigObject.TeX = {extensions: ["mhchem.js"]};
+        gConfigObject.extensions.push("toMathML.js");
+      }
+
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax();
+        var mml0 = jax[0].root.toMathML();
+        var mml1 = jax[1].root.toMathML();
+        var mml2 = jax[2].root.toMathML();
+        return [
+          newScriptReftestResult("\\ce{^1_0 A} ", mml0.match(/mmultiscripts/)),
+          newScriptReftestResult("\\ce{A{}^1_0 A} ", mml1.match(/mmultiscripts/)),
+          newScriptReftestResult("\\ce{A{^1_0 A}} ", mml2.match(/mmultiscripts/))
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- use mmultiscripts for prescripts in mhchem
+         https://github.com/mathjax/MathJax/issues/956 -->
+
+      <p>
+      \[\ce{^1_0 A}\]
+      \[\ce{A{}^1_0 A}\]
+      \[\ce{A{^1_0 A}}\]
+      </p>
+
+  </body>
+</html>
