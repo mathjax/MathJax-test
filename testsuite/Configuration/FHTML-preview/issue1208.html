@@ -1,0 +1,39 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1208</title>
+    <!-- Copyright (c) 2013 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("FHTML-preview.js");
+        gConfigObject["FHTML-preview"] = {
+          disabled: true, 
+          Chunks: {EqnChunk:10101}
+        };
+      }
+
+      function getTestCases() {
+        var OJAX = MathJax.OutputJax[gOutputJax];
+        var chunk = OJAX.config.EqnChunk;
+        return [newScriptReftestResult("EqnChunk not changed ("+chunk+")",chunk !== 10101)];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- FHTML-preview sets chunking parameters even when disabled
+         https://github.com/mathjax/MathJax/issues/1208 -->
+
+    <div>\( x \)</div>
+
+  </body>
+</html>
