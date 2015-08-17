@@ -69,6 +69,9 @@ annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizo
 annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21FD horizontal-ref.html
 annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21FE horizontal-ref.html
 annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21FF horizontal-ref.html
+annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2312 horizontal-ref.html
+annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2322 horizontal-ref.html
+annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2323 horizontal-ref.html
 annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23B4 horizontal-ref.html
 annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23B5 horizontal-ref.html
 annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23DC horizontal-ref.html
