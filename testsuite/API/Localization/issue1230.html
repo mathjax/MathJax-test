@@ -1,0 +1,49 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1230</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function xMathJaxConfig() {
+        gMaxErrorSignals["Math Processing Error"] = 1;
+        MathJax.Hub.Register.StartupHook("TeX Jax Ready", function () {
+          MathJax.InputJax.TeX.Definitions.macros.crash = "Crash";
+        });
+        MathJax.Localization.addTranslation("en","_",{strings: {
+          ErrorMessage: "MyErrorMsg",
+          ErrorFile: "MyErrorFile",
+          ErrorLine: "MyErrorLine",
+          ErrorTips: "MyErrorTips"
+        }});
+      }
+
+      function getTestCases() {
+        var error = document.getElementById("crash").MathJax.error.errorText;
+        return [
+          newScriptReftestResult("Error message localized ", error.match(/MyErrorMsg/)),
+          newScriptReftestResult("Error file localized ", error.match(/MyErrorFile/)),
+          newScriptReftestResult("Error line localized ", error.match(/MyErrorLine/)),
+          newScriptReftestResult("Error tips localized ", error.match(/MyErrorTips/))
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Localization of Math Processing Error in Show Math As...
+         https://github.com/mathjax/MathJax/issues/1230 -->
+
+      <p>
+      <script id="crash" type="math/tex">\crash</script>
+      </p>
+
+  </body>
+</html>

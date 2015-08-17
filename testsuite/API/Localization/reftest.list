@@ -3,3 +3,4 @@ script parsing-2.html
 # script parsing-3.html
 script setLocale-1.html
 script param-1.html
+script issue1230.html
