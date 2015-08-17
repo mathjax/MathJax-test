@@ -3,3 +3,4 @@ include SemanticMappingElements/semantics/reftest.list
 == issue404.html issue404-ref.html
 == issue692.html issue692-ref.html
 script issue799.html
+script issue1238.html

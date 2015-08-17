@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="reftest-wait" xmlns:mml="http://www.w3.org/1998/Math/MathML">
+  <head>
+    <title>Issue 1238</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gConfigObject.MathML = {extensions: ["content-mathml.js"]};
+        gConfigObject.extensions.push("toMathML.js");
+      }
+
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax()[0].root.toMathML();
+        return [
+          newScriptReftestResult("Namespaces are OK ",!mml.match(/merror/)),
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- content-mathml doesn't handle namespaces properly.
+       https://github.com/mathjax/MathJax/issues/1238 -->
+
+    <div>
+      <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML">
+        <mml:list order="numeric">
+          <mml:mn>0</mml:mn>
+          <mml:mn>1</mml:mn>
+        </mml:list>
+      </mml:math>
+    </div>
+
+  </body>
+</html>
