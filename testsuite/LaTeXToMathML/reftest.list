@@ -76,3 +76,4 @@ script issue1151.html
 script issue1152-1.html
 script issue1152-2.html
 script issue1224.html
+require(!NativeMML) script issue1229.html
