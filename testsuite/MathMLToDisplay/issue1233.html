@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1233</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax();
+        var svg0 = jax[0].SourceElement().previousSibling.innerHTML;
+        var svg1 = jax[1].SourceElement().previousSibling.innerHTML;
+        return [
+          newScriptReftestResult("Non-empty maligngroup is OK ",!svg0.match(/NaN/)),
+          newScriptReftestResult("Non-empty malignmark is OK ",!svg1.match(/NaN/)),
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Non-empty <maligngroup> or <malignmark> cause NaN in y values of contained <mo>
+       https://github.com/mathjax/MathJax/issues/1233 -->
+
+    <div>
+      <math>
+        <maligngroup>
+          <mo>&#x3333;</mo>
+        </maligngroup>
+      </math>
+    </div>
+
+    <div>
+      <math>
+        <malignmark>
+          <mo>&#x3333;</mo>
+        </malignmark>
+      </math>
+    </div>
+
+  </body>
+</html>
