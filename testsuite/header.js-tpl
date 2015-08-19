@@ -185,6 +185,8 @@ function defaultConfigObject()
           webFont: gFont
       },
 
+      CommonHTML: {}, // so that it can be configured by individual tests
+
       "SVG" : {
           styles: {
               // Disable antialiasing for SVG rects
