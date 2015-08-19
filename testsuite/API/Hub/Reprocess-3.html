@@ -4,64 +4,60 @@
 <html class="reftest-wait">
   <head>
     <title>Reprocess</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
-      gConfigObject["SVG"].linebreaks = { automatic: true };
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].linebreaks = {automatic: true};
+        gConfigObject["CommonHTML"].linebreaks = {automatic: true};
+        gConfigObject["SVG"].linebreaks = {automatic: true};
       }
     
       var r1 = false, r2 = false, r3 = false, r4 = false, r5 = false,
           r6 = false, r7 = false, r8 = false;
 
-      function f()
-      {
+      function f() {
         r1 = true;
         r6 = (document.getElementById("div1").offsetHeight > 30);
       }
 
-      function g()
-      {
+      function g() {
         r2 = true;
         r7 = (document.getElementById("div2").offsetHeight < 30);
       }
 
-      function postMathJax() 
-      {
-      var div1 = document.getElementById("div1");
-      var div2 = document.getElementById("div2");
-      var div3 = document.getElementById("div3");
-      div1.style.width = "30px";
-      div2.style.width = "50px";
-      div3.style.width = "30px";
+      function postMathJax() {
+        var div1 = document.getElementById("div1");
+        var div2 = document.getElementById("div2");
+        var div3 = document.getElementById("div3");
+        div1.style.width = "30px";
+        div2.style.width = "50px";
+        div3.style.width = "30px";
 
-      r3 = (div1.offsetHeight < 30);
-      r4 = (div2.offsetHeight > 30);
-      r5 = (div3.offsetHeight < 30);
-      MathJax.Hub.Queue(["Reprocess", MathJax.Hub, "div1", f]);
-      MathJax.Hub.Queue(["Reprocess", MathJax.Hub, "div2", g]);
+        r3 = (div1.offsetHeight < 30);
+        r4 = (div2.offsetHeight > 30);
+        r5 = (div3.offsetHeight < 30);
+        MathJax.Hub.Queue(["Reprocess", MathJax.Hub, "div1", f]);
+       MathJax.Hub.Queue(["Reprocess", MathJax.Hub, "div2", g]);
       }
 
-      function getTestCases()
-      {
-      r8 = (document.getElementById("div3").offsetHeight < 30);
+      function getTestCases() {
+        r8 = (document.getElementById("div3").offsetHeight < 30);
 
-      return [
-        newScriptReftestResult("Callback f called", r1),
-        newScriptReftestResult("Callback g called", r2),
-        newScriptReftestResult("div1, before reprocess", r3),
-        newScriptReftestResult("div2, before reprocess", r4),
-        newScriptReftestResult("div3, before reprocess", r5),
-        newScriptReftestResult("div1, after reprocess", r6),
-        newScriptReftestResult("div2, after reprocess", r7),
-        newScriptReftestResult("div3, at the end", r8)
-      ];
+        return [
+          newScriptReftestResult("Callback f called", r1),
+          newScriptReftestResult("Callback g called", r2),
+          newScriptReftestResult("div1, before reprocess", r3),
+          newScriptReftestResult("div2, before reprocess", r4),
+          newScriptReftestResult("div3, before reprocess", r5),
+          newScriptReftestResult("div1, after reprocess", r6),
+          newScriptReftestResult("div2, after reprocess", r7),
+          newScriptReftestResult("div3, at the end", r8)
+        ];
       }
     </script>
 

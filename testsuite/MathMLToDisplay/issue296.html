@@ -4,28 +4,31 @@
 <html class="reftest-wait">
   <head>
     <title>issue 296</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
-    <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
-      gConfigObject["SVG"].linebreaks = { automatic: true };
 
-      gConfigObject.TeX = { 
-      equationNumbers: { autoNumber: "all" }
-      }
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].linebreaks = {automatic: true};
+        gConfigObject["CommonHTML"].linebreaks = {automatic: true};
+        gConfigObject["SVG"].linebreaks = {automatic: true};
+
+        gConfigObject.TeX = {equationNumbers: {autoNumber: "all"}}
       }
     </script>
+
   </head>
 
   <body>
+
+    <!-- See issue 296
+         https://github.com/mathjax/MathJax/issues/296 -->
+
     <div style="width: 200px; height: 200px;">
-      <!-- See issue 296
-           https://github.com/mathjax/MathJax/issues/296 -->
       \[ 1 + 2 + 3 + 4 + 5 + \dots + n = \frac{n(n+1)}{2} \]
     </div>
+
   </body>
 </html>

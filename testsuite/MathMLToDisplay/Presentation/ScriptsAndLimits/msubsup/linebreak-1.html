@@ -4,22 +4,25 @@
 <html class="reftest-wait">
   <head>
     <title>msubsup</title>
-    <!-- Copyright (c) 2012 Design Science, Inc.
+    <!-- Copyright (c) 2012 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../../../header.js"></script>
+
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
-      gConfigObject["SVG"].linebreaks = { automatic: true };
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].linebreaks = {automatic: true};
+        gConfigObject["CommonHTML"].linebreaks = {automatic: true};
+        gConfigObject["SVG"].linebreaks = {automatic: true};
       }
     </script>
   </head>
 
   <body>
+
     <!-- See issue 305
          https://github.com/mathjax/MathJax/issues/305 -->
+
     <div style="width: 75px; background: yellow;">
       <math>
         <msubsup>

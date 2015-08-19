@@ -4,7 +4,7 @@
 <html class="reftest-wait">
   <head>
     <title>Reprocess</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011-2015 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
@@ -13,45 +13,41 @@
     <script type="text/javascript">
       var r1 = false, r2 = false, r3 = false, r4 = false, r5 = false;
 
-      function preMathJax()
-      {
-      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
-      gConfigObject["SVG"].linebreaks = { automatic: true };
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
+        gConfigObject["CommonHTML"].linebreaks = { automatic: true };
+        gConfigObject["SVG"].linebreaks = { automatic: true };
       }
 
-      function f()
-      {
-      r1 = true;
-      r3 = (document.getElementById("div").offsetHeight > 30);
+      function f() {
+        r1 = true;
+        r3 = (document.getElementById("div").offsetHeight > 30);
       }
 
-      function g()
-      {
-      r4 = true;
-      r5 = (document.getElementById("div").offsetHeight < 30);
+      function g() {
+        r4 = true;
+        r5 = (document.getElementById("div").offsetHeight < 30);
       }
 
-      function postMathJax() 
-      {
-      var div = document.getElementById("div");
-      div.style.width = "30px";
-      r2 = (div.offsetHeight < 30);
-      document.getElementById("myscript").text = "<math></math>";
+      function postMathJax() {
+        var div = document.getElementById("div");
+        div.style.width = "30px";
+        r2 = (div.offsetHeight < 30);
+        document.getElementById("myscript").text = "<math></math>";
 
-      var math = MathJax.Hub.getAllJax("div")[0];
-      MathJax.Hub.Queue(["Rerender", math, f]);
-      MathJax.Hub.Queue(["Reprocess", math, g]);
+        var math = MathJax.Hub.getAllJax("div")[0];
+        MathJax.Hub.Queue(["Rerender", math, f]);
+        MathJax.Hub.Queue(["Reprocess", math, g]);
       }
 
-      function getTestCases()
-      {
-      return [
-      newScriptReftestResult("Rerender(f): Callback is called", r1),
-      newScriptReftestResult("Reprocess(g): Callback is called", r4),
-      newScriptReftestResult("After style change: div height > 30", r2),
-      newScriptReftestResult("After rerender: div height < 30", r3),
-      newScriptReftestResult("After reprocess: div height < 30", r5)
-      ];
+      function getTestCases() {
+        return [
+          newScriptReftestResult("Rerender(f): Callback is called", r1),
+          newScriptReftestResult("Reprocess(g): Callback is called", r4),
+          newScriptReftestResult("After style change: div height > 30", r2),
+          newScriptReftestResult("After rerender: div height < 30", r3),
+          newScriptReftestResult("After reprocess: div height < 30", r5)
+        ];
       }
     </script>
 

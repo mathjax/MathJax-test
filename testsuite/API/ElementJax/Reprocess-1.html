@@ -4,23 +4,22 @@
 <html class="reftest-wait">
   <head>
     <title>Reprocess</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
 
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject["HTML-CSS"].linebreaks = { automatic: true };
-      gConfigObject["SVG"].linebreaks = { automatic: true };
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].linebreaks = {automatic: true};
+        gConfigObject["CommonHTML"].linebreaks = {automatic: true};
+        gConfigObject["SVG"].linebreaks = {automatic: true};
       }
 
-      function postMathJax() 
-      {
-      var math = MathJax.Hub.getAllJax("div")[0];
-      document.getElementById("div").style.width = "30px";
-      MathJax.Hub.Queue(["Reprocess", math]);
+      function postMathJax() {
+        var math = MathJax.Hub.getAllJax("div")[0];
+        document.getElementById("div").style.width = "30px";
+        MathJax.Hub.Queue(["Reprocess", math]);
       }
     </script>
 
