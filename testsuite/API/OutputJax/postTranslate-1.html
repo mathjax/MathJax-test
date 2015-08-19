@@ -4,7 +4,7 @@
 <html class="reftest-wait">
   <head>
     <title>postTranslate</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
@@ -12,21 +12,19 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject.jax = ["input/MathML", "output/" + gOutputJax];
+      function preMathJax() {
+        gConfigObject.jax = ["input/MathML", "output/" + gOutputJax];
       }
 
-      function getTestCases()
-      {
-      var outputJax = MathJax.OutputJax[gOutputJax];
-      var script = document.getElementById("id");
-      var state = { jax: [] };
-      return [
-      newScriptReftestResult("postTranslate() == null",
-      outputJax.postTranslate(state) == null)
-      ];
-      }    
+      function getTestCases() {
+        var outputJax = MathJax.OutputJax[gOutputJax];
+        var script = document.getElementById("id");
+        var state = { jax: {} }; state.jax[gOutputJax] = [];
+        return [
+          newScriptReftestResult("postTranslate() == null",
+          outputJax.postTranslate(state) == null)
+        ];
+      } 
     </script>
 
   </head>

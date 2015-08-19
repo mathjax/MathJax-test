@@ -4,7 +4,7 @@
 <html class="reftest-wait">
   <head>
     <title>Translate</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
@@ -12,41 +12,30 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject.jax = ["input/MathML", "output/" + gOutputJax];
+      function preMathJax() {
+        gConfigObject.jax = ["input/MathML", "output/" + gOutputJax];
       }
 
-      function getTestCases()
-      {
-      var el = MathJax.Hub.getAllJax()[0];
-      var outputJax = MathJax.OutputJax[gOutputJax];
-      var math;
-      if (gOutputJax == "NativeMML") {
-        math = document.getElementsByClassName("MathJax_MathContainer")[0];
-      } else if (gOutputJax == "HTML-CSS") {
-        math = document.getElementsByClassName("MathJax")[0];
-      } else if (gOutputJax == "SVG") {
-        math = document.getElementsByClassName("MathJax_SVG")[0];
-      }
-      var span = document.getElementById("span");
-      var r1 = (span.childNodes.length == 0);
-      r = outputJax.Zoom(el, span, math, 10, 10);
-      var r2 = (span.childNodes.length != 0);
+      function getTestCases() {
+        var el = MathJax.Hub.getAllJax()[0];
+        var outputJax = MathJax.OutputJax[gOutputJax];
+        var math = document.getElementById("id-Frame");
+        if (gOutputJax === "NativeMML") math = math.firstChild;
+        var span = document.getElementById("span");
+        var r1 = (span.childNodes.length == 0);
+        r = outputJax.Zoom(el, span, math, 10, 10);
+        var r2 = (span.childNodes.length != 0);
       
-      var tolerance = .5;
+        var tolerance = .5;
 
-      return [
-      newScriptReftestResult("Zoom().Y", !isNaN(r.Y)),
-      newScriptReftestResult("Zoom().mW ~ 100px",
-                             Math.abs(r.mW - 100)/100 < tolerance),
-      newScriptReftestResult("Zoom().mH ~ 100px",
-                             Math.abs(r.mH - 100)/100 < tolerance),
-      newScriptReftestResult("zW/mW ~ zH/mH",
-                             Math.abs(r.zW/r.mW - r.zH/r.mH) < tolerance),
-      newScriptReftestResult("span empty (before Zoom)", r1),
-      newScriptReftestResult("span nonempty (after Zoom)", r2)
-      ];
+        return [
+          newScriptReftestResult("Zoom().Y", !isNaN(r.Y)),
+          newScriptReftestResult("Zoom().mW ~ 100px", Math.abs(r.mW - 100)/100 < tolerance),
+          newScriptReftestResult("Zoom().mH ~ 100px", Math.abs(r.mH - 100)/100 < tolerance),
+          newScriptReftestResult("zW/mW ~ zH/mH", Math.abs(r.zW/r.mW - r.zH/r.mH) < tolerance),
+          newScriptReftestResult("span empty (before Zoom)", r1),
+          newScriptReftestResult("span nonempty (after Zoom)", r2)
+        ];
       }    
     </script>
 
