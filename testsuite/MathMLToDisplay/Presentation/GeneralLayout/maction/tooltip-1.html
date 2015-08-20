@@ -4,28 +4,30 @@
 <html class="reftest-wait">
   <head>
     <title>maction tooltip</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../../../header.js"></script>
+
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject["HTML-CSS"].tooltip = { delayPost: 0 };
-      gConfigObject["SVG"].tooltip = { delayPost: 0 };
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].tooltip = {delayPost: 0};
+        gConfigObject["CommonHTML"].tooltip = {delayPost: 0};
+        gConfigObject["SVG"].tooltip = {delayPost: 0};
       }
 
-      function postMathJax()
-      {
-      var event = {
-      clientX: 0,
-      clientY: 0
-      };
-      if (gOutputJax == "HTML-CSS") {
-        MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOver(event);
-      } else if (gOutputJax == "SVG") {
-        MathJax.Hub.getAllJax()[0].root.data[0].data[0].SVGtooltipOver(event);
-      }
+      function postMathJax() {
+      var event = {clientX: 0, clientY: 0};
+        var method = {
+          "HTML-CSS": "HTMLtooltipOver",
+          CommonHTML: "CHTMLtooltipOver",
+          SVG: "SVGtooltipOver"
+        }[gOutputJax];
+        if (!method) throw Error("No method for triggering tooltip");
+        var jax = MathJax.Hub.getAllJax()[0];
+        var maction = jax.root.data[0].data[0];
+        if (gOutputJax === "CommonHTML") maction[method](jax,event);
+                                    else maction[method](event);
       }
     </script>
 
