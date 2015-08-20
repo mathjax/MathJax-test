@@ -4,7 +4,7 @@
 <html class="reftest-wait">
   <head>
     <title>zscale</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
@@ -14,14 +14,9 @@
       }
 
       function postMathJax() {
-        var id = ({
-          "HTML-CSS": "MathJax",
-          SVG: "MathJax_SVG",
-          NativeMML: "MathJax_MathContainer"
-        })[gOutputJax];
-
-        if (!id) {throw "zoom-1 doesn't work with "+gOutputJax+" output jax."}
-        var math = document.getElementsByClassName(id)[0];
+        var id = MathJax.Hub.getAllJax()[0].inputID+"-Frame";
+        var math = document.getElementById(id);
+        if (gOutputJax === "NativeMML") math = math.firstChild;
         MathJax.Extension.MathZoom.Click(null, math);
       }
     </script>
