@@ -4,26 +4,28 @@
 <html class="reftest-wait">
   <head>
     <title>undefinedFamily</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+
     <script type="text/javascript">
-      function preMathJax()
-      {
-      // We assume here that
-      //  - MathJax fonts do not contain &#x222F;
-      //  - STIXIntegralsD and STIXGeneral render this character differently
-      gConfigObject["HTML-CSS"].undefinedFamily = "STIXGeneral";
-      gConfigObject["SVG"].undefinedFamily = "STIXGeneral";
+      function preMathJax() {
+        // We assume here that
+        //  - MathJax fonts do not contain &#x222F;
+        //  - STIXIntegralsD and STIXGeneral render this character differently
+        gConfigObject["HTML-CSS"].undefinedFamily = "STIXGeneral";
+        gConfigObject["CommonHTML"].undefinedFamily = "STIXGeneral";
+        gConfigObject["SVG"].undefinedFamily = "STIXGeneral";
       }
     </script>
-    <script type="text/javascript" src="../../header.js"></script>
-  </head>
 
+  </head>
   <body>
 
     <!-- See issue 19
          https://github.com/mathjax/MathJax/issues/19 -->
+
     <math>
       <mtext>&#x222F;</mtext>
     </math>

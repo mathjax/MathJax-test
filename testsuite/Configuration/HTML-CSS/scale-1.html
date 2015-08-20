@@ -7,21 +7,22 @@
     <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
 
     <script type="text/javascript">
       function postMathJax() {
         // reprocess with a scale of 200%, only the red square
-	gConfigObject["HTML-CSS"].scale = 200;
-	gConfigObject["CommonHTML"].scale = 200;
-	gConfigObject["SVG"].scale = 200;
-	gConfigObject["NativeMML"].scale = 200;
+        gConfigObject["HTML-CSS"].scale = 200;
+        gConfigObject["CommonHTML"].scale = 200;
+        gConfigObject["SVG"].scale = 200;
+        gConfigObject["NativeMML"].scale = 200;
         MathJax.Hub.Config(gConfigObject);
 
         var math = MathJax.Hub.getAllJax("MathDiv")[0];
         MathJax.Hub.Queue(["Rerender", math]);
       }
     </script>
-    <script type="text/javascript" src="../../header.js"></script>
+
   </head>
 
   <body>

@@ -4,32 +4,35 @@
 <html class="reftest-wait">
   <head>
     <title>issue351</title>
-    <!-- Copyright (c) 2012 Design Science, Inc.
+    <!-- Copyright (c) 2012 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
+
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject.extensions.push("MathZoom.js");
-      tooltipConfig = { delayPost: 0, offsetX: 50, offsetY: 50 };
-      gConfigObject["HTML-CSS"].tooltip = tooltipConfig;
-      gConfigObject["SVG"].tooltip = tooltipConfig;
+      function preMathJax() {
+        gConfigObject.extensions.push("MathZoom.js");
+        tooltipConfig = {delayPost: 0, offsetX: 50, offsetY: 50};
+        gConfigObject["HTML-CSS"].tooltip = tooltipConfig;
+        gConfigObject["CommonHTML"].tooltip = tooltipConfig;
+        gConfigObject["SVG"].tooltip = tooltipConfig;
       }
 
-      function postMathJax()
-      {
-      var jax = MathJax.Hub.getAllJax()[0];
-      var math = document.getElementById(jax.inputID+"-Frame");
-      if (!math.jaxID) {math = math.firstChild}
-      MathJax.Extension.MathZoom.Zoom(null, math)
+      function postMathJax() {
+        var jax = MathJax.Hub.getAllJax()[0];
+        var math = document.getElementById(jax.inputID+"-Frame");
+        if (!math.jaxID) {math = math.firstChild}
+        MathJax.Extension.MathZoom.Zoom(null, math)
       }
     </script>
+
   </head>
 
   <body>
+
     <!-- See issue 351
          https://github.com/mathjax/MathJax/issues/351 -->
+
     <div style="position: absolute; left: 0; top: 0;">
       <math>
         <maction actiontype="tooltip">
@@ -38,5 +41,6 @@
         </maction>
       </math>
     </div>
+
   </body>
 </html>

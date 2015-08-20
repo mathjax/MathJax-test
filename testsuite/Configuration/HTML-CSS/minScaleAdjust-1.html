@@ -4,17 +4,19 @@
 <html class="reftest-wait">
   <head>
     <title>minScaleAdjust</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject["HTML-CSS"].minScaleAdjust = 300;
-      gConfigObject["SVG"].minScaleAdjust = 300;
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].minScaleAdjust = 300;
+        gConfigObject["CommonHTML"].minScaleAdjust = 300;
+        gConfigObject["SVG"].minScaleAdjust = 300;
       }
     </script>
-    <script type="text/javascript" src="../../header.js"></script>
+
   </head>
 
   <body>

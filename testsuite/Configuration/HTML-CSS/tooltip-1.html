@@ -4,58 +4,59 @@
 <html class="reftest-wait">
   <head>
     <title>maction tooltip</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript">
       var delayPost, delayClear, offsetX, offsetY, delayFinalize;
 
-      function preMathJax()
-      {
-      delayPost = getQueryInteger("delayPost", 600);
-      delayClear = getQueryInteger("delayClear", 600);
-      offsetX = getQueryInteger("offsetX", 10);
-      offsetY = getQueryInteger("offsetY", 5);
-      delayFinalize = getQueryInteger("delayFinalize", 0);
+      function preMathJax() {
+        delayPost = getQueryInteger("delayPost", 600);
+        delayClear = getQueryInteger("delayClear", 600);
+        offsetX = getQueryInteger("offsetX", 10);
+        offsetY = getQueryInteger("offsetY", 5);
+        delayFinalize = getQueryInteger("delayFinalize", 0);
 
-      gConfigObject.jax = ["input/MathML", "output/HTML-CSS"];
-      gConfigObject["HTML-CSS"].tooltip = {
-        delayPost: delayPost,
-        delayClear: delayClear,
-        offsetX: offsetX,
-        offsetY: offsetY
-      };
-      gConfigObject["SVG"].tooltip = {
-        delayPost: delayPost,
-        delayClear: delayClear,
-        offsetX: offsetX,
-        offsetY: offsetY
-      };
+        var tooltipConfig = {
+          delayPost: delayPost,
+          delayClear: delayClear,
+          offsetX: offsetX,
+          offsetY: offsetY
+        };
+
+        gConfigObject["HTML-CSS"].tooltip = tooltipConfig;
+        gConfigObject["CommonHTML"].tooltip = tooltipConfig;
+        gConfigObject["SVG"].tooltip = tooltipConfig;
       }
 
-      function tooltipOver()
-      {
-      var event = { clientX: 0, clientY: 0 };
-      MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOver(event);
+      function tooltipOver() {
+        var event = {clientX: 0, clientY: 0};
+        var jax = MathJax.Hub.getAllJax()[0];
+        var maction = jax.root.data[0].data[0];
+        if (gOutputJax === "HTML-CSS") maction.HTMLtooltipOver(event);
+        else if (gOutputJax === "SVG") maction.SVGtooltipOver(event);
+        else if (gOutputJax === "CommonHTML") maction.CHTMLtooltipOver(jax,event);
       }
 
-      function tooltipOut()
-      {
-      MathJax.Hub.getAllJax()[0].root.data[0].data[0].HTMLtooltipOut(null);
+      function tooltipOut() {
+        var jax = MathJax.Hub.getAllJax()[0];
+        var maction = jax.root.data[0].data[0];
+        if (gOutputJax === "HTML-CSS") maction.HTMLtooltipOut(null);
+        else if (gOutputJax === "SVG") maction.SVGtooltipOut(null);
+        else if (gOutputJax === "CommonHTML") maction.CHTMLtooltipOut(jax,null);
       }
 
-      function postMathJax()
-      {
-      // This finalizeTest is supposed to be called at delayFinalize i.e.
-      // before the standard one (which will be after delayFinalize + 100) 
-      if (delayFinalize > 0) {
-        setTimeout("finalizeReftests()", delayFinalize);
-      }
-      MathJax.Hub.Queue(tooltipOver,
-                        ["Delay", MathJax.Callback, delayPost + 5],
-                        tooltipOut,
-                        ["Delay", MathJax.Callback, delayFinalize + 100]);
+      function postMathJax() {
+        // This finalizeTest is supposed to be called at delayFinalize i.e.
+        // before the standard one (which will be after delayFinalize + 100) 
+        if (delayFinalize > 0) setTimeout("finalizeReftests()", delayFinalize);
+        MathJax.Hub.Queue(
+          tooltipOver,
+          ["Delay", MathJax.Callback, delayPost + 5],
+          tooltipOut,
+          ["Delay", MathJax.Callback, delayFinalize + 100]
+        );
       }
     </script>
 

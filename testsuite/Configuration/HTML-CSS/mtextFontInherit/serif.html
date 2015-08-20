@@ -4,24 +4,28 @@
 <html class="reftest-wait">
   <head>
     <title>serif</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../../header.js"></script>
+
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject["HTML-CSS"].mtextFontInherit = true;
-      gConfigObject["SVG"].mtextFontInherit = true;
+      function preMathJax() {
+        gConfigObject["HTML-CSS"].mtextFontInherit = true;
+        gConfigObject["CommonHTML"].mtextFontInherit = true;
+        gConfigObject["SVG"].mtextFontInherit = true;
       }
     </script>
   </head>
 
   <body>
+
     <!-- See issue 21
          https://github.com/mathjax/MathJax/issues/21 -->
+
     <div style="font-family: serif">
       <math><mtext>MathJax</mtext></math>
     </div>
+
   </body>
 </html>
