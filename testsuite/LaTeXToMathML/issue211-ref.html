@@ -8,17 +8,37 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
+
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject.TeX = { extensions: ["mhchem.js"] };
+      function preMathJax() {
+        gConfigObject.TeX = {extensions: ["mhchem.js"]};
       }
     </script>
+
   </head>
 
   <body>
+
     <!-- See issue 211
          https://github.com/mathjax/MathJax/issues/211 -->
-    <div>\( \raise 1pt{\scriptstyle\begin{CEscriptstack}{-1}\\ 1\end{CEscriptstack}}\kern-.125em {\rm H} \)</div>
+
+    <div>
+
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mmultiscripts>
+          <mtext>H</mtext>
+          <mprescripts></mprescripts>
+          <mrow>
+            <mphantom><mpadded height="0" depth="0"><mo>&#2212;</mo></mpadded></mphantom>
+            <mn>1</mn>
+          </mrow>
+          <mrow>
+            <mo>&#x2212;</mo>
+            <mn>1</mn>
+          </mrow>
+        </mmultiscripts>
+      </math>
+
+    </div>
   </body>
 </html>
