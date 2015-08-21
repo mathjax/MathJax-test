@@ -11,8 +11,11 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script>
-      function xMathJaxConfig() {
+      function preMathJax() {
         gMaxErrorSignals["Math Processing Error"] = 1;
+        gConfigObject.errorSettings = {};
+      }
+      function xMathJaxConfig() {
         MathJax.Hub.Register.StartupHook("TeX Jax Ready", function () {
           MathJax.InputJax.TeX.Definitions.macros.crash = "Crash";
         });
