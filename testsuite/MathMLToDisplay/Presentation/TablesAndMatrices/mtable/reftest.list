@@ -80,7 +80,7 @@ annotate(@note6) fails-if(Firefox&&NativeMML) != rowlines-3-1.html rowlines-3-1-
 fails-if(SVG) == rowlines-3-2.html rowlines-3-2-ref.html
 # XXXfred it seems that rowspacing can not be set under a minimum value.
 == rowspacing-1.html rowspacing-1-ref.html
-annotate(@note6) fails-if(Firefox&&NativeMML) == width-1.html width-1-ref.html
+== width-1.html width-1-ref.html
 annotate(@note6) fails-if(Firefox&&NativeMML) == issue719-1.html issue719-1-ref.html
 annotate(@note6) fails-if(Firefox&&NativeMML) == issue719-2.html issue719-2-ref.html
 == issue719-3.html issue719-3-ref.html
