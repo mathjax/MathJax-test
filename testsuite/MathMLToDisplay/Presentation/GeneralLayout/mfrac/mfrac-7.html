@@ -4,26 +4,39 @@
 <html class="reftest-wait">
   <head>
     <title>Test mfrac</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var div = document.getElementById("math");
+        return [
+          newScriptReftestResult("Linethickness OK ",div.offsetHeight >= 50),
+        ];
+      }
+    </script>
+
   </head>
 
   <body>
     <!-- linethickness: 10px -->
 
-    <div style="position: absolute; left: 20px; top: 20px; width: 200px;
-                background: red;">
-      <math xmlns="http://www.w3.org/1998/Math/MathML">
-        <mphantom>
-          <mfrac linethickness="10px">
-            <mspace height="0px" width="100px"></mspace>
-            <mspace height="0px" width="100px"></mspace>
-          </mfrac>
-        </mphantom>
+    <!-- Note: MathJax uses the linethickness for the spacing above/below the
+         horizontal "fraction bar". Hence the total height is 3 * 10 = 30px
+         plus the two spaces of 10px gives 50px -->
+
+    <div id="math" style="display:inline-block; left: 20px; top: 20px; background: red;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML" mathbackground="blue">
+        <mfrac linethickness="10px">
+          <mspace height="10px" width="100px" mathbackground="yellow"></mspace>
+          <mspace height="10px" width="100px" mathbackground="yellow"></mspace>
+        </mfrac>
       </math>
     </div>
+    <p>
 
   </body>
 </html>

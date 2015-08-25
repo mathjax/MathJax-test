@@ -4,6 +4,6 @@
 == mfrac-4.html mfrac-4-ref.html
 == mfrac-5.html mfrac-5-ref.html
 == mfrac-6.html mfrac-6-ref.html
-== mfrac-7.html mfrac-7-ref.html
+fails-if(NativeMML) script mfrac-7.html
 != mfrac-8.html mfrac-8-ref.html
 == issue547.html issue547-ref.html
