@@ -2,6 +2,12 @@ include mlabeledtr/reftest.list
 include mtable/reftest.list
 include mtr-mtd/reftest.list
 
+!= issue596-1a.html issue596-1-ref.html
+!= issue596-1b.html issue596-1-ref.html
+!= issue596-1c.html issue596-1-ref.html
+!= issue596-1d.html issue596-1-ref.html
+!= issue596-1e.html issue596-1-ref.html
+!= issue596-1f.html issue596-1-ref.html
 == issue807.html issue807-ref.html
 == issue832.html issue832-ref.html
 require(NativeMML) != issue993-1a.html issue993-1-ref.html
