@@ -4,24 +4,21 @@
 <html class="reftest-wait">
   <head>
     <title>styles</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011-2015 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gConfigObject.extensions.push("MathMenu.js");
-
-      gConfigObject.MathMenu = {
-        styles: {
-          "#MathJax_About": { background: "green" }
+      function preMathJax() {
+        gConfigObject.extensions.push("MathMenu.js");
+        gConfigObject.MathMenu = {
+          styles: {
+            "#MathJax_About": { background: "green" }
+          }
         }
-      }
       }  
       
-      function postMathJax()
-      {
-      MathJax.Menu.About();
+      function postMathJax() {
+        MathJax.Menu.About({type:"mouseup"});
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
