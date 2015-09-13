@@ -4,7 +4,7 @@
 <html class="reftest-wait">
   <head>
     <title>issue 777</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011-2015 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../header.js"></script>
@@ -21,13 +21,12 @@
         //
         var posted = MathJax.Callback(function () {});
         MathJax.Localization.Try(function () {
-          var event;
-          if (document.createEvent) {event = document.createEvent("UIEvents")}
-            else {event = { clientX: 0, clientY: 0, pageX: 0, pageY: 0 }}
-          event.clientX = 300;
+          var event = {type:"contextmenu", clientX: 300, clientY: 0, pageX: 0, pageY: 0};
+          MathJax.Menu.jax = MathJax.Hub.getAllJax()[0];
           MathJax.Menu.menu.Post(event, null);
           var menu = document.getElementById("MathJax_MenuFrame").lastChild;
-          MathJax.Menu.menu.FindId("Settings").menu.Post(event,menu);
+          event.type = "mouseup";
+          MathJax.Menu.menu.FindId("Settings").submenu.Post(event,menu);
           posted();
         });
         return posted;
@@ -43,6 +42,7 @@
     <!-- See issue 777
          https://github.com/mathjax/MathJax/issues/777 -->
 
+      <script type="math/tex"></script>
       <div style="z-index:1000; position:absolute; left:300px; top:0;
                   width:500px; height:150px; background:red"></div>
 
