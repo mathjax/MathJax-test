@@ -19,12 +19,15 @@
         MathJax.Hub.Register.StartupHook("TeX Jax Ready", function () {
           MathJax.InputJax.TeX.Definitions.macros.crash = "Crash";
         });
-        MathJax.Localization.addTranslation("en","_",{strings: {
-          ErrorMessage: "MyErrorMsg",
-          ErrorFile: "MyErrorFile",
-          ErrorLine: "MyErrorLine",
-          ErrorTips: "MyErrorTips"
-        }});
+        MathJax.Localization.addTranslation("en","_",{
+          strings: {
+            ErrorMessage: "MyErrorMsg",
+            ErrorFile: "MyErrorFile",
+            ErrorLine: "MyErrorLine",
+            ErrorTips: "MyErrorTips"
+          },
+          isLoaded: true
+        });
       }
 
       function getTestCases() {
