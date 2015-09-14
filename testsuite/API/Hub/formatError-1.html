@@ -4,7 +4,7 @@
 <html class="reftest-wait">
   <head>
     <title>formatError</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011-2015 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
@@ -12,25 +12,22 @@
     <script type="text/javascript" src="../../treeReftests.js"></script>
 
     <script type="text/javascript">
-      function preMathJax()
-      {
-      // We generate an error on purpose, so do not raise an exception when
-      // a math processing error occurs.
-      gConfigObject.errorSettings = {};
-      gMaxErrorSignals["Math Processing Error"] = 1;
+      function preMathJax() {
+        // We generate an error on purpose, so do not raise an exception when
+        // a math processing error occurs.
+        gConfigObject.errorSettings = {};
+        gMaxErrorSignals["Math Processing Error"] = 1;
       }
 
-      function getReftestElements()
-      {
-      return ["root"];
+      function getReftestElements() {
+        return ["root"];
       }
 
-      function postMathJax()
-      {
-      var error = new Error("my error");
-      var script = document.getElementById("script");
-      script.MathJax = {};
-      MathJax.Hub.formatError(script, error);
+      function postMathJax() {
+        var error = new Error("my error");
+        var script = document.getElementById("script");
+        script.MathJax = {};
+        MathJax.Hub.formatError(script, error);
       }
     </script>
 
