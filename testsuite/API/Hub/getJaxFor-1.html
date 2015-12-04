@@ -4,7 +4,7 @@
 <html class="reftest-wait">
   <head>
     <title>getJaxFor</title>
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011 The MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
@@ -12,21 +12,25 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      function getTestCases()
-      {
+    function getTestCases() {
       var maths = MathJax.Hub.getAllJax();
       var script1 = document.getElementById("script1");
       var script2 = document.getElementById("script2");
-      var r1 = (MathJax.Hub.getJaxFor(script1) == maths[0]);
-      var r2 = (MathJax.Hub.getJaxFor("script1") == maths[0]);
-      var r3 = (MathJax.Hub.getJaxFor(script2) == maths[1]);
-      var r4 = (MathJax.Hub.getJaxFor("script2") == maths[1]);
+      var mix = document.getElementById("mi-x");
+      var r1 = (MathJax.Hub.getJaxFor(script1) === maths[0]);
+      var r2 = (MathJax.Hub.getJaxFor("script1") === maths[0]);
+      var r3 = (MathJax.Hub.getJaxFor(script2) === maths[1]);
+      var r4 = (MathJax.Hub.getJaxFor("script2") === maths[1]);
+      var r5 = (MathJax.Hub.getJaxFor(mix) === maths[1]);
+      var r6 = (MathJax.Hub.getJaxFor("mi-x") === maths[1]);
 
       return [
-      newScriptReftestResult("getJaxFor(script1)", r1),
-      newScriptReftestResult("getJaxFor('script1')", r2),
-      newScriptReftestResult("getJaxFor(script2)", r3),
-      newScriptReftestResult("getJaxFor('script2')", r4)
+        newScriptReftestResult("getJaxFor(script1)", r1),
+        newScriptReftestResult("getJaxFor('script1')", r2),
+        newScriptReftestResult("getJaxFor(script2)", r3),
+        newScriptReftestResult("getJaxFor('script2')", r4),
+        newScriptReftestResult("getJaxFor(mix)", r5),
+        newScriptReftestResult("getJaxFor('mi-x')", r6)
       ];
       }
     </script>
@@ -39,7 +43,7 @@
 
     <script id="script2" type="math/mml">
       <math>
-        <mi>x</mi>
+        <mi id="mi-x">x</mi>
         <mo>+</mo>
         <msqrt>
           <mn>1</mn>
