@@ -18,3 +18,4 @@ annotate(@note2) fails-if((Linux&&Firefox&&HTML-CSS)||(Chrome&&SVG&&Windows)) ==
 == mtextScolor5.html mtextScolor5-ref.html
 annotate(@note1) fails-if(!(Linux&&Chrome&&HTML-CSS&&STIX)) == mtextspaces7.html mtextspaces7-ref.html
 == mtextStoken6.html mtextStoken6-ref.html
+require(SVG) script issue1316.html
