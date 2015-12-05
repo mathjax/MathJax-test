@@ -1,0 +1,41 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1287</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gMaxErrorSignals["Math Processing Error"] = 1;
+      }
+
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["Math Processing Error"] === 1);
+        return [newScriptReftestResult("No processing error",OK)];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Super- and subscripts on stretchy operator cause processing error
+         https://github.com/mathjax/MathJax/issues/949 -->
+    
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <msubsup>
+          <mo maxsize="2.047em" minsize="2.047em">]</mo>
+          <mi>a</mi>
+         <mi>b</mi>
+        </msubsup>
+      </math>
+    </div>
+
+  </body>
+</html>
