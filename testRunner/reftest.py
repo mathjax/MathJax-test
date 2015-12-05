@@ -83,6 +83,9 @@ def verifyPageExistence(aTestDir, aTestPage):
     i = path.find("?")
     if (i >= 0):
         path = path[:i]
+    i = path.find("#")
+    if (i >= 0):
+        path = path[:i]
     path = aTestDir + path
     if (not os.path.exists(MATHJAX_TESTSUITE_PATH + path)):
         print("warning: " + path + " does not exist!", file=sys.stderr)
