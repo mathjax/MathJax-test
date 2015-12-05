@@ -50,3 +50,4 @@ require(HTML-CSS) script issue1179.html
 require(SVG) == issue1176.html issue1176-ref.html
 require(!NativeMML) == issue1231.html issue1231-ref.html
 require(SVG) script issue1233.html
+script issue1278.html

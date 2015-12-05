@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1278</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w = document.getElementById("math").scrollWidth;
+        return [
+          newScriptReftestResult("Reduced width ("+w+") ",w < 35),
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Negative space causes wrong width in WebKit in CommonHTML
+       https://github.com/mathjax/MathJax/issues/1278 -->
+
+    <div id="math" style="display:inline-block;">
+      <math>
+        <mspace width="20px" height="20px" mathbackground="red"></mspace>
+        <mspace width="-10px"></mspace>
+        <mspace width="20px" height="20px" mathbackground="green"></mspace>
+      </math>
+    </div>
+
+  </body>
+</html>
