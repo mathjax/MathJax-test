@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1281</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var root = document.getElementById("root");
+console.log(root.innerHTML);
+        var OK = !!root.innerHTML.match(/TeX-size3-R/);
+        return [newScriptReftestResult("Size3 root ",OK)];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- \Large etc don't set delimiter sizes correctly
+       https://github.com/mathjax/MathJax/issues/1281 -->
+
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mstyle mathsize="1.44em">
+          <msqrt id="root">
+            <mfrac>
+              <mi>x</mi>
+              <mi>y</mi>
+            </mfrac>
+          </msqrt>
+        </mstyle>
+      </math>
+    </div>
+
+  </body>
+</html>
