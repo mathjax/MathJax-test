@@ -36,3 +36,4 @@ require(!Opera) script issue658.html?browser=Opera&fail=true
 script issue971.html
 script issue972.html
 script issue975.html
+script issue1285.html

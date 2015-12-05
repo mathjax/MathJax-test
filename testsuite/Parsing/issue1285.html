@@ -1,0 +1,38 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1285</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gConfigObject.TeX = {extensions: ["noErrors.js"]};
+      gMaxErrorSignals["TeX Jax - parse error"] = 2;
+      function xMathJaxConfig() {
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+      }
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax();
+        return [newScriptReftestResult("noError output skipped ",math.length === 1)];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- tex2jax can reprocess noError output from CHTML
+         https://github.com/mathjax/MathJax/issues/1285 -->
+
+    \[
+      \begin{badEnvironment}\end{badEnvironment}
+    \]
+    <p>
+
+  </body>
+</html>
