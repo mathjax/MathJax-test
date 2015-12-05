@@ -1,0 +1,40 @@
+<!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
+<!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1006</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var mtable = MathJax.Hub.getAllJax()[0].root.data[0].data[0];
+        var mtr = (mtable.data[0].type === "mtr");
+        var mtd = ((mtable.data[0].data[0]||{}).type === "mtd");
+        return [
+          newScriptReftestResult("mtr added ",mtr),
+          newScriptReftestResult("mtd added ",mtd)
+        ];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- tex2jax can reprocess noError output from CHTML
+         https://github.com/mathjax/MathJax/issues/1006 -->
+
+    <math>
+      <mtable>
+        <mi>x</mi>
+      </mtable>
+    </math>
+    <p>
+
+  </body>
+</html>
