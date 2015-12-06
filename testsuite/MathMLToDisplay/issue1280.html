@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1280</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var l1 = document.getElementById("x1").offsetLeft;
+        var l2 = document.getElementById("x2").offsetLeft;
+        return [
+          newScriptReftestResult("Negative width 1 ("+l1+") ", l1 < 0),
+          newScriptReftestResult("Negaitve width 2 ("+l2+") ", l2 < 0)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Negative space causes wrong width in WebKit in CommonHTML
+       https://github.com/mathjax/MathJax/issues/1280 -->
+
+    <div style="display:inline-block; margin-left:50px; position:relative">
+      <math>
+        <mspace width="20px" height="20px" mathbackground="red"></mspace>
+        <mspace width="-60px"></mspace>
+        <mspace width="20px" height="20px" mathbackground="green"></mspace>
+      </math><span id="x1">x</span>
+    </div>
+    <p>
+    <div style="display:inline-block; margin-left:50px; position:relative">
+      <math>
+        <mspace width="-20px"></mspace>
+      </math><span id="x2">x</span>
+    </div>
+    <p>
+
+  </body>
+</html>
