@@ -15,7 +15,7 @@
       function getTestCases() {
         var math = MathJax.Hub.getAllJax();
         var tests = [];
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < math.length; i++) {
           var OK = math[i].root.data[0].data[1].type === "mo";
           tests[i] = newScriptReftestResult(math[i].originalText+" ", OK);
         }
@@ -33,6 +33,8 @@
     <div>\(\arcsin\sin\)</div>
     <div>\(\operatorname{x}\operatorname{y}\)</div>
     <div>\(\sin\left(x\right)\)</div>
+    <div>\(\dim\mathrm{im}(f)\)</div>
+    <div>\(\dim\begin{vmatrix}x\end{vmatrix}\)</div>
 
   </body>
 </html>
