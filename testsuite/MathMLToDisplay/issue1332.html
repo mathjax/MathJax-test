@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1332</title>
+    <!-- Copyright (c) 2015 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w = document.getElementById("row").bbox.w;
+        return [newScriptReftestResult("Width is correct ("+w+") ", w > 2)];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- HTML-CSS gets width wrong for mrow contianing an unstretched
+       embelished operator.
+       https://github.com/mathjax/MathJax/issues/1322 -->
+
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mrow mathbackground="red" id="row">
+          <mrow>
+            <mspace width="2em"></mspace>
+            <mo>|</mo>
+          </mrow>
+        </mrow>
+      </math>
+    </div>
+
+  </body>
+</html>
