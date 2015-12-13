@@ -1,7 +1,7 @@
 <!-- -*- Mode: nXML; tab-width: 2; indent-tabs-mode: nil; -*- -->
 <!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
 <!--
-   Copyright 2012-2013 Design Science, Inc.
+   Copyright 2012-2015 MathJax Consortium, Inc.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

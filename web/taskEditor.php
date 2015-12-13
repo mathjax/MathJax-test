@@ -4,7 +4,7 @@
 /* ***** BEGIN LICENSE BLOCK *****
 /* Version: Apache License 2.0
  *
- * Copyright (c) 2011 Design Science, Inc.
+ * Copyright (c) 2011-2015 MathJax Consortium, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@
   <head>
     <title>Task Editor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <!-- Copyright (c) 2011 Design Science, Inc.
+    <!-- Copyright (c) 2011-2015 MathJax Consortium, Inc.
          License: Apache License 2.0 -->
     <link rel="stylesheet" type="text/css" href="default.css"/>
     <script type="text/javascript" src="config.js"></script>
