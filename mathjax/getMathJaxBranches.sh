@@ -1,6 +1,4 @@
 #!/bin/bash
-# -*- Mode: Shell-script; tab-width: 2; indent-tabs-mode:nil; -*-
-# vim: set ts=2 et sw=2 tw=80:
 # ***** BEGIN LICENSE BLOCK *****
 # Version: Apache License 2.0
 #

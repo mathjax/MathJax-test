@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# -*- Mode: Python; tab-width: 2; indent-tabs-mode:nil; -*-
-# vim: set ts=2 et sw=2 tw=80:
 #
 # Copyright (c) 2013-2015 MathJax Consortium, Inc.
 #

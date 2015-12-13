@@ -115,8 +115,6 @@ framework, we always wait after MathJax processing before reading the result.
 
 .. code-block:: html
 
-   <!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
-   <!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
    <!DOCTYPE html>
    <html class="reftest-wait">
    <head>

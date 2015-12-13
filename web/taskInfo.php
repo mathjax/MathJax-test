@@ -1,6 +1,4 @@
 <?php
-/* -*- Mode: PHP; tab-width: 2; indent-tabs-mode:nil; -*- */
-/* vim: set ts=2 et sw=2 tw=80: */
 /* ***** BEGIN LICENSE BLOCK *****
 /* Version: Apache License 2.0
  *
@@ -42,8 +40,6 @@
   include('config.php');
 ?>
 
-<!-- -*- Mode: HTML; tab-width: 2; indent-tabs-mode:nil; -*- -->
-<!-- vim: set ts=2 et sw=2 tw=80: !-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
