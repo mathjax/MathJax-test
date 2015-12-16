@@ -14,20 +14,25 @@
       gConfigObject.positionToHash = true;
     }
     function getTestCases() {
-      var OK = (document.body.scrollTop > 0);
-      return [newScriptReftestResult("Position to hash ", OK)];
+      var top = document.body.scrollTop;
+      if (document.documentElement) top = document.documentElement.scrollTop;
+      if (top === 0) top = window.pageYOffset || window.scrollY;
+      return [newScriptReftestResult("Position to hash ", top > 0)];
     }
     </script>
     <script type="text/x-mathjax-config">
     MathJax.Hub.Queue(["Delay",MathJax.Callback,10]);
     </script>
+    <style>
+    body {overflow: auto ! important}
+    </style>
 
   </head>
 
   <body>
    
     <div style="height: 2000px;"></div>
-    <div id="marker">
+    <div><a name="marker" id="marker"></a>
     $$x+1$$
     </div>
 
