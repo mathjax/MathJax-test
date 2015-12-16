@@ -115,13 +115,11 @@ framework, we always wait after MathJax processing before reading the result.
 
 .. code-block:: html
 
-   <!-- -*- mode: HTML; tab-width: 2; indent-tabs-mode: nil; -*- -->
-   <!-- vim: set tabstop=2 expandtab shiftwidth=2 textwidth=80:  -->
    <!DOCTYPE html>
    <html class="reftest-wait">
    <head>
      <title>__PAGE_TITLE__</title>
-       <!-- Copyright (c) __YEAR__ Design Science, Inc.
+       <!-- Copyright (c) __YEAR__-2015 MathJax Consortium, Inc.
             License: Apache License 2.0 -->
        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
        <script type="text/javascript" src="__MATHJAX-TEST__/header.js"></script>
@@ -139,7 +137,7 @@ above. You can also add your author name if you want. Here are some models:
 
 .. code-block:: html
 
-   <!-- Copyright (c) 2011 Design Science, Inc.
+   <!-- Copyright (c) 2011-2015 MathJax Consortium, Inc.
         License: Apache License 2.0
         Author: John Doe <john.doe@des@dessci.com>
         Source: My MathML Test Suite -->

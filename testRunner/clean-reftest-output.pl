@@ -1,6 +1,4 @@
 #!/usr/bin/perl
-# -*- Mode: Perl; tab-width: 2; indent-tabs-mode: nil; -*-
-# vim: set shiftwidth=4 tabstop=8 autoindent expandtab:
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
 #
@@ -93,7 +91,7 @@ my @testTypes = (
 # HTML header
 
 print <<EOM
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
 <title>reftest output</title>
@@ -155,7 +153,7 @@ while (<$gReftestOutput>) {
 
     if ($state == 0) {
         $unparsedContent = $_;
-        
+
         if (/(TEST-)([^\|]*) \| ([^\|]*) \|(.*)/) {
             $N_TESTS++;
             for(my $i = 0; $i <= $#testTypes ; $i++) {
@@ -174,7 +172,7 @@ while (<$gReftestOutput>) {
                     $parsedContent .= "<a href=\"".$gMathJaxTestURI;
                     $parsedContent .= "testsuite/".$testID;
                     $parsedContent .= $queryString2."\">".$testID."</a>";
-                    
+
                     # convert references @ to link
                     my $testNote = $gMathJaxTestURI."web/testsuiteNotes.html#";
                     $_ = $testID;
@@ -361,7 +359,7 @@ EOM
 sub drawLegend {
 ## @fn void drawLegend (scalar i)
 #  @brief Generate a SVG representation of a legend for the i-th failure type.
-# 
+#
   my($i) = @_;
   my $y = 20 + $i*30;
 print <<EOM
@@ -371,7 +369,7 @@ print <<EOM
     $testTypes[$i][0] ($testTypes[$i][3] / $N_TESTS)
   </text>
 EOM
-;  
+;
 }
 
 ################################################################################
@@ -384,13 +382,13 @@ print <<EOM
   var error, listOfErrors;
   var errorClasses = [
 EOM
-;  
+;
 
 for(my $i = 0; $i <= $#testTypes ; $i++) {
 print <<EOM
     "$testTypes[$i][1]",
 EOM
-;  
+;
 }
 
 print <<EOM
