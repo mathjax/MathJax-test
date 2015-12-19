@@ -8,17 +8,21 @@
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../scriptTests.js"></script>
     <script type="text/javascript">
+    document.location = "#marker";
     function preMathJax() {
-      gConfigObject.positionToHash = true;
+      gConfigObject.positionToHash = false;
     }
     function getTestCases() {
       var top = document.body.scrollTop;
       if (document.documentElement) top = document.documentElement.scrollTop;
       if (top === 0) top = window.pageYOffset || window.scrollY;
-      return [newScriptReftestResult("Position to hash ", top > 0)];
+      return [newScriptReftestResult("Position to hash ", top > 2100)];
     }
     </script>
     <script type="text/x-mathjax-config">
+    MathJax.Hub.Register.StartupHook("End Config",function () {
+      return MathJax.Callback.Delay(10);
+    });
     MathJax.Hub.Queue(["Delay",MathJax.Callback,10]);
     </script>
     <style>
@@ -29,6 +33,9 @@
 
   <body>
    
+    <div>
+    <math><mpadded height="2000px" width="1em" mathbackground="red"></mpadded></math>
+    </div>
     <div style="height: 2000px;"></div>
     <div><a name="marker" id="marker"></a>
     $$x+1$$

@@ -23,4 +23,4 @@ slow script showProcessingMessages-1.html?showProcessing=true
 # script v1.0-compatible-2.html
 == positionToHash-1.html positionToHash-1-ref.html
 load positionToHash-2.html
-script positionToHash-3.html#marker
+script positionToHash-3.html
