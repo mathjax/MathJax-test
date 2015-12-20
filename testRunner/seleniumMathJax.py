@@ -438,18 +438,25 @@ class seleniumMathJax(object):
         elif self.mBrowserMode == "IE11":
             self.mSelenium.key_press_native(VK_E)
 
-        time.sleep(.1)
         time.sleep(3)
 
-        #
-        #  Close developer tools
-        #
-        self.mSelenium.key_down_native(VK_ALT)
-        time.sleep(.1)
-        self.mSelenium.key_press_native(VK_F4)
-        time.sleep(.1)
-        self.mSelenium.key_up_native(VK_ALT)
+#
+#  Don't close the tools, since then IE11 reverts back to Edge
+#  Just bring the main window to the front
+#
+        self.mSelenium.key_press_native(VK_F12)
         time.sleep(3)
+
+#
+#         #
+#         #  Close developer tools
+#         #
+#         self.mSelenium.key_down_native(VK_ALT)
+#         time.sleep(.1)
+#         self.mSelenium.key_press_native(VK_F4)
+#         time.sleep(.1)
+#         self.mSelenium.key_up_native(VK_ALT)
+#         time.sleep(3)
 
     def pre(self):
         """
