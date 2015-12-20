@@ -10,8 +10,9 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/javascript">
-      function getTestCases()
-      {
+    gMaxErrorSignals["Math Processing Error"] = 1;
+    delete gConfigObject.errorSettings;
+    function getTestCases() {
       var error = new Error("my error");
       var script = document.getElementById("script");
       script.MathJax = {};
@@ -19,7 +20,7 @@
 
       return [newScriptReftestResult("MathJax.Hub.lastError",
              MathJax.Hub.lastError == error)];
-      }
+    }
     </script>
 
   </head>
