@@ -48,9 +48,12 @@ VK_ENTER = 10
 VK_SHIFT = 16
 VK_CONTROL = 17
 VK_ALT = 18
+VK_1 = 49
+VK_5 = 53
 VK_7 = 55
 VK_8 = 56
 VK_9 = 57
+VK_E = 69
 VK_L = 76
 VK_M = 77
 VK_Q = 81
@@ -59,7 +62,7 @@ VK_T = 84
 VK_F4 = 115
 VK_F11 = 122
 VK_F12 = 123
-VK_DELETE =	127
+VK_DELETE = 127
 
 class ReftestError(Exception):
     """
@@ -346,47 +349,106 @@ class seleniumMathJax(object):
         else:
             self.mSelenium.start()
 
+#     def chooseInternetExplorerDocumentMode(self):
+#         """
+#         @fn chooseInternetExplorerDocumentMode(self)
+#         @brief function to choose the internet explorer mode
+#         """
+#         #  open developer tools
+#         self.mSelenium.key_down_native(VK_F12)
+#         time.sleep(3)
+# 
+#         if self.mBrowserMode == "Quirks":
+#             self.mSelenium.key_down_native(VK_ALT)
+#             time.sleep(.1)
+#             self.mSelenium.key_press_native(VK_Q)
+#             time.sleep(.1)
+#             self.mSelenium.key_up_native(VK_ALT)
+#             time.sleep(.1)
+#         elif self.mBrowserMode == "IE7":
+#             self.mSelenium.key_down_native(VK_ALT)
+#             time.sleep(.1)
+#             self.mSelenium.key_press_native(VK_7)
+#             time.sleep(.1)
+#             self.mSelenium.key_up_native(VK_ALT)
+#             time.sleep(.1)
+#         elif self.mBrowserMode == "IE8":
+#             self.mSelenium.key_down_native(VK_ALT)
+#             time.sleep(.1)
+#             self.mSelenium.key_press_native(VK_8)
+#             time.sleep(.1)
+#             self.mSelenium.key_up_native(VK_ALT)
+#             time.sleep(.1)
+#         elif self.mBrowserMode == "IE9":
+#             self.mSelenium.key_down_native(VK_ALT)
+#             time.sleep(.1)
+#             self.mSelenium.key_press_native(VK_9)
+#             time.sleep(.1)
+#             self.mSelenium.key_up_native(VK_ALT)
+#             time.sleep(.1)
+#             time.sleep(3)
+# 
+#         # close developer tools
+#         self.mSelenium.key_down_native(123) # F12
+#         time.sleep(3)
+
     def chooseInternetExplorerDocumentMode(self):
         """
         @fn chooseInternetExplorerDocumentMode(self)
         @brief function to choose the internet explorer mode
         """
-        #  open developer tools
-        self.mSelenium.key_down_native(VK_F12)
+
+        #
+        #  Open developer tools
+        #  (They must be set to open in a separate window, and
+        #  have the "Persist Emulation" icon selected)
+        #  
+        self.mSelenium.key_press_native(VK_F12)
         time.sleep(3)
 
-        if self.mBrowserMode == "Quirks":
-            self.mSelenium.key_down_native(VK_ALT)
-            time.sleep(.1)
-            self.mSelenium.key_press_native(VK_Q)
-            time.sleep(.1)
-            self.mSelenium.key_up_native(VK_ALT)
-            time.sleep(.1)
-        elif self.mBrowserMode == "IE7":
-            self.mSelenium.key_down_native(VK_ALT)
-            time.sleep(.1)
-            self.mSelenium.key_press_native(VK_7)
-            time.sleep(.1)
-            self.mSelenium.key_up_native(VK_ALT)
-            time.sleep(.1)
-        elif self.mBrowserMode == "IE8":
-            self.mSelenium.key_down_native(VK_ALT)
-            time.sleep(.1)
-            self.mSelenium.key_press_native(VK_8)
-            time.sleep(.1)
-            self.mSelenium.key_up_native(VK_ALT)
-            time.sleep(.1)
-        elif self.mBrowserMode == "IE9":
-            self.mSelenium.key_down_native(VK_ALT)
-            time.sleep(.1)
-            self.mSelenium.key_press_native(VK_9)
-            time.sleep(.1)
-            self.mSelenium.key_up_native(VK_ALT)
-            time.sleep(.1)
-            time.sleep(3)
+        #
+        #  Select Emulation page
+        #
+        self.mSelenium.key_down_native(VK_CONTROL)
+        time.sleep(.1)
+        self.mSelenium.key_press_native(VK_8)
+        time.sleep(.1)
+        self.mSelenium.key_up_native(VK_CONTROL)
+        time.sleep(.1)
 
-        # close developer tools
-        self.mSelenium.key_down_native(123) # F12
+        #
+        #  Tab to Document Mode
+        #
+        self.mSelenium.key_press_native(VK_TAB)
+        time.sleep(.1)
+
+        #
+        #  Select mode
+        #
+        if self.mBrowserMode == "Quirks":
+            self.mSelenium.key_press_native(VK_5)
+        elif self.mBrowserMode == "IE7":
+            self.mSelenium.key_press_native(VK_7)
+        elif self.mBrowserMode == "IE8":
+            self.mSelenium.key_press_native(VK_8)
+        elif self.mBrowserMode == "IE9":
+            self.mSelenium.key_press_native(VK_9)
+        elif self.mBrowserMode == "IE10":
+            self.mSelenium.key_press_native(VK_1)
+        elif self.mBrowserMode == "IE11":
+            self.mSelenium.key_press_native(VK_E)
+
+        time.sleep(.1)
+        time.sleep(3)
+
+        #
+        #  Close developer tools
+        #
+        self.mSelenium.key_down_native(VK_ALT)
+        time.sleep(.1)
+        self.mSelenium.key_press_native(VK_F4)
+        time.sleep(.1)
+        self.mSelenium.key_up_native(VK_ALT)
         time.sleep(3)
 
     def pre(self):
