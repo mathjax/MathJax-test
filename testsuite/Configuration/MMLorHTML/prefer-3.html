@@ -19,7 +19,7 @@
       var browser = MathJax.Hub.Browser;
       var result;
 
-      if (browser == "MSIE") {
+      if (browser == "MSIE" && browser.hasMathPlayer) {
         result = (document.getElementsByTagName("math").length == 1);
       } else {
         result = (document.getElementById("MathJax-Span-1") != null);

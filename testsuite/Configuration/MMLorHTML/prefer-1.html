@@ -6,24 +6,25 @@
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript">
-      function preMathJax()
-      {
-      gMathJaxQueryString = "config=MMLorHTML";
-      gConfigObject.jax = ["input/TeX", "input/MathML"];
-      gConfigObject["MMLorHTML"] = {
-        prefer: {
-          MSIE: "MML", Firefox: "MML", Opera: "MML", Safari: "MML",
-          Chrome: "MML", other: "MML"
+      function preMathJax() {
+        gMathJaxQueryString = "config=MMLorHTML";
+        gConfigObject.jax = ["input/TeX", "input/MathML"];
+        gConfigObject["MMLorHTML"] = {
+          prefer: {
+            MSIE: "MML", Firefox: "MML", Opera: "MML", Safari: "MML",
+            Chrome: "MML", other: "MML"
+          }
         }
       }
-      }
 
-      function getTestCases()
-      {
-      return [
-        newScriptReftestResult("native MathML used",
-                              document.getElementsByTagName("math").length == 1)
-      ];
+      function getTestCases() {
+        var browser = MathJax.Hub.Browser;
+        return [
+          newScriptReftestResult("native MathML used",
+            document.getElementsByTagName("math").length == 1 ||
+            (browser.isMSIE && !browser.hasMathPlayer)
+          )
+        ];
       }
     </script>
     <script type="text/javascript" src="../../header.js"></script>
