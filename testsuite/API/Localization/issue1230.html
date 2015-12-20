@@ -29,13 +29,17 @@
       }
 
       function getTestCases() {
-        var error = document.getElementById("crash").MathJax.error.errorText;
-        return [
-          newScriptReftestResult("Error message localized ", error.match(/MyErrorMsg/)),
-          newScriptReftestResult("Error file localized ", error.match(/MyErrorFile/)),
-          newScriptReftestResult("Error line localized ", error.match(/MyErrorLine/)),
-          newScriptReftestResult("Error tips localized ", error.match(/MyErrorTips/))
+        var text = document.getElementById("crash").MathJax.error.errorText;
+        var error = MathJax.Hub.lastError;
+        var tests = [
+          newScriptReftestResult("Error message localized ", text.match(/MyErrorMsg/)),
+          newScriptReftestResult("Error tips localized ", text.match(/MyErrorTips/))
         ];
+        if (error.sourceURL || error.fileName)
+          tests.push(newScriptReftestResult("Error file localized ", text.match(/MyErrorFile/)));
+        if (error.line || error.lineNumber)
+          tests.push(newScriptReftestResult("Error line localized ", text.match(/MyErrorLine/)));
+        return tests;
       }
     </script>
   </head>
