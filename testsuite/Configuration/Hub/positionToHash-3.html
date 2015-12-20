@@ -10,13 +10,13 @@
     <script type="text/javascript">
     document.location = "#marker";
     function preMathJax() {
-      gConfigObject.positionToHash = false;
+      gConfigObject.positionToHash = true;
     }
     function getTestCases() {
       var top = document.body.scrollTop;
       if (document.documentElement) top = document.documentElement.scrollTop;
       if (top === 0) top = window.pageYOffset || window.scrollY;
-      return [newScriptReftestResult("Position to hash ", top > 2100)];
+      return [newScriptReftestResult("Position to hash ("+top+")", top > 2100)];
     }
     </script>
     <script type="text/x-mathjax-config">
@@ -37,8 +37,8 @@
     <math><mpadded height="2000px" width="1em" mathbackground="red"></mpadded></math>
     </div>
     <div style="height: 2000px;"></div>
-    <div><a name="marker" id="marker"></a>
-    $$x+1$$
+    <div>
+    <a name="marker" id="marker">Marker</a>
     </div>
 
   </body>
