@@ -12,45 +12,31 @@
     <script type="text/javascript">
       var start, end;
 
-      function setStartTime()
-      {
-      start = new Date().getTime();
-      }
+      function setStartTime() {start = new Date().getTime()}
+      function setEndTime()   {end = new Date().getTime()}
 
-      function setEndTime()
-      {
-      end = new Date().getTime();
-      }
-
-      function f()
-      {
-        // do nothing
-      }
-
-      function g(aText)
-      {
+      function f() {
         setEndTime();
       }
 
-      function test()
-      {
-      // example in the doc
-      setTimeout(MathJax.Callback([g,"Hello World!"]), 500);
+      function test() {
+        setTimeout(MathJax.Callback(f), 500);
       }
 
-      function postMathJax()
-      {
-      MathJax.Hub.Queue(setStartTime, test,
-      MathJax.Callback.Delay(750, f));
+      function postMathJax() {
+        MathJax.Hub.Queue(
+          setStartTime,
+          test,
+          MathJax.Callback.Delay(750)
+        );
       }
 
-      function getTestCases()
-      {
-      var delta = end - start;
-      return [
-      newScriptReftestResult("setTimeout(MathJax.Callback(...)) (delta = " + delta + ")",
-      delta > 400 && delta < 600) // error tolerance of 100ms
-      ];
+      function getTestCases() {
+        var delta = end - start;
+        return [
+          newScriptReftestResult("setTimeout(MathJax.Callback(...)) (delta = " + delta + ")",
+            delta > 400 && delta < 600) // error tolerance of 100ms
+        ];
       }    
     </script>
 

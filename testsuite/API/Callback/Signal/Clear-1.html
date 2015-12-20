@@ -15,57 +15,45 @@
       var start, end, signal;
       var functionsCalled = [];
 
-      function setStartTime()
-      {
-      start = new Date().getTime();
+      function setStartTime() {start = new Date().getTime()}
+      function setEndTime()   {end = new Date().getTime()}
+
+      function f() {functionsCalled.push("f")}
+
+      function f1(msg) {
+        functionsCalled.push("f1");
+        setStartTime();
+        return MathJax.Callback.Delay(500, f);
       }
 
-      function setEndTime()
-      {
-      end = new Date().getTime();
+      function f2() {
+        functionsCalled.push("f2");
+        setEndTime();
       }
 
-      function f()
-      {
-      functionsCalled.push("f");
+      function postMathJax() {
+        signal = MathJax.Callback.Signal("mySignal");
+        signal.Interest(MathJax.Callback(f1));
+        var queue = MathJax.Callback.Queue();
+        MathJax.Hub.Queue(
+          ["Post",signal,"msg"],
+          f2,
+          ["Clear",signal]
+        );
       }
 
-      function f1(msg)
-      {
-      functionsCalled.push("f1");
-      setStartTime();
-      return MathJax.Callback.Delay(500, f);
-      }
+      function getTestCases() {
+        var delta = end - start;
 
-      function f2()
-      {
-      functionsCalled.push("f2");
-      setEndTime();
-      }
-
-      function postMathJax()
-      {
-      signal = MathJax.Callback.Signal("mySignal");
-      signal.Interest(MathJax.Callback(f1));
-      signal.Post("msg");
-      MathJax.Hub.Queue(signal.Clear(MathJax.Callback(f2)));
-      }
-
-      function getTestCases()
-      {
-      var delta = end - start;
-
-      return [
-      newScriptReftestResult("Order of function calls",
-      (functionsCalled.length == 3 &&
-      functionsCalled[0] == "f1" &&
-      functionsCalled[1] == "f" &&
-      functionsCalled[2] == "f2")),
-      newScriptReftestResult("Posted message list cleared",
-      signal.posted.length == 0),
-      newScriptReftestResult("Posting delayed (delta = " + delta + ")",
-      delta > 400 && delta < 600) // error tolerance of 100ms
-      ];
+        return [
+          newScriptReftestResult("Order of function calls",
+            (functionsCalled.length === 3 &&
+             functionsCalled.join(",") === "f1,f,f2")),
+          newScriptReftestResult("Posted message list cleared",
+            signal.posted.length == 0),
+          newScriptReftestResult("Posting delayed (delta = " + delta + ")",
+            delta > 400 && delta < 600) // error tolerance of 100ms
+        ];
       }    
     </script>
 
