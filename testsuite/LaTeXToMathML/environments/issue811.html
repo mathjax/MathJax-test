@@ -11,7 +11,7 @@
       function compareWidth(name,n,equal) {
         var wA = document.getElementById("eq"+n+"a").scrollWidth;
         var wB = document.getElementById("eq"+n+"b").scrollWidth;
-        return newScriptReftestResult(name+" ("+wA+","+wB+")",(wA === wB) === equal);
+        return newScriptReftestResult(name+" ("+wA+","+wB+")",(Math.abs(wA-wB) < 2) === equal);
       }
       function getTestCases() {
         return [
@@ -28,36 +28,36 @@
          https://github.com/mathjax/MathJax/issues/811 -->
 
     <!-- check that space before = is correct -->
-    <div id="eq1a" style="display:inline-block">
+    <div id="eq1a" style="display:inline-block; font-size:300%">
     \begin{align}
     a&=b
     \end{align}
     </div>
-    <div id="eq1b" style="display:inline-block">
+    <div id="eq1b" style="display:inline-block; font-size:300%">
     \begin{align}
     a&{}=b
     \end{align}
     </div><br>
 
     <!-- check that space before non-operator is correct -->
-    <div id="eq2a" style="display:inline-block">
+    <div id="eq2a" style="display:inline-block; font-size:300%">
     \begin{align}
     a&b
     \end{align}
     </div>
-    <div id="eq2b" style="display:inline-block">
+    <div id="eq2b" style="display:inline-block; font-size:300%">
     \begin{align}
     ab
     \end{align}
     </div><br>
 
     <!-- check that space before = is REL spacing and + is BIN spacing -->
-    <div id="eq3a" style="display:inline-block">
+    <div id="eq3a" style="display:inline-block; font-size:300%">
     \begin{align}
     a&=b
     \end{align}
     </div>
-    <div id="eq3b" style="display:inline-block">
+    <div id="eq3b" style="display:inline-block; font-size:300%">
     \begin{align}
     a&+b
     \end{align}
