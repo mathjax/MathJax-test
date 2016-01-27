@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1353</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var mi = MathJax.Hub.getAllJax()[0].root.data[0].data[0];
+        var BBOX = mi.CHTML||{};
+        var OK = (BBOX.w > 0 && BBOX.h > 0);
+        return [
+          newScriptReftestResult("Size OK ("+BBOX.w.toFixed(2)+","+BBOX.h.toFixed(2)+") ", OK),
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!--
+        CHTML can't measure unknown character in container with display:none
+        https://github.com/mathjax/MathJax/issues/1353 -->
+
+    <div style="display:none">
+      \( &#xE1; \)
+    </div>
+
+  </body>
+</html>
