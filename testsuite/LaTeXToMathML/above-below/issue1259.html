@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1259</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("toMathML.js");
+        gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+      }
+
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax();
+        var tests = [];
+        for (var i = 0, m = jax.length; i < m; i++) {
+          var mml = jax[i].root.toMathML();
+          tests.push(newScriptReftestResult(
+            jax[i].originalText+" without movablelimits ",
+            !mml.match(/movablelimits/i)
+          ));
+        }
+        return tests;
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- \overset and \underset with operators need to remove movablelimits
+         https://github.com/mathjax/MathJax/issues/1259 -->
+
+    <div>
+      \(\overset{x}{\min}\)
+    </div>
+    <div>
+      \(\overset{x}{\operatorname{x}}\)
+    </div>
+    <div>
+      \(\overset{x}{\operatorname{x+}}\)
+    </div>
+    <div>
+      \(\underset{x}{\min}\)
+    </div>
+    <div>
+      \(\underset{x}{\operatorname{x}}\)
+    </div>
+    <div>
+      \(\underset{x}{\operatorname{x+}}\)
+    </div>
+
+  </body>
+</html>
