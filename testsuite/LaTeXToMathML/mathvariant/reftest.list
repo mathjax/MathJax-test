@@ -27,3 +27,5 @@ tree== textrm-1.html textrm-1-ref.html
 tree== textsf-1.html textsf-1-ref.html
 tree== texttt-1.html texttt-1-ref.html
 tree== tt-1.html tt-1-ref.html
+
+script issue1321.html

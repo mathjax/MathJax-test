@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1321</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("toMathML.js");
+        gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+      }
+
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax();
+        var tests = [];
+        for (var i = 0, m = jax.length; i < m; i++) {
+          var mml = jax[i].root.toMathML();
+          tests.push(newScriptReftestResult(
+            jax[i].originalText+" without mathvariant ",
+            !mml.match(/mathvariant/i)
+          ));
+        }
+        return tests;
+      }    
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- \textrm{$x$} incorrectly passes mathvariant to the math
+         https://github.com/mathjax/MathJax/issues/1321 -->
+
+    <div>
+      \(\textrm{$x$}\textbf{$x$}\textsf{$x$}\)
+    </div>
+    <div>
+      \(\rm\text{$x$}\bf\text{$x$}\sf\text{$x$}\)
+    </div>
+
+  </body>
+</html>
