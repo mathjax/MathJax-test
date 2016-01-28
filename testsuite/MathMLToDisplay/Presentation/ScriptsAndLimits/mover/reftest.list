@@ -1,2 +1,3 @@
 != mover-1.html mover-1-ref.html
 != issue237.html issue237-ref.html
+require(CommonHTML) issue1359.html

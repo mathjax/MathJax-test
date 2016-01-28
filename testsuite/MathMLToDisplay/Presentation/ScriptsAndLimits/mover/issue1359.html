@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1359</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gConfigObject.MathML = {useMathMLspacing: true};
+
+      function getTestCases() {
+        var BBOX = MathJax.Hub.getAllJax()[0].root.data[0].data[0].data[1].CHTML||{};
+        return [
+          newScriptReftestResult("No left padding ("+(BBOX.L||"")+") ", BBOX.L == null),
+          newScriptReftestResult("No right padding ("+(BBOX.R||"")+") ", BBOX.R == null)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Vector arrow in wrong place in CHTML with useMMLspacing
+         https://github.com/mathjax/MathJax/issues/1359 -->
+
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mover>
+          <mi>x</mi>
+          <mo>&#x2192;</mo>
+        </mover>
+      </math>
+    </div>
+
+  </body>
+</html>
