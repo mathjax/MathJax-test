@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1197</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("TeX/AMSmath.js");
+      }
+    </script>
+  </head>
+
+  <body style="padding-left:1em">
+
+    <!-- \varprojlim, etc, don't handle movablelimits properly
+         https://github.com/mathjax/MathJax/issues/1197 -->
+
+    \( \varprojlim\nolimits^2 + \displaystyle \varprojlim\limits^2 \)
+   <br/>
+    \( \varinjlim\nolimits^2 + \displaystyle \varinjlim\limits^2 \)
+   <br/>
+    \( \varliminf\nolimits^2 + \displaystyle \varliminf\limits^2 \)
+   <br/>
+    \( \varlimsup\nolimits^2 + \displaystyle \varlimsup\limits^2 \)
+   <br/>
+    \( \def\esssup{\mathop{\rm ess\sup}}
+       \esssup\nolimits^2 + \displaystyle \esssup\limits^2 \)
+
+  </body>
+</html>

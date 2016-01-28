@@ -78,3 +78,4 @@ script issue1152-2.html
 script issue1224.html
 require(!NativeMML) script issue1229.html
 script issue1312.html
+== issue1197.html issue1197-ref.html
