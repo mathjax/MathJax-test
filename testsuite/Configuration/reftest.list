@@ -1,5 +1,5 @@
 include Contexts/reftest.list
-require(!NativeMML) include FHTML-preview/reftest.list
+require(!NativeMML) include fast-preview/reftest.list
 require(HTML-CSS) include FontWarnings/reftest.list
 include HTML-CSS/reftest.list
 include Hub/reftest.list
