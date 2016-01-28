@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1358</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("AssistiveMML.js");
+        gConfigObject.AssistiveMML = {
+          disabled: true
+        };
+      }
+
+      function getTestCases() {
+        var n = document.getElementById("MathJax-Element-1-Frame").childNodes.length;
+        return [newScriptReftestResult("No assistive MML (children: "+n+")",n === 1)];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- AssistiveMML doesn't read its configuration
+         https://github.com/mathjax/MathJax/issues/1358 -->
+
+    <div>\( x \)</div>
+
+  </body>
+</html>

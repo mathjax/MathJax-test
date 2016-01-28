@@ -1,3 +1,4 @@
+include AssistiveMML/reftest.list
 include Contexts/reftest.list
 require(!NativeMML) include fast-preview/reftest.list
 require(HTML-CSS) include FontWarnings/reftest.list
