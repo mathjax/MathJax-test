@@ -7,3 +7,4 @@
 fails-if(NativeMML) script mfrac-7.html
 != mfrac-8.html mfrac-8-ref.html
 == issue547.html issue547-ref.html
+== issue1348.html issue1348-ref.html

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1348</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+  </head>
+
+  <body style="padding:2em; font-size:133%">
+
+  <!-- Fractions may not line up in CHTML output
+       https://github.com/mathjax/MathJax/issues/1348 -->
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mpadded height="4em"></mpadded>
+      <mfrac>
+        <mphantom><mn>1</mn></mphantom>
+        <mpadded height="2em" width=".5em" depth=".333em"></mpadded>
+     </mfrac>
+    </math>
+
+  </body>
+</html>
