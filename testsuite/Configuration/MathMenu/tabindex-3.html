@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>TabIndex control 3</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax()[0];
+        var frame = document.getElementById(jax.inputID+"-Frame");
+        var tabindex = frame.tabIndex;
+        return [newScriptReftestResult("TabIndex 5 ("+tabindex+") ", tabindex === 5)];
+      }    
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.getTabOrder = function (jax) {return 5}
+    </script>
+    
+  </head>
+
+  <body>
+
+    <div>\( x \)</div>
+
+  </body>
+</html>

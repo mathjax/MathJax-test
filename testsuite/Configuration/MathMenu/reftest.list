@@ -8,3 +8,6 @@
 annotate(@note1) skip script helpURL-1.html
 != styles-1.html styles-1-ref.html
 == styles-2.html styles-2-ref.html
+script tabindex-1.html
+script tabindex-2.html
+script tabindex-3.html
