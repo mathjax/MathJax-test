@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1009</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var int = document.getElementById("int");
+        var OK = int.style.textRendering === "optimizelegibility";
+        return [newScriptReftestResult("Int has text-rending ", OK)];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Firefox clips integral signs in HTML-CSS output
+       https://github.com/mathjax/MathJax/issues/1009 -->
+
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mo id="int">&#x222B;</mo>
+      </math>
+    </div>
+
+  </body>
+</html>

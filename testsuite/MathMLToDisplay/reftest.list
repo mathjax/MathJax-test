@@ -43,6 +43,7 @@ require(STIX) != issue820.html issue820-ref.html
 script issue502.html
 script issue860-1.html
 require(!NativeMML) script issue860-2.html
+require(HTML-CSS&&Firefox) script issue1009.html
 require(HTML-CSS) script issue1139.html
 require(HTML-CSS) script issue1158.html
 require(HTML-CSS) script issue1163.html
