@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1287</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax()[0].root;
+        var mo = mml.data[0].data[0].data[1].data[0].data[1];
+        var pad = mo.texSpacing();
+        return [newScriptReftestResult("No space: ("+pad+")",pad === "")];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Spacing is wrong after initial textstyle fraction in exponents
+         https://github.com/mathjax/MathJax/issues/911 -->
+    
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <msup>
+          <mi>e</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mstyle displaystyle="false" scriptlevel="0">
+              <mfrac>
+                <mn>1</mn>
+                <mn>2</mn>
+              </mfrac>
+            </mstyle>
+            <mo id="test">+</mo>
+            <mi>c</mi>
+          </mrow>
+        </msup>
+      </math>
+    </div>
+
+  </body>
+</html>
