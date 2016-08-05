@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 989</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w1 = document.getElementById("m1").offsetWidth;
+        var w2 = document.getElementById("m2").offsetWidth;
+        return [newScriptReftestResult("U+2220 used ("+w1+","+w2+") ", w1 > w2+2)];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Use U+2220 for minus in <mn>-a</mn> instead of U+002D
+       https://github.com/mathjax/MathJax/issues/989 -->
+
+    <div id="m1" style="display:inline-block">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mn>-1</mn>
+      </math>
+    </div><br/>
+    <div id="m2" style="display:inline-block">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtext>-1</mtext>
+      </math>
+    </div><br/>
+
+  </body>
+</html>

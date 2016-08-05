@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 989</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gConfigObject.MathML = {extensions: ["content-mathml.js"]};
+      }
+
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax()[0].root.data[0].data[0];
+        return [
+          newScriptReftestResult("Converted to mrow+mo+mn ",mml.type === "mrow"),
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- produce <mrow><mo>-</mn><mn>a</mn></mrow> rather than <mn>-a</mn>
+       https://github.com/mathjax/MathJax/issues/989 -->
+
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <cn> -444 </cn>
+      </math>
+    </div>
+
+  </body>
+</html>
