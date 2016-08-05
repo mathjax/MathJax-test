@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1023</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gMaxErrorSignals["TeX Jax - parse error"] = 1;
+      }
+
+      function getTestCases() {
+        var signals = gMaxErrorSignals["TeX Jax - parse error"];
+        return [
+          newScriptReftestResult("\middle works after prime ("+signals+") ", signals)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \middle doesn't work properly after a prime
+         https://github.com/mathjax/MathJax/issues/1023 -->
+
+      <p>
+      \[\left\{x' \middle| x\right\}\]
+      </p>
+
+  </body>
+</html>
