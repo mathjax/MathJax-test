@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1004</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var ok1, ok2;
+        if (gOutputJax === "HTML-CSS") {
+          var test1 = document.getElementById("test1").firstChild.lastChild;
+          var test2 = document.getElementById("test2").firstChild.lastChild;
+          ok1 = (test1.style.borderTop === "");
+          ok2 = (test2.style.borderTop === "");
+        } else if (gOutputJax === "SVG") {
+          ok1 = (document.getElementById("test1").childNodes.length === 0);
+          ok2 = (document.getElementById("test2").childNodes.length === 0)
+        }
+        return [
+          newScriptReftestResult("Rowlines=''  OK ", ok1),
+          newScriptReftestResult("Rowlines=' ' OK ", ok2)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- HTML-CSS and SVG treate rowlines="" and rowlines=" " as rowlines="solid"
+       https://github.com/mathjax/MathJax/issues/1004 -->
+
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable rowlines="" id="test1">
+          <mtr><mtd><mspace width="1em"></mspace></mtd></mtr>
+          <mtr><mtd></mtd></mtr>
+        </mtable>
+      </math>
+
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable rowlines=" " id="test2">
+          <mtr><mtd><mspace width="1em"></mspace></mtd></mtr>
+          <mtr><mtd></mtd></mtr>
+        </mtable>
+      </math>
+
+    </div>
+
+  </body>
+</html>
