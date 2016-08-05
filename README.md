@@ -28,10 +28,7 @@ copy of these licenses in the licenses/ directory.
 The MathJax-test installation and usage documentation is available in the
 web/docs/html/ directory of the MathJax-test distribution. People willing to
 work on the development of this framework may also be interested in the
-doxygen documentation in the web/docs/doxygen/ directory. The documents are
-also available on the MathJax-test web site on line at
-<http://devel.mathjax.org/testing/web/docs/html/> and
-<http://devel.mathjax.org/testing/web/docs/doxygen/>.
+doxygen documentation in the web/docs/doxygen/ directory.
 
 ## Community
 
