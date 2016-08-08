@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1415</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gConfigObject.extensions.push("toMathML.js");
+        gConfigObject.styles = {".test": {color:"red"}}
+      }
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax()[0].root.toMathML();
+        return [
+          newScriptReftestResult("Fence keeps mrows ", mml.match(/class="test"/))
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- fences unwrap mrows when they shouldn't
+         https://github.com/mathjax/MathJax/issues/1415 -->
+
+      <p>
+      \[\left[\class{test}{xy}\right]\]
+      </p>
+
+  </body>
+</html>

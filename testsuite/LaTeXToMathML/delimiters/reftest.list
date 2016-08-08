@@ -14,3 +14,4 @@ tree== issue776-4.html issue776-4-ref.html
 tree== issue776-5.html issue776-5-ref.html
 script issue1023.html
 script issue1084.html
+script issue1415.html
