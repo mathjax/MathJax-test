@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1569</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+    <script>
+      function preMathJax() {
+        gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+      }
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax();
+        var tests = [];
+        for (var i = 0; i < math.length; i++) {
+          var mml = math[i].root.data[0].data[0].toString();
+          var OK = (mml === "mtext(\u00A0OK\u00A0)");
+          tests[i] = newScriptReftestResult(math[i].originalText+" ", OK);
+        }
+        return tests;
+      }
+    </script>
+
+  <body>
+
+    <!-- \def doesn't handle control sequences in templates properly
+         https://github.com/mathjax/MathJax/issues/1569 -->
+
+    <div>\(\def\x#1b#2.{\text{#2}} \x test \abc b OK .\)</div>
+    <div>\(\def\x#1\a#2.{\text{#2}} \x test \abc test \a OK .\)</div>
+    <div>\(\def\a{}\def\x#1\a{} \x test \aOK \a \text{ OK }\)</div>
+
+  </body>
+</html>
