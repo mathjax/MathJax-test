@@ -12,3 +12,4 @@ tree== macro-7.html macro-7-ref.html
 load issue793.html
 tree== issue881.html issue881-ref.html
 script issue1563.html
+script issue1564.html

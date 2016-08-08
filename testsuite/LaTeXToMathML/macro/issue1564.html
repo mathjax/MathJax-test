@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1564</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+    <script>
+      function preMathJax() {
+        gMaxErrorSignals["Math Processing Error"] = 1;
+        gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+      }
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["Math Processing Error"] === 1);
+        return [
+          newScriptReftestResult('\\let works with undefined macro', OK)
+        ];
+      }
+    </script>
+
+  <body>
+
+    <!-- \let doesn't allow assignment to undefined macros
+         https://github.com/mathjax/MathJax/issues/1564 -->
+
+    <div>\(\let\ =\undefined\)</div>
+
+  </body>
+</html>
