@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1084</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax()[0].root.data[0].data[0].data[0];
+        return [
+          newScriptReftestResult("Arrows are symmetric", mml.symmetric)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- arrow delimiters aren't symmetric
+         https://github.com/mathjax/MathJax/issues/1084 -->
+
+      <p>
+      \[\left\uparrow x\right.\]
+      </p>
+
+  </body>
+</html>
