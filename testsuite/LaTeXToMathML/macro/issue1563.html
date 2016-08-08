@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1563</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gMaxErrorSignals["TeX Jax - parse error"] = 1;
+        gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+      }
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax();
+        var tests = [];
+        for (var i = 0; i < math.length; i++) {
+          var mn = math[i].root.data[0].data[0].toString();
+          var OK = (mn === "mn("+i+")");
+          tests[i] = newScriptReftestResult(math[i].originalText+" => "+mn, OK);
+        }
+        return tests;
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \def, \let, \newcommand, don't handle '\ ' properly.
+         https://github.com/mathjax/MathJax/issues/1563 -->
+
+    <div>\(\def\ {0}\ \)</div>
+    <div>\(\let\ =1\ \)</div>
+    <div>\(\newcommand{\ }{2}\ \)</div>
+
+  </body>
+</html>

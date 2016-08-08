@@ -11,3 +11,4 @@ tree== macro-6.html macro-6-ref.html
 tree== macro-7.html macro-7-ref.html
 load issue793.html
 tree== issue881.html issue881-ref.html
+script issue1563.html
