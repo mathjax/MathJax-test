@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>COnfigure root</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+    var fakeRoot = "http://localhost/ErRoR";
+    MathJax = {root: fakeRoot};
+    var rootChanged = false, ajaxChanged = false;
+    </script>
+    <script type="text/x-mathjax-config">
+    rootChanged = (MathJax.Hub.config.root === fakeRoot);
+    ajaxChanged = (MathJax.Ajax.config.root === fakeRoot);
+    MathJax.Hub.config.root = MathJax.Ajax.config.root = gMathJaxPath;
+    </script>
+    <script>
+      function getTestCases() {
+        return [
+          newScriptReftestResult('MathJax root changed ', rootChanged),
+          newScriptReftestResult('MathJax ajax changed ', ajaxChanged)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- MathJax root directory is not configurable
+       https://github.com/mathjax/MathJax/issues/1403 -->
+
+  </body>
+</html>
