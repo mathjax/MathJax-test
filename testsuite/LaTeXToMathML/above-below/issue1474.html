@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1474</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gMaxErrorSignals["Math Processing Error"] = 2;
+      gConfigObject.extensions.push("fast-preview.js");
+
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["Math Processing Error"] === 2);
+        return [newScriptReftestResult("No processing error",OK)];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- empty \overset{} or \underset{} produces procesing error in fast-preview
+         https://github.com/mathjax/MathJax/issues/1474 -->
+
+    <div>
+      \(\overset{}X\)
+    </div>
+    <div>
+      \(\underset{}X\)
+    </div>
+
+  </body>
+</html>
