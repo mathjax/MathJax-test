@@ -38,3 +38,4 @@ require(SVG) load issue898-1.html
 require(SVG) script issue898-2.html
 require(SVG&&STIX-Web) script issue1251.html
 require(CommonHTML) script issue1353.html
+require(CommonHTML) script issue1451.html

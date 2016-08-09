@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1451</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var char = document.getElementById("test").firstChild;
+        var OK = !!char.className.match(/MJXc-TeX-ams-R/);
+        return [
+          newScriptReftestResult("Correct font used ", OK),
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- CHTML doesn't handle Plane 1 with mathvariant properly.
+         https://github.com/mathjax/MathJax/issues/1451 -->
+
+    <div>
+      <math>
+        <mi mathvariant="double-struck" id="test">&#x1D53D;</mi>
+      </math>
+    </div>
+
+  </body>
+</html>
