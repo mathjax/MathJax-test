@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1480</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gMaxErrorSignals["Math Processing Error"] = 1;
+      }
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["Math Processing Error"] === 1);
+        return [
+          newScriptReftestResult('Nested scripts with mmultiscripts ', OK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Math Processing Error with mmultiscripts having nested scripts
+         https://github.com/mathjax/MathJax/issues/1480 -->
+
+    <div>
+    <math>
+      <mmultiscripts>
+        <mi>A</mi>
+        <mrow>
+            <mo>(</mo>
+            <msup>
+                <mi>g</mi>
+                <mi>h</mi>
+            </msup>
+            <mo>)</mo>
+        </mrow>
+        <none></none>
+      </mmultiscripts>
+    </math>
+    </div>
+
+  </body>
+</html>
