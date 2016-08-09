@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1468</title>
+    <!-- Copyright (c) 2015 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var eq = MathJax.Hub.getAllJax()[0].root;
+        var mi = eq.data[0].data[0].data[0].data[0].data[0].data[0].data[0].data[0];
+        var variant = mi.Get("mathvariant");
+        return [
+          newScriptReftestResult("Variant reset in array ("+variant+")", variant === "italic")
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Arrays should reset font selection
+         https://github.com/mathjax/MathJax/issues/1468 -->
+
+    \[\mathbf{\begin{array}{c}x\end{array}}\]
+
+  </body>
+</html>
