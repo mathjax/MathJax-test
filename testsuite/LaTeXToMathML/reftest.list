@@ -55,7 +55,9 @@ tree== style-1.html style-1-ref.html
 tree== style-2.html style-2-ref.html
 tree== verb-1.html verb-1-ref.html
 tree== verb-2.html verb-2-ref.html
+
 tree== issue349.html issue349-ref.html
+tree== issue375.html issue375-ref.html
 == issue377.html issue377-ref.html
 == issue400-1.html issue400-1-ref.html
 fails == issue400-2.html issue400-2-ref.html
@@ -71,11 +73,11 @@ script issue856.html
 script issue900.html
 == issue901-1.html issue901-1-ref.html
 script issue901-2.html
-tree== issue375.html issue375-ref.html
 script issue1151.html
 script issue1152-1.html
 script issue1152-2.html
+== issue1197.html issue1197-ref.html
 script issue1224.html
 require(!NativeMML) script issue1229.html
 script issue1312.html
-== issue1197.html issue1197-ref.html
+script issue1419.html

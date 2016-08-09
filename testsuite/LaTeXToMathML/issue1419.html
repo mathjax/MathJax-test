@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1419</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+      OK = (MathJax.InputJax.TeX.resetEquationNumbers != null)
+    });
+    </script>
+    <script>
+      var OK = false;
+      function getTestCases() {
+        return [
+          newScriptReftestResult("resetEquationNumbers defined ", OK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- resetEquationNumbers should always be available
+         https://github.com/mathjax/MathJax/issues/1419 -->
+
+    <div>\(x\)</div>
+
+  </body>
+</html>
