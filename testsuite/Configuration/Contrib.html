@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Contrib Ajax path</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var OK = (MathJax.Ajax.config.path.Contrib != null);
+        return [newScriptReftestResult("Contrib defined ",OK)];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- Make sure Contrib is present
+         https://github.com/mathjax/MathJax/issues/1519 -->
+
+  </body>
+</html>
