@@ -56,3 +56,4 @@ require(CommonHTML) script issue1280.html
 require(CommonHTML) script issue1281.html
 require(HTML-CSS) script issue1332.html
 script issue1356.html
+require(HTML-CSS) script issue1452.html
