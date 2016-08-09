@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1452</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w = MathJax.Hub.getAllJax()[0].root.HTMLspanElement().style.width;
+        return [
+          newScriptReftestResult('Math is width 0 ('+w+')', w === "0em")
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- EmRounded() produces .02em when it should be 0
+       https://github.com/mathjax/MathJax/issues/1452 -->
+
+    <div>
+      <math></math>
+    </div>
+
+  </body>
+</html>
