@@ -6,4 +6,4 @@ fails-if(Firefox&&NativeMML) == linebreak-1.html linebreak-1-ref.html
 load issue294.html
 == issue1072.html issue1072-ref.html
 == issue1188.html issue1188-ref.html
-script issue1480.html
+require(CommonHTML) script issue1480.html
