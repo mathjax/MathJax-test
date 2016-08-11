@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1447</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gMaxErrorSignals["Math Processing Error"] = 1;
+
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["Math Processing Error"] === 1);
+        return [newScriptReftestResult("No processing error ",OK)];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Problems with getNode() in connection with line breaks
+         https://github.com/mathjax/MathJax/issues/1447 -->
+    
+    <div>
+      <math>
+        <msup>
+          <mfenced>
+            <mrow>
+              <mi>x</mi>
+              <mspace linebreak="newline"></mspace>
+            </mrow>
+          </mfenced>
+          <mfenced>
+            <msub>
+              <mi>b</mi>
+              <mn>4</mn>
+            </msub>
+          </mfenced>
+        </msup>
+      </math>
+    </div>
+    <br/>
+
+  </body>
+</html>
