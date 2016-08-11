@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1445-1</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Register.MessageHook("Begin Process",function () {
+        var scripts = document.getElementsByTagName("script");
+        var n = scripts.length - 4;
+        for (var i = 0; i < 4; i++) {
+          var prev = scripts[n+i].previousSibling;
+          previews[i] = (prev.innerText === "[math]");
+        }
+        console.log(previews);
+      });
+    </script>
+    <script type="text/javascript">
+      gConfigObject.jax.push("input/AsciiMath");
+      gConfigObject.extensions.push("asciimath2jax.js","jsMath2jax.js");
+
+      var previews = [];
+      function getTestCases() {
+        return [
+          newScriptReftestResult("No tex2jax preview ",previews[0]),
+          newScriptReftestResult("No asciimath2jax preview ",previews[1]),
+          newScriptReftestResult("No mml2jax preview ",previews[2]),
+          newScriptReftestResult("No jsMath2jax preview ",previews[3])
+        ];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- preprocessors shouldn't produce a preview if there is one already
+         https://github.com/mathjax/MathJax/issues/1445 -->
+
+    <div>
+      <span class="MathJax_Preview">[math]</span>\(x\)
+    </div>
+
+    <div>
+      <span class="MathJax_Preview">[math]</span>`x`
+    </div>
+
+    <div>
+      <span class="MathJax_Preview">[math]</span><math><mi>x</mi></math>
+    </div>
+
+    <div>
+      <span class="MathJax_Preview">[math]</span><span class="math">x</math>
+    </div>
+
+  </body>
+</html>
