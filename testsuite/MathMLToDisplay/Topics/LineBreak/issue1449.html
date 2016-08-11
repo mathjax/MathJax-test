@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1449</title>
+    <!-- Copyright (c) 2012 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var w = document.getElementById("math").offsetWidth;
+        return [
+          newScriptReftestResult("Linebreak in <munder> ("+w+")",w < 75)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Allow linebreaks in TeXAtom (in munder and mover)
+         https://github.com/mathjax/MathJax/issues/1449 -->
+    
+    <div id="math" style="display:inline-block">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <munder>
+          <mrow class="MJX-TeXAtom-OP MJX-fixedlimits">
+            <mi>x</mi>
+          </mrow>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mspace width="50px" height="1em" mathbackground="red"></mspace>
+            <mspace linebreak="newline"></mspace>
+            <mspace width="50px" height="1em" mathbackground="blue"></mspace>
+          </mrow>
+        </munder>
+      </math>
+    </div>
+    <br/>
+
+  </body>
+</html>
