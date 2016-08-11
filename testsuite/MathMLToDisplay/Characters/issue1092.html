@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1092</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var h1 = document.getElementById("math1").offsetHeight;
+        var h2 = document.getElementById("math2").offsetHeight;
+        return [
+          newScriptReftestResult("Integral streches ("+h1+","+h2+") ", h1 > h2 + 5)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Integral should be stretchable in STIX fonts
+         https://github.com/mathjax/MathJax/issues/1092 -->
+
+    <div id="math1" style="display:inline-block; background:red">
+      <math>
+        <mo stretchy="true" minsize="3">&#x222B;</mo>
+      </math>
+    </div>
+
+    <div id="math2" style="display:inline-block; background:red">
+      <math>
+        <mo stretchy="false">&#x222B;</mo>
+      </math>
+    </div>
+    <br/>
+
+  </body>
+</html>
