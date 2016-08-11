@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1175</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+      }
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax()[0].root.data[0];
+        return [
+          newScriptReftestResult("\\lvert ", mml.data[0].data[0].data[0] === "#x007C"),
+          newScriptReftestResult("\\rvert ", mml.data[1].data[0].data[0] === "#x007C"),
+          newScriptReftestResult("\\lVert ", mml.data[2].data[0].data[0] === "#x2016"),
+          newScriptReftestResult("\\rvert ", mml.data[3].data[0].data[0] === "#x2016"),
+          newScriptReftestResult("\\| ", mml.data[4].data[0].data[0] === "#x2016"),
+          newScriptReftestResult("\\Vert ", mml.data[5].data[0].data[0] === "#x2016")
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \lvert and \rvert should use U+007C,
+         \lVert, \rVert, \| and \Vert should use U+2016
+         https://github.com/mathjax/MathJax/issues/1175 -->
+
+      <p>
+      \[\lvert\rvert\lVert\rVert\|\Vert\]
+      </p>
+
+  </body>
+</html>
