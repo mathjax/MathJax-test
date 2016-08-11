@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1154</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax();
+        var c0, c1, OK0, OK1
+        c0 = mml[0].root.data[0].data[0];
+        if (gOutputJax === "HTML-CSS") {
+          c1 = mml[1].root.data[0].data[0];
+          OK0 = (c0.HTMLspanElement().bbox.d > .05);
+          OK1 = (c1.HTMLspanElement().bbox.d < .05);
+        } else if (gOutputJax === "SVG") {
+          c1 = mml[2].root.data[0].data[0];
+          OK0 = (c0.SVGdata.d > 50);
+          OK1 = (c1.SVGdata.d < 50);
+        }
+        return [
+          newScriptReftestResult("| has descender ", OK0),
+          newScriptReftestResult("| variant has none ", OK1)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Swap | and its variant in STIX fonts
+         https://github.com/mathjax/MathJax/issues/1154 -->
+
+    <div>
+      <math>
+        <mo>|</mo>
+      </math>
+      <math>
+        <mo mathvariant="-STIX-variant">|</mo>
+      </math>
+      <math>
+        <mo mathvariant="-STIX-Web-variant">|</mo>
+      </math>
+    </div>
+
+  </body>
+</html>
