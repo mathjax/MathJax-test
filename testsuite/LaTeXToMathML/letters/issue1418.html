@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1418</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Register.MessageHook(gOutputJax+" Jax - unknown char",unknownChar);
+    </script>
+    <script>
+      var OK = true;
+      function unknownChar() {OK = false}
+      function getTestCases() {
+        var U2206 = document.getElementById("MJMAIN-2206");
+        if (U2206 && U2206.getAttribute("d") === "") unknownChar();
+        return [
+          newScriptReftestResult("U+2206 defined ", OK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- U+2206 has no data in SVG, and isn't in HTML-CSS or CHTML
+         https://github.com/mathjax/MathJax/issues/1418 -->
+
+    <div>
+      <math>
+        <mo>&#x2206;</mo>
+      </math>
+    </div>
+
+  </body>
+</html>

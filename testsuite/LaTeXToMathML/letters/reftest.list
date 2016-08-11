@@ -3,3 +3,4 @@ tree== greek-2.html greek-2-ref.html
 tree== greek-3.html greek-3-ref.html
 tree== greek-4.html greek-4-ref.html
 tree== hebrew-1.html hebrew-1-ref.html
+require((HTML-CSS|CommonHTML|SVG)&&TeX) script issue1418.html
