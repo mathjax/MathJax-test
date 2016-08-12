@@ -47,3 +47,5 @@ fails-if(Quirks||IE7||IE8||Safari) == menclose-2o.html menclose-2o-ref.html
 fails-if(Quirks||IE7||IE8||Safari) == menclose-2p.html menclose-2p-ref.html
 == menclose-3.html menclose-3-ref.html
 annotate(@noteCircle) fails-if(!(NativeMML&&Firefox)) == menclose-4.html menclose-4-ref.html
+
+require(HTML-CSS|CommonHTML|SVG) script issue1573.html

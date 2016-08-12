@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1573</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var mml = document.getElementById("test1").getElementsByTagName("ellipse")[0];
+        var OK = (mml.getAttribute("stroke") !== "black" &&
+                  mml.parentNode.getAttribute("stroke") !== "black");
+        return [
+          newScriptReftestResult("Color not set to black ", OK)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- menclose doesn't inherit color
+         https://github.com/mathjax/MathJax/issues/1573 -->
+
+    <div style="color:red">
+      <math>
+        <menclose notation="circle" id="test1">
+          <mi>x</mi>
+        </menclose>
+      </math>
+    </div>
+
+  </body>
+</html>
