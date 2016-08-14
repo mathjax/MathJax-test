@@ -2,4 +2,5 @@
 != issue237.html issue237-ref.html
 require(CommonHTML) script issue1359.html
 require(CommonHTML) script issue1360.html
+require(STIX||STIX-Web) script issue1470.html
 require(TeX||STIX||STIX-Web) script issue1544.html

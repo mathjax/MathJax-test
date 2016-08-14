@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1470</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var w1 = document.getElementById("test1").offsetWidth;
+        var w2 = document.getElementById("test2").offsetWidth;
+        return [
+          newScriptReftestResult("U+20D6 used ("+w1+","+w2+") ", Math.abs(w1-w2) < 2)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- over left arrow show include U+20D6 as an option
+         https://github.com/mathjax/MathJax/issues/1470 -->
+
+    <div id="test1" style="display:inline-block">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mover>
+          <mi>x</mi>
+          <mo stretchy="false">&#x2190;</mo>
+        </mover>
+      </math>
+    </div>
+
+    <div id="test2" style="display:inline-block">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mover>
+          <mi>x</mi>
+          <mo></mo>
+        </mover>
+      </math>
+    </div>
+
+    <br/>
+
+  </body>
+</html>
