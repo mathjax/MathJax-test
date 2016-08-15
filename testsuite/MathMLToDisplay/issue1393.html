@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1393</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+
+      function getTestCases() {
+        var w1 = document.getElementById("test1").offsetWidth;
+        var w2 = document.getElementById("test2").offsetWidth;
+        return [
+          newScriptReftestResult("box-sizing reset ("+w1+","+w2+") ", w1 === w2)
+        ];
+      }    
+    </script>
+
+    <style>
+    * {
+      box-sizing: border-box;
+    }
+    #test2 .mjx-math span {
+      -webkit-box-sizing: content-box!important;
+      -moz-box-sizing: content-box!important;
+      box-sizing: content-box!important;
+    }
+    </style>
+
+  </head>
+
+  <body>
+
+  <!-- CommonHTML needs to reset box-sizing
+       https://github.com/mathjax/MathJax/issues/393 -->
+
+    <div id="test1" style="display:inline-block">
+      \(\dfrac{1}{10}\)
+    </div>
+    <div id="test2" style="display:inline-block">
+      \(\dfrac{1}{10}\)
+    </div>
+    <br/>
+
+  </body>
+</html>
