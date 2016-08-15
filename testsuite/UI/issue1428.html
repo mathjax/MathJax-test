@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1428</title>
+    <!-- Copyright (c) 2014 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.processUpdateTime = 1;
+      MathJax.Hub.processUpdateDelay = 1;
+      var FILTER = MathJax.Message.filterText;
+      MathJax.Message.filterText = function () {
+        var text = FILTER.apply(this,arguments);
+        if (this.typesetting) TEXT = text;
+      }
+      MathJax.Hub.Queue(["Rerender",MathJax.Hub]);
+    </script>
+    <script>
+      var TEXT = "";
+      gConfigObject.messageStyle = "simple";
+
+      function getTestCases() {
+        var dots = TEXT.replace(/[^.]/g,"").length;
+        return [
+          newScriptReftestResult("Dots reset ("+dots+") ", dots < 11)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Typeset dots continue to grow after multiple Typeset() calls.
+         https://github.com/mathjax/MathJax/issues/1428 -->
+    <div>
+      \(x\) \(x\) \(x\) \(x\) \(x\) \(x\) \(x\) \(x\) \(x\) \(x\)
+    </div>
+
+  </body>
+</html>

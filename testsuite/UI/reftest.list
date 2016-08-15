@@ -10,3 +10,4 @@ fails-if(IE8||IE7||Quirks) script issue847.html?semantics=true
 script issue912.html
 script issue935.html?semantics=true
 require((Chrome||Safari)&&(HTML-CSS||CommonHTML)) == issue1282.html issue1282-ref.html
+script issue1428.html
