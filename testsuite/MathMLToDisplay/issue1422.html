@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1422</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      gConfigObject.SVG.scale = "200";
+      function getTestCases() {
+        var frame = MathJax.Hub.getAllJax()[0].SourceElement().previousSibling;
+        var w = frame.offsetWidth;
+        return [
+          newScriptReftestResult('Container is not scaled ('+w+')', Math.abs(200-w) < 10)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Container width is scaled when it shouldn't be in SVG output
+       https://github.com/mathjax/MathJax/issues/1422 -->
+
+    <div id="test" style="width:200px">
+      \(x = y\tag{1}\)
+    </div>
+
+  </body>
+</html>

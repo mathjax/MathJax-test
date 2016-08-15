@@ -57,5 +57,6 @@ require(CommonHTML) script issue1281.html
 require(HTML-CSS) script issue1332.html
 script issue1356.html
 require(CommonHTML) script issue1393.html
+script issue1422.html
 require(CommonHTML||HTML-CSS) script issue1437.html
 require(HTML-CSS) script issue1452.html
