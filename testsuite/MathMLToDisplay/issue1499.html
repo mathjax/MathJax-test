@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1499</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax()[0];
+        var frame = document.getElementById(math.inputID+"-Frame");
+        var w = frame.offsetWidth;
+        return [
+          newScriptReftestResult('Container is not scaled ('+w+')', Math.abs(400-w) < 10)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CommonHTML: semantics tag causes shrink wrapping of tags
+       https://github.com/mathjax/MathJax/issues/1499 -->
+
+    <div id="test" style="width:400px">
+      <math display="block">
+        <semantics>
+          <mtable>
+            <mlabeledtr>
+              <mtd>
+                <mtext>(1)</mtext>
+              </mtd>
+              <mtd>
+                <mi>x</mi>
+                <mo>=</mo>
+                <mi>y</mi>
+              </mtd>
+            </mlabeledtr>
+          </mtable>
+        <semantics>
+      </math>
+    </div>
+
+  </body>
+</html>
