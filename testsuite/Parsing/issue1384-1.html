@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1384-1</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Register.MessageHook("Begin Math Output",function () {
+        var math = document.getElementById("remove");
+        math.parentNode.removeChild(math);
+      });
+      
+    </script>
+    <script type="text/javascript">
+      gMaxErrorSignals["Math Processing Error"] = 1;
+
+      function getTestCases() {
+        var errors = 1 - gMaxErrorSignals["Math Processing Error"];
+        var OK = (errors === 0);
+        return [
+          newScriptReftestResult("Removed scripts OK ("+errors+") ",OK)
+        ];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- CHTML fails when the math is removed before it processes it
+         https://github.com/mathjax/MathJax/issues/1384 -->
+
+    <div id="remove">
+      \(x\)
+    </div>
+
+
+  </body>
+</html>

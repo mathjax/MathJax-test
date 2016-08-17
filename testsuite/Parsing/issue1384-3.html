@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1384-3</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+      var typeset = false;
+      MathJax.Hub.Register.MessageHook("Begin Math",function (msg) {
+        if (!typeset) {
+          typeset = true;
+          MathJax.Hub.Typeset();
+        }
+      });
+      MathJax.Hub.Queue(["Delay",MathJax.Callback,1]);
+    </script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var math = document.getElementById("MathJax-Element-1-Frame");
+        var next = math.nextSibling, prev = math.previousSibling;
+        var OK1 = !math.className.match(/processed|processing/i),
+            OK2 = !next.className.match(/processed|processing/i),
+            OK3 = (prev.innerText === "");
+        return [
+          newScriptReftestResult("Math not processing ("+math.className+") ",OK1),
+          newScriptReftestResult("Next not processing ("+next.className+") ",OK2),
+          newScriptReftestResult("Preview removed ("+prev.innerText+") ",OK3)
+        ];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- HTML-CSS fails when typeset is called while it is running
+         https://github.com/mathjax/MathJax/issues/1384 -->
+
+    <div>
+      \(x\)
+    </div>
+
+
+  </body>
+</html>
