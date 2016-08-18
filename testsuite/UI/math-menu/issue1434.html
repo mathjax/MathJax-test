@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1434</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function preMathJax() {
+        gConfigObject.extensions.push("MathMenu.js");
+      }
+      function postMathJax() {
+        var event;
+        if (window.UIEvent) {
+          try {event = new UIEvent("contextmenu")} catch (e) {}
+        } 
+        if (!event && document.createEvent) {
+          try {
+            event = document.createEvent("UIEvents");
+            event.initUIEvent("contextmenu",true,true,null,"");
+          } catch (e){}
+        }
+        if (!event) {
+          event = { type:"contextmenu", clientX: 0, clientY: 0, pageX: 0, pageY: 0 };
+        }
+        MathJax.Menu.jax = MathJax.Hub.getAllJax()[0];
+        MathJax.Menu.menu.Post(event, null);
+      }
+      function getTestCases() {
+        var menu = document.getElementById("MathJax_MenuFrame").lastChild;
+        var left = menu.offsetLeft;
+        var OK = left > 400;
+        return [newScriptReftestResult("Menu positioned well ("+left+") ",OK)];
+      }    
+    </script>
+
+    <style>
+    body {
+      width: 400px!important;
+      margin: 0 0 0 400px!important;
+      border: 1px solid black!important;
+    }
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Menu placement needs improvement in some situations
+         https://github.com/mathjax/MathJax/issues/1434 -->
+
+      \(x\)
+      <br/>
+
+  </body>
+</html>
