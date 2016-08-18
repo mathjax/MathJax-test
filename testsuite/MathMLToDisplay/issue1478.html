@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1478</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      gConfigObject["HTML-CSS"].linebreaks = {automatic: true};
+      gConfigObject.CommonHTML.linebreaks = {automatic: true};
+      gConfigObject.SVG.linebreaks = {automatic: true};
+
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax();
+        var w = [];
+        for (var i = 0; i < math.length; i++) {
+          var frame = document.getElementById(math[i].inputID+"-Frame");
+          w.push(frame.offsetWidth);
+        }
+        return [
+          newScriptReftestResult('Math width good ('+w[0]+')', Math.abs(600-w[0]) < 5),
+          newScriptReftestResult('Math in table good ('+w[1]+')', Math.abs(600-w[1]) < 5),
+          newScriptReftestResult('Math in inline-block good ('+w[2]+')', Math.abs(600-w[2]) < 5)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Shrink-wrap containers don't produce proper line-break width
+       https://github.com/mathjax/MathJax/issues/1478 -->
+
+    <div style="width:800px">
+      <div style="float:left; height:200px; width:100px; background-color:red"></div>
+      <div style="float:right; height:200px; width:100px; background-color:red"></div>
+
+      <br/>
+      \[x\tag{1}\]
+
+      <table><tr></td>
+        \[x\tag{2}\]
+      </td></tr></table>
+
+      <br clear="all"/>
+      <div style="width:600px">
+        <span style="display:inline-block">
+          \[x\tag{3}\]
+        </span>
+      </div>
+    </div>
+
+  </body>
+</html>

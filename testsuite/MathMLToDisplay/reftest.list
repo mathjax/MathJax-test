@@ -61,4 +61,5 @@ require(CommonHTML) script issue1393.html
 script issue1422.html
 require(CommonHTML||HTML-CSS) script issue1437.html
 require(HTML-CSS) script issue1452.html
+fails-if(NativeMML) script issue1478.html
 script issue1499.html
