@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1087</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gConfigObject.jax.push("input/AsciiMath");
+      gConfigObject.extensions.push("asciimath2jax.js");
+
+      var previews = [];
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax().length;
+        return [
+          newScriptReftestResult("<wbr> allowed ("+math+")" , math === 2)
+        ];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- Allow <wbr> in TeX and AsciiMath (just like <br>)
+         https://github.com/mathjax/MathJax/issues/1087 -->
+
+    <div>
+      \(x + <wbr> y\)
+    </div>
+
+    <div>
+      `x + <wbr> y`
+    </div>
+
+  </body>
+</html>
