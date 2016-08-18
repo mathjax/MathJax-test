@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1022</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var a = document.getElementById("test").getElementsByTagName("a");
+        var OK1 = (a.length == 2);
+        var OK2 = (a.length > 0);
+        for (var i = 0; i < a.length; i++) {
+          if (a[i].childNodes.length === 0) OK2 = false;
+        }
+        return [
+          newScriptReftestResult("Output has 2 links ",OK1),
+          newScriptReftestResult("Links have content ",OK2)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Linebreak inside a link causes math to no longer be a link
+         https://github.com/mathjax/MathJax/issues/1022 -->
+    
+    <div id='test'>
+      <math>
+        <mrow href="test.html">
+        <mi>x</mi>
+        <mspace linebreak="newline"></mspace>
+        <mi>y</mi>
+        </mrow>
+      </math>
+    </div>
+    <br/>
+
+  </body>
+</html>
