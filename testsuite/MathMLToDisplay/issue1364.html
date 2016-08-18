@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1364</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      gConfigObject["HTML-CSS"].linebreaks = {automatic: true};
+      gConfigObject.CommonHTML.linebreaks = {automatic: true};
+      gConfigObject.SVG.linebreaks = {automatic: true};
+
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax()[0];
+        var frame = document.getElementById(math.inputID+"-Frame");
+        var w = frame.offsetWidth;
+        return [
+          newScriptReftestResult('Math width good ('+w+')', Math.abs(200-w) < 20)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Preview width was affecting container-width calculations
+       https://github.com/mathjax/MathJax/issues/1364 -->
+
+    <table style="width:300px; background-color:yellow" cellpadding="0" cellspacing="0">
+    <tr>
+      <td>
+        \[x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x\]
+      </td>
+      <td width="100" style="background-color:red"></td>
+    </tr>
+    </table>
+
+  </body>
+</html>
