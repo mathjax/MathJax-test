@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1441</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var table = document.getElementById("test");
+        var w = Math.round(table.getBoundingClientRect().width);
+        return [
+          newScriptReftestResult('Width is correct ('+w+')', Math.abs(600-w) < 10)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CommonHTML: multiple labeled equations don't preserve width
+       https://github.com/mathjax/MathJax/issues/1441 -->
+
+    <div style="width:600px">
+      <math display="block" indentalign="left">
+        <mtable side='left'>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(1)</mtext>
+            </mtd>
+            <mtd>
+              <mi>X</mi>
+            </mtd>
+          </mlabeledtr>
+        </mtable>
+        <mspace linebreak="newline"></mspace>
+        <mtable id="test">
+          <mlabeledtr>
+            <mtd>
+              <mtext>(2)</mtext>
+            </mtd>
+            <mtd>
+              <mi>Y</mi>
+            </mtd>
+          </mlabeledtr>
+        </mtable>
+      </math>
+    </div>
+
+  </body>
+</html>
