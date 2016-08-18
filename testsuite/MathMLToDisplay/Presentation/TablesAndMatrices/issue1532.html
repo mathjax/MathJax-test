@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1532</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script>
+      gConfigObject.TeX = {TagSide: "left"};
+      gConfigObject.displayAlign = "left";
+      function getTestCases() {
+        var tests = [];
+        for (var i = 1; i <= 3; i++) {
+          var table = document.getElementById("test"+i);
+          var h1 = table.firstChild.offsetHeight;
+          var h2 = table.lastChild.offsetHeight;
+          tests.push(
+            newScriptReftestResult('Label Heights match in table '+i+' ('+h1+','+h2+')',
+                                   Math.abs(h1-h2) < 4)
+          );
+        }
+        return tests;
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CommonHTML: alignment issues with labels in tables
+       https://github.com/mathjax/MathJax/issues/1532 -->
+
+    <div style="display:inline-block; width:100px">
+      <math>
+        <mtable side="left" displaystyle="true" id="test1">
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mtr>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mtr>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+        </mtable>
+      </math>
+    </div>
+    <div style="display:inline-block; width:100px">
+      <math>
+        <mtable side="left" displaystyle="true" id="test2">
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mtr>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mtr>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd></mtd>
+            <mtd></mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+        </mtable>
+      </math>
+    </div>
+    <div style="display:inline-block; width:100px">
+      <math>
+        <mtable side="left" displaystyle="true" id="test3">
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mpadded height="1.5em" depth="1em" width="1em" mathbackground="red"></mpadded>
+            </mtd>
+          </mlabeledtr>
+          <mtr>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mtr>
+          <mlabeledtr>
+            <mtd>
+              <mpadded height="1.5em" depth="1em" width="1em" mathbackground="red"></mpadded>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mpadded height=".5em" depth="2em" width="1em" mathbackground="red"></mpadded>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mtr>
+            <mtd>
+              <mpadded height="2em" depth="0em" width="1em" mathbackground="red"></mpadded>
+            </mtd>
+          </mtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+          <mlabeledtr>
+            <mtd>
+              <mtext>(x)</mtext>
+            </mtd>
+            <mtd>
+              <mi>a</mi>
+            </mtd>
+          </mlabeledtr>
+        </mtable>
+      </math>
+    </div>
+    <br/>
+
+  </body>
+</html>

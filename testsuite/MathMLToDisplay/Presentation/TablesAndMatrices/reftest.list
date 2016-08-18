@@ -21,3 +21,4 @@ require(!NativeMML) == issue1000-1.html issue1000-1-ref.html
 require(!NativeMML) == issue1000-2.html issue1000-2-ref.html
 require(HTML-CSS||SVG) script issue1004.html
 script issue1441.html
+require(CommonHTML) script issue1532.html
