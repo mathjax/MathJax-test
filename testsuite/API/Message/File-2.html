@@ -9,42 +9,28 @@
     <script type="text/javascript" src="../../header.js"></script>
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
-    <script type="text/javascript">
-      var id1, r1, r2;
-
-      function preMathJax()
-      {
-      gConfigObject.messageStyle = "simple";
-      }
-
-      function checkValue(aValue)
-      {
-      return document.getElementById("MathJax_Message").innerHTML == aValue;
-      }
-
-      function postMathJax()
-      {
-      MathJax.Hub.Queue(
-      function () {
-      id1 = MathJax.Message.File("myfile");
-      r1 = checkValue("Loading .....");
-      MathJax.Message.Clear(id1, 0);
-      },
-      function () {
-      r2 = checkValue("");
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Register.MessageHook("Begin Math",function () {
+        var id1 = MathJax.Message.File("myfile");
+        r1 = checkValue("Loading .....");
+        MathJax.Message.Clear(id1, 0);
+        r2 = checkValue("");
       });
+    </script>
+    <script type="text/javascript">
+      var r1, r2;
+
+      gConfigObject.messageStyle = "simple";
+
+      function checkValue(aValue) {
+        return document.getElementById("MathJax_Message").innerHTML == aValue;
       }
 
-      function getTestCases()
-      {
-      return [
-      newScriptReftestResult(
-      "File myfile", r1
-      ),
-      newScriptReftestResult(
-      "Clear id1", r2
-      )
-      ];
+      function getTestCases() {
+        return [
+          newScriptReftestResult("File myfile", r1),
+          newScriptReftestResult("Clear id1", r2)
+        ];
       }    
     </script>
 
