@@ -11,3 +11,4 @@ tree== isotopes-1.html isotopes-1-ref.html
 tree== math-1.html math-1-ref.html
 tree== special_symbols-1.html special_symbols-1-ref.html
 script issue956.html
+script issue1593.html

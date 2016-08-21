@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1593</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Extension["TeX/mhchem"] = {version:VERSION}; // pretend we loaded it
+    </script>
+    <script>
+      var VERSION = "3.0.0";
+      function getTestCases() {
+        v = MathJax.Extension["TeX/mhchem"].version;
+        return [
+          newScriptReftestResult("Proper version loaded ("+v+")", v === VERSION)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- don't override [Contrib] version if it is already loaded
+         https://github.com/mathjax/MathJax/issues/1593 -->
+
+      <p>
+      \(\require{mhchem}\)
+      </p>
+
+  </body>
+</html>
