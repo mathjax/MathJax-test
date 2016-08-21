@@ -11,3 +11,7 @@
 == size-3.html size-3-ref.html
 == styles-1.html styles-1-ref.html
 == styles-2.html styles-2-ref.html
+
+script issue1182-1.html
+script issue1182-2.html
+script issue1183.html

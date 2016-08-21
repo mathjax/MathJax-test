@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1182</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gConfigObject.Safe = {
+        allow: {styles: "safe"},
+        lengthMax: 3
+      };
+      gConfigObject.extensions.push("Safe.js","toMathML.js");
+
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax()[0].root.data[0].data;
+        var OK0 = math[0].style.match(/padding: *2px/) && !math[0].style.match(/border/);
+        var OK1 = !math[1].style.match(/padding/) && math[1].style.match(/border(-width)?: *2px/);
+        var OK2 = math[2].style.match(/padding-right: *2px/) && !math[2].style.match(/border/);
+        var OK3 = !math[3].style.match(/padding/) && math[3].style.match(/border-right: *2px/);
+        return [
+          newScriptReftestResult("Border >= 3em removed ", OK0),
+          newScriptReftestResult("Padding >= 3em removed ", OK1),
+          newScriptReftestResult("Border-right >= 3em removed ", OK2),
+          newScriptReftestResult("Padding-right >= 3em removed ", OK3)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Safe should filter lengths for padding, border, etc.
+         https://github.com/mathjax/MathJax/issues/1182 -->
+
+    <div>
+      <math>
+        <mi style="padding:2px; border:5em solid red">x</mi>
+        <mi style="padding:5em; border:2px solid red">x</mi>
+        <mi style="padding-right:2px; border-right:5em solid red">x</mi>
+        <mi style="padding-right:5em; border-right:2px solid red">x</mi>
+      </math>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1182</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gConfigObject.Safe = {
+        allow: {styles: "safe"},
+        safeStyles: {border:true}
+      };
+      gConfigObject.extensions.push("Safe.js","toMathML.js");
+
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax();
+        var OK = !!math[0].root.toMathML().match(/border-right/);
+        return [
+          newScriptReftestResult("Safe allows border-right when border allowed ", OK)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Safe should allow border-right, border-left, etc. when *border is allowed
+         https://github.com/mathjax/MathJax/issues/1182 -->
+
+    <div>
+      <math>
+        <mi style="border-right: 2px solid red">x</mi>
+      </math>
+    </div>
+
+  </body>
+</html>
