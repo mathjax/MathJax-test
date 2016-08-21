@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1594</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      gConfigObject.CommonHTML.scale = "200"; // test that scale is taken into account
+      function getTestCases() {
+        var f1 = document.getElementById("test1").style.fontSize;
+        var f2 = document.getElementById("test2").style.fontSize;
+        var OK1 = false, OK2 = false;
+        var scale = (200/MathJax.OutputJax.CommonHTML.scale).toFixed(1);
+        var OK1 = f1 && Math.abs(parseFloat(f1) - scale) < .01;
+        var OK2 = f2 && Math.abs(parseFloat(f2) - scale) < .01;
+        return [
+          newScriptReftestResult('CSS font-family is scaled ('+f1+','+scale+')', OK1),
+          newScriptReftestResult('Attribute fontfamily is scaled ('+f2+','+scale+')', OK2)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CommonHTML: elements with specified font aren't scaled properly
+       https://github.com/mathjax/MathJax/issues/1594 -->
+
+    <div id="test">
+      <math>
+        <mi id="test1" style="font-family:inherit">x</mi>
+        <mi id="test2" fontfamily="inherit">x</mi>
+      </math>
+    </div>
+
+  </body>
+</html>

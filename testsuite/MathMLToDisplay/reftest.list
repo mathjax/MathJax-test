@@ -65,3 +65,4 @@ require(HTML-CSS) script issue1452.html
 fails-if(NativeMML) script issue1478.html
 script issue1499.html
 require(Firefox) script issue1555.html
+require(CommonHTML) script issue1594.html
