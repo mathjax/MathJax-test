@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1555</title>
+    <!-- Copyright (c) 2016 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var h1 = document.getElementById("test").offsetHeight;
+        var h2  = document.getElementById("ref").offsetHeight;
+        return [
+          newScriptReftestResult('No extra vertical space ('+h1+','+h2+')', h1 < h2-2)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Preview span causes extra line breaks lists in Firefox 
+       https://github.com/mathjax/MathJax/issues/1555 -->
+
+    <div id="test">
+      <ol>
+        <li>\[x\]</li>  
+      </ol>
+    </div>
+
+    <div id="ref">
+      <ol>
+        <li><span></span>\[x\]</li>  
+      </ol>
+    </div>
+
+  </body>
+</html>
