@@ -10,7 +10,7 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script type="text/x-mathjax-config">
-      MathJax.Hub.Register.MessageHook("Begin Math",function () {
+      MathJax.Hub.Register.MessageHook("End Math",function () {
         var id1 = MathJax.Message.File("myfile");
         r1 = checkValue("Loading .....");
         MathJax.Message.Clear(id1, 0);
@@ -37,5 +37,6 @@
   </head>
 
   <body>
+    \(\)
   </body>
 </html>
