@@ -36,8 +36,8 @@ script issue826-1.html
 require(!NativeMML) script issue826-2.html
 require(SVG) load issue898-1.html
 require(SVG) script issue898-2.html
-require((SVG&&STIX-Web)||(HTML-CSS&&STIX)) sript issue1092.html
-require((SVG&&STIX-Web)||(HTML-CSS&&STIX)) sript issue1154.html
+require((SVG&&STIX-Web)||(HTML-CSS&&STIX)) script issue1092.html
+require((SVG&&STIX-Web)||(HTML-CSS&&STIX)) script issue1154.html
 require(SVG&&STIX-Web) script issue1251.html
 require(CommonHTML) script issue1353.html
 require(CommonHTML) script issue1451.html
