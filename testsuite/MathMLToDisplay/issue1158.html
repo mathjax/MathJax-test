@@ -7,13 +7,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../header.js"></script>
     <script type="text/javascript" src="../scriptTests.js"></script>
+
     <script type="text/javascript">
       function getTestCases() {
-        var math = document.getElementById('math');
-        var row = document.getElementById('row');
-        var w1 = math.offsetWidth, w2 = row.offsetWidth;
+        var w1 = document.getElementById('math').offsetWidth;
+        var w2 = document.getElementById('row').offsetWidth;
         return [
-          newScriptReftestResult("Math width correct ("+w1+" === "+w2+")",w1 === w2)
+          newScriptReftestResult("Math width correct ("+w1+" === "+w2+")", w1-w2 < 2)
         ];
       }
     </script>
