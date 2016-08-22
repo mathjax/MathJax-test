@@ -24,7 +24,7 @@
         var next = math.nextSibling, prev = math.previousSibling;
         var OK1 = !math.className.match(/processed|processing/i),
             OK2 = !next.className.match(/processed|processing/i),
-            OK3 = (prev.innerText === "");
+            OK3 = (prev.innerHTML === "");
         return [
           newScriptReftestResult("Math not processing ("+math.className+") ",OK1),
           newScriptReftestResult("Next not processing ("+next.className+") ",OK2),
