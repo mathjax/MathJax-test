@@ -21,8 +21,10 @@
         var bb2 = document.getElementById("cell2").getBoundingClientRect();
         var w1 = bb1.width || (bb1.right - bb1.left);
         var w2 = bb2.width || (bb2.right - bb2.left);
-        var diff = Math.abs(w2 - w1 - 30);
-        return [newScriptReftestResult("Cell width ("+diff+") ", diff < .1)];
+        return [
+          newScriptReftestResult("Short cell is stretched ("+w1+") ", Math.abs(w1 - 600) < 10),
+          newScriptReftestResult("Long cell is stretched ("+w2+") ", Math.abs(w2 - 600) < 10)
+        ];
       }
     </script>
 
@@ -30,8 +32,10 @@
 
   <body>
 
-    <!-- See issue 428
+    <!-- Check that width is properly found even when shrink wrapped
          https://github.com/mathjax/MathJax/issues/428 -->
+
+    <div style="width:600px">
 
       <table>
         <tr>
@@ -39,7 +43,7 @@
            \begin{align} \Rule{50px}{10px}{0px}  \end{align}
           </td>
         </tr>
-     </table>
+      </table>
 
       <table>
         <tr>
@@ -47,7 +51,9 @@
            \begin{align} \Rule{80px}{10px}{0px}  \end{align}
           </td>
         </tr>
-     </table>
+      </table>
+
+    </div>
 
   </body>
 </html>
