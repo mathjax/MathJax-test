@@ -21,7 +21,6 @@
         var OK1 = !math[1].style.match(/padding/) && math[1].style.match(/border(-width)?: *2px/);
         var OK2 = math[2].style.match(/padding-right: *2px/) && !math[2].style.match(/border/);
         var OK3 = !math[3].style.match(/padding/) && math[3].style.match(/border-right(-width)?: *2px/);
-console.log(math[3].style);
         return [
           newScriptReftestResult("Border >= 3em removed ", OK0),
           newScriptReftestResult("Padding >= 3em removed ", OK1),
