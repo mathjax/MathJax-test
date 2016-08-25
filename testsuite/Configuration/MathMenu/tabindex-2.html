@@ -14,6 +14,7 @@
       function getTestCases() {
         var jax = MathJax.Hub.getAllJax()[0];
         var frame = document.getElementById(jax.inputID+"-Frame");
+        if (gOutputJax === "NativeMML") frame = frame.firstChild;
         var tabindex = frame.tabIndex;
         return [newScriptReftestResult("TabIndex -1 ("+tabindex+") ", tabindex === -1)];
       }    
