@@ -17,6 +17,10 @@
       function getTestCases() {
         var outputJax = MathJax.OutputJax[gOutputJax];
         var script = document.getElementById("id");
+        if (gOutputJax === "HTML-CSS") {
+          var jax = script.MathJax.elementJax;
+          jax.HTMLCSS.span = jax.HTMLCSS.div = document.getElementById(jax.inputID+"-Frame");
+        }
         var state = {SVGdelay: false, HTMLdelay: false};
         var result = outputJax.Translate(script,state);
         return [
