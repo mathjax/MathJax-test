@@ -19,5 +19,5 @@ fails-if(NativeMML) == issue769-6b.html issue769-6-ref.html
 script issue949.html
 skip-if(NativeMML) script issue1022.html
 require(CommonHTML) script issue1447.html
-script issue1449.html
+fails-if(NativeMML) script issue1449.html
 == issue1548.html issue1548-ref.html
