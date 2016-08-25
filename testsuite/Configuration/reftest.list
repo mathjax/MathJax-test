@@ -18,3 +18,4 @@ include Safe/reftest.list
 script issue556.html
 require(HTML-CSS&&!ImageTeX) script issue711.html
 script Contrib.html
+script issue1584.html

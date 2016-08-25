@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1589 iframe</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script>
+      //
+      //  This iframe calls the parent frame's callback(),
+      //  which is set up to test if an array created in the
+      //  iframe can be used by MathJax in the outer window.
+      //
+      var MathJax = window.top.MathJax;
+      window.top.callback(["Typeset",MathJax.Hub]);
+    </script>
+    
+  </head>
+
+  <body>
+  </body>
+</html>

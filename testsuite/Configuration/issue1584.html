@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1584</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+      var callback = MathJax.Callback(function (array) {
+        try {
+          MathJax.Callback(array);
+          OK = true;
+        } catch (e) {}
+      });
+      MathJax.Hub.Queue(callback);
+      var iframe = document.createElement("iframe");
+      document.body.appendChild(iframe);
+      iframe.src = "issue1584-iframe.html";
+    </script>
+
+    <script type="text/javascript">
+      var OK = false;
+      function getTestCases() {
+        return [newScriptReftestResult("Cross window arrays allowed ", OK)];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- instanceof Array is fragile across windows
+         https://github.com/mathjax/MathJax/issues/1584 -->
+
+  </body>
+</html>
