@@ -489,6 +489,9 @@ class requestHandler(SocketServer.StreamRequestHandler):
                     if (command == "UNEXPECTED_DEATH"):
                         t.mStatus = "Killed"
                         t.mExceptionMessage = self.readExceptionMessage()
+                        print("==================")
+                        print(t.mExceptionMessage)
+                        print("==================")
                     gServer.runNextTasksFromPendingQueue(t.host())
                 elif (command == "OUTPUTFILENAME"):
                     t.mOutputFileName = items[3]

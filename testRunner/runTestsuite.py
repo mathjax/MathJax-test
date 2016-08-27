@@ -63,6 +63,7 @@ import socket
 import string
 import subprocess
 import sys
+import traceback
 import time
 
 from selenium.common.exceptions import WebDriverException
@@ -683,7 +684,7 @@ the its status to the task handler.")
             announceDeath("EXPECTED")
             exit(0)
         except Exception as e:
-            announceDeath("UNEXPECTED", str(e))
+            announceDeath("UNEXPECTED", str(e)+"\n"+traceback.format_exc())
             exit(1)
     else:
         main(args, False)
