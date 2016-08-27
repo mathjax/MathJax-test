@@ -18,7 +18,7 @@
       function getTestCases() {
         var math = MathJax.Hub.getAllJax()[0].root.data[0].data;
         var OK0 = math[0].style.match(/padding: *2px/) && !math[0].style.match(/border/);
-        var OK1 = !math[1].style.match(/padding/) && math[1].style.match(/border(-width)?: *2px/);
+        var OK1 = !math[1].style.match(/padding/) && math[1].style.match(/border(-top)?(-width)?: *2px/);
         var OK2 = math[2].style.match(/padding-right: *2px/) && !math[2].style.match(/border/);
         var OK3 = !math[3].style.match(/padding/) && math[3].style.match(/border-right(-width)?: *2px/);
         return [
