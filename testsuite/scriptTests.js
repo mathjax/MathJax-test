@@ -78,8 +78,8 @@ function finalizeScriptReftests()
     var testcases = getTestCases();
     var success = true;
     for (var i = 0; i < testcases.length; i++) {
-        test = testcases[i];
-        testPassed = test.testPassed();
+        var test = testcases[i];
+        var testPassed = test.testPassed();
         success = success && testPassed;
         textarea.value += "Test " + (i + 1) + ": " + test.testDescription();
         textarea.value += "... " + (testPassed ? "passed" : "failed") + "\n";
