@@ -11,7 +11,8 @@
     <script>
       function getTestCases() {
         var table = document.getElementById("test");
-        var w = Math.round(table.getBoundingClientRect().width);
+        var bbox = table.getBoundingClientRect();
+        var w = Math.round(bbox.width || bbox.right-bbox.left);
         return [
           newScriptReftestResult('Width is correct ('+w+')', Math.abs(600-w) < 10)
         ];
