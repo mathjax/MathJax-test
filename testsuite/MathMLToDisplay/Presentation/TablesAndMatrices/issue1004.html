@@ -12,8 +12,8 @@
       function getTestCases() {
         var ok1, ok2;
         if (gOutputJax === "HTML-CSS") {
-          var test1 = document.getElementById("test1").firstChild.lastChild;
-          var test2 = document.getElementById("test2").firstChild.lastChild;
+          var test1 = document.getElementById("test1").lastChild.lastChild;
+          var test2 = document.getElementById("test2").lastChild.lastChild;
           ok1 = (test1.style.borderTop === "");
           ok2 = (test2.style.borderTop === "");
         } else if (gOutputJax === "SVG") {
