@@ -641,47 +641,23 @@ class seleniumMathJax(object):
 
         image = Image.open(StringIO.StringIO(base64.b64decode(data)))
         image = image.convert("RGB")
-
+        
         if (self.mCanvas == None):
             # This is used in function "pre" for Selenium 1, to determine
             # the browser canvas. In that case, we return the whole screenshot.
             return image
 
-        # Only keep the rectangular region given by mCanvas
-        image = image.crop(self.mCanvas)
+        # Scale large images to the canvas size
+        if (image.size[0] > self.mCanvas[2] + 100):
+            scale = self.mCanvas[2] / float(image.size[0])
+            size = int(scale*float(image.size[0])+.5), int(scale*float(image.size[1])+.5)
+            image = image.resize(size,Image.ANTIALIAS)
 
-        # The Internet Explorer Driver sends screenshots with black background
-        # at the bottom. So only keep the "bounding box".
-        if (self.mWebDriver and self.mBrowser == "MSIE"):
-            box = image.getbbox()
-            if box:
-                image = image.crop(box)
+        #  Paste image into a reftest-sized white page
+        canvas = Image.new(mode="RGB",size=self.mReftestSize,color=(255,255,255))
+        canvas.paste(image,(0,0));
 
-        # Verify if the image has the size mReftestSize
-        size = image.size
-        if (size[0] == self.mReftestSize[0] and
-            size[1] == self.mReftestSize[1]):
-            return image
-
-        # Otherwise, fill the rest of the image with white...
-        image = image.crop((0, 0, self.mReftestSize[0], self.mReftestSize[1]))
-        draw = ImageDraw.Draw(image)
-        white = (255, 255, 255)
-
-        # Draw a white rectangle on the right hand side
-        if (size[0] < self.mReftestSize[0]):
-            draw.rectangle((size[0], 0,
-                            self.mReftestSize[0], self.mReftestSize[1]),
-                           fill=white)
-
-        # Draw a white rectangle a the bottom                            
-        if (size[1] < self.mReftestSize[1]):
-            draw.rectangle((0, size[1],
-                            size[0], self.mReftestSize[1]),
-                           fill=white)
-        del draw
-        
-        return image
+        return canvas;
 
     def encodeImageToBase64(self, aImage):
         """
