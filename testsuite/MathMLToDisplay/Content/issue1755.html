@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1755</title>
+    <!-- Copyright (c) 2017 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function preMathJax() {
+        gConfigObject.MathML = {extensions: ["content-mathml.js", "mml3.js"]};
+      }
+
+      function getTestCases() {
+        var mml = document.getElementById("math");
+        return [
+          newScriptReftestResult("Namespaces OK ",!mml.innerHTML.match(/m:mtd/))
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- content-mathml doesn't handle presention MathML with namespaces
+       (like those produced by the mml3 extension).
+       https://github.com/mathjax/MathJax/issues/1755 -->
+
+    <div>
+      <math id="math" display="block">
+        <mlongdiv longdivstyle="lefttop">
+          <mn>1</mn>
+          <mn>1</mn>
+          <mn>1</mn>
+        </mlongdiv>
+      </math>
+    </div>
+
+  </body>
+</html>
