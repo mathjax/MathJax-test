@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1626</title>
+    <!-- Copyright (c) 2017 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+    <script>
+      gConfigObject.MathML = {useMathMLspacing: true};
+      function getTestCases() {
+        var w1 = document.getElementById("eq1").scrollWidth;
+        var w2 = document.getElementById("eq2").scrollWidth;
+        return [
+          newScriptReftestResult("Fractions are spaced ("+w1+","+w2+") ", w1 == w2)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Adjacent fractions have no space when useMMLspacing is set.
+         https://github.com/mathjax/MathJax/issues/1626 -->
+
+    <div id="eq1" style="display:inline-block">
+    <math>
+      <mfrac>
+        <mi>a</mi>
+        <mi>b</mi>
+      </mfrac>
+      <mfrac>
+        <mi>a</mi>
+        <mi>b</mi>
+      </mfrac>
+    </math>
+    </div>
+
+    <div id="eq2" style="display:inline-block">
+    \(\frac a b \frac a b\)
+    </div>
+
+    <p>
+
+  </body>
+</html>
