@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1666</title>
+    <!-- Copyright (c) 2016 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script>
+      function getTestCases() {
+        var mml = MathJax.Hub.getAllJax()[0].root.data[0].data[0];
+        var OK = mml.isa(MathJax.ElementJax.mml.mspace);
+        return [newScriptReftestResult("\Rule produces mspace", OK)];
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- \Rule should use mspace rather than mphantom
+         https://github.com/mathjax/MathJax/issues/1666 -->
+
+    \( \Rule{1em}{1em}{-.5ex} \)
+    <p>
+  </body>
+</html>
