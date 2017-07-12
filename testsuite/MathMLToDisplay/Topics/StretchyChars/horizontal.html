@@ -2,57 +2,48 @@
 <html class="reftest-wait">
   <head>
     <title>horizontal stretchy char</title>
-    <!-- Copyright (c) 2011-2015 MathJax Consortium
+    <!-- Copyright (c) 2011-2017 MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
     <script type="text/javascript">
-      function preMathJax()
-      {
-      op = getQueryString("op");
-      if (!op) {
-      op = "005F"; // _
+      function preMathJax() {
+        op = getQueryString("op");
+        if (!op) op = "005F"; // _
+        var math1 = document.getElementById("math1");
+        math1.innerHTML = '<math><mo stretchy="false">&#x'+op+';</mo></math>';
+        var math2 = document.getElementById("math2");
+        math2.innerHTML = '<math><mover><mo stretchy="true" minsize="150px">&#x'+op+';</mo><mrow></mrow></mover></math>';
       }
-      mydiv = document.getElementById("div");
-      mydiv.innerHTML += "&#x" + op + ";"
-
-      textNode = document.createTextNode(mydiv.innerHTML);
-      <!-- this does not seem to work on IE < 9 -->
-      document.getElementById("mo").appendChild(textNode);
+      function getTestCases() {
+        var w1 = document.getElementById("math1").offsetWidth;
+        var w2 = document.getElementById("math2").offsetWidth;
+        var tests = [
+          newScriptReftestResult("U+"+op+" stretches ("+w1+','+w2+")", w2 > w1+5)
+        ];
+        if (!getQueryString("limited")) {
+          tests.push(newScriptReftestResult("U+"+op+" stretches fully ", w2 >= 135));
+        }
+        return tests;
       }
     </script>
-    <script type="text/javascript" src="../../../header.js"></script>
   </head>
 
   <body>
     
-    <!-- the stretchy char should not be entirely hidden by the blue rectangle.
-         Note: the rectangle should be wide enough to avoid UNEXPECTED-PASS
-         with operators that can not stretch but should not be too wide to
-         avoid UNEXPECTED-FAIL with operators like accents that can not stretch
-         to an arbitrary width.
-      -->
-    <div style="position: absolute;">
+  <div style="margin:1em;">
+    <span id="math1" style="display:inline-block">
       <math>
-        <mpadded width="1.75em" height="3em" depth="3em">
-          <mover align="left">
-            <mo id="mo" stretchy="true"></mo>
-            <mspace width="4em" height="1px"></mspace>
-          </mover>
-        </mpadded>
+      <mo stretchy="true">_</mo>
       </math>
-    </div>
-    
-    <!-- one can click on the blue rectangle to make it transparent -->
-    <div onclick="this.style.opacity = 0.2" id="rect"
-         style="position: absolute;">
+    </span>
+    <span id="math2" style="display:inline-block">
       <math>
-        <mspace width="1.75em" height="3em" depth="3em"
-                mathbackground="blue"></mspace>
+      <mo stretchy="true" minsize="150px">_</mo>
       </math>
-    </div>
-
-    <!-- helper div to create unicode character -->
-    <div style="visibility: hidden" id="div"></div>
+    </span>
+  </div>
 
   </body>
 </html>

@@ -5,224 +5,219 @@
 # dictionary stretch correctly. However, the necessary glyphs to stretch
 # operators are not always available in the mathematical fonts.</p>
 #
-# <p>For manual testing convenience, you can click on the blue rectangle to show
-# the glyph behind it. The tests page are not compatible with IE < 9.</p>
 
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=005E horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=005F horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=007E horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=00AF horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=02C6 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=02C7 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=02C9 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=02CD horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=02DC horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=02F7 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=0302 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=203E horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2190 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2192 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2194 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2198 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2199 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=219C horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=219D horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=219E horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21A0 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21A2 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21A3 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21A4 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21A6 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21A9 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21AA horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21AB horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21AC horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21AD horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21B4 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21B9 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21BC horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21BD horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21C0 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21C1 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21C4 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21C6 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21C7 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21C9 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21CB horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21CC horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21D0 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21D2 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21D4 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21DA horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21DB horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21DC horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21DD horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21E0 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21E2 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21E4 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21E5 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21E6 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21E8 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21EC horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21F0 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21F6 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21FD horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21FE horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=21FF horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2312 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2322 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2323 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23B4 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23B5 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23DC horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23DD horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23DE horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23DF horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23E0 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=23E1 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27F5 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27F6 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27F7 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27F8 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27F9 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27FA horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27FB horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27FC horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27FD horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27FE horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=27FF horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=290C horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=290D horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=290E horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=290F horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2910 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=294E horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2950 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2952 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2953 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2956 horizontal-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2957 horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=295A horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=295B horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=295E horizontal-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=295F horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2B45 horizontal-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != horizontal.html?op=2B46 horizontal-ref.html
+annotate(@note) script horizontal.html?op=005E&limited=true
+annotate(@note) script horizontal.html?op=005F
+annotate(@note) script horizontal.html?op=007E&limited=true
+annotate(@note) script horizontal.html?op=00AF
+annotate(@note) script horizontal.html?op=02C6&limited=true
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=02C7&limited=true
+annotate(@note) script horizontal.html?op=02C9
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=02CD
+annotate(@note) script horizontal.html?op=02DC&limited=true
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=02F7&limited=true
+annotate(@note) script horizontal.html?op=0302&limited=true
+annotate(@note) script horizontal.html?op=203E
+annotate(@note) script horizontal.html?op=2190
+annotate(@note) script horizontal.html?op=2192
+annotate(@note) script horizontal.html?op=2194
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=2198
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=2199
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=219C
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=219D
+annotate(@note) script horizontal.html?op=219E
+annotate(@note) script horizontal.html?op=21A0
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21A2
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21A3
+annotate(@note) script horizontal.html?op=21A4
+annotate(@note) script horizontal.html?op=21A6
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21A9
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21AA
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21AB
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21AC
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21AD
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21B4
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21B9
+annotate(@note) script horizontal.html?op=21BC
+annotate(@note) script horizontal.html?op=21BD
+annotate(@note) script horizontal.html?op=21C0
+annotate(@note) script horizontal.html?op=21C1
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21C4
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21C6
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21C7
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21C9
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21CB
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21CC
+annotate(@note) script horizontal.html?op=21D0
+annotate(@note) script horizontal.html?op=21D2
+annotate(@note) script horizontal.html?op=21D4
+annotate(@note) script horizontal.html?op=21DA
+annotate(@note) script horizontal.html?op=21DB
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21DC
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21DD
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21E0
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21E2
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21E4
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21E5
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21E6
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21E8
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21EC
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21F0
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=21F6
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21FD
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21FE
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=21FF
+annotate(@note) script horizontal.html?op=2312
+annotate(@note) script horizontal.html?op=2322
+annotate(@note) script horizontal.html?op=2323
+annotate(@note) script horizontal.html?op=23B4
+annotate(@note) script horizontal.html?op=23B5
+annotate(@note) script horizontal.html?op=23DC
+annotate(@note) script horizontal.html?op=23DD
+annotate(@note) script horizontal.html?op=23DE
+annotate(@note) script horizontal.html?op=23DF
+annotate(@note) script horizontal.html?op=23E0
+annotate(@note) script horizontal.html?op=23E1
+annotate(@note) script horizontal.html?op=27F5
+annotate(@note) script horizontal.html?op=27F6
+annotate(@note) script horizontal.html?op=27F7
+annotate(@note) script horizontal.html?op=27F8
+annotate(@note) script horizontal.html?op=27F9
+annotate(@note) script horizontal.html?op=27FA
+annotate(@note) script horizontal.html?op=27FB
+annotate(@note) script horizontal.html?op=27FC
+annotate(@note) script horizontal.html?op=27FD
+annotate(@note) script horizontal.html?op=27FE
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=27FF
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=290C
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=290D
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=290E
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=290F
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=2910
+annotate(@note) script horizontal.html?op=294E
+annotate(@note) script horizontal.html?op=2950
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=2952
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=2953
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=2956
+annotate(@note) fails-if(TeX&&!NativeMML) script horizontal.html?op=2957
+annotate(@note) script horizontal.html?op=295A
+annotate(@note) script horizontal.html?op=295B
+annotate(@note) script horizontal.html?op=295E
+annotate(@note) script horizontal.html?op=295F
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=2B45
+annotate(@note) fails-if(!NativeMML) script horizontal.html?op=2B46
 require(TeX&&!NativeMML) != horizontal-braces-1a.html horizontal-braces-1-ref.html
 require(TeX&&!NativeMML) != horizontal-braces-1b.html horizontal-braces-1-ref.html
 fails-if(MSIE) require(STIX) != horizontal-braces-2.html horizontal-braces-2-ref.html
 == minsize-1.html minsize-1-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=0028 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=0029 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=005B vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=005D vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=007B vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=007C vertical-ref.html
-# XXXfred: testing multiple chars not supported yet
-# skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=\u007C\u007C vertical-ref.html
-# skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=\u007C\u007C\u007C vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=007D vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2016 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2044 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2191 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2193 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2195 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2196 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2197 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=219F vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21A1 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21A5 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21A7 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21A8 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21AF vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21B0 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21B1 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21B2 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21B3 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21B5 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21BE vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21BF vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21C2 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21C3 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21C5 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21C8 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21CA vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21D1 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21D3 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21D5 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21E1 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21E3 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21E7 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21E9 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21EA vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21EB vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21EC vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21ED vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21EE vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21EF vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21F3 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=21F5 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2215 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=221A vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2308 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2309 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=230A vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=230B vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2772 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2773 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27E6 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27E7 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27E8 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27E9 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27EA vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27EB vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27EC vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27ED vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27EE vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27EF vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27F0 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=27F1 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=290A vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=290B vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2912 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2913 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=294F vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2951 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2954 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2955 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2958 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2959 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=295C vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=295D vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2960 vertical-ref.html
-annotate(@note) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2961 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=296E vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=296F vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2980 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2983 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2984 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2985 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2986 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2987 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2988 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2989 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=298A vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=298B vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=298C vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=298D vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=298E vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=298F vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2990 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2991 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2992 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2993 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2994 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2995 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2996 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2997 vertical-ref.html
-annotate(@note) fails-if(TeX&&!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=2998 vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=29FC vertical-ref.html
-annotate(@note) fails-if(!NativeMML) skip-if(MSIE&&(Quirks||IE7||IE8)) != vertical.html?op=29FD vertical-ref.html
+annotate(@note) script vertical.html?op=0028
+annotate(@note) script vertical.html?op=0029
+annotate(@note) script vertical.html?op=005B
+annotate(@note) script vertical.html?op=005D
+annotate(@note) script vertical.html?op=007B
+annotate(@note) script vertical.html?op=007C
+annotate(@note) script vertical.html?op=007D
+annotate(@note) script vertical.html?op=2016
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2044
+annotate(@note) script vertical.html?op=2191
+annotate(@note) script vertical.html?op=2193
+annotate(@note) script vertical.html?op=2195
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2196
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2197
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=219F
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=21A1
+annotate(@note) script vertical.html?op=21A5
+annotate(@note) script vertical.html?op=21A7
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=21A8
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21AF
+annotate(@note) script vertical.html?op=21B0
+annotate(@note) script vertical.html?op=21B1
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=21B2
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=21B3
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=21B5
+annotate(@note) script vertical.html?op=21BE
+annotate(@note) script vertical.html?op=21BF
+annotate(@note) script vertical.html?op=21C2
+annotate(@note) script vertical.html?op=21C3
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21C5
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21C8
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21CA
+annotate(@note) script vertical.html?op=21D1
+annotate(@note) script vertical.html?op=21D3
+annotate(@note) script vertical.html?op=21D5
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=21E1
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=21E3
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21E7
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21E9
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21EA
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21EB
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21EC
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21ED
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21EE
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21EF
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21F3
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=21F5
+annotate(@note) script vertical.html?op=2215&limited=true
+annotate(@note) script vertical.html?op=221A
+annotate(@note) script vertical.html?op=2308
+annotate(@note) script vertical.html?op=2309
+annotate(@note) script vertical.html?op=230A
+annotate(@note) script vertical.html?op=230B
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2772
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2773
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=27E6
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=27E7
+annotate(@note) script vertical.html?op=27E8&limited=true
+annotate(@note) script vertical.html?op=27E9&limited=true
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=27EA&limited=true
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=27EB&limited=true
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=27EC
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=27ED
+annotate(@note) script vertical.html?op=27EE
+annotate(@note) script vertical.html?op=27EF
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=27F0
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=27F1
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=290A
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=290B
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2912
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2913
+annotate(@note) script vertical.html?op=294F
+annotate(@note) script vertical.html?op=2951
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2954
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2955
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2958
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2959
+annotate(@note) script vertical.html?op=295C
+annotate(@note) script vertical.html?op=295D
+annotate(@note) script vertical.html?op=2960
+annotate(@note) script vertical.html?op=2961
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=296E
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=296F
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2980
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2983
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2984
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2985
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2986
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2987
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2988
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2989
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=298A
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=298B
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=298C
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=298D
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=298E
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=298F
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2990
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2991
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2992
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2993
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2994
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2995
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=2996
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2997
+annotate(@note) fails-if(TeX&&!NativeMML) script vertical.html?op=2998
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=29FC
+annotate(@note) fails-if(!NativeMML) script vertical.html?op=29FD
 skip-if(NativeMML) == issue213.html issue213-ref.html
 != issue469.html issue469-ref.html
 == issue703.html issue703-ref.html
