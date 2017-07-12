@@ -1196,7 +1196,7 @@ class taskHandler:
         self.mRunningTasksFromHost = {}
         self.mRunningTaskFromPID = {}
         self.mPendingTasksFromHost = {}
-        self.mCronTab = CronTab()
+#        self.mCronTab = CronTab()
 
     def start(self):
         """

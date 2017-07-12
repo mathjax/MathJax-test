@@ -231,7 +231,7 @@ class seleniumMathJax(object):
                                                desiredCapabilities)
             self.mWebDriver.implicitly_wait(aTimeOut / 1000)
             self.mWebDriver.set_script_timeout(aTimeOut / 1000)
-            self.mSelenium = selenium(host, port, '*webdriver',
+            self.mSelenium = selenium.selenium(host, port, '*webdriver',
                                       aMathJaxTestPath)
             self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
         else:
@@ -265,7 +265,7 @@ class seleniumMathJax(object):
             else:
                 startCommand = startCommand + " " + aBrowserPath
               
-            self.mSelenium = selenium(host, port, startCommand,
+            self.mSelenium = selenium.selenium(host, port, startCommand,
                                       aMathJaxTestPath)
 
     def open(self, aURI, aWaitTime = 0.5, aIsReference = False):
