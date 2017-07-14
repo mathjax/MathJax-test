@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1774</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function xMathJaxConfig() {
+        MathJax.Hub.Config({
+          "HTML-CSS": {
+            availableFonts: [],
+            preferredFont: null
+          }
+        });
+      }
+      function getTestCases() {
+        var n = document.getElementById("test").childNodes.length;
+        return [
+          newScriptReftestResult("No extra spans ("+(n-1)+")", n === 1)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- HTML-CSS adds extra spans when FontFaceBug is true and mathvariant is set
+         https://github.com/mathjax/MathJax/issues/1774 -->
+
+    <div>
+      <math>
+        <mi mathvariant="italic" id="test">xx</mi>
+      </math>
+    </div>
+
+  </body>
+</html>
