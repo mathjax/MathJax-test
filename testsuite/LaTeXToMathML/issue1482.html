@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1482</title>
+    <!-- Copyright (c) 2017 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      
+      function getTestCases() {
+        var node = MathJax.Hub.getAllJax()[0].SourceElement();
+        var OK = !!node.previousSibling.textContent.match(/\\text\{a\}b/);
+        return [
+          newScriptReftestResult("\\cases handles \\text{} properly ", OK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Test for \text{} in \cases was not robust enough
+         https://github.com/mathjax/MathJax/issues/1482 -->
+
+    <div>
+    \[\cases{x&\text{a}b}\]
+    </div>
+
+  </body>
+</html>
