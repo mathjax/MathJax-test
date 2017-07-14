@@ -231,8 +231,8 @@ class seleniumMathJax(object):
                                                desiredCapabilities)
             self.mWebDriver.implicitly_wait(aTimeOut / 1000)
             self.mWebDriver.set_script_timeout(aTimeOut / 1000)
-            self.mSelenium = selenium.selenium(host, port, '*webdriver',
-                                      aMathJaxTestPath)
+#            self.mSelenium = selenium(host, port, '*webdriver',
+#                                      aMathJaxTestPath)
             self.mCanvas = 0, 0, self.mReftestSize[0], self.mReftestSize[1]
         else:
             self.mWebDriver = None
@@ -345,7 +345,8 @@ class seleniumMathJax(object):
         @brief start Selenium
         """
         if self.mWebDriver:
-            self.mSelenium.start(driver=self.mWebDriver)
+            print("REFTEST INFO | >>> start");
+#            self.mSelenium.start(driver=self.mWebDriver)
         else:
             self.mSelenium.start()
 
