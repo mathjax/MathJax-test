@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1691</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script>
+      gMaxErrorSignals["Math Processing Error"] = 1;
+      function getTestCases() {
+        var OK = (gMaxErrorSignals["Math Processing Error"] === 1);
+        return [
+          newScriptReftestResult("getNode() finds child node ", OK)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CommonHTML: getNode() fails in some nested situations.
+       https://github.com/mathjax/MathJax/issues/1691 -->
+
+    <div>
+      <math display="block">
+        <mtable>
+          <mtr>
+            <mtd>
+              <munder>
+                <mo>&#x2192;</mo>
+                <mi>b</mi>
+              </munder>
+            </mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <br/>
+
+  </body>
+</html>
