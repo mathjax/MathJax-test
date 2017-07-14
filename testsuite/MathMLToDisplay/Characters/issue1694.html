@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1694</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      unknownChars = 0;
+      function getTestCases() {
+        return [
+          newScriptReftestResult("Newlines processed ", unknownChars === 0)
+        ];
+      }
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.signal.Interest(function (msg) {
+        if (msg[0].match(/- unknown char/)) unknownChars++;
+      });
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- Newlines in <mtext> cause undefined character warnings
+         https://github.com/mathjax/MathJax/issues/1694 -->
+
+    <div>
+    $$\textrm{a
+b}$$
+    </div>
+
+  </body>
+</html>
