@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1680</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gConfigObject.skipStartupTypeset = true;
+      function getTestCases() {
+        var OK = MathJax.Hub.getAllJax().length === 1;
+        return [newScriptReftestResult("Callback OK ",OK)];
+      }
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub,[document.getElementById("math")]]);
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Typesetting an array of a singel element with no callback typesets all
+         https://github.com/mathjax/MathJax/issues/1680 -->
+
+    <div id="math">
+      \(x\)
+    </div>
+    <div>
+      \(y\)
+    </div>
+
+  </body>
+</html>
