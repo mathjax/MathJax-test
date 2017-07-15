@@ -11,3 +11,4 @@ script issue912.html
 script issue935.html?semantics=true
 require((Chrome||Safari)&&(HTML-CSS||CommonHTML)) == issue1282.html issue1282-ref.html
 script issue1428.html
+script issue1806.html

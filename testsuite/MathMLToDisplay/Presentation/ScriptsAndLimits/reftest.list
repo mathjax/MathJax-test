@@ -9,3 +9,4 @@ include munderover/reftest.list
 == issue804.html issue804-ref.html
 script issue911.html
 require(CommonHTML) script issue1287.html
+script issue1706.html

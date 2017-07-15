@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1701</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      gConfigObject.TeX = {extensions: ["AMSmath.js"]};
+      gMaxErrorSignals["TeX Jax - parse error"] = 4;
+      errors = [];
+      function getTestCases() {
+        OK = errors.join(',') === "multline,multline,beginning,beginning";
+        return [
+          newScriptReftestResult("\\shoveleft outside multline ", errors[0] === 'multline'),
+          newScriptReftestResult("\\shoveright outside multline ", errors[1] === 'multline'),
+          newScriptReftestResult("\\shoveleft misplaced ", errors[2] === 'beginning'),
+          newScriptReftestResult("\\shoveright misplaced ", errors[3] === 'beginning')
+        ];
+      }
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (msg) {
+      var err = "unknown";
+      if (msg[1].match(/beginning of the line/)) err = "beginning";
+      if (msg[1].match(/multline environment/)) err = "multline";
+      errors.push(err);
+    });
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- Better errors for \shoveleft and \shoveright 
+         https://github.com/mathjax/MathJax/issues/1701 -->
+
+    <div>
+    \[\shoveleft\]
+
+    \[\shoveright\]
+
+    \begin{multline}
+      a\shoveleft b
+    \end{multline}
+
+    \begin{multline}
+      a\shoveright b
+    \end{multline}
+    </div>
+    <p>
+
+  </body>
+</html>

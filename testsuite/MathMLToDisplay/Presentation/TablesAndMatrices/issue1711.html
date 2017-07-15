@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1711</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var row = document.getElementById("row");
+        var cell = row.childNodes[1] || {style:{}};
+        return [
+          newScriptReftestResult("Row is extended ", row.childNodes.length === 3),
+          newScriptReftestResult("Rowlines ", !!cell.style.borderBottomWidth),
+          newScriptReftestResult("Columnlines ", !!cell.style.borderRightWidth),
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CommonHTML: rowlines/columnlines may not extend far enough
+       https://github.com/mathjax/MathJax/issues/1711 -->
+
+    <div>
+      <math display="block">
+        <mtable rowlines="solid" columnlines="solid">
+          <mtr id="row">
+            <mtd>
+              <mi>x</mi>
+            </mtd>
+          </mtr>
+          <mtr>
+            <mtd>
+              <mi>x</mi>
+            </mtd>
+            <mtd>
+              <mi>x</mi>
+            </mtd>
+            <mtd>
+              <mi>x</mi>
+            </mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <br/>
+
+  </body>
+</html>

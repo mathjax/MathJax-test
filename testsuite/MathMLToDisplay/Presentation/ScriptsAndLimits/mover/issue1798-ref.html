@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
   <head>
-    <title>Issue 1737 and 1709</title>
+    <title>Issue 1798</title>
     <!-- Copyright (c) 2017 MathJax Consortium
          License: Apache License 2.0 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="../../../../header.js"></script>
-    <script type="text/javascript" src="../../../../scriptTests.js"></script>
 
     <script type="text/javascript">
       function getTestCases() {
@@ -21,14 +20,13 @@
 
   <body>
 
-    <!-- Vector accent placed wrong in WebKit > 603 in HTML-CSS and CHTML
-         https://github.com/mathjax/MathJax/issues/1709
-         https://github.com/mathjax/MathJax/issues/1737 -->
+    <!-- HTML-CSS: with mathsize > 30pt, accents start to disappear
+         https://github.com/mathjax/MathJax/issues/1798 -->
 
-    <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <math mathsize="40pt">
       <mover>
-        <mi id="x">x</mi>
-        <mo id="vec">&#x20D7;</mo>
+        <mi>xxxxx</mi>
+        <mphantom><mo>^</mo></mphantom>
       </mover>
     </math>
 

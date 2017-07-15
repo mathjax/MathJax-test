@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1686</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var m1 = document.getElementById("math1");
+        var m2 = document.getElementById("math2");
+        var m3 = document.getElementById("math3");
+        var h1 = m1.offsetHeight, w1 = m1.offsetWidth;
+        var h2 = m2.offsetHeight, w2 = m2.offsetWidth;
+        var w3 = m3.offsetWidth;
+        return [
+          newScriptReftestResult("Height OK ("+h1+","+h2+") ", h1 < h2+10 && h1 > h2),
+          newScriptReftestResult("Width OK ("+w1+","+w2+","+w3+") ", w1 >= w2 && w1 < w3+3)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Underline character should not be minus
+         https://github.com/mathjax/MathJax/issues/1686 -->
+
+    <div style="font-size:200%">
+
+    <div id="math1" style="display: inline-block; background-color: red">
+      \(\scriptscriptstyle\underline{\lower.5em{k}}\)
+    </div>
+
+    <div id="math2" style="display: inline-block; background-color: red">
+      \(\scriptscriptstyle\lower.5em{k}\)
+    </div>
+
+    <div id="math3" style="display: inline-block; background-color: red">
+      \(\scriptscriptstyle &#x2013;\)
+    </div>
+
+    </div>
+
+    <br/>
+
+  </body>
+</html>

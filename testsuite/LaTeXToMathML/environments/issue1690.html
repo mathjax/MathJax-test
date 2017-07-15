@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1690</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var w1 = document.getElementById("math1").offsetWidth;
+        var w2 = document.getElementById("math2").offsetWidth;
+        return [
+          newScriptReftestResult("Spacing not added to even columns ("+w1+","+w2+")", w1 < w2-2)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- alignat spacing incorrect in even columns
+         https://github.com/mathjax/MathJax/issues/1690 -->
+
+    <div id="math1" style="display:inline-block">
+    \begin{alignat}{2}
+      a&= b&= c&= d
+    \end{alignat}
+    </div><br/>
+    <div id="math2" style="display:inline-block">
+    \begin{alignat}{2}
+      a&= b&{}= c&= d
+    \end{alignat}
+    </div>
+    <p>
+
+  </body>
+</html>

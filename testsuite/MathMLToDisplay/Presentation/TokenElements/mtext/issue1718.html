@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1718</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w1 = document.getElementById("math1").offsetWidth;
+        var w2 = document.getElementById("math2").offsetWidth;
+        return [
+          newScriptReftestResult("Width not constrained ("+w1+","+w2+") ", w1 > w2 / 2 + 10)
+        ];
+      }
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        CommonHTML: {mtextFontInherit: true}
+      });
+      MathJax.Hub.Register.StartupHook("CommonHTML Jax Ready", function () {
+        var CHTML = MathJax.OutputJax.CommonHTML;
+        var METRICS = CHTML.getMetrics;
+        CHTML.Augment({
+          getMetrics: function (jax) {
+            //
+            //  Force the em-size to be wrong, so we can test if it gets used
+            //
+            METRICS.call(this,jax);
+            this.em = this.outerEm = this.em * 2;
+          }
+        });
+      });
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CHTML: Don't set width of long mtext (avoid round-off accumulation)
+       https://github.com/mathjax/MathJax/issues/1718 -->
+
+    <div id="math1" style="display:inline-block">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtext>xxxxxxxxxxxxxxxxxxxxxxxxx</mtext>
+      </math>
+    </div>
+    <p>
+    <div id="math2" style="display:inline-block">
+       xxxxxxxxxxxxxxxxxxxxxxxxx
+    </div>
+    <p>
+
+  </body>
+</html>
