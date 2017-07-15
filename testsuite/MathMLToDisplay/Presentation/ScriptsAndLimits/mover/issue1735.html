@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1735</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var w1 = document.getElementById("math1").offsetWidth;
+        var w2 = document.getElementById("math2").offsetWidth;
+        return [
+          newScriptReftestResult("Accent positioned OK ("+w1+","+w2+") ", w1 < w2+4)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- CHTML: italic correction and skew should only used for single-character bases
+         https://github.com/mathjax/MathJax/issues/1735 -->
+
+    <div id="math1" style="display:inline-block; margin-left:1em">
+      <math>
+        <mover>
+          <mrow>
+            <mi>X</mi>
+            <mi>J</mi>
+          </mrow>
+          <mo>&#x23DC;</mo>
+        </mover>
+      </math>
+    </div>
+
+    <div id="math2" style="display:inline-block">
+      <math>
+        <mi>X</mi>
+        <mi>J</mi>
+      </math>
+    </div>
+
+    <br/>
+
+  </body>
+</html>
