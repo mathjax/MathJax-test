@@ -9,3 +9,4 @@ script 1686.html
 require(CommonHTML) script 1712.html
 script issue1735.html
 script issue1737.html
+!= issue1798.html issue1798-ref.html
