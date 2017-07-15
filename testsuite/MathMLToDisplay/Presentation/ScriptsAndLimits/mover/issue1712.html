@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1712</title>
+    <!-- Copyright (c) 2017 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var left1 = document.getElementById("top").getBoundingClientRect().left;
+        var left2 = document.getElementById("base").getBoundingClientRect().left;
+        return [
+          newScriptReftestResult(
+            "Base stretched ("+left1.toFixed(1)+","+left2.toFixed(1)+") ",
+            left2 < left1 + 4
+          )
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- CHTML: placement of stretchy arrows can be wrong
+         https://github.com/mathjax/MathJax/issues/1712 -->
+
+    <math>
+      <mover>
+        <mpadded id="base" height=".2em">
+          <mo minsize="2em">&#x2190;</mo>
+        </mpadded>
+        <mo id="top" minsize="2em">&#x2192;</mo>
+      </mover>
+    </math>
+
+    <br/>
+
+  </body>
+</html>
