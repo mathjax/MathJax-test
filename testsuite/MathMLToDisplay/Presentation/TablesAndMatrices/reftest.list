@@ -23,3 +23,4 @@ require(HTML-CSS||SVG) script issue1004.html
 script issue1441.html
 require(CommonHTML) script issue1532.html
 require(CommonHTML) script issue1691.html
+require(CommonHTML) script issue1711.html
