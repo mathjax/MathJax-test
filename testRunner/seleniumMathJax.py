@@ -42,6 +42,7 @@ import sys
 import time
 import urlparse
 import inspect
+import os
 
 VK_TAB = 9
 VK_ENTER = 10
@@ -345,7 +346,13 @@ class seleniumMathJax(object):
         @brief start Selenium
         """
         if self.mWebDriver:
-            print("REFTEST INFO | >>> start");
+            if self.mBrowser == "Safari":
+                x, y = 0, 22
+                cmd = "osascript -e 'tell application \"Safari\" to set bounds of front window to {%d, %d, %d, %d}'" \
+                       % (x, y, self.mReftestSize[0]+x, self.mReftestSize[1]+y)
+                os.system(cmd)
+            else:
+                self.mWebDriver.set_window_size(self.mReftestSize[0], self.mReftestSize[1]);
 #            self.mSelenium.start(driver=self.mWebDriver)
         else:
             self.mSelenium.start()
