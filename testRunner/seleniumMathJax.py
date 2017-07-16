@@ -597,6 +597,10 @@ class seleniumMathJax(object):
         """
         if self.mWebDriver:
             self.mWebDriver.quit()
+            if self.mBrowser == "Safari":
+                cmd = "osascript -e 'tell application \"Safari\" to quit'"
+                os.system(cmd)
+              
         else:
             # selenium.stop does not seem to close Konqueror/MSIE
             # correctly. Leave the browser manually instead.
