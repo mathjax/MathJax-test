@@ -13,7 +13,7 @@
         var w1 = document.getElementById("eq1").scrollWidth;
         var w2 = document.getElementById("eq2").scrollWidth;
         return [
-          newScriptReftestResult("Fractions are spaced ("+w1+","+w2+") ", w1 == w2)
+          newScriptReftestResult("Fractions are spaced ("+w1+","+w2+") ", Math.abs(w1 - w2) < 2)
         ];
       }
     </script>

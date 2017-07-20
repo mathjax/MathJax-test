@@ -4,9 +4,9 @@ require(CommonHTML) script issue1359.html
 require(CommonHTML) script issue1360.html
 require(STIX||STIX-Web) script issue1470.html
 require(TeX||STIX||STIX-Web) script issue1544.html
-require(CommonHTML) script 1657.html
-script 1686.html
-require(CommonHTML) script 1712.html
-script issue1735.html
-script issue1737.html
+require(CommonHTML) script issue1657.html
+script issue1686.html
+require(CommonHTML) script issue1712.html
+require(CommonHTML) script issue1735.html
+require(Safari&&!SVG) script issue1737.html
 != issue1798.html issue1798-ref.html

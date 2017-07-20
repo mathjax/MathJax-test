@@ -43,6 +43,7 @@
         MathJax.Hub.Queue(["Rerender", MathJax.Hub, "p", g]);
 
         if (MathJax.Hub.Browser.isMSIE && document.documentMode < 9) testSVG = false;
+        if (gFont === "STIX") MathJax.Hub.Config({SVG: {font: "STIX-Web"}});
 
         if (testSVG) {
           MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "SVG"]);
