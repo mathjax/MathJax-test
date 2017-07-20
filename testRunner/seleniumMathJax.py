@@ -310,7 +310,13 @@ class seleniumMathJax(object):
 
         # open the page and wait for 'reftest-wait' removal
         if self.mWebDriver:
-            self.mWebDriver.get(self.mMathJaxTestPath + newURI)
+            IE = ''
+            if (self.mBrowser == 'MSIE' and \
+                self.mBrowserMode != 'default' and self.mBrowserMode != 'IE11'):
+                IE = self.mMathJaxTestPath + '../web/ie.php?_ie=' + self.mBrowserMode[2:] + '&_url='
+                newURI = newURI.replace('?','&',1);
+
+            self.mWebDriver.get(IE + self.mMathJaxTestPath + newURI)
 
             # wait_for_condition no longer exists in Selenium 2. Use an explicit
             # wait method. We wait for the insertion of an element with id
@@ -353,118 +359,9 @@ class seleniumMathJax(object):
                 os.system(cmd)
             else:
                 self.mWebDriver.set_window_size(self.mReftestSize[0], self.mReftestSize[1]);
-#            self.mSelenium.start(driver=self.mWebDriver)
         else:
             self.mSelenium.start()
 
-#     def chooseInternetExplorerDocumentMode(self):
-#         """
-#         @fn chooseInternetExplorerDocumentMode(self)
-#         @brief function to choose the internet explorer mode
-#         """
-#         #  open developer tools
-#         self.mSelenium.key_down_native(VK_F12)
-#         time.sleep(3)
-# 
-#         if self.mBrowserMode == "Quirks":
-#             self.mSelenium.key_down_native(VK_ALT)
-#             time.sleep(.1)
-#             self.mSelenium.key_press_native(VK_Q)
-#             time.sleep(.1)
-#             self.mSelenium.key_up_native(VK_ALT)
-#             time.sleep(.1)
-#         elif self.mBrowserMode == "IE7":
-#             self.mSelenium.key_down_native(VK_ALT)
-#             time.sleep(.1)
-#             self.mSelenium.key_press_native(VK_7)
-#             time.sleep(.1)
-#             self.mSelenium.key_up_native(VK_ALT)
-#             time.sleep(.1)
-#         elif self.mBrowserMode == "IE8":
-#             self.mSelenium.key_down_native(VK_ALT)
-#             time.sleep(.1)
-#             self.mSelenium.key_press_native(VK_8)
-#             time.sleep(.1)
-#             self.mSelenium.key_up_native(VK_ALT)
-#             time.sleep(.1)
-#         elif self.mBrowserMode == "IE9":
-#             self.mSelenium.key_down_native(VK_ALT)
-#             time.sleep(.1)
-#             self.mSelenium.key_press_native(VK_9)
-#             time.sleep(.1)
-#             self.mSelenium.key_up_native(VK_ALT)
-#             time.sleep(.1)
-#             time.sleep(3)
-# 
-#         # close developer tools
-#         self.mSelenium.key_down_native(123) # F12
-#         time.sleep(3)
-
-    def chooseInternetExplorerDocumentMode(self):
-        """
-        @fn chooseInternetExplorerDocumentMode(self)
-        @brief function to choose the internet explorer mode
-        """
-
-        #
-        #  Open developer tools
-        #  (They must be set to open in a separate window, and
-        #  have the "Persist Emulation" icon selected)
-        #  
-        self.mSelenium.key_press_native(VK_F12)
-        time.sleep(3)
-
-        #
-        #  Select Emulation page
-        #
-        self.mSelenium.key_down_native(VK_CONTROL)
-        time.sleep(.1)
-        self.mSelenium.key_press_native(VK_8)
-        time.sleep(.1)
-        self.mSelenium.key_up_native(VK_CONTROL)
-        time.sleep(.1)
-
-        #
-        #  Tab to Document Mode
-        #
-        self.mSelenium.key_press_native(VK_TAB)
-        time.sleep(.1)
-
-        #
-        #  Select mode
-        #
-        if self.mBrowserMode == "Quirks":
-            self.mSelenium.key_press_native(VK_5)
-        elif self.mBrowserMode == "IE7":
-            self.mSelenium.key_press_native(VK_7)
-        elif self.mBrowserMode == "IE8":
-            self.mSelenium.key_press_native(VK_8)
-        elif self.mBrowserMode == "IE9":
-            self.mSelenium.key_press_native(VK_9)
-        elif self.mBrowserMode == "IE10":
-            self.mSelenium.key_press_native(VK_1)
-        elif self.mBrowserMode == "IE11":
-            self.mSelenium.key_press_native(VK_E)
-
-        time.sleep(3)
-
-#
-#  Don't close the tools, since then IE11 reverts back to Edge
-#  Just bring the main window to the front
-#
-        self.mSelenium.key_press_native(VK_F12)
-        time.sleep(3)
-
-#
-#         #
-#         #  Close developer tools
-#         #
-#         self.mSelenium.key_down_native(VK_ALT)
-#         time.sleep(.1)
-#         self.mSelenium.key_press_native(VK_F4)
-#         time.sleep(.1)
-#         self.mSelenium.key_up_native(VK_ALT)
-#         time.sleep(3)
 
     def pre(self):
         """
@@ -496,11 +393,6 @@ class seleniumMathJax(object):
         if self.mWebDriver:
             # Only open the blank page...
             self.open("blank.html")
-
-            if (self.mBrowser == "MSIE" and
-                not(self.mBrowserMode == "default")):
-                # For MSIE, we choose the document mode
-                self.chooseInternetExplorerDocumentMode()
 
             if (self.mBrowser == "Opera"):
                 # Screenshots taken by OperaDriver have random noise at the
@@ -556,10 +448,6 @@ class seleniumMathJax(object):
                     # FullScreen Mode: 
                     self.mSelenium.key_press_native(VK_F11)
                     time.sleep(3)
-
-            if (self.mBrowser == "MSIE" and
-                not(self.mBrowserMode == "default")):
-                self.chooseInternetExplorerDocumentMode()
 
             # Determine the canvas
             image1 = self.takeScreenshot(1.0)
