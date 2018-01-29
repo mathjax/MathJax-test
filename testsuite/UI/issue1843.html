@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1843</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+      var cb = MathJax.Callback({});
+      // need to wait for hash's setTimeout to complete.
+      MathJax.Hub.Queue(function() {setTimeout(cb, 1)}, cb);
+    </script>
+    <script>
+      function getTestCases() {
+        var top = document.body.scrollTop || document.documentElement.scrollTop;
+        var lambda = document.getElementById("\u03BB").offsetTop;
+        return [
+          newScriptReftestResult("Scrolled after math ("+top+","+lambda+")", top === lambda)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Hash URI with special cahracters not handled properly
+         https://github.com/mathjax/MathJax/issues/1843 -->
+
+    <div style="height: 10em; width:1em; background-color:yellow"></div>
+    \(\Rule{1em}{5em}{0px}\)
+    <div id="&#x3BB" style="height:1em; width:1em; background-color:red"></div>
+    <div style="height: 10em; width:1em; background-color:yellow"></div>
+
+  </body>
+</html>
