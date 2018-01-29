@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1837</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w1 = document.getElementById("m1").offsetWidth;
+        var w2 = document.getElementById("m2").offsetWidth;
+        return [
+          newScriptReftestResult("No extra space ("+w1+","+w2+")", w1 === w2)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- CommonHTML doesn't reset spacing after a restart
+         https://github.com/mathjax/MathJax/issues/1837 -->
+
+    <div>
+      <span id="m1" style="display:inline-block">\(\raise0pt{::}=\mathsf{x}\)</span>
+      <br>
+      <span id="m2" style="display:inline-block">\(\raise0pt{::}=\mathsf{x}\)</span>
+    </div>
+
+  </body>
+</html>
