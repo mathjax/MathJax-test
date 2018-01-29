@@ -9,14 +9,11 @@
     <script type="text/javascript" src="../../scriptTests.js"></script>
 
     <script>
-      function preMathJax() {
-        gMaxErrorSignals["TeX Jax - parse error"] = 1;
-      }
-
       function getTestCases() {
-        var OK = (gMaxErrorSignals["TeX Jax - parse error"] == 1);
+        var count = MathJax.Hub.getAllJax()[0].root.data[0].data[0].data.length - 2;
+        var OK = (count === 2);
         return [
-          newScriptReftestResult("\\bigg handles spaces ", OK)
+          newScriptReftestResult("\\left...\\right don't add mrows ("+count+")", OK)
         ];
       }
     </script>
@@ -24,11 +21,11 @@
 
   <body>
 
-    <!-- \bigg and friends don't work with spaces inside braced argument
-         https://github.com/mathjax/MathJax/issues/1819 -->
+    <!-- \left...\right adds unwanted mrows
+         https://github.com/mathjax/MathJax/issues/1829 -->
 
       <p>
-      \[\bigg{\uparrow }\]
+      \[\left(x x\right)\]
       </p>
 
   </body>
