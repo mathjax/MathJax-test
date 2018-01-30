@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1870</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w = document.getElementById("math").offsetWidth;
+        return [
+          newScriptReftestResult('Annotation is sized properly ('+w+')', w < 125)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- SVG: annotation-xml gets the wrong width
+       https://github.com/mathjax/MathJax/issues/1870 -->
+
+    <div>
+    <span id="math" style="display:inline-block">
+      <math mathbackground="red">
+        <semantics>
+          <annotation-xml encoding="application/xhtml+xml">
+            <input xmlns="http://www.w3.org/1999/xhtml" type="text" style="width:100px" />
+          </annotation-xml>
+        </semantics>
+      </math>
+    </span>
+    </div>
+
+  </body>
+</html>
