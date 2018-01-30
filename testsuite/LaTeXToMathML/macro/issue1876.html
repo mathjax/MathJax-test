@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1876</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+  </head>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        extensions: ["AMSmath.js", "begingroup.js", "extpfeil.js"]
+      }
+    });
+    </script>
+    <script>
+      gMaxErrorSignals["TeX Jax - parse error"] = 2;
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax();
+        var tests = [];
+        for (var i = 0; i < math.length; i++) {
+          var mml = math[i].root.data[0].data[0].toString();
+          var OK = !!mml.match(/OK|\u2190/);
+          tests[i] = newScriptReftestResult("Test "+i+" ", OK);
+        }
+        return tests;
+      }
+    </script>
+
+  <body>
+
+    <!-- \DeclareMathOperator and \Newextarrow aren't localized by begingroup
+         https://github.com/mathjax/MathJax/issues/1876 -->
+
+    <div>\(\DeclareMathOperator\X{OK} \begingroup \DeclareMathOperator\X{FAIL} \endgroup \X\)</div>
+    <div>\(\def\X{\text{FAIL}} \begingroup \global\DeclareMathOperator\X{OK} \endgroup \X\)</div>
+    <div>\(\Newextarrow\X{1,1}{0x2190} \begingroup \Newextarrow\X{1,1}{0x2192} \endgroup \X{a}\)</div>
+    <div>\(\def\X#1{\text{FAIL}} \begingroup \global\Newextarrow\X{1,1}{0x2190} \endgroup \X{a}\)</div>
+
+  </body>
+</html>
