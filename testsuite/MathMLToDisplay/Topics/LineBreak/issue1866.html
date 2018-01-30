@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1866</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      SVG: {linebreaks: {automatic: true}}
+    });
+    </script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var trans = document.getElementById("a").parentNode.getAttribute("transform");
+        var w = (trans.match(/translate.(\d+)/))[1];
+        return [
+          newScriptReftestResult("Linebreak preserves space ("+w+")", w > 1700)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- SVG: linebreaks in mrows can lose spacing of initial element
+         https://github.com/mathjax/MathJax/issues/1866 -->
+    
+    <div style="width:200px; border:1px solid black">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <mi>I</mi>
+      <mo>=</mo>
+      <mrow>
+        <mi id="a">a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+      </mrow>
+    </math>
+    </div>
+    <br/>
+
+  </body>
+</html>
