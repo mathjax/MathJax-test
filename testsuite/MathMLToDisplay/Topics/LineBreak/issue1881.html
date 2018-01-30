@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1881</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      CommonHTML: {linebreaks: {automatic: true}}
+    });
+    </script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var w = document.getElementById("math").offsetWidth;
+        return [
+          newScriptReftestResult("Linebreak preserves space ("+w+")", w < 220)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- CommonHTML doesn't take scaling into account for some linebreaks.
+         https://github.com/mathjax/MathJax/issues/1881 -->
+    
+    <div style="width:200px; border:1px solid black">
+    <span id="math" style="display:inline-block">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <mstyle scriptlevel="-2">
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+        <mo>+</mo>
+        <mi>a</mi>
+      </mstyle>
+    </math>
+    </span>
+    </div>
+    <br/>
+
+  </body>
+</html>
