@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1896</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var mover = (MathJax.Hub.getAllJax())[0].root.data[0].data[0];
+        var span = mover.data[mover.over].HTMLspanElement();
+        var left = parseFloat(span.firstChild.lastChild.style.left);
+        return [
+          newScriptReftestResult("Right-hand glyph properly placed ("+left+") ", left < .53)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+   <!-- HTML-CSS doesn't palce right-hand glyph in horiontal stretchy chars properly
+        https://github.com/mathjax/MathJax/issues/1896 -->
+
+   <div>
+     \(\overrightarrow{\rm AP}\)
+   </div>
+   <p>
+
+  </body>
+</html>
