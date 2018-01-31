@@ -21,3 +21,4 @@ require(HTML-CSS) fails-if(Quirks||IE7) == tag-1.html tag-1-ref.html
 annotate(@issue240) script tag-3.html
 == notag-1.html notag-1-ref.html
 script issue1194.html
+script issue1899.html
