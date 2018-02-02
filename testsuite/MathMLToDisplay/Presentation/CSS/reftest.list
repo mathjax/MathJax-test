@@ -23,4 +23,4 @@ include munder/reftest.list
 include munderover/reftest.list
 include semantics/reftest.list
 
-script issue1855.html
+require(SVG) script issue1855.html
