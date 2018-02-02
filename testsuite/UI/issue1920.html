@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1920</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Register.StartupHook("Begin Jax", function () {
+      document.body.innerHTML = document.body.innerHTML;
+      MathJax.Hub.Config({messageStyle: "normal"});
+      try {
+        MathJax.Message.Set("Testing...");
+        textOK = true;
+      } catch(err) {}
+      MathJax.Hub.Config({messageStyle: "none"});
+    });
+    </script>
+    <script>
+      var textOK = false;
+      function getTestCases() {
+        return [
+          newScriptReftestResult("Message.text is recreated ", textOK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Setting document.body.innerHTML causes Message.text to be lost
+         https://github.com/mathjax/MathJax/issues/1920 -->
+
+    <div>
+    \(x\)
+    </div>
+
+  </body>
+</html>

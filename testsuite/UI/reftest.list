@@ -13,3 +13,4 @@ require((Chrome||Safari)&&(HTML-CSS||CommonHTML)) == issue1282.html issue1282-re
 script issue1428.html
 script issue1806.html
 script issue1843.html#%CE%BB
+script issue1920.html
