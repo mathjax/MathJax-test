@@ -17,6 +17,7 @@ require(!NativeMML) script issue937.html
 script issue1225.html
 script issue1259.html
 script issue1469.html
+script issue1929.html
 
 # XXXfred not supported
 # fails tree== overbracket-1.html overbracket-1-ref.html
