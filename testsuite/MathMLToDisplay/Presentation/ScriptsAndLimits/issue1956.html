@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1956</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var h1 = document.getElementById("math1").offsetHeight;
+        var h2 = document.getElementById("math2").offsetHeight;
+        return [newScriptReftestResult("Minimum height for base ("+h1+","+h2+")", h1 < h2 - 8)];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Mins height for base of mover needs to be scaled for subscripts
+         https://github.com/mathjax/MathJax/issues/1956 -->
+    
+    <div style="font-size:300%">
+      <span id="math1" style="display:inline-block">
+        \(\scriptstyle\bbox[red]{\raise 1em{\hat a}}\)
+      </span>
+      <span id="math2" style="display:inline-block">
+        \(\scriptstyle\bbox[red]{\raise 1em{\hat A}}\)
+      </span>
+    </div>
+    <p>
+
+  </body>
+</html>
