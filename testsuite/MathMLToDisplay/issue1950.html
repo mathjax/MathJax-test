@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1950</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var mwidth = document.getElementsByTagName('svg')[1].style.maxWidth;
+        var OK = !!mwidth.match(/px/);
+        return [
+          newScriptReftestResult('Max-width has px ('+mwidth+')', OK)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- SVG max-width was missing px
+       https://github.com/mathjax/MathJax/issues/1950 -->
+
+    <div>
+      \[x\tag{1}\]
+    </div>
+
+  </body>
+</html>

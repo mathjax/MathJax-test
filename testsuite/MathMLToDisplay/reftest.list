@@ -69,3 +69,4 @@ require(CommonHTML) script issue1594.html
 require(SVG) script issue1870.html
 require(SVG||HTML-CSS||CommonHTML) script issue1936-1.html
 require(SVG||HTML-CSS||CommonHTML) script issue1936-2.html
+require(SVG) script issue1950.html
