@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1953</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w1 = document.getElementById("math1").offsetWidth;
+        var w2 = document.getElementById("math2").offsetWidth;
+        var OK = (Math.abs(w1 - w2) < 3);
+        return [
+          newScriptReftestResult('Space is proper size ('+w1+','+w2+')', OK)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Size of typewriter U+00A0 is wrong
+       https://github.com/mathjax/MathJax/issues/1953 -->
+
+    <div>
+    <span id="math1" style="display:inline-block">
+      \(\verb|a1234b|\)
+    </span>
+    </div>
+    <div>
+    <span id="math2" style="display:inline-block">
+      \(\verb|a    b|\)
+    </span>
+    </div>
+
+  </body>
+</html>
