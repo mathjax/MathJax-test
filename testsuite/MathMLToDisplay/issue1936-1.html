@@ -38,6 +38,7 @@
 
     <script>
       gMaxErrorSignals['Math Processing Error'] = 1;
+      window.onerror = null;
       function getTestCases() {
         var message = (MathJax.Hub.lastError || {}).message || '';
         var OK = !!message.match(/can't autoload 'mtest'/);
