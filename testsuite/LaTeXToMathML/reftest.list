@@ -81,5 +81,5 @@ script issue1224.html
 require(!NativeMML) script issue1229.html
 script issue1312.html
 script issue1419.html
-script issue1482.html
+require(!SVG) script issue1482.html
 script issue1586.html

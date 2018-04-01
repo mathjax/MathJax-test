@@ -66,3 +66,7 @@ fails-if(NativeMML) script issue1478.html
 script issue1499.html
 require(Firefox) script issue1555.html
 require(CommonHTML) script issue1594.html
+require(SVG) script issue1870.html
+require(SVG||HTML-CSS||CommonHTML) script issue1936-1.html
+require(SVG||HTML-CSS||CommonHTML) script issue1936-2.html
+require(SVG) script issue1950.html

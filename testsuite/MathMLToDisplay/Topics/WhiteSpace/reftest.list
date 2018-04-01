@@ -19,3 +19,4 @@ annotate(@note) fails == white7.html white7-ref.html
 annotate(@note) fails == white8.html white8-ref.html
 annotate(@note) fails == white9.html white9-ref.html
 annotate(@note) fails == white10.html white10-ref.html
+fails-if(NativeMML) script issue1953.html

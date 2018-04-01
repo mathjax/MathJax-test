@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1960</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$', '$']],
+        processEscapes: true
+      },
+      asciimath2jax: {
+        delimiters: [['`','`'], ['#', '#']]
+      }
+    });
+    </script>
+    <script type="text/javascript">
+      gConfigObject.jax.push('input/AsciiMath');
+      gConfigObject.extensions.push('asciimath2jax.js');
+      function getTestCases() {
+        var OK1 = (document.getElementById("math1").textContent.replace(/[\s\n]/g, "") 
+                     === '$1...$2...$3...$4...$5...$6');
+        var OK2 = (MathJax.Hub.getAllJax('math2').length === 1);
+        var OK3 = (MathJax.Hub.getAllJax('math3').length === 1);
+        return [
+          newScriptReftestResult("Single dollar rescans ", OK1),
+          newScriptReftestResult("Double dollar rescans ", OK2),
+          newScriptReftestResult("AsciiMath rescans ", OK3)
+        ];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- When there isn't a close delimiter, rescan text
+         https://github.com/mathjax/MathJax/issues/1960 -->
+
+    <div id="math1">
+      \$1 ... \$2 ... \$3 ... $4 ... \$5 <span>...</span> \$6
+    </div>
+    <div id="math2">
+      \$1 ... \$2 ... \$3 ... $$4 ... $5 <br>... $6
+    </div>
+    <div id="math3">
+      ... ` ... # cos<br>(x) # ...
+    </div>
+
+  </body>
+</html>

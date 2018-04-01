@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1819</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var count = MathJax.Hub.getAllJax()[0].root.data[0].data[0].data.length - 2;
+        var OK = (count === 2);
+        return [
+          newScriptReftestResult("\\left...\\right don't add mrows ("+count+")", OK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \left...\right adds unwanted mrows
+         https://github.com/mathjax/MathJax/issues/1829 -->
+
+      <p>
+      \[\left(x x\right)\]
+      </p>
+
+  </body>
+</html>

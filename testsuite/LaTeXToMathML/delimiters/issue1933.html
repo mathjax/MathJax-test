@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1933</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var data = MathJax.Hub.getAllJax()[0].root.SVGdata;
+        var OK = (data.h < 2000);
+        return [
+          newScriptReftestResult("Correct stretchy parentheses ("+Math.floor(data.h)+")", OK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Wrong stretchy parenthesis size
+         https://github.com/mathjax/MathJax/issues/1933 -->
+
+      <p>
+      \[{\left( \int \int \right)}^\frac{1}{2}\]
+      </p>
+
+  </body>
+</html>

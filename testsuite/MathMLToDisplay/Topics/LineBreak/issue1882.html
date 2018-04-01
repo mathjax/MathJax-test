@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1882</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      CommonHTML: {linebreaks: {automatic: true}}
+    });
+    </script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var w1 = document.getElementById("m1").offsetWidth;
+        var w2 = document.getElementById("m2").offsetWidth;
+        return [
+          newScriptReftestResult("Correct width in sqrt ("+w1+")", w1 < 55),
+          newScriptReftestResult("Correct width in mroot ("+w2+")", w2 < 55)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- CommonHTML gets width of sqrt with linebreak wrong.
+         https://github.com/mathjax/MathJax/issues/1882 -->
+    
+    <div style="border:1px solid black; width:30px">
+    <span id="m1" style="display:inline-block">
+    <math xmlns="http://www.w3.org/1998/Math/MathML"> 
+      <msqrt mathbackground="red">
+        <mi>x</mi>
+        <mo>+</mo>
+        <mi>x</mi>
+      </msqrt>
+      <mo>=</mo>
+      <mi>x</mi>
+    </math>
+    </span>
+    </div>
+    <p>
+    <div style="border:1px solid black; width:30px">
+    <span id="m2" style="display:inline-block">
+    <math xmlns="http://www.w3.org/1998/Math/MathML"> 
+      <mroot mathbackground="red">
+        <mrow>
+          <mi>x</mi>
+          <mo>+</mo>
+          <mi>x</mi>
+        </mrow>
+        <mn>3</mn>
+      </mroot>
+      <mo>=</mo>
+      <mi>x</mi>
+    </math>
+    </span>
+    </div>
+    <br/>
+
+  </body>
+</html>

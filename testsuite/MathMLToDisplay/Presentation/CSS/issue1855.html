@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1855</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var n = document.getElementsByTagName("line").length;
+        return [
+          newScriptReftestResult("Border drawn ("+n+")", n == 4)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- SVG border should default default to 3px
+         https://github.com/mathjax/MathJax/issues/1855 -->
+    
+    <div style="font-size:300%">
+      <math style="border-style: solid">
+        <mi>x</mi>
+      </math>
+    </div>
+    <p>
+
+  </body>
+</html>

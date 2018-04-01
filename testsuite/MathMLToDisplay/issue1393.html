@@ -15,7 +15,7 @@
         var w1 = document.getElementById("test1").offsetWidth;
         var w2 = document.getElementById("test2").offsetWidth;
         return [
-          newScriptReftestResult("box-sizing reset ("+w1+","+w2+") ", w1 === w2)
+          newScriptReftestResult("box-sizing reset ("+w1+","+w2+") ", Math.abs(w1 - w2) < 2)
         ];
       }    
     </script>
@@ -36,7 +36,7 @@
   <body>
 
   <!-- CommonHTML needs to reset box-sizing
-       https://github.com/mathjax/MathJax/issues/393 -->
+       https://github.com/mathjax/MathJax/issues/1393 -->
 
     <div id="test1" style="display:inline-block">
       \(\dfrac{1}{10}\)

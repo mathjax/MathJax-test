@@ -21,3 +21,7 @@ skip-if(NativeMML) script issue1022.html
 require(CommonHTML) script issue1447.html
 fails-if(NativeMML) script issue1449.html
 == issue1548.html issue1548-ref.html
+require(SVG&&TeX) script issue1866.html
+require(CommonHTML) script issue1881.html
+require(CommonHTML) script issue1882.html
+fails-if(NativeMML) script issue1883.html

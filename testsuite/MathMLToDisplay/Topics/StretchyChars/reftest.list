@@ -224,3 +224,4 @@ skip-if(NativeMML) == issue213.html issue213-ref.html
 require(SVG) script issue800.html
 require(!NativeMML) script issue829.html
 require(STIX&&HTML-CSS) == issue715.html issue715-ref.html
+require(TeX&&HTML-CSS) script issue1896.html

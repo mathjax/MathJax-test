@@ -18,9 +18,9 @@
         });
       }
       function getTestCases() {
-        var n = document.getElementById("test").childNodes.length;
+        var n = document.getElementById("test").children.length;
         return [
-          newScriptReftestResult("No extra spans ("+(n-1)+")", n === 1)
+          newScriptReftestResult("No extra spans ("+n+")", n === 0)
         ];
       }
     </script>

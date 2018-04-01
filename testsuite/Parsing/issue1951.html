@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait" xmlns:math="http://www.w3.org/1998/Math/MathML">
+  <head>
+    <title>Issue 1951</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var math = MathJax.Hub.getAllJax()[0].root;
+        var OK = (math.data[0].data[0].type !== 'merror');
+        return [
+          newScriptReftestResult("Namespace 'math' works ", OK)
+        ];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- Namespace prefix starting with "math" confuses MathML input jax
+         https://github.com/mathjax/MathJax/issues/1951 -->
+
+    <div>
+      <math:math><math:mi>x</math:mi></math:math>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1929</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var mo = MathJax.Hub.getAllJax()[0].root.data[0].data[0].data[0];
+        var OK = (mo.movablelimits === false);
+        return [newScriptReftestResult("movablelimits=false ",OK)];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \overset should prevent movable limits
+         https://github.com/mathjax/MathJax/issues/1929 -->
+
+    <div>
+      \(\overset{\rightarrow}{\prod}\)
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1899</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var el = document.getElementById("mjx-eqn-A_B");
+        return [
+          newScriptReftestResult("\\tag doesn't use spaces in ids ", !!el)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \tag with spaces produces invalid ids
+         https://github.com/mathjax/MathJax/issues/11899 -->
+
+      <p id="math">
+      \[x\tag{A B}\]
+      </p>
+
+  </body>
+</html>

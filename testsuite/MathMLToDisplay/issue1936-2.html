@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1936-2</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    var resetCount = 0;
+    MathJax.Hub.Register.StartupHook("mml Jax Ready", function () {
+      var MML = MathJax.ElementJax.mml;
+      MML.mtest = MML.mbase.Subclass({
+        type: 'mtest',
+        toCommonHTML: function () {
+          try {MML.mbase.CHTMLautoloadFile.call(this,"mtest")} catch (e) {
+            if (e.restart) resetCount++;
+            if (resetCount < 5) throw e
+          }
+        },
+        toHTML: function () {
+          try {MML.mbase.HTMLautoloadFile.call(this,"mtest")} catch (e) {
+            if (e.restart) resetCount++;
+            if (resetCount < 5) throw e
+          }
+        },
+        toSVG: function () {
+          try {MML.mbase.SVGautoloadFile.call(this,"mtest")} catch (e) {
+            if (e.restart) resetCount++;
+            if (resetCount < 5) throw e
+          }
+        }
+      });
+    });
+    </script>
+
+    <script>
+      gMaxErrorSignals['Math Processing Error'] = 1;
+      window.onerror = null;
+      function getTestCases() {
+        var message = (MathJax.Hub.lastError || {}).message || '';
+        var OK = !!message.match(/can't autoload file 'mtest'/);
+        return [
+          newScriptReftestResult('No autoload loops ('+resetCount+')', resetCount < 2),
+          newScriptReftestResult('Last error ('+message+')', OK)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Failure to load an autoloaded file can cause infinite loop
+       https://github.com/mathjax/MathJax/issues/1936 -->
+
+    <div style="visibility:hidden">
+      <math>
+        <mtest></mtest>
+      </math>
+    </div>
+
+  </body>
+</html>
