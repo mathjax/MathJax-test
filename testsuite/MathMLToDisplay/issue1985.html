@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1985</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w1 = document.getElementById('math1').offsetWidth;
+        var w2 = document.getElementById('math2').offsetWidth;
+        return [
+          newScriptReftestResult('Width correct ('+w1+','+w2+')', w1 >= w2)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CHTML: script widths not computed correctly with scriptlevel
+       https://github.com/mathjax/MathJax/issues/1985 -->
+
+    <span id="math1" style="inline-block">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mfrac>
+          <mi>x</mi>
+          <mstyle scriptlevel="2">
+            <mi mathvariant="italic">xxxxxxxxxxxxxx</mi>
+          </mstyle>
+        </mfrac>
+      </math>
+    </span>
+    <br>
+    <span id="math2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mstyle scriptlevel="2">
+          <mi mathvariant="italic">xxxxxxxxxxxxxx</mi>
+        </mstyle>
+      </math>
+    </span>
+    <br>
+
+  </body>
+</html>
