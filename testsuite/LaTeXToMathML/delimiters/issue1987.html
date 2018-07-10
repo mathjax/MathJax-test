@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1987</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var h1 = document.getElementById("math1").offsetHeight;
+        var h2 = document.getElementById("math2").offsetHeight;
+        var OK = Math.abs(h1 - h2) < 3;
+        return [
+          newScriptReftestResult("Correct size for \\big in scripts ("+h1+','+h2+")", OK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- CHTML and NativeMML:  \big and friends get the wrong size in scripts
+         https://github.com/mathjax/MathJax/issues/1987 -->
+
+      <span id="math1" style="display: inline-block">
+      \(\scriptstyle \Bigg(\)
+      </span>
+      <span id="math2" style="display: inline-block">
+      \(\Bigg(\)
+      </span>
+      <br>
+
+  </body>
+</html>

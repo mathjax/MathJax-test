@@ -19,3 +19,4 @@ script issue1415.html
 script issue1819.html
 script issue1829.html
 require(SVG&&STIX) script issue1933.html
+script issue1987.html
