@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1986</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub._setRenderer = MathJax.Hub.setRenderer;
+    MathJax.Hub.setRenderer = function(renderer,type) {
+      if (count++ === 5) return;
+      return this._setRenderer(renderer,type);
+    }
+    MathJax.Hub.setRenderer("unknown");
+    </script>
+
+    <script type="text/javascript">
+      var count = 0;
+      function getTestCases() {
+        return [newScriptReftestResult("setRenderer() doesn't loop excessively ("+count+") ", count < 5)];
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- setRenderer() can loop infinitely if jax can't be loaded
+         https://github.com/mathjax/MathJax/issues/1986 -->
+
+  </body>
+</html>
