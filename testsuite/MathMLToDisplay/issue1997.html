@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1997</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    gConfigObject.extensions.push('fast-preview.js','[a11y]/semantic-enrich.js');
+    </script>
+    <script>
+      function getTestCases() {
+        var w1 = document.getElementById('math1').offsetWidth;
+        var w2 = document.getElementById('math2').offsetWidth;
+        var OK = Math.abs(w1 - w2) < 3;
+        return [
+          newScriptReftestResult('Width correct ('+w1+','+w2+')', OK)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Interaction between fast-preview, semantic enrichment, and useMMLspacing
+       https://github.com/mathjax/MathJax/issues/1997 -->
+
+    <span id="math1" style="display:inline-block">
+    \(\lim\limits_{xxxxxx}\)
+    </span>
+    <br>
+    <span id="math2" style="display:inline-block">
+      \(\scriptstyle xxxxxx\)
+    </span>
+    <br>
+
+  </body>
+</html>

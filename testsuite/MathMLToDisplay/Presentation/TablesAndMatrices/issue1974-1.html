@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1974</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var table = document.getElementsByClassName('mjx-table')[0];
+        return [
+          newScriptReftestResult("Width is 85% ", table.style.width === '85%'),
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CommonHTML: tagged multline tables aren't 85% wide
+       https://github.com/mathjax/MathJax/issues/1974 -->
+
+    <div style="width:300px; border:1px solid black">
+    \begin{multline}xxxx\tag*{} \\ yyyyyyy \\ zzz\end{multline}
+    </div>
+    <br/>
+
+  </body>
+</html>

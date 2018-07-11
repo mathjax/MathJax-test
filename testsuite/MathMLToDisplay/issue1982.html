@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1982</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var h = document.getElementById('math').offsetHeight;
+        var H = document.getElementById('text').offsetHeight;
+        return [
+          newScriptReftestResult('One line height ('+h+','+H+')', h < 1.25*H)
+        ];
+      }
+    </script>
+
+    <style>
+    .inline {
+      display: inline;
+    }
+    .inline + p {
+      display: inline;
+    }
+    </style>
+
+  </head>
+
+  <body>
+
+  <!-- Safari bug: inline math can cause unwanted line breaks.
+       https://github.com/mathjax/MathJax/issues/1982 -->
+
+    <div id="math">
+      <p class="inline">x</p><p>yz \(x\) xyz.</p>
+      <p></p>
+    </div>
+
+    <div id="text">
+      <p>xyz</p>
+    </div>
+
+  </body>
+</html>

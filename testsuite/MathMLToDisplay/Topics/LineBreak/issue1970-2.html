@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1970</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      CommonHTML: {linebreaks: {automatic: true}},
+      "HTML-CSS": {linebreaks: {automatic: true}},
+      SVG: {linebreaks: {automatic: true}}
+    });
+    </script>
+    <script type="text/javascript">
+      function getTestCases() {
+        var w = document.getElementById("math").offsetWidth;
+        return [
+          newScriptReftestResult("Linebreak prevented ("+w+")", w > 207)
+        ];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Allow end-of-line as a potential line break
+         https://github.com/mathjax/MathJax/issues/1970 -->
+    
+    <div style="border:1px solid black; width:200px">
+    <span id="math" style="display:inline-block; min-width:200px">
+    <math xmlns="http://www.w3.org/1998/Math/MathML"> 
+      <mpadded width="10px" height=".5em" mathbackground="red"></mpadded>
+      <mo linebreak="badbreak"></mo>
+      <mpadded width="190px" height=".5em" mathbackground="red"></mpadded>
+      <mi>x</mi>
+    </math>
+    </span>
+    </div>
+    <br/>
+
+  </body>
+</html>

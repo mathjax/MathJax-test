@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1993</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var w1 = document.getElementById("math1").offsetWidth;
+        var w2 = document.getElementById("math2").offsetWidth;
+        var OK = Math.abs(w1 - w2) < 3;
+        if (OK) {
+          var jax = MathJax.Hub.getAllJax();
+          if (jax[0].root.SVGdata) {
+            w1 = Math.round(jax[0].root.data[0].data[0].data[1].SVGdata.w);
+            w2 = Math.round(jax[1].root.data[0].data[0].data[1].SVGdata.w);
+            OK = Math.abs(w1 - w2) < 10;
+          }
+        }
+        return [newScriptReftestResult("Proper width for array ("+w1+","+w2+")", OK)];
+      }    
+    </script>
+  </head>
+
+  <body>
+
+    <!-- SVG and HTML-CSS: nulldelimiterspace not taken into account in munderover
+         https://github.com/mathjax/MathJax/issues/1993 -->
+    
+    <div>
+      <span id="math1" style="display:inline-block">
+        \(\underline{\begin{array}{c}123456789\end{array}}\)
+      </span>
+      <span id="math2" style="display:inline-block">
+        \(\underline{{\begin{array}{c}123456789\end{array}}}\)
+      </span>
+    </div>
+
+  </body>
+</html>

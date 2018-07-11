@@ -25,3 +25,5 @@ require(SVG&&TeX) script issue1866.html
 require(CommonHTML) script issue1881.html
 require(CommonHTML) script issue1882.html
 fails-if(NativeMML) script issue1883.html
+script issue1970-1.html
+fails-if(NativeMML) script issue1970-2.html
