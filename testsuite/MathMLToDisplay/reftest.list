@@ -73,3 +73,4 @@ require(SVG) script issue1950.html
 script issue1982.html
 require(CHTML) script issue1985.html
 script issue1997.html
+script issue2005.html

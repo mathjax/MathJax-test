@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2005</title>
+    <!-- Copyright (c) 2018 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var h1 = document.getElementById('math1').offsetHeight;
+        var h2 = document.getElementById('math2').offsetHeight;
+        return [
+          newScriptReftestResult('One line height ('+h1+','+h2+')', h1 > 1.25*h2)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Safari bug: text can disappear
+       https://github.com/mathjax/MathJax/issues/2005 -->
+
+     <div id="math1">
+       $$x$$
+       $$x$$
+       text
+       <div></div>
+     </div>
+     <div id="math2">
+       $$x$$
+       $$x$$
+     </div>
+
+  </body>
+</html>
