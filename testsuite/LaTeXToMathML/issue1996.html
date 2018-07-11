@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1996</title>
+    <!-- Copyright (c) 2018 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: {extensions: ['color.js']}
+      });
+      MathJax.Hub.Register.StartupHook("TeX Jax Ready", function () {
+        var TEXDEF = MathJax.InputJax.TeX.Definitions;
+        TEXDEF.macros.__proto__ = {macroFail: function () {fail.macros = true}};
+        TEXDEF.mathchar0mi.__proto__ = {miFail: true};
+        TEXDEF.mathchar0mo.__proto__ = {moFail: true};
+        TEXDEF.mathchar7.__proto__ = {msevenFail: true};
+        TEXDEF.special.__proto__ = {X: 'XFail'};
+        TEXDEF.remap.__proto__ = {'@': [41, {fail: true}]};
+        TEXDEF.environment.__proto__ = {fail: ['envFail']};
+        TEXDEF.delimiter.__proto__ = {'\\delimFail': 'x'};
+        MathJax.InputJax.TeX.Parse.Augment({
+          csMathchar0mi: function () {fail.mi = true},
+          csMathchar0mo: function () {fail.mo = true},
+          csMathchar7: function () {fail.m7 = true},
+          csDelimiter: function () {fail.delim = true},
+          XFail: function () {fail.special = true},
+          envFail: function (mml) {fail.env = true; return mml}
+        });
+      });
+      MathJax.Hub.Register.MessageHook("TeX Jax - parse error", function (msg) {
+        if (msg[2] === "\\big\\delimFail") fail.big = false;
+      });
+      MathJax.Hub.Register.StartupHook("TeX color Ready", function () {
+        var COLOR = MathJax.Extension["TeX/color"];
+        COLOR.colors.__proto__ = {fail: "#FA1000"};
+      });
+    </script>
+
+    <script>
+      var fail = {big: true};
+      gMaxErrorSignals["TeX Jax - parse error"] = 10;
+      function getTestCases() {
+        var mo = MathJax.Hub.getAllJax()[0].root.data[0].data[0];
+        var delim = MathJax.InputJax.TeX.Parse.prototype.convertDelimiter('\\delimFail');
+        var color = document.getElementById("colored");
+        return [
+          newScriptReftestResult("Macro is not defined ", !fail.macros),
+          newScriptReftestResult("Mi is not defined ", !fail.mi),
+          newScriptReftestResult("Mo is not defined ", !fail.mo),
+          newScriptReftestResult("M7 is not defined ", !fail.m7),
+          newScriptReftestResult("Big delim is not defined ", !fail.big),
+          newScriptReftestResult("Delim is not defined ", !fail.delim),
+          newScriptReftestResult("convertDelim is OK ", delim == null),
+          newScriptReftestResult("Special X is not defined ", !fail.special),
+          newScriptReftestResult("Other @ is not defined ", !mo.fail),
+          newScriptReftestResult("Env fail is not defined ", !fail.env),
+          newScriptReftestResult("Color fail is not defined ", !(color && color.style.color))
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- A number of lookups are not protected by hasOwnProperty()
+         https://github.com/mathjax/MathJax/issues/1996 -->
+
+    <div>
+      \(@\)
+      \(\macroFail\)
+      \(\miFail\)
+      \(\moFail\)
+      \(\msevenFail X\)
+      \(\big\delimFail\)
+      \(\delimFail\)
+      \(\begin{fail}\end{fail}\)
+      \(\cssId{colored}{\color{fail}{X}}\)
+    </div>
+
+  </body>
+</html>
