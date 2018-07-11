@@ -71,6 +71,6 @@ require(SVG||HTML-CSS||CommonHTML) script issue1936-1.html
 require(SVG||HTML-CSS||CommonHTML) script issue1936-2.html
 require(SVG) script issue1950.html
 script issue1982.html
-require(CHTML) script issue1985.html
+require(CommonHTML) script issue1985.html
 script issue1997.html
 script issue2005.html
