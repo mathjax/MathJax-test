@@ -5,7 +5,7 @@ include mtr-mtd/reftest.list
 != issue596-1a.html issue596-1-ref.html
 != issue596-1b.html issue596-1-ref.html
 != issue596-1c.html issue596-1-ref.html
-!= issue596-1d.html issue596-1-ref.html
+skip-if(SVG) != issue596-1d.html issue596-1-ref.html
 != issue596-1e.html issue596-1-ref.html
 != issue596-1f.html issue596-1-ref.html
 == issue807.html issue807-ref.html

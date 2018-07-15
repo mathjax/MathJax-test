@@ -13,7 +13,7 @@
         var h1 = document.getElementById("test").offsetHeight;
         var h2  = document.getElementById("ref").offsetHeight;
         return [
-          newScriptReftestResult('No extra vertical space ('+h1+','+h2+')', h1 < h2-2)
+          newScriptReftestResult('No extra vertical space ('+h1+','+h2+')', h1 < h2+2)
         ];
       }
     </script>
@@ -22,7 +22,7 @@
 
   <body>
 
-  <!-- Preview span causes extra line breaks lists in Firefox 
+  <!-- Preview span causes extra line breaks in lists in Firefox 
        https://github.com/mathjax/MathJax/issues/1555 -->
 
     <div id="test">
