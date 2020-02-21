@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 1815</title>
+    <!-- Copyright (c) 2020 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+    <script type="text/javascript">
+      var notations = [
+        'circle', 'updiagonalstrike', 'downdiagonalstrike', 'updiagonalarrow',
+        'phasorangle', 'longdiv', 'radical'
+      ];
+      
+      function getTestCases() {
+        var results = [];
+        for (var i = 0; i < notations.length; i++) {
+          var test = document.getElementById('test' + i);
+          test.firstChild.style.fontSize = "300%";  // zoom the math
+          var svg = test.getElementsByTagName('svg');
+          var w1 = Math.round(svg[0].firstChild.getBoundingClientRect().width);
+          var w2 = Math.round(svg[1].firstChild.getBoundingClientRect().width);
+          results.push(newScriptReftestResult(notations[i]+' zooms ('+w1+', '+w2+') ', Math.abs(w1 - w2) < 5));
+        }
+        return results;
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- CHTML menclosures don't always zoom properly
+         https://github.com/mathjax/MathJax/issues/1815 -->
+
+      <div id="notations"></div>
+
+      <script>
+      var div = document.getElementById('notations');
+      for (var i = 0; i < notations.length; i++) {
+        var math = '<math><menclose notation="'+notations[i]+'"><mi>123</mi></menclose></math>';
+        var test = div.appendChild(document.createElement('div'));
+        test.id = 'test'+i; test.style.display = "inline-block";
+        test.innerHTML = '<div>' + math + '</div><div style="font-size:300%">' + math + '</div>';
+      }
+      </script>
+ 
+
+  </body>
+</html>
