@@ -31,3 +31,4 @@ annotate(@note1,@note3,@note5) fails-if(SVG||(Firefox&&NativeMML)) == mglyph_val
 require(HTML-CSS) annotate(@note4) fails-if(MSIE) script rec-mglyph1.html
 annotate(@note5) fails-if(MSIE||(Firefox&&NativeMML)) == rec-mglyph2.html rec-mglyph2-ref.html
 == issue763.html issue763-ref.html
+require(!NativeMML) script issue2124.thml
