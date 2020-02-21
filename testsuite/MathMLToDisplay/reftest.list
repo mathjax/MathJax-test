@@ -75,3 +75,4 @@ require(CommonHTML) script issue1985.html
 script issue1997.html
 script issue2005.html
 require(SVG) script issue1637.html
+require(!NativeMML) script issue1804.html

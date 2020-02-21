@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1804</title>
+    <!-- Copyright (c) 2019 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var m1 = document.getElementById('math1');
+        var m2 = document.getElementById('math2');
+        var m3 = document.getElementById('math3');
+        var m4 = document.getElementById('math4');
+        m1.className = '';
+        var w = [0, m1.clientWidth, m2.clientWidth, m3.clientWidth, m4.clientWidth];
+        var h = [0, m1.clientHeight, m2.clientHeight, m3.clientHeight, m4.clientHeight];
+        return [
+          newScriptReftestResult('inline break width  ('+w[1]+','+w[2]+')', Math.abs(w[1] - w[2]) < 5),
+          newScriptReftestResult('nested break height ('+h[1]+','+h[2]+')', Math.abs(h[1] - h[2]) < 5),
+          newScriptReftestResult('nested break width  ('+w[3]+','+w[4]+')', Math.abs(w[3] - w[4]) < 5),
+          newScriptReftestResult('nested break height ('+h[3]+','+h[4]+')', Math.abs(h[3] - h[4]) < 5)
+        ];
+      }
+    </script>
+    
+    <style>
+    #math1, #math2, #math3, #math4 {
+      border: 1px solid black;
+      display: inline-block;
+    }
+    #math2 {
+      display: block;
+    }
+    .initial {
+      display: inline ! important;
+    }
+    </style>
+
+  </head>
+
+  <body>
+
+  <!-- Make inline \\ produce full-width blocks when at the top level
+       https://github.com/mathjax/MathJax/issues/1804 -->
+
+     <span id="math1" class="initial">
+       testing \(hj\\hj\) line breaks
+     </span>
+     <div id="math2">
+       testing<br>
+       \(\begin{aligned}[t]hj\\[1px]hj\end{aligned}\)<br>
+       line breaks
+     </div>
+     <br>
+     <span id="math3">
+       testing \({\begin{aligned}hj\end{aligned}\\\begin{aligned}hj\end{aligned}}\) line breaks
+     </span>
+     <br>
+     <div id="math4">
+       testing \(\begin{aligned}[t]hj\\[1px]hj\end{aligned}\) line breaks<br>
+     </div>
+     <br>
+
+  </body>
+</html>
