@@ -12,3 +12,4 @@ require(CommonHTML) script issue1287.html
 script issue1706.html
 require(HTML-CSS||SVG||CommonHTML) script issue1956.html
 script issue1993.html
+require(HTML-CSS&&STIX) script issue2135.html
