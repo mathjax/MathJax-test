@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2352</title>
+    <!-- Copyright (c) 2020 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      var align = ['', 'left', 'center', 'right'];
+
+      function getTestCases() {
+        var tests = [];
+        for (var i = 1; i < align.length; i++) {
+          var a1 = Math.round(document.getElementById('a-'+i+'-1').getBoundingClientRect().x);
+          var a2 = Math.round(document.getElementById('a-'+i+'-2').getBoundingClientRect().x);
+          var a3 = Math.round(document.getElementById('a-'+i+'-3').getBoundingClientRect().x);
+          tests.push(
+            newScriptReftestResult(align[i]+': Indent with tag ('+a1+','+a3+')', Math.abs(a1 - a3) < 10),
+            newScriptReftestResult(align[i]+': Indent without tag ('+a2+','+a3+')', Math.abs(a2 - a3) < 10)
+          );
+        }
+        return tests;
+      }
+    </script>
+    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        skipStartupTypeset: true,
+        displayIndent: '5em'
+      });
+      for (var i = 1; i < align.length; i++) {
+        MathJax.Hub.Queue(
+          ['Config', MathJax.Hub, {displayAlign: align[i]}],
+          ['Typeset', MathJax.Hub, 'test' + i]
+        );
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CHTML: displayIndent gets lost in floating elements
+       https://github.com/mathjax/MathJax/issues/2352 -->
+
+     <div id="test1">
+     <div style="width:3em; height: 6em; background-color: green; float:left"></div>
+     <div style="width:3em; height: 6em; background-color: green; float:right"></div>
+     \[\cssId{a-1-1}{a}\tag{1}\]
+     \[\cssId{a-1-2}{a}\]
+     <div style="text-align: left"><span style="margin:0 5em">\(\cssId{a-1-3}{a}\)</span></div>
+     </div>
+     <br clear="all">
+
+     <div id="test2">
+     <div style="width:3em; height: 6em; background-color: green; float:left"></div>
+     <div style="width:3em; height: 6em; background-color: green; float:right"></div>
+     \[\cssId{a-2-1}{a}\tag{1}\]
+     \[\cssId{a-2-2}{a}\]
+     <div style="text-align: center"><span style="margin:0 -5em 0 5em">\(\cssId{a-2-3}{a}\)</span></div>
+     </div>
+     <br clear="all">
+
+     <div id="test3">
+     <div style="width:3em; height: 6em; background-color: green; float:left"></div>
+     <div style="width:3em; height: 6em; background-color: green; float:right"></div>
+     \[\cssId{a-3-1}{a}\tag{1}\]
+     \[\cssId{a-3-2}{a}\]
+     <div style="text-align: right"><span style="margin:0 5em">\(\cssId{a-3-3}{a}\)</span></div>
+     </div>
+     <br clear="all">
+
+  </body>
+</html>
