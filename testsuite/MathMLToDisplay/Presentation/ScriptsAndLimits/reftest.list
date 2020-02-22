@@ -14,3 +14,4 @@ require(HTML-CSS||SVG||CommonHTML) script issue1956.html
 script issue1993.html
 require(HTML-CSS&&STIX) script issue2135.html
 require(!NativeMML) script issue2139.html
+require(!NativeMML&&!CHTML) script issue2050.html
