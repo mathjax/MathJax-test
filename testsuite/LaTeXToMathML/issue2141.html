@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2141</title>
+    <!-- Copyright (c) 2020 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      gMaxErrorSignals['TeX Jax - parse error'] = 2;
+      function getTestCases() {
+        var OK = gMaxErrorSignals['TeX Jax - parse error'] === 2;
+        var h1 = document.getElementById('math1').offsetHeight;
+        var h2 = document.getElementById('math2').offsetHeight;
+        return [
+          newScriptReftestResult("\\newline OK ", OK),
+          newScriptReftestResult("\\newline can't have brackets ("+h1+","+h2+") ", Math.abs(h1 - h2) < 2)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- \newline should work like \\ (without brackets)
+         https://github.com/mathjax/MathJax/issues/2141 -->
+
+    <div id="math1" style="display:inline-block; border: 1px solid black">
+      \(x\newline y[]\)
+    </div>
+    <br>
+    <div id="math2" style="display:inline-block; border: 1px solid black">
+      \(x\newline[10pt] y\)
+    </div>
+    <p>
+
+  </body>
+</html>
