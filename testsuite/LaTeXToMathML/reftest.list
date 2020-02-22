@@ -84,3 +84,4 @@ script issue1419.html
 require(!SVG) script issue1482.html
 script issue1586.html
 script issue1996.html
+script issue2222.html
