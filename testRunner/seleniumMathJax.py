@@ -33,7 +33,9 @@ from config import SELENIUM_SERVER_HUB_HOST, SELENIUM_SERVER_HUB_PORT
 
 from PIL import Image, ImageChops, ImageDraw
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium import webdriver, selenium
+#from selenium import webdriver, selenium
+from selenium import webdriver
+import selenium
 import StringIO
 import base64
 import difflib
