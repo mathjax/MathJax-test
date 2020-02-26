@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2124</title>
+    <!-- Copyright (c) 2020 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w1 = document.getElementById("math1").offsetWidth;
+        var w2 = document.getElementById("math2").offsetWidth;
+        return [
+          newScriptReftestResult("Width scales with scriptlevel ("+w1+","+w2+") ", w1/2 + 2 > w2)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- Properly scale mglyphs with dimensions given in ems
+       https://github.com/mathjax/MathJax/issues/2124 -->
+
+    <div id="math1" style="display: inline-block">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" width="1em" height="1em">
+        <rect width="1" height="1" fill="red"/>
+      </svg>
+    </div>
+    <div id="math2" style="display:inline-block"></div>
+    <p>
+    
+    <script>
+    var svg = document.getElementById("math1").getElementsByTagName("svg")[0];
+    var div = document.getElementById("math2");
+    div.innerHTML = '<math><mstyle scriptlevel="2"><mglyph src="data:image/svg+xml,'
+      + encodeURIComponent(svg.outerHTML) + '" width="1em" height="1em"></mglyph></mstyle></math>';
+    </script>
+
+  </body>
+</html>

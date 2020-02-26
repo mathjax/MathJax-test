@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 2175</title>
+    <!-- Copyright (c) 2020 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var w1 = document.getElementById('math1').offsetWidth;
+        var w2 = document.getElementById('math2').offsetWidth;
+        return [
+          newScriptReftestResult("\\mathrel respected in alignment ("+w1+","+w2+")", Math.abs(w1 - w2) < 3)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- Use properspacing for \mathrel{} in aligments 
+         https://github.com/mathjax/MathJax/issues/2175 -->
+
+    <div id="math1" style="display:inline-block; border: 1px solid black">
+    \(\begin{aligned}
+      &\mathrel{x}x
+    \end{aligned}\)
+    </div>
+    <br>
+    <div id="math2" style="display:inline-block; border: 1px solid black">
+    \(\begin{aligned}
+      &{}\mathrel{x}x
+    \end{aligned}\)
+    </div>
+    <p>
+
+  </body>
+</html>

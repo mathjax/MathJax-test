@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2036</title>
+    <!-- Copyright (c) 2020 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      gMaxErrorSignals['TeX Jax - parse error'] = 1;
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax();
+        return [
+          newScriptReftestResult('Delimiters recognized ', jax.length > 0)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Handle \({\) properly
+         https://github.com/mathjax/MathJax/issues/2036 -->
+
+    <div>\({\)</div>
+
+  </body>
+</html>

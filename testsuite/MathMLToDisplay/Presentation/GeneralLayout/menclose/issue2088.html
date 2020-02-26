@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>issue 2088</title>
+    <!-- Copyright (c) 2020 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../../header.js"></script>
+    <script type="text/javascript" src="../../../../scriptTests.js"></script>
+    <script type="text/javascript">
+      var notations = [
+        '\\LARGE\\enclose{circle}{x+y}', 
+        '2^{\\enclose{updiagonalstrike}{x+1}}',
+        '\\textstyle\\frac{1}{\\enclose{updiagonalarrow}{x+1}}'
+      ];
+      
+      gConfigObject.TeX = {
+        extensions: ['enclose.js']
+      };
+      function getTestCases() {
+        var results = [];
+        for (var i = 0; i < notations.length; i++) {
+          var test = document.getElementById('test' + i);
+          var svg = test.getElementsByTagName('svg')[0];
+          var w1 = Math.round(svg.getBoundingClientRect().width);
+          var w2 = Math.round(svg.firstChild.getBoundingClientRect().width);
+          results.push(newScriptReftestResult(notations[i]+' zooms ('+w1+', '+w2+') ', Math.abs(w1 - w2) < 5));
+        }
+        return results;
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- CHTML menclosures need to be scaled for scripts
+         https://github.com/mathjax/MathJax/issues/2088 -->
+
+      <div id="notations"></div>
+
+      <script>
+      var div = document.getElementById('notations');
+      for (var i = 0; i < notations.length; i++) {
+        var test = div.appendChild(document.createElement('div'));
+        test.id = 'test'+i; test.style.display = "inline-block";
+        test.innerHTML = '\\['+notations[i]+'\\]';
+      }
+      </script>
+ 
+
+  </body>
+</html>

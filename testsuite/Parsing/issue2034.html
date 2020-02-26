@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2034</title>
+    <!-- Copyright (c) 2020 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      gConfigObject.tex2jax = {
+        inlineMath: [['\\equation{','}']]
+      };
+      function getTestCases() {
+        var jax = MathJax.Hub.getAllJax();
+        return [
+          newScriptReftestResult('Delimiters recognized ', jax.length > 0)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Allow use of '}' as a tex2jax delimiter
+         https://github.com/mathjax/MathJax/issues/2034 -->
+
+    <div>\equation{\frac{x}{y}}</div>
+
+  </body>
+</html>

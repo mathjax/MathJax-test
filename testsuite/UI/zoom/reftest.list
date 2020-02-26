@@ -11,3 +11,4 @@ script issue460.html
 script issue834.html
 require(!NativeMML) script issue835.html
 require(NativeMML) script issue918.html
+require(CommonHTML) script issue1815.html

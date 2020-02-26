@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2139</title>
+    <!-- Copyright (c) 2020 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      function getTestCases() {
+        var int1 = document.getElementById("int1");
+        var int2 = document.getElementById("int2").parentNode;
+        if (int2.className === 'mjx-base') int2 = int2.parentNode;
+        var w1 = Math.round(int1.getBoundingClientRect().width);
+        var w2 = Math.round(int2.getBoundingClientRect().width);
+        return [newScriptReftestResult("No italic correction ("+w1+","+w2+") ", Math.abs(w1 - w2) < 3)];
+      }    
+    </script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      displayAlign: 'left',
+      "HTML-CSS": {linebreaks: {automatic: true}},
+      CommonHTML: {linebreaks: {automatic: true}},
+      SVG: {linebreaks: {automatic: true}, addMMLclasses: false},
+    });
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Italic correction mot removed during line breaking
+         https://github.com/mathjax/MathJax/issues/2139 -->
+    
+    <div style="width:4em; border: 1px solid black">
+      \[\cssId{int1}{\int_0^1}+\cssId{int2}{\int}_0^1\]
+    </div>
+
+  </body>
+</html>

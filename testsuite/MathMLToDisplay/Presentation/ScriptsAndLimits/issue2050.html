@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2050</title>
+    <!-- Copyright (c) 2020 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../../header.js"></script>
+    <script type="text/javascript" src="../../../scriptTests.js"></script>
+
+    <script type="text/javascript">
+      var variants = ['italic', 'bold-italic'];
+      var letters = ['f', 'A', '&#x3B4;', '&#x394'];
+
+      function getTestCases() {
+        var tests = [];
+        for (var v = 0; v < variants.length; v++) {
+          for (var i = 0; i < letters.length; i++) {
+            var x1 = Math.round(document.getElementById('hat1-'+v+'-'+i).getBoundingClientRect().x);
+            var x2 = Math.round(document.getElementById('hat2-'+v+'-'+i).getBoundingClientRect().x);
+            tests.push(newScriptReftestResult(variants[v]+"("+letters[i]+") Skew present ("+x1+","+x2+") ", x1 > x2));
+          }
+        }
+        return tests;
+      }    
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- STIX: Skew values are missing for Math Alphabet block
+         https://github.com/mathjax/MathJax/issues/2050 -->
+    
+    <div id="tests">
+    </div>
+    
+    <script>
+    (function () {
+      var tests = document.getElementById('tests');
+      var lines = [];
+      for (var v = 0; v < variants.length; v++) {
+        for (var i = 0; i< letters.length; i++) {
+          lines.push([
+            '<div style="display: inline-block; border: 1px solid black; margin-right: .5em">',
+            '  <div>',
+            '    <math>',
+            '      <mover>',
+            '        <mi mathvariant="'+variants[v]+'">'+letters[i]+'</mi>',
+            '        <mo stretchy="false" id="hat1-'+v+'-'+i+'">&#x302;</mo>',
+            '      </mover>',
+            '    </math>',
+            '  </div>',
+            '  <div>',
+            '    <math>',
+            '      <mover>',
+            '        <mrow><mi mathvariant="'+variants[v]+'">'+letters[i]+'</mi><mi></mrow>',
+            '        <mo stretchy="false" id="hat2-'+v+'-'+i+'">&#x302;</mo>',
+            '      </mover>',
+            '    </math>',
+            '  </div>',
+            '</div>'
+          ].join('\n'));
+        }
+      }
+      tests.innerHTML = lines.join('\n\n');
+    })();
+    
+    </script>
+    <p>
+    
+  </body>
+</html>

@@ -45,3 +45,4 @@ script issue1694.html
 require(HTML-CSS) script issue1774.html
 require(CommonHTML) script issue1837.html
 script issue1923.html
+require(STIX||STIX-Web) script issue2035.html

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 1637</title>
+    <!-- Copyright (c) 2019 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var svg = document.getElementsByTagName('svg');
+        var w1 = svg[1].clientWidth;
+        var w2 = svg[2].clientWidth;
+        var h1 = svg[3].clientHeight;
+        var h2 = svg[2].clientHeight;
+        return [
+          newScriptReftestResult('vphantom width ('+w1+','+w2+')', Math.abs(w1 - w2) <= 2),
+          newScriptReftestResult('hphantom width ('+h1+','+h2+')', Math.abs(h1 - h2) <= 2)
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- SVG: vphantom produces too much width
+       https://github.com/mathjax/MathJax/issues/1637 -->
+
+     <div id="math1" style="display:inline-block">
+       \(x\vphantom{xxxxxxxxxxxxxxx}x\)
+     </div>
+     <div id="math2" style="display:inline-block">
+       \(xx\)
+     </div>
+     <div id="math3" style="display:inline-block">
+       \(x\hphantom{\Rule{0em}{3em}{3em}}x\)
+     </div>
+     <br>
+
+  </body>
+</html>

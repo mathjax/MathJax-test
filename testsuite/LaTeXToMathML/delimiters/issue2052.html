@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2052</title>
+    <!-- Copyright (c) 2020 The MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../../header.js"></script>
+    <script type="text/javascript" src="../../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var w1 = document.getElementById("math1").offsetWidth;
+        var w2 = document.getElementById("math2").offsetWidth;
+        var OK = Math.abs(w1 - w2) < 3;
+        return [
+          newScriptReftestResult("Correct spacing for \\big ("+w1+','+w2+")", OK)
+        ];
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- SVG: Spacing is lost before \Big
+         https://github.com/mathjax/MathJax/issues/2052 -->
+
+      <span id="math1" style="display: inline-block">
+      \(x=\Bigl|x\Bigr|\)
+      </span>
+      <br>
+      <span id="math2" style="display: inline-block">
+      \(x={\Bigl|x\Bigr|}\)
+      </span>
+      <br>
+
+  </body>
+</html>

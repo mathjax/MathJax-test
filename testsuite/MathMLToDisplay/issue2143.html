@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+    <title>Issue 2143</title>
+    <!-- Copyright (c) 2020 MathJax Consortium
+         License: Apache License 2.0 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../header.js"></script>
+    <script type="text/javascript" src="../scriptTests.js"></script>
+
+    <script>
+      function getTestCases() {
+        var h1 = document.getElementById('math1').offsetHeight;
+        var h2 = document.getElementById('math2').offsetHeight;
+        return [
+          newScriptReftestResult('Empty surd is shifted down ('+h1+','+h2+')', Math.abs(h1 - h2) > 1),
+        ];
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+  <!-- CHTML: position of root is bad with empty base
+       https://github.com/mathjax/MathJax/issues/2143 -->
+
+     <div id="math1" style="display: inline-block; border: 1px solid black">
+       \(\sqrt[1234]{}\)
+     </div>
+     <div id="math2" style="display: inline-block; border: 1px solid black">
+       \(\sqrt[1234]{x}\)
+     </div>
+     <p>
+
+  </body>
+</html>
