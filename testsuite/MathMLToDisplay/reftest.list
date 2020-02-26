@@ -77,4 +77,4 @@ script issue2005.html
 require(SVG) script issue1637.html
 require(!NativeMML) script issue1804.html
 require(!NativeMML) script issue2143.html
-require(!NativeMML) script issue2352.html
+require(!NativeMML) fails-if(MSIE) script issue2352.html
